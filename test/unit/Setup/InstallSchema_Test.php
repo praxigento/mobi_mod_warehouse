@@ -17,7 +17,7 @@ class InstallSchema_UnitTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
 
     public function test_constructor() {
         $obj = new InstallSchema();
-        $this->assertInstanceOf('Praxigento\Warehouse\Setup\InstallSchema', $obj);
+        $this->assertInstanceOf(\Praxigento\Warehouse\Setup\InstallSchema::class, $obj);
     }
 
     public function test_install() {
@@ -69,6 +69,6 @@ class InstallSchema_UnitTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
         /** === Test itself === */
         $obj = new InstallSchema();
         $obj->install($mockSetup, $mockMageCtx);
-        $this->assertInstanceOf('Praxigento\Warehouse\Setup\InstallSchema', $obj);
+        $this->assertInstanceOf(\Praxigento\Warehouse\Setup\InstallSchema::class, $obj);
     }
 }
