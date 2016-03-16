@@ -7,17 +7,21 @@
 
     <!-- Plugins -->
     <type name="Magento\CatalogInventory\Ui\DataProvider\Product\AddQuantityFieldToCollection">
-        <plugin
-                name="prxgt_wrhs_plugin"
+        <plugin name="prxgt_wrhs_plugin"
                 type="Praxigento\Warehouse\Plugin\CatalogInventory\Ui\DataProvider\Product\AddQuantityFieldToCollection"
                 sortOrder="100"
                 disabled="false"/>
     </type>
     <type name="Magento\CatalogInventory\Ui\DataProvider\Product\AddQuantityFilterToCollection">
-        <plugin
-                name="prxgt_wrhs_plugin"
+        <plugin name="prxgt_wrhs_plugin"
                 type="Praxigento\Warehouse\Plugin\CatalogInventory\Ui\DataProvider\Product\AddQuantityFilterToCollection"
                 sortOrder="100"
                 disabled="false"/>
     </type>
+
+    <!-- API -->
+    <preference for="Praxigento\Warehouse\Api\WarehouseInterface"
+                type="Praxigento\Warehouse\Api\Def\Warehouse"/>
+    <preference for="Praxigento\Warehouse\Api\Data\IWarehouse"
+                type="Praxigento\Warehouse\Api\Data\Def\Warehouse"/>
 </config>
