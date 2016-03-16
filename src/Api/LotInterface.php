@@ -6,15 +6,15 @@
 namespace Praxigento\Warehouse\Api;
 
 /**
- * Service to operate with 'warehouse' entity in MOBI applications.
+ * Service to operate with 'lot' entity in MOBI applications.
  * @api
  */
-interface WarehouseInterface {
+interface LotInterface {
 
     /**
      * @param int $id
      *
-     * @return \Praxigento\Warehouse\Api\Data\IWarehouse
+     * @return null
      */
     public function read($id = null);
 

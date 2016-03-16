@@ -19,9 +19,13 @@
                 disabled="false"/>
     </type>
 
-    <!-- API -->
+    <!-- API Services -->
+    <preference for="Praxigento\Warehouse\Api\LotInterface"
+                type="Praxigento\Warehouse\Api\Def\Lot"/>
     <preference for="Praxigento\Warehouse\Api\WarehouseInterface"
                 type="Praxigento\Warehouse\Api\Def\Warehouse"/>
+
+    <!-- API Data -->
     <preference for="Praxigento\Warehouse\Api\Data\IWarehouse"
                 type="Praxigento\Warehouse\Api\Data\Def\Warehouse"/>
 </config>

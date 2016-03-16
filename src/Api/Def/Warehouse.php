@@ -10,7 +10,7 @@ use Praxigento\Warehouse\Api\WarehouseInterface;
 
 class Warehouse implements WarehouseInterface {
 
-    public function read($wrhsId = null) {
+    public function read($id = null) {
         $result = new WarehouseData();
         $result->setId(43);
         return $result;
