@@ -6,6 +6,6 @@
  */
 namespace Praxigento\Warehouse;
 
-class Config {
+class Config extends \Praxigento\Warehouse\Lib\Config {
     const MODULE = 'Praxigento_Warehouse';
 }
