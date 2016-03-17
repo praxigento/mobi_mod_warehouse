@@ -6,7 +6,7 @@
 namespace Praxigento\Warehouse\Api;
 
 /**
- * Service to operate with 'warehouse' entity in MOBI applications.
+ * CRUD service to operate with 'warehouse' entity in MOBI applications.
  * @api
  */
 interface WarehouseInterface {
@@ -24,7 +24,7 @@ interface WarehouseInterface {
      *
      * @param int $id ID of the Warehouse instance.
      *
-     * @return boolean 'true' if instnace is deleted.
+     * @return boolean 'true' if instance is deleted.
      */
     public function delete($id);
 
@@ -43,7 +43,7 @@ interface WarehouseInterface {
      * @param int                                             $id ID of the warehouse instance to update.
      * @param \Praxigento\Warehouse\Api\Data\IWarehouseUpdate $data data to update.
      *
-     * @return boolean 'true' if instnace is updated.
+     * @return boolean 'true' if instance is updated.
      */
     public function update($id, Data\IWarehouseUpdate $data);
 

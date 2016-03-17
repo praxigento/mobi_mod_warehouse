@@ -5,7 +5,7 @@
 
 namespace Praxigento\Warehouse\Api\Def;
 
-use Praxigento\Warehouse\Api\Data\Def\WarehouseCreate as WarehouseData;
+use Praxigento\Warehouse\Api\Data;
 use Praxigento\Warehouse\Api\WarehouseInterface;
 use Praxigento\Warehouse\Lib\Entity\Warehouse as WarehouseEntity;
 
@@ -24,16 +24,39 @@ class Warehouse implements WarehouseInterface {
         $this->_repoBasic = $repoBasic;
     }
 
-    public function read($id = null) {
-        $result = new WarehouseData();
-        $result->setId(43);
+    /**
+     * @inheritdoc
+     */
+    public function create(Data\IWarehouseCreate $data) {
+        $result = $this->_repoBasic->addEntity(WarehouseEntity::ENTITY_NAME, $data);
         return $result;
     }
 
-    public function update(\Praxigento\Warehouse\Api\Data\IWarehouseCreate $data) {
-        $rowData = $data->getData();
-        unset($rowData[WarehouseEntity::ATTR_ID]);
-        $resp = $this->_repoBasic->updateEntity(WarehouseEntity::ENTITY_NAME, $rowData);
-        return $resp;
+    /**
+     * @inheritdoc
+     */
+    public function delete($id) {
+        throw new \Exception("'Delete' operation is not implemented yet.");
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function read($id = null) {
+        $pk = [ WarehouseEntity::ATTR_ID => $id ];
+        $data = $this->_repoBasic->getEntityByPk(WarehouseEntity::ENTITY_NAME, $pk);
+        $result = new Data\Def\Warehouse();
+        $result->setData($data);
+        return $result;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function update($id, Data\IWarehouseUpdate $data) {
+        $where = WarehouseEntity::ATTR_ID . '=' . (int)$id;
+        $updatedRows = $this->_repoBasic->updateEntity(WarehouseEntity::ENTITY_NAME, $data, $where);
+        $result = ($updatedRows > 0);
+        return $result;
     }
 }

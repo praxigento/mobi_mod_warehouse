@@ -25,4 +25,17 @@ interface IWarehouseUpdate extends IBase {
      */
     public function getNote();
 
+    /**
+     * @param string $data
+     *
+     * @return null
+     */
+    public function setCode($data);
+
+    /**
+     * @param string $data
+     *
+     * @return null
+     */
+    public function setNote($data);
 }

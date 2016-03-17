@@ -16,4 +16,8 @@ class InstallData_UnitTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
         $this->assertInstanceOf(\Praxigento\Warehouse\Setup\InstallData::class, $obj);
     }
 
+    public function test_smth() {
+        $obj = new \Praxigento\Warehouse\Api\Data\Def\Warehouse();
+        $obj->setData('asd');
+    }
 }

@@ -13,4 +13,5 @@ use Praxigento\Warehouse\Lib\Entity\Warehouse as WarehouseEntity;
 class Warehouse
     extends WarehouseEntity
     implements IWarehouseCreate, IWarehouseRead, IWarehouseUpdate {
+
 }
