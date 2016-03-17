@@ -5,18 +5,14 @@
 
 namespace Praxigento\Warehouse\Api\Data;
 
-
-interface IWarehouse {
-
+/**
+ * Read request for Warehouse entity (from Praxigento_Warehouse module).
+ */
+interface IWarehouseRead extends IWarehouseCreate {
     /**
+     * Warehouse ID.
+     *
      * @return int
      */
     public function getId();
-
-    /**
-     * @param int $id
-     *
-     * @return null
-     */
-    public function setId($id);
 }

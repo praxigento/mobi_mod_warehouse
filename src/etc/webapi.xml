@@ -2,6 +2,36 @@
 <routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
 
+
+    <route url="/V1/prxgt/wrhs/warehouse/" method="POST">
+        <service class="Praxigento\Warehouse\Api\WarehouseInterface" method="create"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+
+    <route url="/V1/prxgt/wrhs/warehouse/:id/" method="GET">
+        <service class="Praxigento\Warehouse\Api\WarehouseInterface" method="read"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+
+    <route url="/V1/prxgt/wrhs/warehouse/update/" method="PUT">
+        <service class="Praxigento\Warehouse\Api\WarehouseInterface" method="update"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+
+    <route url="/V1/prxgt/wrhs/warehouse/read/" method="DELETE">
+        <service class="Praxigento\Warehouse\Api\WarehouseInterface" method="delete"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+
+
     <route url="/V1/prxgt/wrhs/lot/read/" method="GET">
         <service class="Praxigento\Warehouse\Api\LotInterface" method="read"/>
         <resources>
@@ -9,10 +39,4 @@
         </resources>
     </route>
 
-    <route url="/V1/prxgt/wrhs/warehouse/read/" method="GET">
-        <service class="Praxigento\Warehouse\Api\WarehouseInterface" method="read"/>
-        <resources>
-            <resource ref="anonymous"/>
-        </resources>
-    </route>
 </routes>

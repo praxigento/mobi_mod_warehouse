@@ -26,6 +26,11 @@
                 type="Praxigento\Warehouse\Api\Def\Warehouse"/>
 
     <!-- API Data -->
-    <preference for="Praxigento\Warehouse\Api\Data\IWarehouse"
+    <preference for="Praxigento\Warehouse\Api\Data\IWarehouseCreate"
                 type="Praxigento\Warehouse\Api\Data\Def\Warehouse"/>
+    <preference for="Praxigento\Warehouse\Api\Data\IWarehouseRead"
+                type="Praxigento\Warehouse\Api\Data\Def\Warehouse"/>
+    <preference for="Praxigento\Warehouse\Api\Data\IWarehouseUpdate"
+                type="Praxigento\Warehouse\Api\Data\Def\Warehouse"/>
+
 </config>

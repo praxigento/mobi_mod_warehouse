@@ -5,19 +5,12 @@
 
 namespace Praxigento\Warehouse\Api\Data\Def;
 
+use Praxigento\Warehouse\Api\Data\IWarehouseCreate;
+use Praxigento\Warehouse\Api\Data\IWarehouseRead;
+use Praxigento\Warehouse\Api\Data\IWarehouseUpdate;
+use Praxigento\Warehouse\Lib\Entity\Warehouse as WarehouseEntity;
 
 class Warehouse
-    extends \Flancer32\Lib\DataObject
-    implements \Praxigento\Warehouse\Api\Data\IWarehouse {
-
-    const ID = 'Id';
-
-    public function getId() {
-        $result = $this->getData(self::ID);
-        return $result;
-    }
-
-    public function setId($id) {
-        $this->setData(self::ID, $id);
-    }
+    extends WarehouseEntity
+    implements IWarehouseCreate, IWarehouseRead, IWarehouseUpdate {
 }

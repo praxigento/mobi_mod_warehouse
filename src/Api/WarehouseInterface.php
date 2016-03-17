@@ -10,12 +10,41 @@ namespace Praxigento\Warehouse\Api;
  * @api
  */
 interface WarehouseInterface {
+    /**
+     * Create new warehouse instance.
+     *
+     * @param \Praxigento\Warehouse\Api\Data\IWarehouseCreate $data
+     *
+     * @return int ID of the newly created instance.
+     */
+    public function create(Data\IWarehouseCreate $data);
 
     /**
-     * @param int $id
+     * Delete warehouse instance by ID.
      *
-     * @return \Praxigento\Warehouse\Api\Data\IWarehouse
+     * @param int $id ID of the Warehouse instance.
+     *
+     * @return boolean 'true' if instnace is deleted.
      */
-    public function read($id = null);
+    public function delete($id);
+
+    /**
+     * Read warehouse instance by ID.
+     *
+     * @param int $id ID of the Warehouse instance.
+     *
+     * @return \Praxigento\Warehouse\Api\Data\IWarehouseRead
+     */
+    public function read($id);
+
+    /**
+     * Update warehouse instance by ID.
+     *
+     * @param int                                             $id ID of the warehouse instance to update.
+     * @param \Praxigento\Warehouse\Api\Data\IWarehouseUpdate $data data to update.
+     *
+     * @return boolean 'true' if instnace is updated.
+     */
+    public function update($id, Data\IWarehouseUpdate $data);
 
 }
