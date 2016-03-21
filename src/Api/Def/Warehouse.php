@@ -43,7 +43,7 @@ class Warehouse implements WarehouseInterface {
      * @inheritdoc
      */
     public function read($id = null) {
-        $pk = [ WarehouseEntity::ATTR_ID => $id ];
+        $pk = [ WarehouseEntity::ATTR_STOCK_REF => $id ];
         $data = $this->_repoBasic->getEntityByPk(WarehouseEntity::ENTITY_NAME, $pk);
         $result = new Data\Def\Warehouse();
         $result->setData($data);
@@ -54,7 +54,7 @@ class Warehouse implements WarehouseInterface {
      * @inheritdoc
      */
     public function update($id, Data\IWarehouse $data) {
-        $where = WarehouseEntity::ATTR_ID . '=' . (int)$id;
+        $where = WarehouseEntity::ATTR_STOCK_REF . '=' . (int)$id;
         $updatedRows = $this->_repoBasic->updateEntity(WarehouseEntity::ENTITY_NAME, $data, $where);
         $result = ($updatedRows > 0);
         return $result;
