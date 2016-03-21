@@ -6,18 +6,18 @@
     <!-- Services -->
 
     <!-- Plugins -->
-    <type name="Magento\CatalogInventory\Ui\DataProvider\Product\AddQuantityFieldToCollection">
-        <plugin name="prxgt_wrhs_plugin"
-                type="Praxigento\Warehouse\Plugin\CatalogInventory\Ui\DataProvider\Product\AddQuantityFieldToCollection"
-                sortOrder="100"
-                disabled="false"/>
-    </type>
-    <type name="Magento\CatalogInventory\Ui\DataProvider\Product\AddQuantityFilterToCollection">
-        <plugin name="prxgt_wrhs_plugin"
-                type="Praxigento\Warehouse\Plugin\CatalogInventory\Ui\DataProvider\Product\AddQuantityFilterToCollection"
-                sortOrder="100"
-                disabled="false"/>
-    </type>
+    <!--<type name="Magento\CatalogInventory\Ui\DataProvider\Product\AddQuantityFieldToCollection">-->
+        <!--<plugin name="prxgt_wrhs_plugin"-->
+                <!--type="Praxigento\Warehouse\Plugin\CatalogInventory\Ui\DataProvider\Product\AddQuantityFieldToCollection"-->
+                <!--sortOrder="100"-->
+                <!--disabled="false"/>-->
+    <!--</type>-->
+    <!--<type name="Magento\CatalogInventory\Ui\DataProvider\Product\AddQuantityFilterToCollection">-->
+        <!--<plugin name="prxgt_wrhs_plugin"-->
+                <!--type="Praxigento\Warehouse\Plugin\CatalogInventory\Ui\DataProvider\Product\AddQuantityFilterToCollection"-->
+                <!--sortOrder="100"-->
+                <!--disabled="false"/>-->
+    <!--</type>-->
 
     <!-- API Services -->
     <preference for="Praxigento\Warehouse\Api\LotInterface"

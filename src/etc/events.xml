@@ -1,6 +1,6 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
-    <event name="eav_collection_abstract_load_before">
+    <event name="FAKE___eav_collection_abstract_load_before">
         <observer
                 name="prxgt_wrhs_eav_collection_abstract_load_before"
                 instance="Praxigento\Warehouse\Observer\EavCollectionAbstractLoadBefore"
