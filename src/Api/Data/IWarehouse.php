@@ -19,18 +19,18 @@ interface IWarehouse extends IBase {
     public function getCode();
 
     /**
-     * Warehouse ID. Required.
-     *
-     * @return int|null
-     */
-    public function getId();
-
-    /**
      * Warehouse notes ('Default warehouse in Riga'). Required.
      *
      * @return string|null
      */
     public function getNote();
+
+    /**
+     * Stock reference. Required.
+     *
+     * @return int|null
+     */
+    public function getStockRef();
 
     /**
      * @param string $data
@@ -40,16 +40,16 @@ interface IWarehouse extends IBase {
     public function setCode($data);
 
     /**
-     * @param int $data
-     *
-     * @return null
-     */
-    public function setId($data);
-
-    /**
      * @param string $data
      *
      * @return null
      */
     public function setNote($data);
+
+    /**
+     * @param int $data
+     *
+     * @return null
+     */
+    public function setStockRef($data);
 }
