@@ -3,6 +3,9 @@
         xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
 
     <!-- Repos -->
+    <preference for="Praxigento\Warehouse\Lib\Repo\Entity\IWarehouse"
+                type="Praxigento\Warehouse\Lib\Repo\Entity\Def\Warehouse"/>
+
     <!-- Services -->
 
     <!-- Plugins -->
