@@ -7,7 +7,7 @@ namespace Praxigento\Warehouse\Api\Def;
 
 use Praxigento\Warehouse\Api\Data;
 use Praxigento\Warehouse\Api\WarehouseInterface;
-use Praxigento\Warehouse\Lib\Entity\Warehouse as WarehouseEntity;
+use Praxigento\Warehouse\Lib\Data\Entity\Warehouse as WarehouseEntity;
 
 /**
  * CRUD service for Praxigento Warehouse entity.
