@@ -1,6 +1,6 @@
 {
   "name": "praxigento/mobi_mod_mage2_warehouse",
-  "description": "MOBI: Magento 2 integration code for Praxigento_Warehouse module.",
+  "description": "MOBI: Praxigento_Warehouse module.",
   "type": "magento2-module",
   "homepage": "https://github.com/praxigento/mobi_mod_mage2_warehouse",
   "license": "MIT",
