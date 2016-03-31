@@ -1,0 +1,228 @@
+<?php
+/**
+ * User: Alex Gusev <alex@flancer64.com>
+ */
+namespace Praxigento\Warehouse\Lib\Test\Story01;
+
+use Magento\CatalogInventory\Api\Data\StockInterface;
+use Magento\CatalogInventory\Api\Data\StockItemInterface;
+use Magento\CatalogInventory\Api\StockItemRepositoryInterface;
+use Magento\CatalogInventory\Api\StockRepositoryInterface;
+use Praxigento\Core\Lib\Context;
+use Praxigento\Warehouse\Lib\Data\Entity\Lot;
+use Praxigento\Warehouse\Lib\Data\Entity\Quantity;
+use Praxigento\Warehouse\Lib\Data\Entity\Warehouse;
+
+include_once(__DIR__ . '/../phpunit_bootstrap.php');
+
+class Main_IntegrationTest extends \Praxigento\Core\Lib\Test\BaseIntegrationTest {
+    /** @var \Praxigento\Core\Lib\Repo\IBasic */
+    private $_repoBasic;
+    /** @var  \Magento\CatalogInventory\Api\StockRepositoryInterface */
+    private $_repoStock;
+    /** @var  \Magento\CatalogInventory\Api\StockItemRepositoryInterface */
+    private $_repoStockItem;
+    /** @var  \Praxigento\Core\Lib\Tool\Date */
+    private $_toolDate;
+
+    public function __construct() {
+        parent::__construct();
+        $this->_repoBasic = $this->_obm->get(\Praxigento\Core\Lib\Repo\IBasic::class);
+        $this->_toolDate = $this->_obm->get(\Praxigento\Core\Lib\Tool\Date::class);
+        $this->_repoStock = $this->_obm->get(StockRepositoryInterface::class);
+        $this->_repoStockItem = $this->_obm->get(StockItemRepositoryInterface::class);
+    }
+
+    /**
+     * @param string   $code
+     * @param datetime $expDate
+     *
+     * @return int ID of the new entity
+     */
+    private function _createLot($code, $expDate) {
+        $tbl = Lot::ENTITY_NAME;
+        $bind = [
+            Lot::ATTR_CODE     => $code,
+            Lot::ATTR_EXP_DATE => $expDate
+        ];
+        $result = $this->_repoBasic->addEntity($tbl, $bind);
+        return $result;
+    }
+
+    private function _createMageCategory($name) {
+        /**
+         * Initialize factories using Object Manager.
+         */
+        /** @var  $categoryFactory \Magento\Catalog\Api\CategoryRepositoryInterface */
+        $categoryFactory = $this->_obm->get(\Magento\Catalog\Api\CategoryRepositoryInterface::class);
+        /** @var  $category \Magento\Catalog\Api\Data\CategoryInterface */
+        $category = $this->_obm->create(\Magento\Catalog\Api\Data\CategoryInterface::class);
+        $category->setName($name);
+        $category->setIsActive(true);
+        $saved = $categoryFactory->save($category);
+        $result = $saved->getId();
+        return $result;
+    }
+
+    /**
+     * @param int    $catId category ID
+     * @param string $sku
+     *
+     * @return int ID of the new entity
+     */
+    private function _createMageProduct($catId, $sku) {
+        /**
+         * Initialize factories using Object Manager.
+         */
+        /** @var  $entityTypeFactory \Magento\Eav\Model\Entity\TypeFactory */
+        $entityTypeFactory = $this->_obm->get(\Magento\Eav\Model\Entity\TypeFactory::class);
+        /** @var  $attrSetFactory \Magento\Eav\Model\Entity\Attribute\SetFactory */
+        $attrSetFactory = $this->_obm->get(\Magento\Eav\Model\Entity\Attribute\SetFactory::class);
+        /** @var  $catProdLinkFactory \Magento\Catalog\Model\CategoryLinkRepository */
+        $catProdLinkFactory = $this->_obm->get(\Magento\Catalog\Model\CategoryLinkRepository::class);
+        /** @var  $productFactory \Magento\Catalog\Api\ProductRepositoryInterface */
+        $productFactory = $this->_obm->get(\Magento\Catalog\Api\ProductRepositoryInterface::class);
+        /**
+         * Retrieve entity type ID & attribute set ID.
+         */
+        /** @var  $entityType \Magento\Eav\Model\Entity\Type */
+        $entityType = $entityTypeFactory
+            ->create()
+            ->loadByCode(\Magento\Catalog\Model\Product::ENTITY);
+        $entityTypeId = $entityType->getId();
+        $attrSet = $attrSetFactory
+            ->create()
+            ->load($entityTypeId, \Magento\Eav\Model\Entity\Attribute\Set::KEY_ENTITY_TYPE_ID);
+        $attrSetId = $attrSet->getId();
+        /**
+         * Create simple product.
+         */
+        /** @var  $product \Magento\Catalog\Api\Data\ProductInterface */
+        $product = $this->_obm->create(\Magento\Catalog\Api\Data\ProductInterface::class);
+        $product->setSku($sku);
+        $product->setName('Product ' . $sku);
+        $product->setPrice(12.34);
+        $product->setAttributeSetId($attrSetId);
+        $product->setTypeId(\Magento\Catalog\Model\Product\Type::TYPE_SIMPLE);
+        $saved = $productFactory->save($product);
+        /* link product with category */
+        /** @var  $catProdLink \Magento\Catalog\Api\Data\CategoryProductLinkInterface */
+        $catProdLink = $this->_obm->create(\Magento\Catalog\Api\Data\CategoryProductLinkInterface::class);
+        $catProdLink->setCategoryId($catId);
+        $catProdLink->setSku($sku);
+        $catProdLink->setPosition(1);
+        $catProdLinkFactory->save($catProdLink);
+        /* return product ID */
+        $result = $saved->getId();
+        return $result;
+    }
+
+    /**
+     * @param string $name Stock name.
+     *
+     * @return StockInterface
+     */
+    private function _createMageStock($name) {
+        /** @var  $stock \Magento\CatalogInventory\Api\Data\StockInterface */
+        $stock = $this->_obm->create(StockInterface::class);
+        $stock->setStockName($name);
+        $saved = $this->_repoStock->save($stock);
+        $result = $this->_repoStock->get($saved->getStockId());
+        return $result;
+    }
+
+    private function _createMageStockItem($stockId, $prodId) {
+        /* check if stock item already exist */
+        /** @var  $criteria \Magento\CatalogInventory\Api\StockItemCriteriaInterface */
+        $criteria = $this->_obm->create(\Magento\CatalogInventory\Api\StockItemCriteriaInterface::class);
+        $criteria->addFilter('byStock', StockItemInterface::STOCK_ID, $stockId);
+        $criteria->addFilter('byProduct', StockItemInterface::PRODUCT_ID, $prodId);
+        $list = $this->_repoStockItem->getList($criteria);
+        $items = $list->getItems();
+        /** @var  $stockItem StockItemInterface */
+        if(count($items)) {
+            $stockItem = reset($items);
+            $result = $stockItem->getItemId();
+        } else {
+            $stockItem = $this->_obm->create(StockItemInterface::class);
+            $stockItem->setStockId($stockId);
+            $stockItem->setProductId($prodId);
+            $saved = $this->_repoStockItem->save($stockItem);
+            $result = $saved->getItemId();
+        }
+        return $result;
+    }
+
+    private function _createQty($stockItemId, $lotId, $total) {
+        $tbl = Quantity::ENTITY_NAME;
+        $bind = [
+            Quantity::ATTR_STOCK_ITEM_REF => $stockItemId,
+            Quantity::ATTR_LOT_REF        => $lotId,
+            Quantity::ATTR_TOTAL          => $total
+        ];
+        $result = $this->_repoBasic->addEntity($tbl, $bind);
+        /* update qty of the stock item */
+        $stockItem = $this->_repoStockItem->get($stockItemId);
+        $qty = $stockItem->getQty();
+        $qty += $total;
+        $stockItem->setQty($qty);
+        $stockItem->setIsInStock(true);
+        $this->_repoStockItem->save($stockItem);
+        return $result;
+    }
+
+    /**
+     * @param null $code
+     * @param null $note
+     *
+     * @return int ID of the new entity
+     */
+    private function _createWarehouse($code, $note) {
+        /* create stock */
+        $stock = $this->_createMageStock($code);
+        $result = $stock->getStockId();
+        /* ... then create warehouse itself */
+        $tbl = Warehouse::ENTITY_NAME;
+        $bind = [
+            Warehouse::ATTR_STOCK_REF => $result,
+            Warehouse::ATTR_CODE      => $code,
+            Warehouse::ATTR_NOTE      => $note
+        ];
+        $this->_repoBasic->addEntity($tbl, $bind);
+        return $result;
+    }
+
+
+    public function test_main() {
+        $this->_logger->debug('Story01 in Warehouse Integration tests is started.');
+        $this->_conn->beginTransaction();
+        try {
+            /* create Magento customers, category & product */
+            $this->_createMageCustomers();
+            $catId = $this->_createMageCategory('All Products');
+            $prodId = $this->_createMageProduct($catId, 'sku001');
+            /* create 2 stocks (warehouses)*/
+            $stockId01 = $this->_createWarehouse('wrhs01', 'First warehouse');
+            $stockId02 = $this->_createWarehouse('wrhs02', 'Second warehouse');
+            /* create stock items */
+            $stockItemIdDef = $this->_createMageStockItem(1, $prodId);
+            $stockItemId01 = $this->_createMageStockItem($stockId01, $prodId);
+            $stockItemId02 = $this->_createMageStockItem($stockId02, $prodId);
+            /* create 2 lots */
+            $expDate = $this->_toolDate->getMageNowForDb();
+            $lotId01 = $this->_createLot('lot01', $expDate);
+            $lotId02 = $this->_createLot('lot02', $expDate);
+            /* add qtys to products */
+            $this->_createQty($stockItemIdDef, $lotId01, 100);
+            $this->_createQty($stockItemIdDef, $lotId02, 200);
+            $this->_createQty($stockItemId01, $lotId01, 10);
+            $this->_createQty($stockItemId01, $lotId02, 20);
+            $this->_createQty($stockItemId02, $lotId01, 30);
+            $this->_createQty($stockItemId02, $lotId02, 40);
+        } finally {
+            // $this->_conn->commit();
+            $this->_conn->rollBack();
+        }
+        $this->_logger->debug('Story01 in Warehouse Integration tests is completed, all transactions are rolled back.');
+    }
+}
