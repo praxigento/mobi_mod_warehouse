@@ -16,9 +16,7 @@ class InstallSchema extends \Praxigento\Core\Setup\Schema\Base
 
     protected function _setup(SchemaSetupInterface $setup, ModuleContextInterface $context)
     {
-        /**
-         * Read and parse JSON schema.
-         */
+        /** Read and parse JSON schema. */
         $pathToFile = __DIR__ . '/../etc/dem.json';
         $pathToNode = '/dBEAR/package/Praxigento/package/Warehouse';
         $demPackage = $this->_toolDem->readDemPackage($pathToFile, $pathToNode);
