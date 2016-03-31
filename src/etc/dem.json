@@ -1,0 +1,129 @@
+{
+  "dBEAR": {
+    "package": {
+      "Praxigento": {
+        "alias": "prxgt",
+        "comment": "Root namespace for Praxigento modules",
+        "package": {
+          "Warehouse": {
+            "alias": "wrhs",
+            "comment": "Top level package for Praxigento_Warehouse module",
+            "entity": {
+              "Quantity": {
+                "alias": "quantity",
+                "comment": "Quantity of the product of the some lot on the some warehouse.",
+                "attribute": {
+                  "StockItemRef": {
+                    "alias": "stock_item_ref",
+                    "comment": "Reference to the inventory's stock item.",
+                    "nullable": false,
+                    "type": {"integer": {"unsigned": true}}
+                  },
+                  "LotRef": {
+                    "alias": "lot_ref",
+                    "comment": "Reference to the lot.",
+                    "nullable": false,
+                    "type": {"integer": {"unsigned": true}}
+                  },
+                  "Total": {
+                    "alias": "total",
+                    "comment": "Total product's quantity of the lot.",
+                    "nullable": false,
+                    "default": 0,
+                    "type": {"numeric": {"precision": 12, "scale": 4}}
+                  }
+                },
+                "index": {
+                  "PK": {"type": "primary", "aliases": ["stock_item_ref", "lot_ref"]}
+                },
+                "relation": {
+                  "toStockItem": {
+                    "own": {"aliases": ["stock_item_ref"]},
+                    "reference": {
+                      "entity": {"completeAlias": "cataloginventory_stock_item"},
+                      "aliases": ["item_id"]
+                    },
+                    "action": {"delete": "restrict", "update": "restrict"}
+                  },
+                  "toLot": {
+                    "own": {"aliases": ["lot_ref"]},
+                    "reference": {
+                      "entity": {"completeAlias": "prxgt_wrhs_lot"},
+                      "aliases": ["id"]
+                    },
+                    "action": {"delete": "restrict", "update": "restrict"}
+                  }
+                }
+              },
+              "Lot": {
+                "alias": "lot",
+                "comment": "Lot.",
+                "attribute": {
+                  "Id": {
+                    "alias": "id",
+                    "comment": "Identificator.",
+                    "nullable": false,
+                    "type": {"integer": {"unsigned": true, "autoincrement": true}}
+                  },
+                  "Code": {
+                    "alias": "code",
+                    "comment": "Lot's code for humans.",
+                    "nullable": true,
+                    "type": {"text": {"length": 255}}
+                  },
+                  "ExpirationDate": {
+                    "alias": "exp_date",
+                    "comment": "Expiration date for lot's product.",
+                    "nullable": false,
+                    "type": {"datetime": {}}
+                  }
+                },
+                "index": {
+                  "PK": {"type": "primary", "aliases": ["id"]}
+                }
+              },
+              "Warehouse": {
+                "alias": "warehouse",
+                "comment": "Warehouse.",
+                "attribute": {
+                  "StockRef": {
+                    "alias": "stock_ref",
+                    "comment": "Reference to inventory stock.",
+                    "nullable": false,
+                    "type": {"integer": {"subtype": "smallint", "unsigned": true}}
+                  },
+                  "Code": {
+                    "alias": "code",
+                    "comment": "Warehouse's code for humans.",
+                    "nullable": false,
+                    "type": {"text": {"length": 32}}
+                  },
+                  "Note": {
+                    "alias": "note",
+                    "comment": "Description of the warehouse.",
+                    "nullable": false,
+                    "type": {"text": {}}
+                  }
+                },
+                "index": {
+                  "PK": {"type": "primary", "aliases": ["stock_ref"]},
+                  "uniqueCode": {"type": "unique", "aliases": ["code"]}
+                },
+                "relation": {
+                  "toStock": {
+                    "own": {"aliases": ["stock_ref"]},
+                    "reference": {
+                      "entity": {"completeAlias": "cataloginventory_stock"},
+                      "aliases": ["stock_id"]
+                    },
+                    "action": {"delete": "restrict", "update": "restrict"}
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
