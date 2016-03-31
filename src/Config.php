@@ -1,6 +1,6 @@
 <?php
 /**
- * Empty class to stub testing.
+ * Module's configuration (hard-coded).
  *
  * User: Alex Gusev <alex@flancer64.com>
  */
