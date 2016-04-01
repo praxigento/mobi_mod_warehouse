@@ -14,12 +14,12 @@ use Praxigento\Warehouse\Lib\Data\Entity\Warehouse as WarehouseEntity;
  */
 class Warehouse implements WarehouseInterface {
     /**
-     * @var \Praxigento\Core\Lib\Repo\IBasic
+     * @var \Praxigento\Core\Repo\IBasic
      */
     private $_repoBasic;
 
     public function __construct(
-        \Praxigento\Core\Lib\Repo\IBasic $repoBasic
+        \Praxigento\Core\Repo\IBasic $repoBasic
     ) {
         $this->_repoBasic = $repoBasic;
     }

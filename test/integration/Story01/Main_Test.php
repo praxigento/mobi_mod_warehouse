@@ -16,7 +16,7 @@ use Praxigento\Warehouse\Lib\Data\Entity\Warehouse;
 include_once(__DIR__ . '/../phpunit_bootstrap.php');
 
 class Main_IntegrationTest extends \Praxigento\Core\Lib\Test\BaseIntegrationTest {
-    /** @var \Praxigento\Core\Lib\Repo\IBasic */
+    /** @var \Praxigento\Core\Repo\IBasic */
     private $_repoBasic;
     /** @var  \Magento\CatalogInventory\Api\StockRepositoryInterface */
     private $_repoStock;
@@ -27,10 +27,10 @@ class Main_IntegrationTest extends \Praxigento\Core\Lib\Test\BaseIntegrationTest
 
     public function __construct() {
         parent::__construct();
-        $this->_repoBasic = $this->_obm->get(\Praxigento\Core\Lib\Repo\IBasic::class);
-        $this->_toolDate = $this->_obm->get(\Praxigento\Core\Lib\Tool\Date::class);
-        $this->_repoStock = $this->_obm->get(StockRepositoryInterface::class);
-        $this->_repoStockItem = $this->_obm->get(StockItemRepositoryInterface::class);
+        $this->_repoBasic = $this->_manObj->get(\Praxigento\Core\Repo\IBasic::class);
+        $this->_toolDate = $this->_manObj->get(\Praxigento\Core\Lib\Tool\Date::class);
+        $this->_repoStock = $this->_manObj->get(StockRepositoryInterface::class);
+        $this->_repoStockItem = $this->_manObj->get(StockItemRepositoryInterface::class);
     }
 
     /**
@@ -54,9 +54,9 @@ class Main_IntegrationTest extends \Praxigento\Core\Lib\Test\BaseIntegrationTest
          * Initialize factories using Object Manager.
          */
         /** @var  $categoryFactory \Magento\Catalog\Api\CategoryRepositoryInterface */
-        $categoryFactory = $this->_obm->get(\Magento\Catalog\Api\CategoryRepositoryInterface::class);
+        $categoryFactory = $this->_manObj->get(\Magento\Catalog\Api\CategoryRepositoryInterface::class);
         /** @var  $category \Magento\Catalog\Api\Data\CategoryInterface */
-        $category = $this->_obm->create(\Magento\Catalog\Api\Data\CategoryInterface::class);
+        $category = $this->_manObj->create(\Magento\Catalog\Api\Data\CategoryInterface::class);
         $category->setName($name);
         $category->setIsActive(true);
         $saved = $categoryFactory->save($category);
@@ -75,13 +75,13 @@ class Main_IntegrationTest extends \Praxigento\Core\Lib\Test\BaseIntegrationTest
          * Initialize factories using Object Manager.
          */
         /** @var  $entityTypeFactory \Magento\Eav\Model\Entity\TypeFactory */
-        $entityTypeFactory = $this->_obm->get(\Magento\Eav\Model\Entity\TypeFactory::class);
+        $entityTypeFactory = $this->_manObj->get(\Magento\Eav\Model\Entity\TypeFactory::class);
         /** @var  $attrSetFactory \Magento\Eav\Model\Entity\Attribute\SetFactory */
-        $attrSetFactory = $this->_obm->get(\Magento\Eav\Model\Entity\Attribute\SetFactory::class);
+        $attrSetFactory = $this->_manObj->get(\Magento\Eav\Model\Entity\Attribute\SetFactory::class);
         /** @var  $catProdLinkFactory \Magento\Catalog\Model\CategoryLinkRepository */
-        $catProdLinkFactory = $this->_obm->get(\Magento\Catalog\Model\CategoryLinkRepository::class);
+        $catProdLinkFactory = $this->_manObj->get(\Magento\Catalog\Model\CategoryLinkRepository::class);
         /** @var  $productFactory \Magento\Catalog\Api\ProductRepositoryInterface */
-        $productFactory = $this->_obm->get(\Magento\Catalog\Api\ProductRepositoryInterface::class);
+        $productFactory = $this->_manObj->get(\Magento\Catalog\Api\ProductRepositoryInterface::class);
         /**
          * Retrieve entity type ID & attribute set ID.
          */
@@ -98,7 +98,7 @@ class Main_IntegrationTest extends \Praxigento\Core\Lib\Test\BaseIntegrationTest
          * Create simple product.
          */
         /** @var  $product \Magento\Catalog\Api\Data\ProductInterface */
-        $product = $this->_obm->create(\Magento\Catalog\Api\Data\ProductInterface::class);
+        $product = $this->_manObj->create(\Magento\Catalog\Api\Data\ProductInterface::class);
         $product->setSku($sku);
         $product->setName('Product ' . $sku);
         $product->setPrice(12.34);
@@ -107,7 +107,7 @@ class Main_IntegrationTest extends \Praxigento\Core\Lib\Test\BaseIntegrationTest
         $saved = $productFactory->save($product);
         /* link product with category */
         /** @var  $catProdLink \Magento\Catalog\Api\Data\CategoryProductLinkInterface */
-        $catProdLink = $this->_obm->create(\Magento\Catalog\Api\Data\CategoryProductLinkInterface::class);
+        $catProdLink = $this->_manObj->create(\Magento\Catalog\Api\Data\CategoryProductLinkInterface::class);
         $catProdLink->setCategoryId($catId);
         $catProdLink->setSku($sku);
         $catProdLink->setPosition(1);
@@ -124,7 +124,7 @@ class Main_IntegrationTest extends \Praxigento\Core\Lib\Test\BaseIntegrationTest
      */
     private function _createMageStock($name) {
         /** @var  $stock \Magento\CatalogInventory\Api\Data\StockInterface */
-        $stock = $this->_obm->create(StockInterface::class);
+        $stock = $this->_manObj->create(StockInterface::class);
         $stock->setStockName($name);
         $saved = $this->_repoStock->save($stock);
         $result = $this->_repoStock->get($saved->getStockId());
@@ -134,7 +134,7 @@ class Main_IntegrationTest extends \Praxigento\Core\Lib\Test\BaseIntegrationTest
     private function _createMageStockItem($stockId, $prodId) {
         /* check if stock item already exist */
         /** @var  $criteria \Magento\CatalogInventory\Api\StockItemCriteriaInterface */
-        $criteria = $this->_obm->create(\Magento\CatalogInventory\Api\StockItemCriteriaInterface::class);
+        $criteria = $this->_manObj->create(\Magento\CatalogInventory\Api\StockItemCriteriaInterface::class);
         $criteria->addFilter('byStock', StockItemInterface::STOCK_ID, $stockId);
         $criteria->addFilter('byProduct', StockItemInterface::PRODUCT_ID, $prodId);
         $list = $this->_repoStockItem->getList($criteria);
@@ -144,7 +144,7 @@ class Main_IntegrationTest extends \Praxigento\Core\Lib\Test\BaseIntegrationTest
             $stockItem = reset($items);
             $result = $stockItem->getItemId();
         } else {
-            $stockItem = $this->_obm->create(StockItemInterface::class);
+            $stockItem = $this->_manObj->create(StockItemInterface::class);
             $stockItem->setStockId($stockId);
             $stockItem->setProductId($prodId);
             $saved = $this->_repoStockItem->save($stockItem);

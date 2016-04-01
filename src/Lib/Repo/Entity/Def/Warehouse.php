@@ -8,7 +8,7 @@ namespace Praxigento\Warehouse\Lib\Repo\Entity\Def;
 use Praxigento\Core\Lib\Context as Ctx;
 use Praxigento\Core\Lib\Context\IObjectManager;
 use Praxigento\Core\Lib\Context\ObjectManagerFactory;
-use Praxigento\Core\Lib\Repo\IBasic as IBasicRepo;
+use Praxigento\Core\Repo\IBasic as IBasicRepo;
 use Praxigento\Warehouse\Config as Cfg;
 use Praxigento\Warehouse\Lib\Data\Agg\Warehouse as AggWarehouse;
 use Praxigento\Warehouse\Lib\Data\Entity\Warehouse as EntityWarehouse;
