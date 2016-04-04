@@ -9,7 +9,7 @@ use Praxigento\Core\Lib\Context as Ctx;
 use Praxigento\Core\Lib\Context\IObjectManager;
 use Praxigento\Core\Lib\Context\ObjectManagerFactory;
 use Praxigento\Core\Repo\IBasic as IBasicRepo;
-use Praxigento\Warehouse\Lib\Data\Entity\Lot as EntityLot;
+use Praxigento\Warehouse\Data\Entity\Lot as EntityLot;
 use Praxigento\Warehouse\Lib\Repo\Entity\ILot;
 
 

@@ -10,8 +10,8 @@ use Praxigento\Core\Lib\Context\IObjectManager;
 use Praxigento\Core\Lib\Context\ObjectManagerFactory;
 use Praxigento\Core\Repo\IBasic as IBasicRepo;
 use Praxigento\Warehouse\Config as Cfg;
-use Praxigento\Warehouse\Lib\Data\Agg\Warehouse as AggWarehouse;
-use Praxigento\Warehouse\Lib\Data\Entity\Warehouse as EntityWarehouse;
+use Praxigento\Warehouse\Data\Agg\Warehouse as AggWarehouse;
+use Praxigento\Warehouse\Data\Entity\Warehouse as EntityWarehouse;
 use Praxigento\Warehouse\Lib\Repo\Entity\IWarehouse;
 
 class Warehouse implements IWarehouse

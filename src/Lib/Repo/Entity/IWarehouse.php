@@ -5,7 +5,7 @@
 
 namespace Praxigento\Warehouse\Lib\Repo\Entity;
 
-use Praxigento\Warehouse\Lib\Data\Agg\Warehouse as AggWarehouse;
+use Praxigento\Warehouse\Data\Agg\Warehouse as AggWarehouse;
 
 interface IWarehouse
 {

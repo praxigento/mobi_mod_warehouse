@@ -2,7 +2,7 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
-namespace Praxigento\Warehouse\Lib\Data\Entity;
+namespace Praxigento\Warehouse\Data\Entity;
 
 use Praxigento\Core\Data\Entity\Base as EntityBase;
 
@@ -13,44 +13,68 @@ class Lot extends EntityBase
     const ATTR_ID = 'id';
     const ENTITY_NAME = 'prxgt_wrhs_lot';
 
+    /**
+     * @return string
+     */
     public function getCode()
     {
         $result = parent::getData(self::ATTR_CODE);
         return $result;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getEntityName()
     {
         return self::ENTITY_NAME;
     }
 
+    /**
+     * @return string
+     */
     public function getExpDate()
     {
         $result = parent::getData(self::ATTR_EXP_DATE);
         return $result;
     }
 
+    /**
+     * @return int
+     */
     public function getId()
     {
         $result = parent::getData(self::ATTR_ID);
         return $result;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getPrimaryKeyAttrs()
     {
         return [self::ATTR_ID];
     }
 
+    /**
+     * @param string $data
+     */
     public function setCode($data)
     {
         parent::setData(self::ATTR_CODE, $data);
     }
 
+    /**
+     * @param string $data
+     */
     public function setExpDate($data)
     {
         parent::setData(self::ATTR_EXP_DATE, $data);
     }
 
+    /**
+     * @param int $data
+     */
     public function setId($data)
     {
         parent::setData(self::ATTR_ID, $data);

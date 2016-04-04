@@ -6,7 +6,7 @@
 namespace Praxigento\Warehouse\Api\Data\Def;
 
 use Praxigento\Warehouse\Api\Data\WarehouseInterface;
-use Praxigento\Warehouse\Lib\Data\Entity\Warehouse as WarehouseEntity;
+use Praxigento\Warehouse\Data\Entity\Warehouse as WarehouseEntity;
 
 class Warehouse extends WarehouseEntity implements WarehouseInterface {
 

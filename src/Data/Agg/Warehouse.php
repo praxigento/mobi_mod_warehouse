@@ -3,7 +3,7 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Warehouse\Lib\Data\Agg;
+namespace Praxigento\Warehouse\Data\Agg;
 
 
 use Flancer32\Lib\DataObject;

@@ -9,9 +9,9 @@ use Magento\CatalogInventory\Api\Data\StockItemInterface;
 use Magento\CatalogInventory\Api\StockItemRepositoryInterface;
 use Magento\CatalogInventory\Api\StockRepositoryInterface;
 use Praxigento\Core\Lib\Context;
-use Praxigento\Warehouse\Lib\Data\Entity\Lot;
-use Praxigento\Warehouse\Lib\Data\Entity\Quantity;
-use Praxigento\Warehouse\Lib\Data\Entity\Warehouse;
+use Praxigento\Warehouse\Data\Entity\Lot;
+use Praxigento\Warehouse\Data\Entity\Quantity;
+use Praxigento\Warehouse\Data\Entity\Warehouse;
 
 include_once(__DIR__ . '/../phpunit_bootstrap.php');
 

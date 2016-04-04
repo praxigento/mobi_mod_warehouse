@@ -7,9 +7,9 @@ namespace Praxigento\Warehouse\Setup;
 
 use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Framework\Setup\SchemaSetupInterface;
-use Praxigento\Warehouse\Lib\Data\Entity\Lot;
-use Praxigento\Warehouse\Lib\Data\Entity\Quantity;
-use Praxigento\Warehouse\Lib\Data\Entity\Warehouse;
+use Praxigento\Warehouse\Data\Entity\Lot;
+use Praxigento\Warehouse\Data\Entity\Quantity;
+use Praxigento\Warehouse\Data\Entity\Warehouse;
 
 class InstallSchema extends \Praxigento\Core\Setup\Schema\Base
 {
