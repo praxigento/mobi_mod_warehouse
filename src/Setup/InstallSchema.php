@@ -14,7 +14,7 @@ use Praxigento\Warehouse\Data\Entity\Warehouse;
 class InstallSchema extends \Praxigento\Core\Setup\Schema\Base
 {
 
-    protected function _setup(SchemaSetupInterface $setup, ModuleContextInterface $context)
+    protected function _setup()
     {
         /** Read and parse JSON schema. */
         $pathToFile = __DIR__ . '/../etc/dem.json';
