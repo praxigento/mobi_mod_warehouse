@@ -5,12 +5,12 @@
 
 namespace Praxigento\Warehouse\Api\Data;
 
-use Praxigento\Core\Api\Data\BaseInterface;
+use Praxigento\Core\Api\Data\IBase;
 
 /**
  * Create request for Warehouse entity (from Praxigento_Warehouse module).
  */
-interface WarehouseInterface extends BaseInterface
+interface WarehouseI extends IBase
 {
     /**
      * Warehouse code, not more then 32 chars ('DEFAULT'). Should be unique across all warehouse instances. Required.
