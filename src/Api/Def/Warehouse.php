@@ -27,7 +27,7 @@ class Warehouse implements WarehouseInterface {
     /**
      * @inheritdoc
      */
-    public function create(Data\WarehouseI $data) {
+    public function create(Data\WarehouseInterface $data) {
         $result = $this->_repoBasic->addEntity(WarehouseEntity::ENTITY_NAME, $data);
         return $result;
     }
@@ -53,7 +53,7 @@ class Warehouse implements WarehouseInterface {
     /**
      * @inheritdoc
      */
-    public function update($id, Data\WarehouseI $data) {
+    public function update($id, Data\WarehouseInterface $data) {
         $where = WarehouseEntity::ATTR_STOCK_REF . '=' . (int)$id;
         $updatedRows = $this->_repoBasic->updateEntity(WarehouseEntity::ENTITY_NAME, $data, $where);
         $result = ($updatedRows > 0);

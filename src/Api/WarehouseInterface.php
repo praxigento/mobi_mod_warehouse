@@ -14,11 +14,11 @@ interface WarehouseInterface
     /**
      * Create new warehouse instance.
      *
-     * @param \Praxigento\Warehouse\Api\Data\WarehouseI $data
+     * @param \Praxigento\Warehouse\Api\Data\WarehouseInterface $data
      *
      * @return int ID of the newly created instance.
      */
-    public function create(Data\WarehouseI $data);
+    public function create(Data\WarehouseInterface $data);
 
     /**
      * Delete warehouse instance by ID.
@@ -34,7 +34,7 @@ interface WarehouseInterface
      *
      * @param int $id ID of the Warehouse instance.
      *
-     * @return \Praxigento\Warehouse\Api\Data\WarehouseI
+     * @return \Praxigento\Warehouse\Api\Data\WarehouseInterface
      */
     public function read($id);
 
@@ -42,10 +42,10 @@ interface WarehouseInterface
      * Update warehouse instance by ID.
      *
      * @param int $id ID of the warehouse instance to update.
-     * @param \Praxigento\Warehouse\Api\Data\WarehouseI $data data to update.
+     * @param \Praxigento\Warehouse\Api\Data\WarehouseInterface $data data to update.
      *
      * @return boolean 'true' if instance is updated.
      */
-    public function update($id, Data\WarehouseI $data);
+    public function update($id, Data\WarehouseInterface $data);
 
 }

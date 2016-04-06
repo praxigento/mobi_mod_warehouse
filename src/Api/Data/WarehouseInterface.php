@@ -10,7 +10,7 @@ use Praxigento\Core\Api\Data\IBase;
 /**
  * Create request for Warehouse entity (from Praxigento_Warehouse module).
  */
-interface WarehouseI extends IBase
+interface WarehouseInterface extends IBase
 {
     /**
      * Warehouse code, not more then 32 chars ('DEFAULT'). Should be unique across all warehouse instances. Required.
