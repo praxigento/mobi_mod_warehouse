@@ -5,7 +5,7 @@
  */
 namespace Praxigento\Warehouse\Setup;
 
-use Praxigento\Core\Lib\Context;
+
 
 include_once(__DIR__ . '/../phpunit_bootstrap.php');
 
@@ -37,7 +37,7 @@ class InstallSchema_UnitTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
         $mockSetup
             ->expects($this->once())
             ->method('startSetup');
-        // $obm = Context::instance()->getObjectManager();
+        // $obm = \Magento\Framework\App\ObjectManager::getInstance();
         $mockCtx = $this
             ->getMockBuilder('Praxigento\Core\Lib\Context')
             ->disableOriginalConstructor()
