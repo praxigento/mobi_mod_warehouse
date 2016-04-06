@@ -9,7 +9,7 @@ namespace Praxigento\Warehouse\Setup;
 
 include_once(__DIR__ . '/../phpunit_bootstrap.php');
 
-class InstallSchema_UnitTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
+class InstallSchema_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
 
     public static function tearDownAfterClass() {
         Context::reset();
