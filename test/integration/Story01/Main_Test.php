@@ -22,13 +22,13 @@ class Main_IntegrationTest extends \Praxigento\Core\Lib\Test\BaseIntegrationTest
     private $_repoStock;
     /** @var  \Magento\CatalogInventory\Api\StockItemRepositoryInterface */
     private $_repoStockItem;
-    /** @var  \Praxigento\Core\Lib\Tool\Date */
+    /** @var  \Praxigento\Core\Tool\IDate */
     private $_toolDate;
 
     public function __construct() {
         parent::__construct();
         $this->_repoBasic = $this->_manObj->get(\Praxigento\Core\Repo\IBasic::class);
-        $this->_toolDate = $this->_manObj->get(\Praxigento\Core\Lib\Tool\Date::class);
+        $this->_toolDate = $this->_manObj->get(\Praxigento\Core\Tool\IDate::class);
         $this->_repoStock = $this->_manObj->get(StockRepositoryInterface::class);
         $this->_repoStockItem = $this->_manObj->get(StockItemRepositoryInterface::class);
     }
