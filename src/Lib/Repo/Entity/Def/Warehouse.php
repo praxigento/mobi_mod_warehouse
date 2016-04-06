@@ -5,9 +5,7 @@
 
 namespace Praxigento\Warehouse\Lib\Repo\Entity\Def;
 
-use Praxigento\Core\Lib\Context as Ctx;
-use Praxigento\Core\Lib\Context\IObjectManager;
-use Praxigento\Core\Lib\Context\ObjectManagerFactory;
+use Magento\Framework\ObjectManagerInterface;
 use Praxigento\Core\Repo\IBasic as IBasicRepo;
 use Praxigento\Warehouse\Config as Cfg;
 use Praxigento\Warehouse\Data\Agg\Warehouse as AggWarehouse;
@@ -18,29 +16,38 @@ class Warehouse implements IWarehouse
 {
     const AS_STOCK = 'cs';
     const AS_WRHS = 'pww';
-    /** @var IBasicRepo */
-    protected $_repoBasic;
+    /** @var  \Magento\Framework\DB\Adapter\AdapterInterface */
+    protected $_conn;
     /** @var  IObjectManager */
     protected $_manObj;
+    /** @var  \Praxigento\Core\Repo\ITransactionManager */
+    protected $_manTrans;
+    /** @var IBasicRepo */
+    protected $_repoBasic;
+    /** @var \Magento\Framework\App\ResourceConnection */
+    protected $_resource;
 
     public function __construct(
-        ObjectManagerFactory $factObjMan,
+        ObjectManagerInterface $manObj,
+        \Praxigento\Core\Repo\ITransactionManager $manTrans,
+        \Magento\Framework\App\ResourceConnection $resource,
         IBasicRepo $repoBasic
     ) {
-        $this->_manObj = $factObjMan->create();
+        $this->_manObj = $manObj;
+        $this->_manTrans = $manTrans;
+        $this->_resource = $resource;
+        $this->_conn = $resource->getConnection();
         $this->_repoBasic = $repoBasic;
     }
 
     protected function _initQueryRead()
     {
-        $dba = $this->_repoBasic->getDba();
-        $conn = $dba->getDefaultConnection();
-        $result = $conn->select();
+        $result = $this->_conn->select();
         /* aliases and tables */
         $asStock = self::AS_STOCK;
         $asWrhs = self::AS_WRHS;
-        $tblStock = [$asStock => $dba->getTableName(Cfg::ENTITY_MAGE_CATALOGINVENTORY_STOCK)];
-        $tblWrhs = [$asWrhs => $dba->getTableName(EntityWarehouse::ENTITY_NAME)];
+        $tblStock = [$asStock => $this->_conn->getTableName(Cfg::ENTITY_MAGE_CATALOGINVENTORY_STOCK)];
+        $tblWrhs = [$asWrhs => $this->_conn->getTableName(EntityWarehouse::ENTITY_NAME)];
         /* SELECT FROM cataloginventory_stock */
         $cols = [
             AggWarehouse::AS_ID => Cfg::E_CATINV_STOCK_A_STOCK_ID,
@@ -61,16 +68,14 @@ class Warehouse implements IWarehouse
     {
         /** @var  $result AggWarehouse */
         $result = $this->_manObj->create(AggWarehouse::class);
-         $result->setData($data);
+        $result->setData($data);
         return $result;
     }
 
     public function create($data)
     {
         $result = $data;
-        $dba = $this->_repoBasic->getDba();
-        $manTrans = $dba->getTransactionManager();
-        $trans = $manTrans->transactionBegin();
+        $trans = $this->_manTrans->transactionBegin();
         try {
             /* create top level object (catalog inventory stock) */
             $tbl = Cfg::ENTITY_MAGE_CATALOGINVENTORY_STOCK;
@@ -89,9 +94,9 @@ class Warehouse implements IWarehouse
             ];
             $this->_repoBasic->addEntity($tbl, $bind);
             /* commit changes */
-            $manTrans->transactionCommit($trans);
+            $this->_manTrans->transactionCommit($trans);
         } finally {
-            $manTrans->transactionClose($trans);
+            $this->_manTrans->transactionClose($trans);
         }
         return $result;
     }
@@ -102,10 +107,7 @@ class Warehouse implements IWarehouse
         $result = null;
         $query = $this->_initQueryRead();
         $query->where(self::AS_STOCK . '.' . Cfg::E_CATINV_STOCK_A_STOCK_ID . '=:id');
-        $sql = (string)$query;
-        $dba = $this->_repoBasic->getDba();
-        $conn = $dba->getDefaultConnection();
-        $data = $conn->fetchRow($query, ['id' => $id]);
+        $data = $this->_conn->fetchRow($query, ['id' => $id]);
         if ($data) {
             $result = $this->_initResultRead($data);
         }

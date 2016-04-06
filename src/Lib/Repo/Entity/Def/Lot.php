@@ -5,9 +5,7 @@
 
 namespace Praxigento\Warehouse\Lib\Repo\Entity\Def;
 
-use Praxigento\Core\Lib\Context as Ctx;
-use Praxigento\Core\Lib\Context\IObjectManager;
-use Praxigento\Core\Lib\Context\ObjectManagerFactory;
+use Magento\Framework\ObjectManagerInterface;
 use Praxigento\Core\Repo\IBasic as IBasicRepo;
 use Praxigento\Warehouse\Data\Entity\Lot as EntityLot;
 use Praxigento\Warehouse\Lib\Repo\Entity\ILot;
@@ -16,27 +14,32 @@ use Praxigento\Warehouse\Lib\Repo\Entity\ILot;
 class Lot implements ILot
 {
     const AS_LOT = 'pwl';
-    /** @var IBasicRepo */
-    protected $_repoBasic;
+    /** @var  \Magento\Framework\DB\Adapter\AdapterInterface */
+    protected $_conn;
     /** @var  IObjectManager */
     protected $_manObj;
+    /** @var IBasicRepo */
+    protected $_repoBasic;
+    /** @var \Magento\Framework\App\ResourceConnection */
+    protected $_resource;
 
     public function __construct(
-        ObjectManagerFactory $factObjMan,
+        ObjectManagerInterface $manObj,
+        \Magento\Framework\App\ResourceConnection $resource,
         IBasicRepo $repoBasic
     ) {
-        $this->_manObj = $factObjMan->create();
+        $this->_manObj = $manObj;
+        $this->_resource = $resource;
+        $this->_conn = $resource->getConnection();
         $this->_repoBasic = $repoBasic;
     }
 
     protected function _initQueryRead()
     {
-        $dba = $this->_repoBasic->getDba();
-        $conn = $dba->getDefaultConnection();
-        $result = $conn->select();
+        $result = $this->_conn->select();
         /* aliases and tables */
         $asLot = self::AS_LOT;
-        $tblLot = [$asLot => $dba->getTableName(EntityLot::ENTITY_NAME)];
+        $tblLot = [$asLot => $this->_conn->getTableName(EntityLot::ENTITY_NAME)];
         /* SELECT FROM prxgt_odoo_lot */
         $cols = [
             EntityLot::ATTR_ID,
@@ -66,10 +69,7 @@ class Lot implements ILot
         $result = null;
         $query = $this->_initQueryRead();
         $query->where(self::AS_LOT . '.' . EntityLot::ATTR_ID . '=:id');
-        $sql = (string)$query;
-        $dba = $this->_repoBasic->getDba();
-        $conn = $dba->getDefaultConnection();
-        $data = $conn->fetchRow($query, ['id' => $id]);
+        $data = $this->_conn->fetchRow($query, ['id' => $id]);
         if ($data) {
             $result = $this->_initResultRead($data);
         }
