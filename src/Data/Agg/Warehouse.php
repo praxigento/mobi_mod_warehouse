@@ -12,6 +12,7 @@ use Flancer32\Lib\DataObject;
 class Warehouse extends DataObject
 {
     const AS_CODE = 'Code';
+    const AS_CURRENCY = 'Currency';
     const AS_ID = 'Id';
     const AS_NOTE = 'Note';
     const AS_WEBSITE_ID = 'WebsiteId';
@@ -19,6 +20,12 @@ class Warehouse extends DataObject
     public function getCode()
     {
         $result = parent::getData(self::AS_CODE);
+        return $result;
+    }
+
+    public function getCurrency()
+    {
+        $result = parent::getData(self::AS_CURRENCY);
         return $result;
     }
 
@@ -43,6 +50,11 @@ class Warehouse extends DataObject
     public function setCode($data)
     {
         parent::setData(self::AS_CODE, $data);
+    }
+
+    public function setCurrency($data)
+    {
+        parent::setData(self::AS_CURRENCY, $data);
     }
 
     public function setId($data)

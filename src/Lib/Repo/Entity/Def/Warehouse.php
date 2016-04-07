@@ -58,6 +58,7 @@ class Warehouse implements IWarehouse
         /* LEFT JOIN prxgt_wrhs_wrhs */
         $on = $asWrhs . '.' . EntityWarehouse::ATTR_STOCK_REF . '=' . $asStock . '.' . Cfg::E_CATINV_STOCK_A_STOCK_ID;
         $cols = [
+            AggWarehouse::AS_CURRENCY => EntityWarehouse::ATTR_CURRENCY,
             AggWarehouse::AS_NOTE => EntityWarehouse::ATTR_NOTE
         ];
         $result->joinLeft($tblWrhs, $on, $cols);
