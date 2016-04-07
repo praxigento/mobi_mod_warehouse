@@ -3,14 +3,14 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Warehouse\Repo\Entity\Def;
+namespace Praxigento\Warehouse\Repo\Agg\Def;
 
 use Magento\Framework\ObjectManagerInterface;
 use Praxigento\Core\Repo\IBasic as IBasicRepo;
 use Praxigento\Warehouse\Config as Cfg;
 use Praxigento\Warehouse\Data\Agg\Warehouse as AggWarehouse;
 use Praxigento\Warehouse\Data\Entity\Warehouse as EntityWarehouse;
-use Praxigento\Warehouse\Repo\Entity\IWarehouse;
+use Praxigento\Warehouse\Repo\Agg\IWarehouse;
 
 class Warehouse implements IWarehouse
 {

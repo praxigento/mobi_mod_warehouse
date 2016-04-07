@@ -3,7 +3,7 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Warehouse\Repo\Entity;
+namespace Praxigento\Warehouse\Repo\Agg;
 
 use Praxigento\Warehouse\Data\Agg\Warehouse as AggWarehouse;
 

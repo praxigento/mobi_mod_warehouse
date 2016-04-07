@@ -5,7 +5,7 @@
 namespace Praxigento\Warehouse\Repo\Entity\Def;
 
 use Praxigento\Core\Lib\Context as Ctx;
-use Praxigento\Warehouse\Repo\Entity\ILot;
+use Praxigento\Warehouse\Repo\Agg\ILot;
 
 include_once(__DIR__ . '/../../../phpunit_bootstrap.php');
 

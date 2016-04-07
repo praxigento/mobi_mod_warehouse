@@ -1,22 +1,29 @@
 <?php
 /**
+ * Aggregate for Warehouse data.
+ *
  * User: Alex Gusev <alex@flancer64.com>
  */
 
 namespace Praxigento\Warehouse\Data\Agg;
 
-
 use Flancer32\Lib\DataObject;
-
 
 class Warehouse extends DataObject
 {
+    /**#@+
+     * Aliases for data attributes.
+     */
     const AS_CODE = 'Code';
     const AS_CURRENCY = 'Currency';
     const AS_ID = 'Id';
     const AS_NOTE = 'Note';
     const AS_WEBSITE_ID = 'WebsiteId';
+    /**#@-*/
 
+    /**
+     * @return string
+     */
     public function getCode()
     {
         $result = parent::getData(self::AS_CODE);

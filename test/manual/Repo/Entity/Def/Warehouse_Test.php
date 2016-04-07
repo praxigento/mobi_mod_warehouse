@@ -6,7 +6,7 @@ namespace Praxigento\Warehouse\Lib\Entity\Def;
 
 use Magento\Framework\App\ObjectManager;
 use Praxigento\Warehouse\Data\Agg\Warehouse as AggWarehouse;
-use Praxigento\Warehouse\Repo\Entity\IWarehouse;
+use Praxigento\Warehouse\Repo\Agg\IWarehouse;
 
 include_once(__DIR__ . '/../../../phpunit_bootstrap.php');
 
