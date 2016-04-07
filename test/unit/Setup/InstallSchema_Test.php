@@ -1,6 +1,5 @@
 <?php
 /**
- * Empty class to get stub for tests
  * User: Alex Gusev <alex@flancer64.com>
  */
 namespace Praxigento\Warehouse\Setup;
