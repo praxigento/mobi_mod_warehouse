@@ -55,7 +55,7 @@ class Warehouse implements IWarehouse
             AggWarehouse::AS_WEBSITE_ID => Cfg::E_CATINV_STOCK_A_WEBSITE_ID
         ];
         $result->from($tblStock, $cols);
-        /* LEFT JOIN prxgt_wrhs_warehouse */
+        /* LEFT JOIN prxgt_wrhs_wrhs */
         $on = $asWrhs . '.' . EntityWarehouse::ATTR_STOCK_REF . '=' . $asStock . '.' . Cfg::E_CATINV_STOCK_A_STOCK_ID;
         $cols = [
             AggWarehouse::AS_NOTE => EntityWarehouse::ATTR_NOTE

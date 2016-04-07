@@ -2,16 +2,15 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
-namespace Praxigento\Warehouse\Data\Entity;
+namespace Praxigento\Warehouse\Data\Entity\Stock;
 
 use Praxigento\Core\Data\Entity\Base as EntityBase;
 
-class Quantity extends EntityBase
+class Item extends EntityBase
 {
-    const ATTR_LOT_REF = 'lot_ref';
+    const ATTR_PRICE = 'price';
     const ATTR_STOCK_ITEM_REF = 'stock_item_ref';
-    const ATTR_TOTAL = 'total';
-    const ENTITY_NAME = 'prxgt_wrhs_qty';
+    const ENTITY_NAME = 'prxgt_wrhs_stock_item';
 
     /**
      * @inheritdoc
@@ -22,11 +21,11 @@ class Quantity extends EntityBase
     }
 
     /**
-     * @return int
+     * @return double
      */
-    public function getLotRef()
+    public function getPrice()
     {
-        $result = parent::getData(self::ATTR_LOT_REF);
+        $result = parent::getData(self::ATTR_PRICE);
         return $result;
     }
 
@@ -35,7 +34,7 @@ class Quantity extends EntityBase
      */
     public function getPrimaryKeyAttrs()
     {
-        return [self::ATTR_STOCK_ITEM_REF, self::ATTR_LOT_REF];
+        return [self::ATTR_ID];
     }
 
     /**
@@ -48,20 +47,11 @@ class Quantity extends EntityBase
     }
 
     /**
-     * @return double
+     * @param double $data
      */
-    public function getTotal()
+    public function setPrice($data)
     {
-        $result = parent::getData(self::ATTR_TOTAL);
-        return $result;
-    }
-
-    /**
-     * @param int $data
-     */
-    public function setLotRef($data)
-    {
-        parent::setData(self::ATTR_LOT_REF, $data);
+        parent::setData(self::ATTR_PRICE, $data);
     }
 
     /**
@@ -72,11 +62,4 @@ class Quantity extends EntityBase
         parent::setData(self::ATTR_STOCK_ITEM_REF, $data);
     }
 
-    /**
-     * @param double $data
-     */
-    public function setTotal($data)
-    {
-        parent::setData(self::ATTR_TOTAL, $data);
-    }
 }

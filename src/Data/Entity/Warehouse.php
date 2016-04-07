@@ -9,9 +9,10 @@ use Praxigento\Core\Data\Entity\Base as EntityBase;
 class Warehouse extends EntityBase
 {
     const ATTR_CODE = 'code';
+    const ATTR_CURRENCY = 'currency';
     const ATTR_NOTE = 'note';
     const ATTR_STOCK_REF = 'stock_ref';
-    const ENTITY_NAME = 'prxgt_wrhs_warehouse';
+    const ENTITY_NAME = 'prxgt_wrhs_wrhs';
 
     /**
      * @return string
@@ -19,6 +20,15 @@ class Warehouse extends EntityBase
     public function getCode()
     {
         $result = parent::getData(self::ATTR_CODE);
+        return $result;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCurrency()
+    {
+        $result = parent::getData(self::ATTR_CURRENCY);
         return $result;
     }
 
@@ -62,6 +72,14 @@ class Warehouse extends EntityBase
     public function setCode($data)
     {
         parent::setData(self::ATTR_CODE, $data);
+    }
+
+    /**
+     * @param string $data
+     */
+    public function setCurrency($data)
+    {
+        parent::setData(self::ATTR_CURRENCY, $data);
     }
 
     /**

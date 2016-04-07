@@ -8,6 +8,46 @@
           "Warehouse": {
             "alias": "wrhs",
             "comment": "Top level package for Praxigento_Warehouse module",
+            "package": {
+              "Stock": {
+                "alias": "stock",
+                "comment": "'Stock' package in Praxigento_Warehouse module",
+                "entity": {
+                  "Item": {
+                    "alias": "item",
+                    "comment": "Stock item (product on the warehouse) attributes.",
+                    "attribute": {
+                      "StockItemRef": {
+                        "alias": "stock_item_ref",
+                        "comment": "Reference to the inventory's stock item (Mage).",
+                        "nullable": false,
+                        "type": {"integer": {"unsigned": true}}
+                      },
+                      "Price": {
+                        "alias": "price",
+                        "comment": "Warehouse price of the product (currency is the Warehouse attr.).",
+                        "nullable": false,
+                        "default": 0,
+                        "type": {"numeric": {"precision": 12, "scale": 4}}
+                      }
+                    },
+                    "index": {
+                      "PK": {"type": "primary", "aliases": ["stock_item_ref"]}
+                    },
+                    "relation": {
+                      "toStockItem": {
+                        "own": {"aliases": ["stock_item_ref"]},
+                        "reference": {
+                          "entity": {"completeAlias": "cataloginventory_stock_item"},
+                          "aliases": ["item_id"]
+                        },
+                        "action": {"delete": "restrict", "update": "restrict"}
+                      }
+                    }
+                  }
+                }
+              }
+            },
             "entity": {
               "Quantity": {
                 "alias": "quantity",
@@ -40,8 +80,8 @@
                   "toStockItem": {
                     "own": {"aliases": ["stock_item_ref"]},
                     "reference": {
-                      "entity": {"completeAlias": "cataloginventory_stock_item"},
-                      "aliases": ["item_id"]
+                      "entity": {"completeAlias": "prxgt_wrhs_stock_item"},
+                      "aliases": ["stock_item_ref"]
                     },
                     "action": {"delete": "restrict", "update": "restrict"}
                   },
@@ -97,6 +137,12 @@
                     "comment": "Warehouse's code for humans.",
                     "nullable": false,
                     "type": {"text": {"length": 32}}
+                  },
+                  "Currency": {
+                    "alias": "currency",
+                    "comment": "Warehouse's base currency code (EUR, ...).",
+                    "nullable": false,
+                    "type": {"text": {"length": 3}}
                   },
                   "Note": {
                     "alias": "note",

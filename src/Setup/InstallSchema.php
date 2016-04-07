@@ -5,10 +5,9 @@
  */
 namespace Praxigento\Warehouse\Setup;
 
-use Magento\Framework\Setup\ModuleContextInterface;
-use Magento\Framework\Setup\SchemaSetupInterface;
 use Praxigento\Warehouse\Data\Entity\Lot;
 use Praxigento\Warehouse\Data\Entity\Quantity;
+use Praxigento\Warehouse\Data\Entity\Stock\Item;
 use Praxigento\Warehouse\Data\Entity\Warehouse;
 
 class InstallSchema extends \Praxigento\Core\Setup\Schema\Base
@@ -20,6 +19,11 @@ class InstallSchema extends \Praxigento\Core\Setup\Schema\Base
         $pathToFile = __DIR__ . '/../etc/dem.json';
         $pathToNode = '/dBEAR/package/Praxigento/package/Warehouse';
         $demPackage = $this->_toolDem->readDemPackage($pathToFile, $pathToNode);
+
+        /* Stock Item  */
+        $entityAlias = Item::ENTITY_NAME;
+        $demEntity = $demPackage->getData('package/Stock/entity/Item');
+        $this->_toolDem->createEntity($entityAlias, $demEntity);
 
         /* Warehouse */
         $entityAlias = Warehouse::ENTITY_NAME;
