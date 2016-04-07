@@ -1,5 +1,7 @@
 <?php
 /**
+ * Repository to operate with 'Warehouse" aggregate in this module.
+ *
  * User: Alex Gusev <alex@flancer64.com>
  */
 
@@ -18,7 +20,7 @@ class Warehouse implements IWarehouse
     const AS_WRHS = 'pww';
     /** @var  \Magento\Framework\DB\Adapter\AdapterInterface */
     protected $_conn;
-    /** @var  IObjectManager */
+    /** @var  ObjectManagerInterface */
     protected $_manObj;
     /** @var  \Praxigento\Core\Repo\ITransactionManager */
     protected $_manTrans;
@@ -40,6 +42,11 @@ class Warehouse implements IWarehouse
         $this->_repoBasic = $repoBasic;
     }
 
+    /**
+     * Create JOIN to get aggregated data.
+     *
+     * @return \Magento\Framework\DB\Select
+     */
     protected function _initQueryRead()
     {
         $result = $this->_conn->select();
@@ -91,6 +98,7 @@ class Warehouse implements IWarehouse
             $bind = [
                 EntityWarehouse::ATTR_STOCK_REF => $id,
                 EntityWarehouse::ATTR_CODE => $data->getCode(),
+                EntityWarehouse::ATTR_CURRENCY => $data->getCurrency(),
                 EntityWarehouse::ATTR_NOTE => $data->getNote()
             ];
             $this->_repoBasic->addEntity($tbl, $bind);
