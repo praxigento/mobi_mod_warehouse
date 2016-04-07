@@ -2,11 +2,11 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
-namespace Praxigento\Warehouse\Lib\Repo\Entity\Def;
+namespace Praxigento\Warehouse\Lib\Entity\Def;
 
-use Praxigento\Core\Lib\Context as Ctx;
+use Magento\Framework\App\ObjectManager;
 use Praxigento\Warehouse\Data\Agg\Warehouse as AggWarehouse;
-use Praxigento\Warehouse\Lib\Repo\Entity\IWarehouse;
+use Praxigento\Warehouse\Repo\Entity\IWarehouse;
 
 include_once(__DIR__ . '/../../../phpunit_bootstrap.php');
 
@@ -15,7 +15,7 @@ class Warehouse_ManualTest extends \Praxigento\Core\Lib\Test\BaseIntegrationTest
 
     public function test_create()
     {
-        $obm = Ctx::instance()->getObjectManager();
+        $obm = ObjectManager::getInstance();
         /** @var  $repo IWarehouse */
         $repo = $obm->get(IWarehouse::class);
         /** @var  $data AggWarehouse */
@@ -29,10 +29,10 @@ class Warehouse_ManualTest extends \Praxigento\Core\Lib\Test\BaseIntegrationTest
 
     public function test_getById()
     {
-        $obm = Ctx::instance()->getObjectManager();
+        $obm = ObjectManager::getInstance();
         /** @var  $repo IWarehouse */
         $repo = $obm->get(IWarehouse::class);
-        $data = $repo->getById(1);
+        $data = $repo->getById(3);
         return;
     }
 

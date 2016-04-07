@@ -5,70 +5,65 @@
  */
 namespace Praxigento\Warehouse\Setup;
 
-
+use Praxigento\Warehouse\Data\Entity\Lot;
+use Praxigento\Warehouse\Data\Entity\Quantity;
+use Praxigento\Warehouse\Data\Entity\Stock\Item;
+use Praxigento\Warehouse\Data\Entity\Warehouse;
 
 include_once(__DIR__ . '/../phpunit_bootstrap.php');
 
-class InstallSchema_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
+class InstallSchema_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase
+{
+    /** @var  \Mockery\MockInterface */
+    private $mConn;
+    /** @var  \Mockery\MockInterface */
+    private $mContext;
+    /** @var  \Mockery\MockInterface */
+    private $mSetup;
+    /** @var  \Mockery\MockInterface */
+    private $mToolDem;
+    /** @var  InstallSchema */
+    private $obj;
 
-    public static function tearDownAfterClass() {
-        Context::reset();
+    public function setUp()
+    {
+        parent::setUp();
+        /* create mocks */
+        $this->mConn = $this->_mockConn();
+        $this->mToolDem = $this->_mock(\Praxigento\Core\Setup\Dem\Tool::class);
+        $this->mSetup = $this->_mock(\Magento\Framework\Setup\SchemaSetupInterface::class);
+        $this->mContext = $this->_mock(\Magento\Framework\Setup\ModuleContextInterface::class);
+        /* create object */
+        $mResource = $this->_mockResourceConnection($this->mConn);
+        $this->obj = new InstallSchema($mResource, $this->mToolDem);
     }
 
-    public function test_constructor() {
-        $obj = new InstallSchema();
-        $this->assertInstanceOf(\Praxigento\Warehouse\Setup\InstallSchema::class, $obj);
-    }
-
-    public function test_install() {
-        /** === Test Data === */
-        /** === Mocks === */
-        // parameters for install(...)
-        $mockSetup = $this
-            ->getMockBuilder('Magento\Framework\Setup\SchemaSetupInterface')
-            ->disableOriginalConstructor()
-            ->getMock();
-        $mockMageCtx = $this
-            ->getMockBuilder('Magento\Framework\Setup\ModuleContextInterface')
-            ->disableOriginalConstructor()
-            ->getMock();
-
+    public function test_install()
+    {
+        /* === Test Data === */
+        /* === Setup Mocks === */
         // $setup->startSetup();
-        $mockSetup
-            ->expects($this->once())
-            ->method('startSetup');
-        // $obm = \Magento\Framework\App\ObjectManager::getInstance();
-        $mockCtx = $this
-            ->getMockBuilder('Praxigento\Core\Lib\Context')
-            ->disableOriginalConstructor()
-            ->getMock();
-        $mockObm = $this
-            ->getMockBuilder('Praxigento\Core\Lib\Context\IObjectManager')
-            ->disableOriginalConstructor()
-            ->getMock();
-        $mockCtx
-            ->expects($this->any())
-            ->method('getObjectManager')
-            ->willReturn($mockObm);
-        // $moduleSchema = $obm->get($this->_classSchema);
-        $mockCoreSchema = $this
-            ->getMockBuilder('Praxigento\Warehouse\Lib\Setup\Schema')
-            ->disableOriginalConstructor()
-            ->getMock();
-        $mockObm
-            ->expects($this->once())
-            ->method('get')
-            ->with('Praxigento\Warehouse\Lib\Setup\Schema')
-            ->willReturn($mockCoreSchema);
-        // $moduleSchema->setup();
-        $mockSetup
-            ->expects($this->once())
-            ->method('endSetup');
-        // Setup mocks to MOBI context
-        Context::set($mockCtx);
-        /** === Test itself === */
-        $obj = new InstallSchema();
-        $obj->install($mockSetup, $mockMageCtx);
-        $this->assertInstanceOf(\Praxigento\Warehouse\Setup\InstallSchema::class, $obj);
+        $this->mSetup
+            ->shouldReceive('startSetup')->once();
+        // $demPackage = $this->_toolDem->readDemPackage($pathToFile, $pathToNode);
+        $mDemPackage = $this->_mock(DataObject::class);
+        $this->mToolDem
+            ->shouldReceive('readDemPackage')->once()
+            ->withArgs([anything(), '/dBEAR/package/Praxigento/package/Warehouse'])
+            ->andReturn($mDemPackage);
+        // $demEntity = $demPackage->getData('package/Type/entity/Asset');
+        $mDemPackage->shouldReceive('getData');
+        //
+        // $this->_toolDem->createEntity($entityAlias, $demEntity);
+        //
+        $this->mToolDem->shouldReceive('createEntity')->withArgs([Item::ENTITY_NAME, anything()]);
+        $this->mToolDem->shouldReceive('createEntity')->withArgs([Warehouse::ENTITY_NAME, anything()]);
+        $this->mToolDem->shouldReceive('createEntity')->withArgs([Lot::ENTITY_NAME, anything()]);
+        $this->mToolDem->shouldReceive('createEntity')->withArgs([Quantity::ENTITY_NAME, anything()]);
+        // $setup->endSetup();
+        $this->mSetup
+            ->shouldReceive('endSetup')->once();
+        /* === Call and asserts  === */
+        $this->obj->install($this->mSetup, $this->mContext);
     }
 }
