@@ -34,7 +34,7 @@ class Item extends EntityBase
      */
     public function getPrimaryKeyAttrs()
     {
-        return [self::ATTR_ID];
+        return [self::ATTR_STOCK_ITEM_REF];
     }
 
     /**
