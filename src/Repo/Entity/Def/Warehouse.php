@@ -13,7 +13,7 @@ class Warehouse extends BaseEntityRepo implements IEntityRepo
 {
     public function __construct(IRepoBasic $repoBasic)
     {
-        parent::__construct($repoBasic, Entity::ENTITY_NAME, Entity::ATTR_STOCK_REF);
+        parent::__construct($repoBasic, new Entity());
     }
 
 }
