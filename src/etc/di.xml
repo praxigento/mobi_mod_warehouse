@@ -9,6 +9,10 @@
                 type="Praxigento\Warehouse\Service\Warehouse\Request\Create"/>
     <preference for="Praxigento\Warehouse\Service\Warehouse\Response\ICreate"
                 type="Praxigento\Warehouse\Service\Warehouse\Response\Create"/>
+    <preference for="Praxigento\Warehouse\Service\Warehouse\Request\IGet"
+                type="Praxigento\Warehouse\Service\Warehouse\Request\Get"/>
+    <preference for="Praxigento\Warehouse\Service\Warehouse\Response\IGet"
+                type="Praxigento\Warehouse\Service\Warehouse\Response\Get"/>
     <!-- Data / API -->
     <preference for="Praxigento\Warehouse\Data\Api\IWarehouse"
                 type="\Praxigento\Warehouse\Data\Api\Def\Warehouse"/>

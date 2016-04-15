@@ -5,7 +5,6 @@
 
 namespace Praxigento\Warehouse\Api;
 
-use Praxigento\Core\Data\Api\IHasId;
 use Praxigento\Warehouse\Service\Warehouse\Request;
 use Praxigento\Warehouse\Service\Warehouse\Response;
 
@@ -24,13 +23,14 @@ interface WarehouseInterface
      */
     public function create(Request\ICreate $data);
 
+
     /**
-     * Read warehouse instance by ID.
+     * Get data for warehouse instance.
      *
-     * @param IHasId $data contains ID of the Warehouse instance.
+     * @param \Praxigento\Warehouse\Service\Warehouse\Request\IGet $data Magento ID of the related stock.
      *
-     * @return \Praxigento\Warehouse\Data\Api\WarehouseInterface
+     * @return \Praxigento\Warehouse\Service\Warehouse\Response\IGet
      */
-    //public function get(IHasId $data);
+    public function get(Request\IGet $data);
 
 }

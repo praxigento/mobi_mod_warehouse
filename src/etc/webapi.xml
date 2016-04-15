@@ -3,18 +3,18 @@
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
 
     <!-- Warehouse -->
-    <route url="/V1/prxgt/wrhs/warehouse/" method="POST">
+    <route url="/V1/prxgt/wrhs/warehouse/create/" method="POST">
         <service class="Praxigento\Warehouse\Api\WarehouseInterface" method="create"/>
         <resources>
             <resource ref="anonymous"/>
         </resources>
     </route>
 
-    <!--<route url="/V1/prxgt/wrhs/warehouse/:id/" method="GET">-->
-        <!--<service class="Praxigento\Warehouse\Api\WarehouseInterface" method="get"/>-->
-        <!--<resources>-->
-            <!--<resource ref="anonymous"/>-->
-        <!--</resources>-->
-    <!--</route>-->
+    <route url="/V1/prxgt/wrhs/warehouse/get/" method="POST">
+        <service class="Praxigento\Warehouse\Api\WarehouseInterface" method="get"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
 
 </routes>

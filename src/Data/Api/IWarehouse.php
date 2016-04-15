@@ -34,7 +34,7 @@ interface IWarehouse
     /**
      * Get stock reference (warehouse ID in Magento).
      *
-     * @return int|null
+     * @return int
      */
     public function getStockRef();
 

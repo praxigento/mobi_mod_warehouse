@@ -9,15 +9,21 @@ use Praxigento\Core\Service\Base\Response as BaseResponse;
 
 class Create extends BaseResponse implements ICreate
 {
+    /**
+     * @inheritdoc
+     */
     public function getId()
     {
         $result = parent::getId();
         return $result;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function setId($data)
     {
-        parent::setID($data);
+        parent::setId($data);
     }
 
 }
