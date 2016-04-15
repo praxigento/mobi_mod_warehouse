@@ -5,7 +5,7 @@
 
 namespace Praxigento\Warehouse\Api\Def;
 
-use Praxigento\Warehouse\Api\Data;
+use Praxigento\Warehouse\Data\Api;
 use Praxigento\Warehouse\Api\WarehouseInterface;
 use Praxigento\Warehouse\Data\Entity\Warehouse as WarehouseEntity;
 

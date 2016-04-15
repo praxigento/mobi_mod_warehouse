@@ -1,12 +1,25 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
 
-    <!-- Repos -->
+    <!-- API Services -->
+    <preference for="Praxigento\Warehouse\Api\WarehouseInterface"
+                type="Praxigento\Warehouse\Service\Warehouse\Call"/>
+    <preference for="Praxigento\Warehouse\Service\Warehouse\Request\ICreate"
+                type="Praxigento\Warehouse\Service\Warehouse\Request\Create"/>
+    <preference for="Praxigento\Warehouse\Service\Warehouse\Response\ICreate"
+                type="Praxigento\Warehouse\Service\Warehouse\Response\Create"/>
+    <!-- Data / API -->
+    <preference for="Praxigento\Warehouse\Data\Api\IWarehouse"
+                type="\Praxigento\Warehouse\Data\Api\Def\Warehouse"/>
+
+    <!-- Repos: Aggregates -->
     <preference for="Praxigento\Warehouse\Repo\Agg\ILot"
                 type="Praxigento\Warehouse\Repo\Agg\Def\Lot"/>
     <preference for="Praxigento\Warehouse\Repo\Agg\IWarehouse"
                 type="Praxigento\Warehouse\Repo\Agg\Def\Warehouse"/>
+
+    <!-- Repos: Entities -->
     <preference for="Praxigento\Warehouse\Repo\Entity\ILot"
                 type="\Praxigento\Warehouse\Repo\Entity\Def\Lot"/>
     <preference for="Praxigento\Warehouse\Repo\Entity\IQuantity"
@@ -15,7 +28,6 @@
                 type="\Praxigento\Warehouse\Repo\Entity\Def\Warehouse"/>
     <preference for="Praxigento\Warehouse\Repo\Entity\Stock\IItem"
                 type="Praxigento\Warehouse\Repo\Entity\Stock\Def\Item"/>
-
 
     <!-- Services -->
 
@@ -42,18 +54,5 @@
     <!--disabled="false"/>-->
     <!--</type>-->
 
-    <!-- API Services -->
-    <preference for="Praxigento\Warehouse\Api\LotInterface"
-                type="Praxigento\Warehouse\Api\Def\Lot"/>
-    <preference for="Praxigento\Warehouse\Api\WarehouseInterface"
-                type="Praxigento\Warehouse\Api\Def\Warehouse"/>
-
-    <!-- API Data -->
-    <preference for="Praxigento\Warehouse\Api\Data\IWarehouseCreate"
-                type="Praxigento\Warehouse\Api\Data\Def\Warehouse"/>
-    <preference for="Praxigento\Warehouse\Api\Data\IWarehouseRead"
-                type="Praxigento\Warehouse\Api\Data\Def\Warehouse"/>
-    <preference for="Praxigento\Warehouse\Api\Data\IWarehouseUpdate"
-                type="Praxigento\Warehouse\Api\Data\Def\Warehouse"/>
 
 </config>

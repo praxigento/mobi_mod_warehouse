@@ -10,33 +10,11 @@
         </resources>
     </route>
 
-    <route url="/V1/prxgt/wrhs/warehouse/:id/" method="GET">
-        <service class="Praxigento\Warehouse\Api\WarehouseInterface" method="read"/>
-        <resources>
-            <resource ref="anonymous"/>
-        </resources>
-    </route>
-
-    <route url="/V1/prxgt/wrhs/warehouse/:id/" method="POST">
-        <service class="Praxigento\Warehouse\Api\WarehouseInterface" method="update"/>
-        <resources>
-            <resource ref="anonymous"/>
-        </resources>
-    </route>
-
-    <route url="/V1/prxgt/wrhs/warehouse/:id/" method="DELETE">
-        <service class="Praxigento\Warehouse\Api\WarehouseInterface" method="delete"/>
-        <resources>
-            <resource ref="anonymous"/>
-        </resources>
-    </route>
-
-    <!-- Lot -->
-    <route url="/V1/prxgt/wrhs/lot/read/" method="GET">
-        <service class="Praxigento\Warehouse\Api\LotInterface" method="read"/>
-        <resources>
-            <resource ref="anonymous"/>
-        </resources>
-    </route>
+    <!--<route url="/V1/prxgt/wrhs/warehouse/:id/" method="GET">-->
+        <!--<service class="Praxigento\Warehouse\Api\WarehouseInterface" method="get"/>-->
+        <!--<resources>-->
+            <!--<resource ref="anonymous"/>-->
+        <!--</resources>-->
+    <!--</route>-->
 
 </routes>

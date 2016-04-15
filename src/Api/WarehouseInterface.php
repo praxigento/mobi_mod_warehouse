@@ -5,8 +5,12 @@
 
 namespace Praxigento\Warehouse\Api;
 
+use Praxigento\Core\Data\Api\IHasId;
+use Praxigento\Warehouse\Service\Warehouse\Request;
+use Praxigento\Warehouse\Service\Warehouse\Response;
+
 /**
- * CRUD service to operate with 'warehouse' entity in MOBI applications.
+ * Service to operate with 'warehouse' entity in MOBI applications.
  * @api
  */
 interface WarehouseInterface
@@ -14,38 +18,19 @@ interface WarehouseInterface
     /**
      * Create new warehouse instance.
      *
-     * @param \Praxigento\Warehouse\Api\Data\WarehouseInterface $data
+     * @param \Praxigento\Warehouse\Service\Warehouse\Request\ICreate $data
      *
-     * @return int ID of the newly created instance.
+     * @return \Praxigento\Warehouse\Service\Warehouse\Response\ICreate ID of the newly created instance.
      */
-    public function create(Data\WarehouseInterface $data);
-
-    /**
-     * Delete warehouse instance by ID.
-     *
-     * @param int $id ID of the Warehouse instance.
-     *
-     * @return boolean 'true' if instance is deleted.
-     */
-    public function delete($id);
+    public function create(Request\ICreate $data);
 
     /**
      * Read warehouse instance by ID.
      *
-     * @param int $id ID of the Warehouse instance.
+     * @param IHasId $data contains ID of the Warehouse instance.
      *
-     * @return \Praxigento\Warehouse\Api\Data\WarehouseInterface
+     * @return \Praxigento\Warehouse\Data\Api\WarehouseInterface
      */
-    public function read($id);
-
-    /**
-     * Update warehouse instance by ID.
-     *
-     * @param int $id ID of the warehouse instance to update.
-     * @param \Praxigento\Warehouse\Api\Data\WarehouseInterface $data data to update.
-     *
-     * @return boolean 'true' if instance is updated.
-     */
-    public function update($id, Data\WarehouseInterface $data);
+    //public function get(IHasId $data);
 
 }
