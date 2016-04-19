@@ -7,8 +7,10 @@
 
 namespace Praxigento\Warehouse\Repo\Agg\Def;
 
+use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\ObjectManagerInterface;
 use Praxigento\Core\Repo\IBasic as IBasicRepo;
+use Praxigento\Core\Repo\ITransactionManager;
 use Praxigento\Warehouse\Config as Cfg;
 use Praxigento\Warehouse\Data\Agg\Warehouse as AggWarehouse;
 use Praxigento\Warehouse\Data\Entity\Warehouse as EntityWarehouse;
@@ -16,8 +18,7 @@ use Praxigento\Warehouse\Repo\Agg\IWarehouse;
 
 class Warehouse implements IWarehouse
 {
-    const AS_STOCK = 'cs';
-    const AS_WRHS = 'pww';
+
     /** @var  \Magento\Framework\DB\Adapter\AdapterInterface */
     protected $_conn;
     /** @var  ObjectManagerInterface */
@@ -31,8 +32,8 @@ class Warehouse implements IWarehouse
 
     public function __construct(
         ObjectManagerInterface $manObj,
-        \Praxigento\Core\Repo\ITransactionManager $manTrans,
-        \Magento\Framework\App\ResourceConnection $resource,
+        ITransactionManager $manTrans,
+        ResourceConnection $resource,
         IBasicRepo $repoBasic
     ) {
         $this->_manObj = $manObj;
@@ -59,8 +60,8 @@ class Warehouse implements IWarehouse
     {
         $result = $this->_conn->select();
         /* aliases and tables */
-        $asStock = self::AS_STOCK;
-        $asWrhs = self::AS_WRHS;
+        $asStock = static::AS_STOCK;
+        $asWrhs = static::AS_WRHS;
         $tblStock = [$asStock => $this->_conn->getTableName(Cfg::ENTITY_MAGE_CATALOGINVENTORY_STOCK)];
         $tblWrhs = [$asWrhs => $this->_conn->getTableName(EntityWarehouse::ENTITY_NAME)];
         /* SELECT FROM cataloginventory_stock */
@@ -120,7 +121,7 @@ class Warehouse implements IWarehouse
         /** @var  $result AggWarehouse */
         $result = null;
         $query = $this->_initQueryRead();
-        $query->where(self::AS_STOCK . '.' . Cfg::E_CATINV_STOCK_A_STOCK_ID . '=:id');
+        $query->where(static::AS_STOCK . '.' . Cfg::E_CATINV_STOCK_A_STOCK_ID . '=:id');
         $data = $this->_conn->fetchRow($query, ['id' => $id]);
         if ($data) {
             $result = $this->_initAggregate($data);

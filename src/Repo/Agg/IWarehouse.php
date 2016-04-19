@@ -10,6 +10,9 @@ use Praxigento\Warehouse\Data\Agg\Warehouse as AggWarehouse;
 
 interface IWarehouse extends IAggregate
 {
+    const AS_STOCK = 'cs';
+    const AS_WRHS = 'pww';
+
     /**
      * @param AggWarehouse $data
      * @return AggWarehouse
