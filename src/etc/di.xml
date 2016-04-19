@@ -18,8 +18,6 @@
                 type="\Praxigento\Warehouse\Data\Api\Def\Warehouse"/>
 
     <!-- Repos: Aggregates -->
-    <preference for="Praxigento\Warehouse\Repo\Agg\ILot"
-                type="Praxigento\Warehouse\Repo\Agg\Def\Lot"/>
     <preference for="Praxigento\Warehouse\Repo\Agg\IWarehouse"
                 type="Praxigento\Warehouse\Repo\Agg\Def\Warehouse"/>
 

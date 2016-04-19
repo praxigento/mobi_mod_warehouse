@@ -5,9 +5,10 @@
 
 namespace Praxigento\Warehouse\Repo\Agg;
 
+use Praxigento\Core\Repo\IAggregate;
 use Praxigento\Warehouse\Data\Agg\Warehouse as AggWarehouse;
 
-interface IWarehouse
+interface IWarehouse extends IAggregate
 {
     /**
      * @param AggWarehouse $data

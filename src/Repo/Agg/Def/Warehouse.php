@@ -42,6 +42,14 @@ class Warehouse implements IWarehouse
         $this->_repoBasic = $repoBasic;
     }
 
+    protected function _initAggregate($data)
+    {
+        /** @var  $result AggWarehouse */
+        $result = $this->_manObj->create(AggWarehouse::class);
+        $result->setData($data);
+        return $result;
+    }
+
     /**
      * Create JOIN to get aggregated data.
      *
@@ -72,17 +80,13 @@ class Warehouse implements IWarehouse
         return $result;
     }
 
-    protected function _initResultRead($data)
-    {
-        /** @var  $result AggWarehouse */
-        $result = $this->_manObj->create(AggWarehouse::class);
-        $result->setData($data);
-        return $result;
-    }
-
+    /**
+     * @param AggWarehouse $data
+     * @return null|AggWarehouse
+     */
     public function create($data)
     {
-        $result = $data;
+        $result = null;
         $trans = $this->_manTrans->transactionBegin();
         try {
             /* create top level object (catalog inventory stock) */
@@ -92,7 +96,6 @@ class Warehouse implements IWarehouse
                 Cfg::E_CATINV_STOCK_A_STOCK_NAME => $data->getCode()
             ];
             $id = $this->_repoBasic->addEntity($tbl, $bind);
-            $result->setId($id);
             /* then create next level object (warehouse) */
             $tbl = EntityWarehouse::ENTITY_NAME;
             $bind = [
@@ -102,8 +105,10 @@ class Warehouse implements IWarehouse
                 EntityWarehouse::ATTR_NOTE => $data->getNote()
             ];
             $this->_repoBasic->addEntity($tbl, $bind);
-            /* commit changes */
+            /* commit changes and compose result data object */
             $this->_manTrans->transactionCommit($trans);
+            $result = $data;
+            $result->setId($id);
         } finally {
             $this->_manTrans->transactionClose($trans);
         }
@@ -118,8 +123,14 @@ class Warehouse implements IWarehouse
         $query->where(self::AS_STOCK . '.' . Cfg::E_CATINV_STOCK_A_STOCK_ID . '=:id');
         $data = $this->_conn->fetchRow($query, ['id' => $id]);
         if ($data) {
-            $result = $this->_initResultRead($data);
+            $result = $this->_initAggregate($data);
         }
+        return $result;
+    }
+
+    public function getQueryToSelect()
+    {
+        $result = $this->_initQueryRead();
         return $result;
     }
 }
