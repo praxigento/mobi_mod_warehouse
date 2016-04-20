@@ -9,7 +9,9 @@ include_once(__DIR__ . '/../../../phpunit_bootstrap.php');
 class Warehouse_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase
 {
     /** @var  \Mockery\MockInterface */
-    private $mRepoBasic;
+    private $mConn;
+    /** @var  \Mockery\MockInterface */
+    private $mRepoGeneric;
     /** @var  Warehouse */
     private $obj;
 
@@ -17,11 +19,15 @@ class Warehouse_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase
     {
         parent::setUp();
         /* create mocks */
-        $this->mRepoBasic = $this->_mockRepoBasic();
+        $this->mConn = $this->_mockConn();
+        $this->mRepoGeneric = $this->_mockRepoGeneric();
         /* setup mocks for constructor */
+        // parent::__construct($resource);
+        $mResource = $this->_mockResourceConnection($this->mConn);
         /* create object to test */
         $this->obj = new Warehouse(
-            $this->mRepoBasic
+            $mResource,
+            $this->mRepoGeneric
         );
     }
 

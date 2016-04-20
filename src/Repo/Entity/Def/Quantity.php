@@ -4,16 +4,19 @@
  */
 namespace Praxigento\Warehouse\Repo\Entity\Def;
 
+use Magento\Framework\App\ResourceConnection;
 use Praxigento\Core\Repo\Def\Entity as BaseEntityRepo;
-use Praxigento\Core\Repo\IBasic as IRepoBasic;
+use Praxigento\Core\Repo\IGeneric;
 use Praxigento\Warehouse\Data\Entity\Quantity as Entity;
 use Praxigento\Warehouse\Repo\Entity\IQuantity as IEntityRepo;
 
 class Quantity extends BaseEntityRepo implements IEntityRepo
 {
-    public function __construct(IRepoBasic $repoBasic)
-    {
-        parent::__construct($repoBasic, new Entity());
+    public function __construct(
+        ResourceConnection $resource,
+        IGeneric $repoGeneric
+    ) {
+        parent::__construct($resource, $repoGeneric, new Entity());
     }
 
 }

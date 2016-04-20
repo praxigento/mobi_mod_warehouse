@@ -9,7 +9,9 @@ include_once(__DIR__ . '/../../../phpunit_bootstrap.php');
 class Lot_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase
 {
     /** @var  \Mockery\MockInterface */
-    private $mRepoBasic;
+    private $mConn;
+    /** @var  \Mockery\MockInterface */
+    private $mRepoGeneric;
     /** @var  Lot */
     private $obj;
 
@@ -17,18 +19,20 @@ class Lot_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase
     {
         parent::setUp();
         /* create mocks */
-        $this->mRepoBasic = $this->_mockRepoBasic();
+        $this->mConn = $this->_mockConn();
+        $this->mRepoGeneric = $this->_mockRepoGeneric();
         /* setup mocks for constructor */
+        // parent::__construct($resource);
+        $mResource = $this->_mockResourceConnection($this->mConn);
         /* create object to test */
         $this->obj = new Lot(
-            $this->mRepoBasic
+            $mResource,
+            $this->mRepoGeneric
         );
     }
 
     public function test_constructor()
     {
-        /* === Test Data === */
-        /* === Setup Mocks === */
         /* === Call and asserts  === */
         $this->assertInstanceOf(Lot::class, $this->obj);
     }

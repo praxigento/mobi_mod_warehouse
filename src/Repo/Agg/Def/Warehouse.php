@@ -9,7 +9,7 @@ namespace Praxigento\Warehouse\Repo\Agg\Def;
 
 use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\ObjectManagerInterface;
-use Praxigento\Core\Repo\IBasic as IBasicRepo;
+use Praxigento\Core\Repo\IGeneric as IGenericRepo;
 use Praxigento\Core\Repo\ITransactionManager;
 use Praxigento\Warehouse\Config as Cfg;
 use Praxigento\Warehouse\Data\Agg\Warehouse as AggWarehouse;
@@ -25,7 +25,7 @@ class Warehouse implements IWarehouse
     protected $_manObj;
     /** @var  \Praxigento\Core\Repo\ITransactionManager */
     protected $_manTrans;
-    /** @var IBasicRepo */
+    /** @var IGenericRepo */
     protected $_repoBasic;
     /** @var \Magento\Framework\App\ResourceConnection */
     protected $_resource;
@@ -34,7 +34,7 @@ class Warehouse implements IWarehouse
         ObjectManagerInterface $manObj,
         ITransactionManager $manTrans,
         ResourceConnection $resource,
-        IBasicRepo $repoBasic
+        IGenericRepo $repoBasic
     ) {
         $this->_manObj = $manObj;
         $this->_manTrans = $manTrans;

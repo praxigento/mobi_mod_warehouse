@@ -16,7 +16,7 @@ use Praxigento\Warehouse\Data\Entity\Warehouse;
 include_once(__DIR__ . '/../phpunit_bootstrap.php');
 
 class Main_IntegrationTest extends \Praxigento\Core\Lib\Test\BaseIntegrationTest {
-    /** @var \Praxigento\Core\Repo\IBasic */
+    /** @var \Praxigento\Core\Repo\IGeneric */
     private $_repoBasic;
     /** @var  \Magento\CatalogInventory\Api\StockRepositoryInterface */
     private $_repoStock;
@@ -27,7 +27,7 @@ class Main_IntegrationTest extends \Praxigento\Core\Lib\Test\BaseIntegrationTest
 
     public function __construct() {
         parent::__construct();
-        $this->_repoBasic = $this->_manObj->get(\Praxigento\Core\Repo\IBasic::class);
+        $this->_repoBasic = $this->_manObj->get(\Praxigento\Core\Repo\IGeneric::class);
         $this->_toolDate = $this->_manObj->get(\Praxigento\Core\Tool\IDate::class);
         $this->_repoStock = $this->_manObj->get(StockRepositoryInterface::class);
         $this->_repoStockItem = $this->_manObj->get(StockItemRepositoryInterface::class);

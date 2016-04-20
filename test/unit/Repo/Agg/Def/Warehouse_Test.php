@@ -17,7 +17,7 @@ class Warehouse_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase
     /** @var  \Mockery\MockInterface */
     private $mManTrans;
     /** @var  \Mockery\MockInterface */
-    private $mRepoBasic;
+    private $mRepoGeneric;
     /** @var  \Mockery\MockInterface */
     private $mResource;
     /** @var  Warehouse */
@@ -31,14 +31,14 @@ class Warehouse_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase
         $this->mManTrans = $this->_mockTransactionManager();
         $this->mConn = $this->_mockConn();
         $this->mResource = $this->_mockResourceConnection($this->mConn);
-        $this->mRepoBasic = $this->_mockRepoBasic();
+        $this->mRepoGeneric = $this->_mockRepoGeneric();
         /* setup mocks for constructor */
         /* create object to test */
         $this->obj = new Warehouse(
             $this->mManObj,
             $this->mManTrans,
             $this->mResource,
-            $this->mRepoBasic
+            $this->mRepoGeneric
         );
     }
 
@@ -67,11 +67,11 @@ class Warehouse_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase
             ->shouldReceive('transactionBegin')->once()
             ->andReturn($mTrans);
         // $id = $this->_repoBasic->addEntity($tbl, $bind);
-        $this->mRepoBasic
+        $this->mRepoGeneric
             ->shouldReceive('addEntity')->once()
             ->andReturn($ID);
         // $this->_repoBasic->addEntity($tbl, $bind);
-        $this->mRepoBasic
+        $this->mRepoGeneric
             ->shouldReceive('addEntity')->once();
         // $this->_manTrans->transactionCommit($trans);
         $this->mManTrans
