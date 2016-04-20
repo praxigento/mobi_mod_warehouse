@@ -7,7 +7,7 @@ namespace Praxigento\Warehouse\Data\Entity\Stock;
 
 include_once(__DIR__ . '/../../../phpunit_bootstrap.php');
 
-class Item_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase
+class Item_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
 {
     /** @var  Item */
     private $obj;

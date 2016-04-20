@@ -11,7 +11,7 @@ use Praxigento\Warehouse\Data\Entity\Warehouse;
 
 include_once(__DIR__ . '/../phpunit_bootstrap.php');
 
-class InstallSchema_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase
+class InstallSchema_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
 {
     /** @var  \Mockery\MockInterface */
     private $mConn;

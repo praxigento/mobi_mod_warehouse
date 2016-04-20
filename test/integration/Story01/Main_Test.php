@@ -15,7 +15,7 @@ use Praxigento\Warehouse\Data\Entity\Warehouse;
 
 include_once(__DIR__ . '/../phpunit_bootstrap.php');
 
-class Main_IntegrationTest extends \Praxigento\Core\Lib\Test\BaseIntegrationTest {
+class Main_IntegrationTest extends \Praxigento\Core\Test\BaseIntegrationTest {
     /** @var \Praxigento\Core\Repo\IGeneric */
     private $_repoBasic;
     /** @var  \Magento\CatalogInventory\Api\StockRepositoryInterface */
