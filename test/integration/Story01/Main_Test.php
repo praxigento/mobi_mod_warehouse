@@ -8,48 +8,56 @@ use Magento\CatalogInventory\Api\Data\StockInterface;
 use Magento\CatalogInventory\Api\Data\StockItemInterface;
 use Magento\CatalogInventory\Api\StockItemRepositoryInterface;
 use Magento\CatalogInventory\Api\StockRepositoryInterface;
-
 use Praxigento\Warehouse\Data\Entity\Lot;
 use Praxigento\Warehouse\Data\Entity\Quantity;
+use Praxigento\Warehouse\Data\Entity\Stock\Item as EntityStockItem;
 use Praxigento\Warehouse\Data\Entity\Warehouse;
+use Praxigento\Warehouse\Repo\Entity\Stock\IItem as IRepoStockItem;
 
 include_once(__DIR__ . '/../phpunit_bootstrap.php');
 
-class Main_IntegrationTest extends \Praxigento\Core\Test\BaseIntegrationTest {
+class Main_IntegrationTest extends \Praxigento\Core\Test\BaseIntegrationTest
+{
     /** @var \Praxigento\Core\Repo\IGeneric */
-    private $_repoBasic;
+    private $_repoGeneric;
     /** @var  \Magento\CatalogInventory\Api\StockRepositoryInterface */
-    private $_repoStock;
+    private $_repoMageStock;
     /** @var  \Magento\CatalogInventory\Api\StockItemRepositoryInterface */
+    private $_repoMageStockItem;
+    /** @var  IRepoStockItem */
     private $_repoStockItem;
     /** @var  \Praxigento\Core\Tool\IDate */
     private $_toolDate;
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
-        $this->_repoBasic = $this->_manObj->get(\Praxigento\Core\Repo\IGeneric::class);
+        $this->_repoGeneric = $this->_manObj->get(\Praxigento\Core\Repo\IGeneric::class);
         $this->_toolDate = $this->_manObj->get(\Praxigento\Core\Tool\IDate::class);
-        $this->_repoStock = $this->_manObj->get(StockRepositoryInterface::class);
-        $this->_repoStockItem = $this->_manObj->get(StockItemRepositoryInterface::class);
+        $this->_repoMageStock = $this->_manObj->get(StockRepositoryInterface::class);
+        $this->_repoMageStockItem = $this->_manObj->get(StockItemRepositoryInterface::class);
+        $this->_repoStockItem = $this->_manObj->get(IRepoStockItem::class);
     }
 
     /**
-     * @param string   $code
+     * @param string $code
      * @param datetime $expDate
      *
      * @return int ID of the new entity
      */
-    private function _createLot($code, $expDate) {
+    private function _createLot($code, $expDate)
+    {
         $tbl = Lot::ENTITY_NAME;
         $bind = [
-            Lot::ATTR_CODE     => $code,
+            Lot::ATTR_CODE => $code,
             Lot::ATTR_EXP_DATE => $expDate
         ];
-        $result = $this->_repoBasic->addEntity($tbl, $bind);
+        $result = $this->_repoGeneric->addEntity($tbl, $bind);
         return $result;
     }
 
-    private function _createMageCategory($name) {
+    private function _createMageCategory($name)
+    {
         /**
          * Initialize factories using Object Manager.
          */
@@ -65,12 +73,13 @@ class Main_IntegrationTest extends \Praxigento\Core\Test\BaseIntegrationTest {
     }
 
     /**
-     * @param int    $catId category ID
+     * @param int $catId category ID
      * @param string $sku
      *
      * @return int ID of the new entity
      */
-    private function _createMageProduct($catId, $sku) {
+    private function _createMageProduct($catId, $sku)
+    {
         /**
          * Initialize factories using Object Manager.
          */
@@ -122,53 +131,64 @@ class Main_IntegrationTest extends \Praxigento\Core\Test\BaseIntegrationTest {
      *
      * @return StockInterface
      */
-    private function _createMageStock($name) {
+    private function _createMageStock($name)
+    {
         /** @var  $stock \Magento\CatalogInventory\Api\Data\StockInterface */
         $stock = $this->_manObj->create(StockInterface::class);
         $stock->setStockName($name);
-        $saved = $this->_repoStock->save($stock);
-        $result = $this->_repoStock->get($saved->getStockId());
+        $saved = $this->_repoMageStock->save($stock);
+        $result = $this->_repoMageStock->get($saved->getStockId());
         return $result;
     }
 
-    private function _createMageStockItem($stockId, $prodId) {
+    private function _createMageStockItem($stockId, $prodId)
+    {
         /* check if stock item already exist */
         /** @var  $criteria \Magento\CatalogInventory\Api\StockItemCriteriaInterface */
         $criteria = $this->_manObj->create(\Magento\CatalogInventory\Api\StockItemCriteriaInterface::class);
         $criteria->addFilter('byStock', StockItemInterface::STOCK_ID, $stockId);
         $criteria->addFilter('byProduct', StockItemInterface::PRODUCT_ID, $prodId);
-        $list = $this->_repoStockItem->getList($criteria);
+        $list = $this->_repoMageStockItem->getList($criteria);
         $items = $list->getItems();
         /** @var  $stockItem StockItemInterface */
-        if(count($items)) {
+        if (count($items)) {
             $stockItem = reset($items);
             $result = $stockItem->getItemId();
         } else {
             $stockItem = $this->_manObj->create(StockItemInterface::class);
             $stockItem->setStockId($stockId);
             $stockItem->setProductId($prodId);
-            $saved = $this->_repoStockItem->save($stockItem);
+            $saved = $this->_repoMageStockItem->save($stockItem);
             $result = $saved->getItemId();
         }
         return $result;
     }
 
-    private function _createQty($stockItemId, $lotId, $total) {
+    private function _createQty($stockItemId, $lotId, $total)
+    {
         $tbl = Quantity::ENTITY_NAME;
         $bind = [
             Quantity::ATTR_STOCK_ITEM_REF => $stockItemId,
-            Quantity::ATTR_LOT_REF        => $lotId,
-            Quantity::ATTR_TOTAL          => $total
+            Quantity::ATTR_LOT_REF => $lotId,
+            Quantity::ATTR_TOTAL => $total
         ];
-        $result = $this->_repoBasic->addEntity($tbl, $bind);
+        $result = $this->_repoGeneric->addEntity($tbl, $bind);
         /* update qty of the stock item */
-        $stockItem = $this->_repoStockItem->get($stockItemId);
+        $stockItem = $this->_repoMageStockItem->get($stockItemId);
         $qty = $stockItem->getQty();
         $qty += $total;
         $stockItem->setQty($qty);
         $stockItem->setIsInStock(true);
-        $this->_repoStockItem->save($stockItem);
+        $this->_repoMageStockItem->save($stockItem);
         return $result;
+    }
+
+    private function _createStockItem($mageStockItemRef, $price)
+    {
+        $this->_repoStockItem->create([
+            EntityStockItem::ATTR_STOCK_ITEM_REF => $mageStockItemRef,
+            EntityStockItem::ATTR_PRICE => $price
+        ]);
     }
 
     /**
@@ -177,7 +197,8 @@ class Main_IntegrationTest extends \Praxigento\Core\Test\BaseIntegrationTest {
      *
      * @return int ID of the new entity
      */
-    private function _createWarehouse($code, $note) {
+    private function _createWarehouse($code, $note)
+    {
         /* create stock */
         $stock = $this->_createMageStock($code);
         $result = $stock->getStockId();
@@ -185,15 +206,15 @@ class Main_IntegrationTest extends \Praxigento\Core\Test\BaseIntegrationTest {
         $tbl = Warehouse::ENTITY_NAME;
         $bind = [
             Warehouse::ATTR_STOCK_REF => $result,
-            Warehouse::ATTR_CODE      => $code,
-            Warehouse::ATTR_NOTE      => $note
+            Warehouse::ATTR_CODE => $code,
+            Warehouse::ATTR_NOTE => $note
         ];
-        $this->_repoBasic->addEntity($tbl, $bind);
+        $this->_repoGeneric->addEntity($tbl, $bind);
         return $result;
     }
 
-
-    public function test_main() {
+    public function test_main()
+    {
         $this->_logger->debug('Story01 in Warehouse Integration tests is started.');
         $this->_conn->beginTransaction();
         try {
@@ -208,6 +229,10 @@ class Main_IntegrationTest extends \Praxigento\Core\Test\BaseIntegrationTest {
             $stockItemIdDef = $this->_createMageStockItem(1, $prodId);
             $stockItemId01 = $this->_createMageStockItem($stockId01, $prodId);
             $stockItemId02 = $this->_createMageStockItem($stockId02, $prodId);
+            /* create warehouse stock items (for prices) */
+            $this->_createStockItem($stockItemIdDef, '100.32');
+            $this->_createStockItem($stockItemId01, '100.43');
+            $this->_createStockItem($stockItemId02, '100.54');
             /* create 2 lots */
             $expDate = $this->_toolDate->getMageNowForDb();
             $lotId01 = $this->_createLot('lot01', $expDate);
@@ -220,7 +245,7 @@ class Main_IntegrationTest extends \Praxigento\Core\Test\BaseIntegrationTest {
             $this->_createQty($stockItemId02, $lotId01, 30);
             $this->_createQty($stockItemId02, $lotId02, 40);
         } finally {
-            // $this->_conn->commit();
+//            $this->_conn->commit();
             $this->_conn->rollBack();
         }
         $this->_logger->debug('Story01 in Warehouse Integration tests is completed, all transactions are rolled back.');

@@ -16,14 +16,16 @@ class Router_IntegrationTest extends \Praxigento\Core\Test\BaseIntegrationTest
 
     public function test_actionControllers_back()
     {
-        /** @var \Magento\Framework\App\Request\Http $request */
-        $request = $this->_manObj->create(\Magento\Framework\App\RequestInterface::class);
         /** @var \Magento\Backend\App\Router $backendRouter */
         $backendRouter = $this->_manObj->create(\Magento\Backend\App\Router::class);
-        /* actions */
+        /* /admin/catalog/lots/ */
+        /** @var \Magento\Framework\App\Request\Http $request */
+        $request = $this->_manObj->create(\Magento\Framework\App\RequestInterface::class);
         $request->setPathInfo('/admin/catalog/lots/');
         $actualAction = $backendRouter->match($request);
         $this->assertInstanceOf(Controller\Adminhtml\Lots\Index::class, $actualAction);
+        $request = $this->_manObj->create(\Magento\Framework\App\RequestInterface::class);
+        /* /admin/catalog/warehouses/ */
         $request->setPathInfo('/admin/catalog/warehouses/');
         $actualAction = $backendRouter->match($request);
         $this->assertInstanceOf(Controller\Adminhtml\Warehouses\Index::class, $actualAction);
