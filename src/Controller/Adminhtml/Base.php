@@ -5,13 +5,12 @@
 
 namespace Praxigento\Warehouse\Controller\Adminhtml;
 
-use Magento\Backend\App\Action;
 use Praxigento\Warehouse\Config as Cfg;
 
 abstract class Base extends \Magento\Backend\App\AbstractAction
 {
     public function __construct(
-        Action\Context $context
+        \Magento\Backend\App\Action\Context $context
     ) {
         parent::__construct($context);
     }

@@ -5,27 +5,32 @@
 
 namespace Praxigento\Warehouse\Controller\Adminhtml\Index;
 
+use Praxigento\Warehouse\Config as Cfg;
 use Praxigento\Warehouse\Controller\Adminhtml\Base;
 
 class Index extends Base
 {
     /**
-     * @return $this
+     * @var \Magento\Framework\View\Result\PageFactory
      */
-    protected function _initAction()
-    {
-        $this->_view->loadLayout();
-        $this->_setActiveMenu('Praxigento_Warehouse::catalog_warehouse');
-        $this->_addBreadcrumb(__('Catalog'), __('Catalog'));
-        $this->_addBreadcrumb(__('Inventory'), __('Inventory'));
-        $this->_addBreadcrumb(__('Warehouse'), __('Warehouse'));
-        return $this;
+    protected $resultPageFactory;
+
+    public function __construct(
+        \Magento\Backend\App\Action\Context $context,
+        \Magento\Framework\View\Result\PageFactory $resultPageFactory
+    ) {
+        parent::__construct($context);
+        $this->resultPageFactory = $resultPageFactory;
     }
+
 
     public function execute()
     {
-        $resultPage = $this->_initAction();
-        $resultPage->getConfig()->getTitle()->prepend(__('QTV'));
+        /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
+        $resultPage = $this->resultPageFactory->create();
+        $resultPage->setActiveMenu(Cfg::MODULE . '::' . Cfg::ACL_CATALOG_LOTS);
+        $this->_addBreadcrumb(__('Lots'), __('Lots'));
+        $resultPage->getConfig()->getTitle()->prepend(__('Lots'));
         return $resultPage;
     }
 }
