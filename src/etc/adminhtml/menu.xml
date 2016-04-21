@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Praxigento_Warehouse::catalog_lots"
+             title="Lots"
+             module="Praxigento_Warehouse"
+             sortOrder="70"
+             parent="Magento_Catalog::inventory"
+             action="catalog/lots"
+             resource="Praxigento_Warehouse::catalog_lots"/>
+        <add id="Praxigento_Warehouse::catalog_warehouses"
+             title="Warehouses"
+             module="Praxigento_Warehouse"
+             sortOrder="80"
+             parent="Magento_Catalog::inventory"
+             action="catalog/warehouses"
+             resource="Praxigento_Warehouse::catalog_warehouses"/>
+    </menu>
+</config>
