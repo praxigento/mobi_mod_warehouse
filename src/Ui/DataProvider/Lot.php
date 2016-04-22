@@ -80,23 +80,30 @@ class Lot extends DataProvider
 
     public function addField($field, $alias = null)
     {
-        // parent::addField($field, $alias);
-        $this->_fieldsToSelect[] = $field;
+        return parent::addField($field, $alias);
     }
 
     public function addFilter(\Magento\Framework\Api\Filter $filter)
     {
-        1 + 1;
+        return parent::addFilter($filter);
     }
 
     public function addOrder($field, $direction)
     {
-        1 + 1;
+        return parent::addOrder($field, $direction);
     }
 
     public function getData()
     {
-        $data = $this->_repo->get();
+//        $search = $this->getSearchResult();
+        $criteria = $this->getSearchCriteria();
+        $pageSize = $criteria->getPageSize();
+        $pageIndx = $criteria->getCurrentPage();
+        $where = null;
+        $order = null;
+        $limit = $criteria->getPageSize();
+        $offset = ($pageIndx - 1) * $pageSize;
+        $data = $this->_repo->get($where, $order, $limit, $offset);
         $total = count($data);
         $result = [
             static::JSON_ATTR_TOTAL_RECORDS => $total,
@@ -107,43 +114,43 @@ class Lot extends DataProvider
 
     public function getFieldMetaInfo($fieldSetName, $fieldName)
     {
-        1 + 1;
+        return parent::getFieldMetaInfo($fieldSetName, $fieldName);
     }
 
     public function getFieldSetMetaInfo($fieldSetName)
     {
-        1 + 1;
+        return parent::getFieldSetMetaInfo($fieldSetName);
     }
 
     public function getFieldsMetaInfo($fieldSetName)
     {
-        1 + 1;
+        return parent::getFieldsMetaInfo($fieldSetName);
     }
 
     public function getMeta()
     {
-        1 + 1;
+        return parent::getMeta();
     }
 
 
     public function getPrimaryFieldName()
     {
-        1 + 1;
+        return parent::getPrimaryFieldName();
     }
 
     public function getRequestFieldName()
     {
-        1 + 1;
+        return parent::getRequestFieldName();
     }
 
     public function getSearchCriteria()
     {
-        1 + 1;
+        return parent::getSearchCriteria();
     }
 
     public function getSearchResult()
     {
-        1 + 1;
+        return parent::getSearchResult();
     }
 
     public function setConfigData($config)
@@ -153,6 +160,6 @@ class Lot extends DataProvider
 
     public function setLimit($offset, $size)
     {
-        1 + 1;
+        return parent::setLimit($offset, $size);
     }
 }
