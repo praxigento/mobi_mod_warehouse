@@ -4,7 +4,7 @@
     <update handle="styles"/>
     <body>
         <referenceContainer name="content">
-            <uiComponent name="catalog_warehouses_grid"/>
+            <uiComponent name="catalog_lots_grid"/>
         </referenceContainer>
     </body>
 </page>
