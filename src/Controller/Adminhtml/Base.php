@@ -7,7 +7,7 @@ namespace Praxigento\Warehouse\Controller\Adminhtml;
 
 use Praxigento\Warehouse\Config as Cfg;
 
-abstract class Base extends \Magento\Backend\App\AbstractAction
+abstract class Base extends \Magento\Backend\App\Action
 {
     public function __construct(
         \Magento\Backend\App\Action\Context $context
