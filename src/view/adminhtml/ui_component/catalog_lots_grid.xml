@@ -15,7 +15,7 @@
             <item name="provider" xsi:type="string">catalog_lots_grid.catalog_lots_grid_data_source</item>
             <item name="deps" xsi:type="string">catalog_lots_grid.catalog_lots_grid_data_source</item>
         </item>
-        <item name="spinner" xsi:type="string">catalog_warehouses_columns</item>
+        <item name="spinner" xsi:type="string">catalog_lots_columns</item>
     </argument>
 
     <!-- **************************************************** -->
@@ -25,13 +25,6 @@
         <argument name="dataProvider" xsi:type="configurableObject">
             <argument name="class" xsi:type="string">Praxigento\Warehouse\Ui\DataProvider\Lot</argument>
             <argument name="name" xsi:type="string">catalog_lots_grid_data_source</argument>
-            <!--<argument name="primaryFieldName" xsi:type="string">visitor_id</argument>-->
-            <!--<argument name="requestFieldName" xsi:type="string">id</argument>-->
-            <!--<argument name="data" xsi:type="array">-->
-            <!--<item name="config" xsi:type="array">-->
-            <!--<item name="update_url" xsi:type="url" path="mui/index/render"/>-->
-            <!--</item>-->
-            <!--</argument>-->
         </argument>
         <argument name="data" xsi:type="array">
             <item name="js_config" xsi:type="array">
@@ -58,7 +51,7 @@
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="columnsData" xsi:type="array">
-                        <item name="provider" xsi:type="string">catalog_lots_grid.catalog_lots_grid.catalog_warehouses_columns</item>
+                        <item name="provider" xsi:type="string">catalog_lots_grid.catalog_lots_grid.catalog_lots_columns</item>
                     </item>
                     <item name="component" xsi:type="string">Magento_Ui/js/grid/controls/columns</item>
                     <item name="displayArea" xsi:type="string">dataGridActions</item>
@@ -68,7 +61,7 @@
         <filters name="listing_filters">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="columnsProvider" xsi:type="string">catalog_lots_grid.catalog_lots_grid.catalog_warehouses_columns</item>
+                    <item name="columnsProvider" xsi:type="string">catalog_lots_grid.catalog_lots_grid.catalog_lots_columns</item>
                     <item name="storageConfig" xsi:type="array">
                         <item name="provider" xsi:type="string">catalog_lots_grid.catalog_lots_grid.listing_top.bookmarks</item>
                         <item name="namespace" xsi:type="string">current.filters</item>
@@ -76,7 +69,7 @@
                     <item name="childDefaults" xsi:type="array">
                         <item name="provider" xsi:type="string">catalog_lots_grid.catalog_lots_grid.listing_top.listing_filters</item>
                         <item name="imports" xsi:type="array">
-                            <item name="visible" xsi:type="string">catalog_lots_grid.catalog_lots_grid.catalog_warehouses_columns.${ $.index }:visible</item>
+                            <item name="visible" xsi:type="string">catalog_lots_grid.catalog_lots_grid.catalog_lots_columns.${ $.index }:visible</item>
                         </item>
                     </item>
                 </item>
@@ -89,7 +82,7 @@
                         <item name="provider" xsi:type="string">catalog_lots_grid.catalog_lots_grid.listing_top.bookmarks</item>
                         <item name="namespace" xsi:type="string">current.paging</item>
                     </item>
-                    <item name="selectProvider" xsi:type="string">catalog_lots_grid.catalog_lots_grid.catalog_warehouses_columns.ids</item>
+                    <item name="selectProvider" xsi:type="string">catalog_lots_grid.catalog_lots_grid.catalog_lots_columns.ids</item>
                 </item>
             </argument>
         </paging>
@@ -98,7 +91,7 @@
     <!-- **************************************************** -->
     <!-- Grid Columns -->
     <!-- **************************************************** -->
-    <columns name="catalog_warehouses_columns">
+    <columns name="catalog_lots_columns">
         <argument name="data" xsi:type="array">
             <item name="config" xsi:type="array">
                 <item name="storageConfig" xsi:type="array">
