@@ -14,7 +14,7 @@ interface IWarehouse extends IAggregate
     const AS_WRHS = 'pww';
 
     /**
-     * @param AggWarehouse $data
+     * @param array|AggWarehouse $data
      * @return AggWarehouse
      */
     public function create($data);

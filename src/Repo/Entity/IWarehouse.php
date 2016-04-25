@@ -14,4 +14,10 @@ interface IWarehouse extends \Praxigento\Core\Repo\IEntity
      * @return \Praxigento\Warehouse\Data\Entity\Warehouse
      */
     public function getRef();
+
+    /**
+     * @param array|\Praxigento\Warehouse\Data\Entity\Warehouse $data
+     * @return \Praxigento\Warehouse\Data\Entity\Warehouse
+     */
+    public function create($data);
 }

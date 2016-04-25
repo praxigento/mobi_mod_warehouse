@@ -12,6 +12,8 @@ class Warehouse_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
 {
     /** @var  \Mockery\MockInterface */
     private $mConn;
+    /** @var  Warehouse\SelectFactory */
+    private $mFactorySelect;
     /** @var  \Mockery\MockInterface */
     private $mManObj;
     /** @var  \Mockery\MockInterface */
@@ -32,13 +34,15 @@ class Warehouse_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         $this->mConn = $this->_mockConn();
         $this->mResource = $this->_mockResourceConnection($this->mConn);
         $this->mRepoGeneric = $this->_mockRepoGeneric();
+        $this->mFactorySelect = $this->_mock(Warehouse\SelectFactory::class);
         /* setup mocks for constructor */
         /* create object to test */
         $this->obj = new Warehouse(
             $this->mManObj,
             $this->mManTrans,
             $this->mResource,
-            $this->mRepoGeneric
+            $this->mRepoGeneric,
+            $this->mFactorySelect
         );
     }
 
@@ -93,20 +97,11 @@ class Warehouse_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         $ID = 21;
         $DATA = ['data'];
         /* === Setup Mocks === */
-        // $query = $this->_initQueryRead();
-        // $result = $this->_conn->select();
+        // $query = $this->_factorySelect->getSelectQuery();
         $mQuery = $this->_mockDbSelect();
-        $this->mConn
-            ->shouldReceive('select')->once()
+        $this->mFactorySelect
+            ->shouldReceive('getSelectQuery')->once()
             ->andReturn($mQuery);
-        // $this->_conn->getTableName()
-        $this->mConn
-            ->shouldReceive('getTableName');
-        // $result->from($tblStock, $cols);
-        $mQuery->shouldReceive('from')->once();
-        // $result->joinLeft($tblWrhs, $on, $cols);
-        $mQuery->shouldReceive('joinLeft')->once();
-        // return
         // $query->where(self::AS_STOCK . '.' . Cfg::E_CATINV_STOCK_A_STOCK_ID . '=:id');
         $mQuery->shouldReceive('where')->once();
         // $data = $this->_conn->fetchRow($query, ['id' => $id]);

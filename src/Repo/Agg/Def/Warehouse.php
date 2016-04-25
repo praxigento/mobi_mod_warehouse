@@ -9,6 +9,7 @@ namespace Praxigento\Warehouse\Repo\Agg\Def;
 
 use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\ObjectManagerInterface;
+use Praxigento\Core\Repo\Def\Aggregate as BaseAggRepo;
 use Praxigento\Core\Repo\IGeneric as IGenericRepo;
 use Praxigento\Core\Repo\ITransactionManager;
 use Praxigento\Warehouse\Config as Cfg;
@@ -16,11 +17,13 @@ use Praxigento\Warehouse\Data\Agg\Warehouse as AggWarehouse;
 use Praxigento\Warehouse\Data\Entity\Warehouse as EntityWarehouse;
 use Praxigento\Warehouse\Repo\Agg\IWarehouse;
 
-class Warehouse implements IWarehouse
+class Warehouse extends BaseAggRepo implements IWarehouse
 {
 
     /** @var  \Magento\Framework\DB\Adapter\AdapterInterface */
     protected $_conn;
+    /** @var Warehouse\SelectFactory */
+    protected $_factorySelect;
     /** @var  ObjectManagerInterface */
     protected $_manObj;
     /** @var  \Praxigento\Core\Repo\ITransactionManager */
@@ -34,15 +37,20 @@ class Warehouse implements IWarehouse
         ObjectManagerInterface $manObj,
         ITransactionManager $manTrans,
         ResourceConnection $resource,
-        IGenericRepo $repoBasic
+        IGenericRepo $repoGeneric,
+        Warehouse\SelectFactory $factorySelect
     ) {
         $this->_manObj = $manObj;
         $this->_manTrans = $manTrans;
         $this->_resource = $resource;
         $this->_conn = $resource->getConnection();
-        $this->_repoBasic = $repoBasic;
+        $this->_repoBasic = $repoGeneric;
+        $this->_factorySelect = $factorySelect;
     }
 
+    /**
+     * @deprecated probably deprecated method
+     */
     protected function _initAggregate($data)
     {
         /** @var  $result AggWarehouse */
@@ -51,35 +59,6 @@ class Warehouse implements IWarehouse
         return $result;
     }
 
-    /**
-     * Create JOIN to get aggregated data.
-     *
-     * @return \Magento\Framework\DB\Select
-     */
-    protected function _initQueryRead()
-    {
-        $result = $this->_conn->select();
-        /* aliases and tables */
-        $asStock = static::AS_STOCK;
-        $asWrhs = static::AS_WRHS;
-        $tblStock = [$asStock => $this->_conn->getTableName(Cfg::ENTITY_MAGE_CATALOGINVENTORY_STOCK)];
-        $tblWrhs = [$asWrhs => $this->_conn->getTableName(EntityWarehouse::ENTITY_NAME)];
-        /* SELECT FROM cataloginventory_stock */
-        $cols = [
-            AggWarehouse::AS_ID => Cfg::E_CATINV_STOCK_A_STOCK_ID,
-            AggWarehouse::AS_CODE => Cfg::E_CATINV_STOCK_A_STOCK_NAME,
-            AggWarehouse::AS_WEBSITE_ID => Cfg::E_CATINV_STOCK_A_WEBSITE_ID
-        ];
-        $result->from($tblStock, $cols);
-        /* LEFT JOIN prxgt_wrhs_wrhs */
-        $on = $asWrhs . '.' . EntityWarehouse::ATTR_STOCK_REF . '=' . $asStock . '.' . Cfg::E_CATINV_STOCK_A_STOCK_ID;
-        $cols = [
-            AggWarehouse::AS_CURRENCY => EntityWarehouse::ATTR_CURRENCY,
-            AggWarehouse::AS_NOTE => EntityWarehouse::ATTR_NOTE
-        ];
-        $result->joinLeft($tblWrhs, $on, $cols);
-        return $result;
-    }
 
     /**
      * @param AggWarehouse $data
@@ -120,18 +99,19 @@ class Warehouse implements IWarehouse
     {
         /** @var  $result AggWarehouse */
         $result = null;
-        $query = $this->_initQueryRead();
+        $query = $this->_factorySelect->getSelectQuery();
         $query->where(static::AS_STOCK . '.' . Cfg::E_CATINV_STOCK_A_STOCK_ID . '=:id');
         $data = $this->_conn->fetchRow($query, ['id' => $id]);
         if ($data) {
-            $result = $this->_initAggregate($data);
+            $result = $this->_manObj->create(AggLot::class);
+            $result->setData($data);
         }
         return $result;
     }
 
     public function getQueryToSelect()
     {
-        $result = $this->_initQueryRead();
+        $result = $this->_factorySelect->getSelectQuery();
         return $result;
     }
 }

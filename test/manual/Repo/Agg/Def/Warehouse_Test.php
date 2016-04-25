@@ -2,7 +2,7 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
-namespace Praxigento\Warehouse\Lib\Entity\Def;
+namespace Praxigento\Warehouse\Repo\Agg\Def;
 
 use Magento\Framework\App\ObjectManager;
 use Praxigento\Warehouse\Data\Agg\Warehouse as AggWarehouse;
