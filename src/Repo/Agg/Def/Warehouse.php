@@ -114,4 +114,10 @@ class Warehouse extends BaseAggRepo implements IWarehouse
         $result = $this->_factorySelect->getSelectQuery();
         return $result;
     }
+
+    public function getQueryToSelectCount()
+    {
+        $result = $this->_factorySelect->getSelectCountQuery();
+        return $result;
+    }
 }

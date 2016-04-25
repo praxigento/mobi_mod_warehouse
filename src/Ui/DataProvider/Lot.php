@@ -95,16 +95,18 @@ class Lot extends DataProvider
 
     public function getData()
     {
-//        $search = $this->getSearchResult();
         $criteria = $this->getSearchCriteria();
         $pageSize = $criteria->getPageSize();
         $pageIndx = $criteria->getCurrentPage();
         $where = null;
         $order = null;
-        $limit = $criteria->getPageSize();
-        $offset = ($pageIndx - 1) * $pageSize;
-        $data = $this->_repo->get($where, $order, $limit, $offset);
-        $total = count($data);
+        /** @var \Magento\Framework\DB\Select $queryTotal */
+        $queryTotal = $this->_repo->getQueryToSelectCount();
+        $total = $queryTotal->getConnection()->fetchOne($queryTotal);
+        /** @var \Magento\Framework\DB\Select $query */
+        $query = $this->_repo->getQueryToSelect();
+        $query->limitPage($pageIndx, $pageSize);
+        $data = $query->getConnection()->fetchAll($query);
         $result = [
             static::JSON_ATTR_TOTAL_RECORDS => $total,
             static::JSON_ATTR_ITEMS => $data
@@ -155,7 +157,7 @@ class Lot extends DataProvider
 
     public function setConfigData($config)
     {
-        parent::setConfigData($config);
+        return parent::setConfigData($config);
     }
 
     public function setLimit($offset, $size)

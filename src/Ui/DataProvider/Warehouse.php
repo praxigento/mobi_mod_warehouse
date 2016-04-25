@@ -29,7 +29,7 @@ class Warehouse extends DataProvider
     /**#@-*/
 
     /** @var  IRepoAggWarehouse */
-    protected $_repoAggWarehouse;
+    protected $_repo;
 
     /**
      * Warehouse constructor.
@@ -74,30 +74,38 @@ class Warehouse extends DataProvider
             $data
         );
         /* post construction setup */
-        $this->_repoAggWarehouse = $repoAggWrhs;
+        $this->_repo = $repoAggWrhs;
     }
 
     public function addField($field, $alias = null)
     {
-        // parent::addField($field, $alias);
-        $this->_fieldsToSelect[] = $field;
+        return parent::addField($field, $alias);
     }
 
     public function addFilter(\Magento\Framework\Api\Filter $filter)
     {
-        1 + 1;
+        return parent::addFilter($filter);
     }
 
     public function addOrder($field, $direction)
     {
-        1 + 1;
+        return parent::addOrder($field, $direction);
     }
 
     public function getData()
     {
-        $query = $this->_repoAggWarehouse->getQueryToSelect();
+        $criteria = $this->getSearchCriteria();
+        $pageSize = $criteria->getPageSize();
+        $pageIndx = $criteria->getCurrentPage();
+        $where = null;
+        $order = null;
+        /** @var \Magento\Framework\DB\Select $queryTotal */
+        $queryTotal = $this->_repo->getQueryToSelectCount();
+        $total = $queryTotal->getConnection()->fetchOne($queryTotal);
+        /** @var \Magento\Framework\DB\Select $query */
+        $query = $this->_repo->getQueryToSelect();
+        $query->limitPage($pageIndx, $pageSize);
         $data = $query->getConnection()->fetchAll($query);
-        $total = count($data);
         $result = [
             static::JSON_ATTR_TOTAL_RECORDS => $total,
             static::JSON_ATTR_ITEMS => $data
@@ -107,52 +115,52 @@ class Warehouse extends DataProvider
 
     public function getFieldMetaInfo($fieldSetName, $fieldName)
     {
-        1 + 1;
+        return parent::getFieldMetaInfo($fieldSetName, $fieldName);
     }
 
     public function getFieldSetMetaInfo($fieldSetName)
     {
-        1 + 1;
+        return parent::getFieldSetMetaInfo($fieldSetName);
     }
 
     public function getFieldsMetaInfo($fieldSetName)
     {
-        1 + 1;
+        return parent::getFieldsMetaInfo($fieldSetName);
     }
 
     public function getMeta()
     {
-        1 + 1;
+        return parent::getMeta();
     }
 
 
     public function getPrimaryFieldName()
     {
-        1 + 1;
+        return parent::getPrimaryFieldName();
     }
 
     public function getRequestFieldName()
     {
-        1 + 1;
+        return parent::getRequestFieldName();
     }
 
     public function getSearchCriteria()
     {
-        1 + 1;
+        return parent::getSearchCriteria();
     }
 
     public function getSearchResult()
     {
-        1 + 1;
+        return parent::getSearchResult();
     }
 
     public function setConfigData($config)
     {
-        parent::setConfigData($config);
+        return parent::setConfigData($config);
     }
 
     public function setLimit($offset, $size)
     {
-        1 + 1;
+        return parent::setLimit($offset, $size);
     }
 }

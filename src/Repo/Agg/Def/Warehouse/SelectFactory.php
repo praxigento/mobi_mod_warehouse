@@ -27,6 +27,26 @@ class SelectFactory implements IHasSelectQuery
         $this->_conn = $resource->getConnection();
     }
 
+    /** @inheritdoc */
+    public function getSelectCountQuery()
+    {
+        $result = $this->_conn->select();
+        /* aliases and tables */
+        $asStock = IRepoWarehouse::AS_STOCK;
+        $asWrhs = IRepoWarehouse::AS_WRHS;
+        $tblStock = [$asStock => $this->_conn->getTableName(Cfg::ENTITY_MAGE_CATALOGINVENTORY_STOCK)];
+        $tblWrhs = [$asWrhs => $this->_conn->getTableName(EntityWarehouse::ENTITY_NAME)];
+        /* SELECT FROM cataloginventory_stock */
+        $cols = "COUNT(" . Cfg::E_CATINV_STOCK_A_STOCK_ID . ")";
+        $result->from($tblStock, $cols);
+        /* LEFT JOIN prxgt_wrhs_wrhs */
+        $on = $asWrhs . '.' . EntityWarehouse::ATTR_STOCK_REF . '=' . $asStock . '.' . Cfg::E_CATINV_STOCK_A_STOCK_ID;
+        $cols = [];
+        $result->joinLeft($tblWrhs, $on, $cols);
+        return $result;
+    }
+
+    /** @inheritdoc */
     public function getSelectQuery()
     {
         $result = $this->_conn->select();
