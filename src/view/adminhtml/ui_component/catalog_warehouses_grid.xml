@@ -25,13 +25,6 @@
         <argument name="dataProvider" xsi:type="configurableObject">
             <argument name="class" xsi:type="string">Praxigento\Warehouse\Ui\DataProvider\Warehouse</argument>
             <argument name="name" xsi:type="string">catalog_warehouses_grid_data_source</argument>
-            <!--<argument name="primaryFieldName" xsi:type="string">visitor_id</argument>-->
-            <!--<argument name="requestFieldName" xsi:type="string">id</argument>-->
-            <!--<argument name="data" xsi:type="array">-->
-            <!--<item name="config" xsi:type="array">-->
-            <!--<item name="update_url" xsi:type="url" path="mui/index/render"/>-->
-            <!--</item>-->
-            <!--</argument>-->
         </argument>
         <argument name="data" xsi:type="array">
             <item name="js_config" xsi:type="array">

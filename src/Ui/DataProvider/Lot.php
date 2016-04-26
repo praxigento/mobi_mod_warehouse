@@ -17,17 +17,6 @@ use Praxigento\Warehouse\Repo\Entity\ILot as IRepoEntityLot;
 class Lot extends BaseDataProvider
 {
 
-    /**
-     * @param UrlInterface $url
-     * @param IRepoEntityLot $repo
-     * @param Reporting $reporting
-     * @param SearchCriteriaBuilder $searchCriteriaBuilder
-     * @param RequestInterface $request
-     * @param FilterBuilder $filterBuilder
-     * @param FilterBuilder $name
-     * @param array $meta
-     * @param array $data
-     */
     public function __construct(
         UrlInterface $url,
         IRepoEntityLot $repo,
@@ -47,8 +36,6 @@ class Lot extends BaseDataProvider
             $request,
             $filterBuilder,
             $name,
-            'entity_id',
-            'id',
             $meta,
             $data
         );
