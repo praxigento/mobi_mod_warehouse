@@ -16,7 +16,7 @@ class Lot extends BaseEntityRepo implements IEntityRepo
         ResourceConnection $resource,
         IGeneric $repoGeneric
     ) {
-        parent::__construct($resource, $repoGeneric, new Entity());
+        parent::__construct($resource, $repoGeneric, Entity::class);
     }
 
 }
