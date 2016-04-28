@@ -39,11 +39,11 @@
 
     <!-- Repos: Entities -->
     <preference for="Praxigento\Warehouse\Repo\Entity\ILot"
-                type="\Praxigento\Warehouse\Repo\Entity\Def\Lot"/>
+                type="Praxigento\Warehouse\Repo\Entity\Def\Lot"/>
     <preference for="Praxigento\Warehouse\Repo\Entity\IQuantity"
-                type="\Praxigento\Warehouse\Repo\Entity\Def\Quantity"/>
+                type="Praxigento\Warehouse\Repo\Entity\Def\Quantity"/>
     <preference for="Praxigento\Warehouse\Repo\Entity\IWarehouse"
-                type="\Praxigento\Warehouse\Repo\Entity\Def\Warehouse"/>
+                type="Praxigento\Warehouse\Repo\Entity\Def\Warehouse"/>
     <preference for="Praxigento\Warehouse\Repo\Entity\Stock\IItem"
                 type="Praxigento\Warehouse\Repo\Entity\Stock\Def\Item"/>
 
