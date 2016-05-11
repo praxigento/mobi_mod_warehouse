@@ -28,15 +28,15 @@ class Warehouse_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
     protected function setUp()
     {
         parent::setUp();
-        /* create mocks */
+        /** create mocks */
         $this->mManObj = $this->_mockObjectManager();
         $this->mManTrans = $this->_mockTransactionManager();
         $this->mConn = $this->_mockConn();
         $this->mResource = $this->_mockResourceConnection($this->mConn);
         $this->mRepoGeneric = $this->_mockRepoGeneric();
         $this->mFactorySelect = $this->_mock(Warehouse\SelectFactory::class);
-        /* setup mocks for constructor */
-        /* create object to test */
+        /** setup mocks for constructor */
+        /** create object to test */
         $this->obj = new Warehouse(
             $this->mManObj,
             $this->mManTrans,
@@ -48,15 +48,15 @@ class Warehouse_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
 
     public function test_constructor()
     {
-        /* === Test Data === */
-        /* === Setup Mocks === */
-        /* === Call and asserts  === */
+        /** === Test Data === */
+        /** === Setup Mocks === */
+        /** === Call and asserts  === */
         $this->assertInstanceOf(Warehouse::class, $this->obj);
     }
 
     public function test_create()
     {
-        /* === Test Data === */
+        /** === Test Data === */
         $ID = 32;
         $DATA = new AggWarehouse([
             AggWarehouse::AS_CODE => 'code',
@@ -64,7 +64,7 @@ class Warehouse_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
             AggWarehouse::AS_CURRENCY => 'currency',
             AggWarehouse::AS_NOTE => 'note'
         ]);
-        /* === Setup Mocks === */
+        /** === Setup Mocks === */
         // $trans = $this->_manTrans->transactionBegin();
         $mTrans = $this->_mock(\Praxigento\Core\Repo\ITransactionDefinition::class);
         $this->mManTrans
@@ -85,7 +85,7 @@ class Warehouse_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         $this->mManTrans
             ->shouldReceive('transactionClose')->once()
             ->with($mTrans);
-        /* === Call and asserts  === */
+        /** === Call and asserts  === */
         $res = $this->obj->create($DATA);
         $this->assertInstanceOf(AggWarehouse::class, $res);
         $this->assertEquals($ID, $res->getId());
@@ -93,10 +93,10 @@ class Warehouse_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
 
     public function test_getById()
     {
-        /* === Test Data === */
+        /** === Test Data === */
         $ID = 21;
         $DATA = ['data'];
-        /* === Setup Mocks === */
+        /** === Setup Mocks === */
         // $query = $this->_factorySelect->getSelectQuery();
         $mQuery = $this->_mockDbSelect();
         $this->mFactorySelect
@@ -113,7 +113,7 @@ class Warehouse_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         $this->mManObj
             ->shouldReceive('create')->once()
             ->andReturn(new AggWarehouse());
-        /* === Call and asserts  === */
+        /** === Call and asserts  === */
         $res = $this->obj->getById($ID);
         $this->assertInstanceOf(AggWarehouse::class, $res);
     }

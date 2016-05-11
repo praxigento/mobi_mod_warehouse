@@ -14,7 +14,7 @@ class Item_UnitTest extends \Praxigento\Core\Test\BaseRepoEntityCase
     protected function setUp()
     {
         parent::setUp();
-        /* create object to test */
+        /** create object to test */
         $this->obj = new Item(
             $this->mResource,
             $this->mRepoGeneric
@@ -23,7 +23,7 @@ class Item_UnitTest extends \Praxigento\Core\Test\BaseRepoEntityCase
 
     public function test_constructor()
     {
-        /* === Call and asserts  === */
+        /** === Call and asserts  === */
         $this->assertInstanceOf(Item::class, $this->obj);
     }
 

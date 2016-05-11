@@ -20,11 +20,11 @@ class Quantity_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
 
     public function test_accessors()
     {
-        /* === Test Data === */
+        /** === Test Data === */
         $LOT_REF = 'lot ref';
         $STOCK_ITEM_REF = 'stock item ref';
         $TOTAL = 'total';
-        /* === Call and asserts  === */
+        /** === Call and asserts  === */
         $this->obj->setLotRef($LOT_REF);
         $this->obj->setStockItemRef($STOCK_ITEM_REF);
         $this->obj->setTotal($TOTAL);

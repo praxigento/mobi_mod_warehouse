@@ -20,10 +20,10 @@ class Item_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
 
     public function test_accessors()
     {
-        /* === Test Data === */
+        /** === Test Data === */
         $STOCK_ITEM_REF = 'stock item ref';
         $PRICE = 'price';
-        /* === Call and asserts  === */
+        /** === Call and asserts  === */
         $this->obj->setStockItemRef($STOCK_ITEM_REF);
         $this->obj->setPrice($PRICE);
         $this->assertEquals($STOCK_ITEM_REF, $this->obj->getStockItemRef());

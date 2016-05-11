@@ -27,7 +27,7 @@ class InstallSchema_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
     public function setUp()
     {
         parent::setUp();
-        /* create mocks */
+        /** create mocks */
         $this->mConn = $this->_mockConn();
         $this->mToolDem = $this->_mock(\Praxigento\Core\Setup\Dem\Tool::class);
         $this->mSetup = $this->_mock(\Magento\Framework\Setup\SchemaSetupInterface::class);
@@ -39,8 +39,8 @@ class InstallSchema_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
 
     public function test_install()
     {
-        /* === Test Data === */
-        /* === Setup Mocks === */
+        /** === Test Data === */
+        /** === Setup Mocks === */
         // $setup->startSetup();
         $this->mSetup
             ->shouldReceive('startSetup')->once();
@@ -62,7 +62,7 @@ class InstallSchema_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         // $setup->endSetup();
         $this->mSetup
             ->shouldReceive('endSetup')->once();
-        /* === Call and asserts  === */
+        /** === Call and asserts  === */
         $this->obj->install($this->mSetup, $this->mContext);
     }
 }

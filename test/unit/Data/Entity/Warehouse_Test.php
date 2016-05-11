@@ -19,13 +19,13 @@ class Warehouse_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
     }
     public function test_accessors()
     {
-        /* === Test Data === */
+        /** === Test Data === */
         $CODE = 'code';
         $CUR = 'currency';
         $ID = 'id';
         $NOTE = 'note';
         $STOCK_REF = 'stock';
-        /* === Call and asserts  === */
+        /** === Call and asserts  === */
         $this->obj->setCode($CODE);
         $this->obj->setCurrency($CUR);
         $this->obj->setNote($NOTE);
