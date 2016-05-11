@@ -118,4 +118,32 @@ class Warehouse_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         $this->assertInstanceOf(AggWarehouse::class, $res);
     }
 
+    public function test_getQueryToSelect()
+    {
+        /** === Test Data === */
+        $QUERY = 'query';
+        /** === Setup Mocks === */
+        // $result = $this->_factorySelect->getSelectQuery();
+        $this->mFactorySelect
+            ->shouldReceive('getSelectQuery')->once()
+            ->andReturn($QUERY);
+        /** === Call and asserts  === */
+        $res = $this->obj->getQueryToSelect();
+        $this->assertEquals($QUERY, $res);
+    }
+
+    public function test_getQueryToSelectCount()
+    {
+        /** === Test Data === */
+        $QUERY = 'query';
+        /** === Setup Mocks === */
+        // $result = $this->_factorySelect->getSelectCountQuery();
+        $this->mFactorySelect
+            ->shouldReceive('getSelectCountQuery')->once()
+            ->andReturn($QUERY);
+        /** === Call and asserts  === */
+        $res = $this->obj->getQueryToSelectCount();
+        $this->assertEquals($QUERY, $res);
+    }
+
 }

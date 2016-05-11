@@ -19,8 +19,8 @@ class Call implements WarehouseInterface
     protected $_repoEntityWarehouse;
 
     public function __construct(
-        ObjectManagerInterface $manObj,
-        ITransactionManager $manTrans,
+        \Magento\Framework\ObjectManagerInterface $manObj,
+        \Praxigento\Core\Repo\ITransactionManager $manTrans,
         \Praxigento\Warehouse\Repo\Entity\IWarehouse $repoEntityWarehouse
     ) {
         $this->_manObj = $manObj;

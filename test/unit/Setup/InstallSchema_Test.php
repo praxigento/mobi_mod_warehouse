@@ -32,7 +32,7 @@ class InstallSchema_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         $this->mToolDem = $this->_mock(\Praxigento\Core\Setup\Dem\Tool::class);
         $this->mSetup = $this->_mock(\Magento\Framework\Setup\SchemaSetupInterface::class);
         $this->mContext = $this->_mock(\Magento\Framework\Setup\ModuleContextInterface::class);
-        /* create object */
+        /** create object to test */
         $mResource = $this->_mockResourceConnection($this->mConn);
         $this->obj = new InstallSchema($mResource, $this->mToolDem);
     }
