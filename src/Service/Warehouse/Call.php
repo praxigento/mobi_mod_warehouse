@@ -61,7 +61,7 @@ class Call implements WarehouseInterface
     public function get(Request\IGet $data)
     {
         /** @var Response\Get $result */
-        $result = $this->_manObj->create(Response\Create::class);
+        $result = $this->_manObj->create(Response\Get::class);
         $id = $data->getId();
         $data = $this->_repoEntityWarehouse->getById($id);
         $result->setWarehouse($data);

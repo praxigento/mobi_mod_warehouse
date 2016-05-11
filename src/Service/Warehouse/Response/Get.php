@@ -4,9 +4,9 @@
  */
 namespace Praxigento\Warehouse\Service\Warehouse\Response;
 
-use Praxigento\Core\Service\Base\Request;
+use Praxigento\Core\Service\Base\Response;
 
-class Get extends Request implements IGet
+class Get extends Response implements IGet
 {
 
     public function getWarehouse()
