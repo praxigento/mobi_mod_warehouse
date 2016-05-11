@@ -17,22 +17,6 @@
     <preference for="Praxigento\Warehouse\Data\Api\IWarehouse"
                 type="\Praxigento\Warehouse\Data\Api\Def\Warehouse"/>
 
-    <!-- Model -->
-    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
-        <arguments>
-            <argument name="collections" xsi:type="array">
-                <item name="catalog_warehouses_grid_data_source" xsi:type="string">Praxigento\Warehouse\Model\ResourceModel\Warehouse\Grid\Collection</item>
-            </argument>
-        </arguments>
-    </type>
-    <type name="Praxigento\Warehouse\Model\ResourceModel\Warehouse\Grid\Collection">
-        <arguments>
-            <argument name="mainTable" xsi:type="string">customer_visitor</argument>
-            <argument name="resourceModel" xsi:type="string">Magento\Customer\Model\ResourceModel\Visitor</argument>
-        </arguments>
-    </type>
-
-
     <!-- Repos: Aggregates -->
     <preference for="Praxigento\Warehouse\Repo\Agg\IWarehouse"
                 type="Praxigento\Warehouse\Repo\Agg\Def\Warehouse"/>
