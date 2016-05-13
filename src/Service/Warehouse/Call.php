@@ -8,6 +8,7 @@ namespace Praxigento\Warehouse\Service\Warehouse;
 use Magento\Framework\ObjectManagerInterface;
 use Praxigento\Core\Repo\ITransactionManager;
 use Praxigento\Warehouse\Api\WarehouseInterface;
+use Praxigento\Warehouse\Data\Entity\Warehouse as EntityWarehouse;
 
 class Call implements WarehouseInterface
 {
@@ -38,12 +39,11 @@ class Call implements WarehouseInterface
         $tran = $this->_manTrans->transactionBegin();
         try {
             $warehouse = $data->getWarehouse();
-            $refEntity = $this->_repoEntityWarehouse->getRef();
             $bind = [
-                $refEntity::ATTR_STOCK_REF => $warehouse->getStockRef(),
-                $refEntity::ATTR_CODE => $warehouse->getCode(),
-                $refEntity::ATTR_CURRENCY => $warehouse->getCurrency(),
-                $refEntity::ATTR_NOTE => $warehouse->getNote()
+                EntityWarehouse::ATTR_STOCK_REF => $warehouse->getStockRef(),
+                EntityWarehouse::ATTR_CODE => $warehouse->getCode(),
+                EntityWarehouse::ATTR_CURRENCY => $warehouse->getCurrency(),
+                EntityWarehouse::ATTR_NOTE => $warehouse->getNote()
             ];
             $id = $this->_repoEntityWarehouse->create($bind);
             $result->setId($id);

@@ -58,11 +58,6 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
             ->shouldReceive('transactionBegin')->once()
             ->andReturn($mTrans);
         // $warehouse = $data->getWarehouse();
-        // $refEntity = $this->_repoEntityWarehouse->getRef();
-        $mRefEntity = $this->_mock(\Praxigento\Warehouse\Data\Entity\Warehouse::class);
-        $this->mRepoEntityWarehouse
-            ->shouldReceive('getRef')->once()
-            ->andReturn($mRefEntity);
         // $id = $this->_repoEntityWarehouse->create($bind);
         $this->mRepoEntityWarehouse
             ->shouldReceive('create')->once()
