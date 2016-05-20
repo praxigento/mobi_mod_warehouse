@@ -69,17 +69,31 @@ class Warehouse extends BaseAggRepo implements IWarehouse
         $result = null;
         $trans = $this->_manTrans->transactionBegin();
         try {
-            /* create top level object (catalog inventory stock) */
             $tbl = Cfg::ENTITY_MAGE_CATALOGINVENTORY_STOCK;
-            $bind = [
-                Cfg::E_CATINV_STOCK_A_WEBSITE_ID => $data->getWebsiteId(),
-                Cfg::E_CATINV_STOCK_A_STOCK_NAME => $data->getCode()
-            ];
-            $id = $this->_repoBasic->addEntity($tbl, $bind);
+            $stockId = $data->getId();
+            if ($stockId) {
+                /* lookup for catalog inventory stock by ID */
+                $stockData = $this->_repoBasic->getEntityByPk($tbl, [Cfg::E_CATINV_STOCK_A_STOCK_ID => $stockId]);
+                if (!$stockData) {
+                    /* create top level object (catalog inventory stock) */
+                    $bind = [
+                        Cfg::E_CATINV_STOCK_A_WEBSITE_ID => $data->getWebsiteId(),
+                        Cfg::E_CATINV_STOCK_A_STOCK_NAME => $data->getCode()
+                    ];
+                    $stockId = $this->_repoBasic->addEntity($tbl, $bind);
+                }
+            } else {
+                /* create top level object (catalog inventory stock) */
+                $bind = [
+                    Cfg::E_CATINV_STOCK_A_WEBSITE_ID => $data->getWebsiteId(),
+                    Cfg::E_CATINV_STOCK_A_STOCK_NAME => $data->getCode()
+                ];
+                $stockId = $this->_repoBasic->addEntity($tbl, $bind);
+            }
             /* then create next level object (warehouse) */
             $tbl = EntityWarehouse::ENTITY_NAME;
             $bind = [
-                EntityWarehouse::ATTR_STOCK_REF => $id,
+                EntityWarehouse::ATTR_STOCK_REF => $stockId,
                 EntityWarehouse::ATTR_CODE => $data->getCode(),
                 EntityWarehouse::ATTR_CURRENCY => $data->getCurrency(),
                 EntityWarehouse::ATTR_NOTE => $data->getNote()
@@ -88,7 +102,7 @@ class Warehouse extends BaseAggRepo implements IWarehouse
             /* commit changes and compose result data object */
             $this->_manTrans->transactionCommit($trans);
             $result = $data;
-            $result->setId($id);
+            $result->setId($stockId);
         } finally {
             $this->_manTrans->transactionClose($trans);
         }
