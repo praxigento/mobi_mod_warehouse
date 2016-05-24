@@ -18,7 +18,7 @@
                     "comment": "Quantity of the sold products by lots.",
                     "attribute": {
                       "SaleOrderItemRef": {
-                        "alias": "order_item_ref",
+                        "alias": "sale_item_ref",
                         "comment": "Reference to the sale order item.",
                         "nullable": false,
                         "type": {"integer": {"unsigned": true}}
@@ -38,11 +38,11 @@
                       }
                     },
                     "index": {
-                      "PK": {"type": "primary", "aliases": ["order_item_ref", "lot_ref"]}
+                      "PK": {"type": "primary", "aliases": ["sale_item_ref", "lot_ref"]}
                     },
                     "relation": {
                       "toSaleOrderItem": {
-                        "own": {"aliases": ["order_item_ref"]},
+                        "own": {"aliases": ["sale_item_ref"]},
                         "reference": {
                           "entity": {"completeAlias": "sales_order_item"},
                           "aliases": ["item_id"]
