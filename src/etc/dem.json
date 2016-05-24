@@ -9,6 +9,58 @@
             "alias": "wrhs",
             "comment": "Top level package for Praxigento_Warehouse module",
             "package": {
+              "Quantity": {
+                "alias": "qty",
+                "comment": "Quantity related entities",
+                "entity": {
+                  "Sale": {
+                    "alias": "sale",
+                    "comment": "Quantity of the sold products by lots.",
+                    "attribute": {
+                      "SaleOrderItemRef": {
+                        "alias": "order_item_ref",
+                        "comment": "Reference to the sale order item.",
+                        "nullable": false,
+                        "type": {"integer": {"unsigned": true}}
+                      },
+                      "LotRef": {
+                        "alias": "lot_ref",
+                        "comment": "Reference to the lot.",
+                        "nullable": false,
+                        "type": {"integer": {"unsigned": true}}
+                      },
+                      "Total": {
+                        "alias": "total",
+                        "comment": "Product's quantity of the lot is sold as part of the order item.",
+                        "nullable": false,
+                        "default": 0,
+                        "type": {"numeric": {"precision": 12, "scale": 4}}
+                      }
+                    },
+                    "index": {
+                      "PK": {"type": "primary", "aliases": ["order_item_ref", "lot_ref"]}
+                    },
+                    "relation": {
+                      "toSaleOrderItem": {
+                        "own": {"aliases": ["order_item_ref"]},
+                        "reference": {
+                          "entity": {"completeAlias": "sales_order_item"},
+                          "aliases": ["item_id"]
+                        },
+                        "action": {"delete": "restrict", "update": "restrict"}
+                      },
+                      "toLot": {
+                        "own": {"aliases": ["lot_ref"]},
+                        "reference": {
+                          "entity": {"completeAlias": "prxgt_wrhs_lot"},
+                          "aliases": ["id"]
+                        },
+                        "action": {"delete": "restrict", "update": "restrict"}
+                      }
+                    }
+                  }
+                }
+              },
               "Stock": {
                 "alias": "stock",
                 "comment": "'Stock' package in Praxigento_Warehouse module",
