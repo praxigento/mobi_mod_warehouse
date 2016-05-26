@@ -54,7 +54,49 @@ class Warehouse_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         $this->assertInstanceOf(Warehouse::class, $this->obj);
     }
 
-    public function test_create()
+    public function test_create_isStockId()
+    {
+        /** === Test Data === */
+        $ID = 32;
+        $DATA = new AggWarehouse([
+            AggWarehouse::AS_CODE => 'code',
+            AggWarehouse::AS_WEBSITE_ID => 'website_id',
+            AggWarehouse::AS_CURRENCY => 'currency',
+            AggWarehouse::AS_NOTE => 'note',
+            AggWarehouse::AS_ID => $ID
+        ]);
+        /** === Setup Mocks === */
+        // $trans = $this->_manTrans->transactionBegin();
+        $mTrans = $this->_mock(\Praxigento\Core\Repo\ITransactionDefinition::class);
+        $this->mManTrans
+            ->shouldReceive('transactionBegin')->once()
+            ->andReturn($mTrans);
+        // $stockData = $this->_repoBasic->getEntityByPk($tbl, [Cfg::E_CATINV_STOCK_A_STOCK_ID => $stockId]);
+        $this->mRepoGeneric
+            ->shouldReceive('getEntityByPk')->once()
+            ->andReturn(null);
+        // $id = $this->_repoBasic->addEntity($tbl, $bind);
+        $this->mRepoGeneric
+            ->shouldReceive('addEntity')->once()
+            ->andReturn($ID);
+        // $this->_repoBasic->addEntity($tbl, $bind);
+        $this->mRepoGeneric
+            ->shouldReceive('addEntity')->once();
+        // $this->_manTrans->transactionCommit($trans);
+        $this->mManTrans
+            ->shouldReceive('transactionCommit')->once()
+            ->with($mTrans);
+        // $this->_manTrans->transactionClose($trans);
+        $this->mManTrans
+            ->shouldReceive('transactionClose')->once()
+            ->with($mTrans);
+        /** === Call and asserts  === */
+        $res = $this->obj->create($DATA);
+        $this->assertInstanceOf(AggWarehouse::class, $res);
+        $this->assertEquals($ID, $res->getId());
+    }
+
+    public function test_create_noStockId()
     {
         /** === Test Data === */
         $ID = 32;

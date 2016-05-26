@@ -12,12 +12,16 @@ use Magento\Framework\Event\ObserverInterface;
  */
 class SaleItemQty implements ObserverInterface
 {
+    /** @var \Praxigento\Warehouse\Service\ICustomer */
+    protected $_callCustomer;
     /** @var \Praxigento\Warehouse\Service\IQtyDistributor */
     protected $_callQtyDistributor;
 
     public function __construct(
+        \Praxigento\Warehouse\Service\ICustomer $callCustomer,
         \Praxigento\Warehouse\Service\IQtyDistributor $callQtyDistributor
     ) {
+        $this->_callCustomer = $callCustomer;
         $this->_callQtyDistributor = $callQtyDistributor;
     }
 
@@ -28,12 +32,17 @@ class SaleItemQty implements ObserverInterface
         $saleItemId = $item->getItemId();
         $prodId = $item->getProductId();
         $qtyOrdered = $item->getQtyOrdered();
-        $req = new \Praxigento\Warehouse\Service\QtyDistributor\Request\RegisterForSaleItem();
-        $req->setItemId($saleItemId);
-        $req->setProductId($prodId);
-        $req->setQuantity($qtyOrdered);
-        $req->setStockId(1);
-        $this->_callQtyDistributor->registerForSaleItem($req);
+        /* get stock ID for the customer */
+        $reqStock = new \Praxigento\Warehouse\Service\Customer\Request\GetCurrentStock();
+        $respStock = $this->_callCustomer->getCurrentStock($reqStock);
+        $stockId = $respStock->getStockId();
+        /* register sale item (fragment total qty by lots) */
+        $reqSaleItem = new \Praxigento\Warehouse\Service\QtyDistributor\Request\RegisterForSaleItem();
+        $reqSaleItem->setItemId($saleItemId);
+        $reqSaleItem->setProductId($prodId);
+        $reqSaleItem->setQuantity($qtyOrdered);
+        $reqSaleItem->setStockId($stockId);
+        $this->_callQtyDistributor->registerForSaleItem($reqSaleItem);
         return;
     }
 }

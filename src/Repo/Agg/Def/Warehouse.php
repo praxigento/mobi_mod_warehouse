@@ -29,7 +29,7 @@ class Warehouse extends BaseAggRepo implements IWarehouse
     /** @var  \Praxigento\Core\Repo\ITransactionManager */
     protected $_manTrans;
     /** @var IGenericRepo */
-    protected $_repoBasic;
+    protected $_repoGeneric;
     /** @var \Magento\Framework\App\ResourceConnection */
     protected $_resource;
 
@@ -44,7 +44,7 @@ class Warehouse extends BaseAggRepo implements IWarehouse
         $this->_manTrans = $manTrans;
         $this->_resource = $resource;
         $this->_conn = $resource->getConnection();
-        $this->_repoBasic = $repoGeneric;
+        $this->_repoGeneric = $repoGeneric;
         $this->_factorySelect = $factorySelect;
     }
 
@@ -73,14 +73,14 @@ class Warehouse extends BaseAggRepo implements IWarehouse
             $stockId = $data->getId();
             if ($stockId) {
                 /* lookup for catalog inventory stock by ID */
-                $stockData = $this->_repoBasic->getEntityByPk($tbl, [Cfg::E_CATINV_STOCK_A_STOCK_ID => $stockId]);
+                $stockData = $this->_repoGeneric->getEntityByPk($tbl, [Cfg::E_CATINV_STOCK_A_STOCK_ID => $stockId]);
                 if (!$stockData) {
                     /* create top level object (catalog inventory stock) */
                     $bind = [
                         Cfg::E_CATINV_STOCK_A_WEBSITE_ID => $data->getWebsiteId(),
                         Cfg::E_CATINV_STOCK_A_STOCK_NAME => $data->getCode()
                     ];
-                    $stockId = $this->_repoBasic->addEntity($tbl, $bind);
+                    $stockId = $this->_repoGeneric->addEntity($tbl, $bind);
                 }
             } else {
                 /* create top level object (catalog inventory stock) */
@@ -88,7 +88,7 @@ class Warehouse extends BaseAggRepo implements IWarehouse
                     Cfg::E_CATINV_STOCK_A_WEBSITE_ID => $data->getWebsiteId(),
                     Cfg::E_CATINV_STOCK_A_STOCK_NAME => $data->getCode()
                 ];
-                $stockId = $this->_repoBasic->addEntity($tbl, $bind);
+                $stockId = $this->_repoGeneric->addEntity($tbl, $bind);
             }
             /* then create next level object (warehouse) */
             $tbl = EntityWarehouse::ENTITY_NAME;
@@ -98,7 +98,7 @@ class Warehouse extends BaseAggRepo implements IWarehouse
                 EntityWarehouse::ATTR_CURRENCY => $data->getCurrency(),
                 EntityWarehouse::ATTR_NOTE => $data->getNote()
             ];
-            $this->_repoBasic->addEntity($tbl, $bind);
+            $this->_repoGeneric->addEntity($tbl, $bind);
             /* commit changes and compose result data object */
             $this->_manTrans->transactionCommit($trans);
             $result = $data;

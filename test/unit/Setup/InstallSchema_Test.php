@@ -4,8 +4,10 @@
  */
 namespace Praxigento\Warehouse\Setup;
 
+use Praxigento\Warehouse\Data\Entity\Customer;
 use Praxigento\Warehouse\Data\Entity\Lot;
 use Praxigento\Warehouse\Data\Entity\Quantity;
+use Praxigento\Warehouse\Data\Entity\Quantity\Sale;
 use Praxigento\Warehouse\Data\Entity\Stock\Item;
 use Praxigento\Warehouse\Data\Entity\Warehouse;
 
@@ -59,6 +61,8 @@ class InstallSchema_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         $this->mToolDem->shouldReceive('createEntity')->withArgs([Warehouse::ENTITY_NAME, anything()]);
         $this->mToolDem->shouldReceive('createEntity')->withArgs([Lot::ENTITY_NAME, anything()]);
         $this->mToolDem->shouldReceive('createEntity')->withArgs([Quantity::ENTITY_NAME, anything()]);
+        $this->mToolDem->shouldReceive('createEntity')->withArgs([Sale::ENTITY_NAME, anything()]);
+        $this->mToolDem->shouldReceive('createEntity')->withArgs([Customer::ENTITY_NAME, anything()]);
         // $setup->endSetup();
         $this->mSetup
             ->shouldReceive('endSetup')->once();
