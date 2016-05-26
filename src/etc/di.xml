@@ -22,6 +22,8 @@
             type="Praxigento\Warehouse\Repo\Agg\Def\Warehouse"/>
 
     <!-- Repos: Entities -->
+    <preference for="Praxigento\Warehouse\Repo\Entity\ICustomer"
+            type="Praxigento\Warehouse\Repo\Entity\Def\Customer"/>
     <preference for="Praxigento\Warehouse\Repo\Entity\ILot"
             type="Praxigento\Warehouse\Repo\Entity\Def\Lot"/>
     <preference for="Praxigento\Warehouse\Repo\Entity\IQuantity"
@@ -36,6 +38,8 @@
     <!-- Services -->
     <preference for="Praxigento\Warehouse\Service\IQtyDistributor"
             type="Praxigento\Warehouse\Service\QtyDistributor\Call"/>
+    <preference for="Praxigento\Warehouse\Service\ICustomer"
+            type="Praxigento\Warehouse\Service\Customer\Call"/>
 
     <!-- Plugins -->
     <type name="Magento\CatalogInventory\Api\Data\StockStatusCollectionInterfaceFactory">

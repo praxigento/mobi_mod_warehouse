@@ -34,7 +34,7 @@ class Customer extends EntityBase
      */
     public function getPrimaryKeyAttrs()
     {
-        return [self::ATTR_CUST_REF, self::ATTR_STOCK_REF];
+        return [self::ATTR_CUST_REF];
     }
 
     /**

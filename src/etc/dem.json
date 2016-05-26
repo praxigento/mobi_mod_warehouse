@@ -119,7 +119,7 @@
                   }
                 },
                 "index": {
-                  "PK": {"type": "primary", "aliases": ["customer_ref", "stock_ref"]}
+                  "PK": {"type": "primary", "aliases": ["customer_ref"]}
                 },
                 "relation": {
                   "toMageCustomer": {
