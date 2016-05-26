@@ -101,6 +101,45 @@
               }
             },
             "entity": {
+              "Customer": {
+                "alias": "customer",
+                "comment": "Registry for customer2warehouse relations.",
+                "attribute": {
+                  "CustomerRef": {
+                    "alias": "customer_ref",
+                    "comment": "Reference to the customer.",
+                    "nullable": false,
+                    "type": {"integer": {"unsigned": true}}
+                  },
+                  "StockRef": {
+                    "alias": "stock_ref",
+                    "comment": "Reference to inventory stock.",
+                    "nullable": false,
+                    "type": {"integer": {"subtype": "smallint", "unsigned": true}}
+                  }
+                },
+                "index": {
+                  "PK": {"type": "primary", "aliases": ["customer_ref", "stock_ref"]}
+                },
+                "relation": {
+                  "toMageCustomer": {
+                    "own": {"aliases": ["customer_ref"]},
+                    "reference": {
+                      "entity": {"completeAlias": "customer_entity"},
+                      "aliases": ["entity_id"]
+                    },
+                    "action": {"delete": "restrict", "update": "restrict"}
+                  },
+                  "toStock": {
+                    "own": {"aliases": ["stock_ref"]},
+                    "reference": {
+                      "entity": {"completeAlias": "cataloginventory_stock"},
+                      "aliases": ["stock_id"]
+                    },
+                    "action": {"delete": "restrict", "update": "restrict"}
+                  }
+                }
+              },
               "Quantity": {
                 "alias": "quantity",
                 "comment": "Quantity of the product of the some lot on the some warehouse.",
@@ -175,7 +214,7 @@
                 }
               },
               "Warehouse": {
-                "alias": "warehouse",
+                "alias": "wrhs",
                 "comment": "Warehouse.",
                 "attribute": {
                   "StockRef": {
