@@ -39,7 +39,7 @@ interface IWarehouse extends \Praxigento\Core\Repo\IEntity
     );
 
     /**
-     * Get the data instance by ID (ID can be an array for complex primary keys).
+     * Get the data instance by ID.
      *
      * @param int $id
      * @return Entity|bool Found instance data or 'false'
