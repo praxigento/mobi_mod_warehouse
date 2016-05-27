@@ -30,6 +30,7 @@ class Call implements \Praxigento\Warehouse\Service\IQtyDistributor
         /* get list of lots for the product */
         $lots = $this->_subRepo->getLotsByProductId($prodId, $stockId);
         $this->_subRepo->registerSaleItemQty($itemId, $qty, $lots);
+        $result->markSucceed();
         return $result;
     }
 }
