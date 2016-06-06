@@ -12,6 +12,8 @@ use Magento\Framework\Event\ObserverInterface;
  */
 class SaleItemQty implements ObserverInterface
 {
+    /* Names for the items in the event's data */
+    const DATA_INVOICE = 'invoice';
     /** @var \Praxigento\Warehouse\Service\ICustomer */
     protected $_callCustomer;
     /** @var \Praxigento\Warehouse\Service\IQtyDistributor */
@@ -27,30 +29,50 @@ class SaleItemQty implements ObserverInterface
 
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
-        /** @var \Magento\Sales\Model\Order\Item $item */
-        $item = $observer->getData('item');
-        /* MOBI-299: register lots for newly saved order items */
-        $isNew = $item->isObjectNew();
-        if ($isNew) {
-            $saleItemId = $item->getItemId();
+        /** @var \Magento\Sales\Model\Order\Invoice $invoice */
+        $invoice = $observer->getData(self::DATA_INVOICE);
+        /** @var \Magento\Sales\Model\Order $order */
+        $order = $invoice->getOrder();
+        $custId = $order->getCustomerId();
+        /* get stock ID for the customer */
+        $stockId = $this->getStockIdByCustomer($custId);
+        /** @var \Magento\Sales\Api\Data\OrderItemInterface[] $items */
+        $items = $order->getItems();
+        $itemsData = [];
+        /** @var \Magento\Sales\Api\Data\OrderItemInterface $item */
+        foreach ($items as $item) {
             $prodId = $item->getProductId();
-            $qtyOrdered = $item->getQtyOrdered();
-            /* get stock ID for the customer */
-            /** @var \Magento\Sales\Model\Order $order */
-            $order = $item->getOrder();
-            $custId = $order->getCustomerId();
-            $reqStock = new \Praxigento\Warehouse\Service\Customer\Request\GetCurrentStock();
-            $reqStock->setCustomerId($custId);
-            $respStock = $this->_callCustomer->getCurrentStock($reqStock);
-            $stockId = $respStock->getStockId();
+            $itemId = $item->getItemId();
+            /* qty of the product can be changed in invoice */
+            $qtyInvoiced = $item->getQtyInvoiced();
             /* register sale item (fragment total qty by lots) */
-            $reqSaleItem = new \Praxigento\Warehouse\Service\QtyDistributor\Request\RegisterForSaleItem();
-            $reqSaleItem->setItemId($saleItemId);
-            $reqSaleItem->setProductId($prodId);
-            $reqSaleItem->setQuantity($qtyOrdered);
-            $reqSaleItem->setStockId($stockId);
-            $this->_callQtyDistributor->registerForSaleItem($reqSaleItem);
+            $itemData = new \Praxigento\Warehouse\Service\QtyDistributor\Data\Item;
+            $itemData->setItemId($itemId);
+            $itemData->setProductId($prodId);
+            $itemData->setQuantity($qtyInvoiced);
+            $itemData->setStockId($stockId);
+            $itemsData[] = $itemData;
         }
+        $reqSale = new \Praxigento\Warehouse\Service\QtyDistributor\Request\RegisterSale();
+        $reqSale->setSaleItems($itemsData);
+        $this->_callQtyDistributor->registerSale($reqSale);
         return;
+    }
+
+    /**
+     * Define current stock/warehouse for the customer.
+     *
+     * @param $custId
+     * @return int
+     */
+    private function getStockIdByCustomer($custId)
+    {
+        /* TODO: move stock id to the service */
+        /* get stock ID for the customer */
+        $reqStock = new \Praxigento\Warehouse\Service\Customer\Request\GetCurrentStock();
+        $reqStock->setCustomerId($custId);
+        $respStock = $this->_callCustomer->getCurrentStock($reqStock);
+        $result = $respStock->getStockId();
+        return $result;
     }
 }

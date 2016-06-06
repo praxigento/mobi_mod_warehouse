@@ -5,14 +5,18 @@
 
 namespace Praxigento\Warehouse\Service;
 
-use Praxigento\Warehouse\Service\QtyDistributor\Request;
-use Praxigento\Warehouse\Service\QtyDistributor\Response;
 
 interface IQtyDistributor
 {
     /**
-     * @param Request\RegisterForSaleItem $req
-     * @return Response\RegisterForSaleItem
+     * @param QtyDistributor\Request\RegisterForSaleItem $req
+     * @return QtyDistributor\Response\RegisterForSaleItem
      */
     public function registerForSaleItem(QtyDistributor\Request\RegisterForSaleItem $req);
+
+    /**
+     * @param QtyDistributor\Request\RegisterSale $req
+     * @return mixed
+     */
+    public function registerSale(QtyDistributor\Request\RegisterSale $req);
 }

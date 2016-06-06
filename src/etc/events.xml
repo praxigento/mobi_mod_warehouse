@@ -2,9 +2,9 @@
 <config
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
-    <event name="sales_order_item_save_after">
+    <event name="sales_order_invoice_pay">
         <observer
-                name="praxigento_warehouse_on_sales_order_item_save_after"
+                name="praxigento_warehouse_on_sales_order_invoice_pay"
                 instance="Praxigento\Warehouse\Observer\SaleItemQty"/>
     </event>
 </config>

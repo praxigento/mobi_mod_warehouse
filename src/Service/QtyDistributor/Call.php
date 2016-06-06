@@ -6,31 +6,62 @@
 namespace Praxigento\Warehouse\Service\QtyDistributor;
 
 
-use Praxigento\Warehouse\Service\QtyDistributor;
-
 class Call implements \Praxigento\Warehouse\Service\IQtyDistributor
 {
+    /** @var  \Praxigento\Core\Repo\ITransactionManager */
+    protected $_manTrans;
     /** @var \Praxigento\Warehouse\Service\QtyDistributor\Sub\Repo */
     protected $_subRepo;
 
     public function __construct(
+        \Praxigento\Core\Repo\ITransactionManager $manTrans,
         \Praxigento\Warehouse\Service\QtyDistributor\Sub\Repo $subRepo
     ) {
+        $this->_manTrans = $manTrans;
         $this->_subRepo = $subRepo;
     }
 
     /** @inheritdoc */
-    public function registerForSaleItem(QtyDistributor\Request\RegisterForSaleItem $req)
+    public function registerForSaleItem(Request\RegisterForSaleItem $req)
     {
         $result = new Response\RegisterForSaleItem();
         $itemId = $req->getItemId();
         $prodId = $req->getProductId();
         $stockId = $req->getStockId();
         $qty = $req->getQuantity();
-        /* get list of lots for the product */
-        $lots = $this->_subRepo->getLotsByProductId($prodId, $stockId);
-        $this->_subRepo->registerSaleItemQty($itemId, $qty, $lots);
+        if ($qty > 0) {
+            /* get list of lots for the product */
+            $lots = $this->_subRepo->getLotsByProductId($prodId, $stockId);
+            $this->_subRepo->registerSaleItemQty($itemId, $qty, $lots);
+        }
         $result->markSucceed();
+        return $result;
+    }
+
+    public function registerSale(Request\RegisterSale $req)
+    {
+        $result = new Response\RegisterSale();
+        $trans = $this->_manTrans->transactionBegin();
+        try {
+            /** @var \Praxigento\Warehouse\Service\QtyDistributor\Data\Item[] $reqItems */
+            $reqItems = $req->getSaleItems();
+            foreach ($reqItems as $item) {
+                $itemId = $item->getItemId();
+                $prodId = $item->getProductId();
+                $stockId = $item->getStockId();
+                $qty = $item->getQuantity();
+                if ($qty > 0) {
+                    /* get list of lots for the product */
+                    $lots = $this->_subRepo->getLotsByProductId($prodId, $stockId);
+                    $this->_subRepo->registerSaleItemQty($itemId, $qty, $lots);
+                }
+            }
+            $this->_manTrans->transactionCommit($trans);
+            $result->markSucceed();
+        } finally {
+            // transaction will be rolled back if commit is not done (otherwise - do nothing)
+            $this->_manTrans->transactionClose($trans);
+        }
         return $result;
     }
 }
