@@ -16,6 +16,7 @@ use Praxigento\Warehouse\Config as Cfg;
 use Praxigento\Warehouse\Data\Agg\Warehouse as AggWarehouse;
 use Praxigento\Warehouse\Data\Entity\Warehouse as EntityWarehouse;
 use Praxigento\Warehouse\Repo\Agg\IWarehouse;
+use Praxigento\Warehouse\Repo\Entity\IWarehouse as RepoEntityWarehouse;
 
 class Warehouse extends BaseAggRepo implements IWarehouse
 {
@@ -28,6 +29,8 @@ class Warehouse extends BaseAggRepo implements IWarehouse
     protected $_manObj;
     /** @var  \Praxigento\Core\Repo\ITransactionManager */
     protected $_manTrans;
+    /** @var  \Praxigento\Warehouse\Repo\Entity\IWarehouse */
+    protected $_repoEntityWarehouse;
     /** @var IGenericRepo */
     protected $_repoGeneric;
     /** @var \Magento\Framework\App\ResourceConnection */
@@ -38,6 +41,7 @@ class Warehouse extends BaseAggRepo implements IWarehouse
         ITransactionManager $manTrans,
         ResourceConnection $resource,
         IGenericRepo $repoGeneric,
+        RepoEntityWarehouse $repoEntityWarehouse,
         Warehouse\SelectFactory $factorySelect
     ) {
         $this->_manObj = $manObj;
@@ -45,6 +49,7 @@ class Warehouse extends BaseAggRepo implements IWarehouse
         $this->_resource = $resource;
         $this->_conn = $resource->getConnection();
         $this->_repoGeneric = $repoGeneric;
+        $this->_repoEntityWarehouse = $repoEntityWarehouse;
         $this->_factorySelect = $factorySelect;
     }
 
@@ -133,5 +138,15 @@ class Warehouse extends BaseAggRepo implements IWarehouse
     {
         $result = $this->_factorySelect->getSelectCountQuery();
         return $result;
+    }
+
+    public function updateById($id, $data)
+    {
+        $bind = [
+            EntityWarehouse::ATTR_CODE => $data->getData(AggWarehouse::AS_CODE),
+            EntityWarehouse::ATTR_CURRENCY => $data->getData(AggWarehouse::AS_CURRENCY),
+            EntityWarehouse::ATTR_NOTE => $data->getData(AggWarehouse::AS_NOTE)
+        ];
+        $this->_repoEntityWarehouse->updateById($id, $bind);
     }
 }
