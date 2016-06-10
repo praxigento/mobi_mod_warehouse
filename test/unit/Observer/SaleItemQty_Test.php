@@ -17,7 +17,7 @@ class SaleItemQty_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
     private $mCallQtyDistributor;
     /** @var  \Mockery\MockInterface */
     private $mObserver;
-    /** @var  SaleItemQty */
+    /** @var  SalesOrderInvoicePay */
     private $obj;
 
     public function setUp()
@@ -29,7 +29,7 @@ class SaleItemQty_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         $this->mObserver = $this->_mock(\Magento\Framework\Event\Observer::class);
         /** setup mocks for constructor */
         /** create object to test */
-        $this->obj = new SaleItemQty(
+        $this->obj = new SalesOrderInvoicePay(
             $this->mCallCustolmer,
             $this->mCallQtyDistributor
         );

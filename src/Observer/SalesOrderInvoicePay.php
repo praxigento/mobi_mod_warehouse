@@ -10,7 +10,7 @@ use Magento\Framework\Event\ObserverInterface;
 /**
  * Register downline on new customer create event.
  */
-class SaleItemQty implements ObserverInterface
+class SalesOrderInvoicePay implements ObserverInterface
 {
     /* Names for the items in the event's data */
     const DATA_INVOICE = 'invoice';

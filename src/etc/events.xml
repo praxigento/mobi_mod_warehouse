@@ -5,6 +5,6 @@
     <event name="sales_order_invoice_pay">
         <observer
                 name="praxigento_warehouse_on_sales_order_invoice_pay"
-                instance="Praxigento\Warehouse\Observer\SaleItemQty"/>
+                instance="Praxigento\Warehouse\Observer\SalesOrderInvoicePay"/>
     </event>
 </config>
