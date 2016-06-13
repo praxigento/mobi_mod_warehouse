@@ -49,6 +49,22 @@
                 disabled="false"/>
     </type>
 
+    <type name="Magento\CatalogInventory\Model\Stock\Item">
+        <!-- Disable default stock item ID if stock ID is 'null'-->
+        <plugin name="prxgt_wrhs_plugin"
+                type="Praxigento\Warehouse\Plugin\CatalogInventory\Model\Stock\Item"
+                sortOrder="100"
+                disabled="false"/>
+    </type>
+
+    <type name="Magento\CatalogInventory\Model\StockRegistry">
+        <!-- Disable default stock item ID registration on product save -->
+        <plugin name="prxgt_wrhs_plugin"
+                type="Praxigento\Warehouse\Plugin\CatalogInventory\Model\StockRegistry"
+                sortOrder="100"
+                disabled="false"/>
+    </type>
+
     <type name="Magento\CatalogInventory\Ui\DataProvider\Product\AddQuantityFieldToCollection">
         <plugin
                 name="prxgt_wrhs_plugin"
