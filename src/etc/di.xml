@@ -49,6 +49,13 @@
                 disabled="false"/>
     </type>
 
+    <type name="Magento\CatalogInventory\Model\ResourceModel\Stock\Status">
+        <!-- Switch stockId for products collections (MOBI-311) -->
+        <plugin name="prxgt_wrhs_plugin"
+                type="Praxigento\Warehouse\Plugin\CatalogInventory\Model\ResourceModel\Stock\Status"
+                sortOrder="100"
+                disabled="false"/>
+    </type>
     <type name="Magento\CatalogInventory\Model\Stock\Item">
         <!-- Disable default stock item ID if stock ID is 'null'-->
         <plugin name="prxgt_wrhs_plugin"
