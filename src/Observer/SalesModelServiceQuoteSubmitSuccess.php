@@ -8,12 +8,13 @@ use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 
 /**
- * Register downline on new customer create event.
+ * Split items qty by lots and register it.
  */
-class SalesOrderInvoicePay implements ObserverInterface
+class SalesModelServiceQuoteSubmitSuccess implements ObserverInterface
 {
     /* Names for the items in the event's data */
-    const DATA_INVOICE = 'invoice';
+    const DATA_ORDER = 'order';
+    const DATA_QUOTE = 'quote';
 
     /** @var \Praxigento\Warehouse\Service\IQtyDistributor */
     protected $_callQtyDistributor;
@@ -30,10 +31,8 @@ class SalesOrderInvoicePay implements ObserverInterface
 
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
-        /** @var \Magento\Sales\Model\Order\Invoice $invoice */
-        $invoice = $observer->getData(self::DATA_INVOICE);
         /** @var \Magento\Sales\Model\Order $order */
-        $order = $invoice->getOrder();
+        $order = $observer->getData(self::DATA_ORDER);
         $storeId = $order->getStoreId();
         /* get stock ID for the store view */
         $stockId = $this->_manStock->getStockIdByStoreId($storeId);
