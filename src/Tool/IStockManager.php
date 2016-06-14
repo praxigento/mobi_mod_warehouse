@@ -11,4 +11,6 @@ namespace Praxigento\Warehouse\Tool;
 interface  IStockManager
 {
     public function getCurrentStockId();
+
+    public function getStockIdByStoreId($storeId);
 }
