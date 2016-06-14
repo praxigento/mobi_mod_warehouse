@@ -17,13 +17,10 @@ class Status
         $this->_manStock = $manStock;
     }
 
-    public function aroundAddStockDataToCollection(
+    public function afterAddStockDataToCollection(
         \Magento\CatalogInventory\Model\ResourceModel\Stock\Status $subject,
-        \Closure $proceed,
-        $collection,
-        $isFilterInStock
+        $result
     ) {
-        $result = $proceed($collection, $isFilterInStock);
         /** @var \Magento\Framework\Db\Select $select */
         $select = $result->getSelect();
         $from = $select->getPart('from');
