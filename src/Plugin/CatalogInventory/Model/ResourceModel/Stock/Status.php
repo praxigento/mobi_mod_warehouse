@@ -1,5 +1,6 @@
 <?php
 /**
+ * Replace default stock ID by stock ID correlated to store (group) 
  * User: Alex Gusev <alex@flancer64.com>
  */
 
