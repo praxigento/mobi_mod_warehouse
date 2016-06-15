@@ -25,16 +25,32 @@ class AddQuantityFieldToCollection
         \Closure $proceed,
         \Magento\Catalog\Model\ResourceModel\Product\Collection $collection
     ) {
-        $fldProdId = \Magento\CatalogInventory\Model\Stock\Item::PRODUCT_ID;
+        $conn = $collection->getConnection();
+        $select = $collection->getSelect();
+        /* aliases for tables ... */
+        $tblEntity = 'e'; // this is alias for 'catalog_product_entity' table
+        $tblStockItem = $conn->getTableName(\Magento\CatalogInventory\Model\Stock\Item::ENTITY);
+        $tblWrhsQty = $conn->getTableName(\Praxigento\Warehouse\Data\Entity\Quantity::ENTITY_NAME);
+        /* ... and fields */
+        $fldStockItemProdId = \Magento\CatalogInventory\Model\Stock\Item::PRODUCT_ID;
+        $fldStockItemId = \Magento\CatalogInventory\Model\Stock\Item::ITEM_ID;
         $fldEntityId = \Magento\Eav\Model\Entity::DEFAULT_ENTITY_ID_FIELD;
         $fldQty = \Magento\CatalogInventory\Api\Data\StockItemInterface::QTY;
-        $tbl = \Magento\CatalogInventory\Model\Stock\Item::ENTITY;
-        $bind = "$fldProdId=$fldEntityId";
-        $fields = [$fldQty => 'SUM(' . $fldQty . ')'];
-        $cond = null;
-        $joinType = 'left';
-        $collection->joinTable($tbl, $bind, $fields, $cond, $joinType);
-        $collection->groupByAttribute($fldEntityId);
+        $fldStockItemRef = \Praxigento\Warehouse\Data\Entity\Quantity::ATTR_STOCK_ITEM_REF;
+        $fldTotal = \Praxigento\Warehouse\Data\Entity\Quantity::ATTR_TOTAL;
+
+        /* LEFT JOIN `cataloginventory_stock_item` */
+        $on = "`$tblStockItem`.`$fldStockItemProdId`=`$tblEntity`.`$fldEntityId`";
+        $fields = [];
+        $select->joinLeft($tblStockItem, $on, $fields);
+
+        /* LEFT JOIN `prxgt_wrhs_qty` */
+        $on = "`$tblWrhsQty`.`$fldStockItemRef`=`$tblStockItem`.`$fldStockItemId`";
+        $fields = [$fldQty => "SUM(`$tblWrhsQty`.`$fldTotal`)"];
+        $select->joinLeft($tblWrhsQty, $on, $fields);
+
+        /* GROUP BY */
+        $select->group("$tblEntity.$fldEntityId");
         return;
     }
 }
