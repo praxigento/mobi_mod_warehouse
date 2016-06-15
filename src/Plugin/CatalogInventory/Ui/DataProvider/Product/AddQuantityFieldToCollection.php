@@ -1,6 +1,6 @@
 <?php
 /**
- * Join 'cataloginventory_stock_item' table with grouping by product_id and add 'qty' as SUM of the all quantities.
+ * Join 'cataloginventory_stock_item' & 'prxgt_wrhs_qty' tables with grouping by product_id and add 'qty' as SUM of the all quantities.
  *
  * User: Alex Gusev <alex@flancer64.com>
  */
