@@ -35,6 +35,11 @@
     <preference for="Praxigento\Warehouse\Repo\Entity\Quantity\ISale"
             type="Praxigento\Warehouse\Repo\Entity\Quantity\Def\Sale"/>
 
+    <!-- REWRITES -->
+    <preference for="Magento\CatalogInventory\Model\ResourceModel\Stock\Item\StockItemCriteriaMapper"
+            type="Praxigento\Warehouse\Rewrite\CatalogInventory\Model\ResourceModel\Stock\Item\StockItemCriteriaMapper"/>
+
+
     <!-- Services -->
     <preference for="Praxigento\Warehouse\Service\IQtyDistributor"
             type="Praxigento\Warehouse\Service\QtyDistributor\Call"/>
@@ -71,6 +76,16 @@
                 sortOrder="100"
                 disabled="false"/>
     </type>
+
+
+    <type name="Magento\CatalogInventory\Model\StockRegistryProvider">
+        <!-- Detect current stock and select appropriate stock item -->
+        <plugin name="prxgt_wrhs_plugin"
+                type="Praxigento\Warehouse\Plugin\CatalogInventory\Model\StockRegistryProvider"
+                sortOrder="100"
+                disabled="false"/>
+    </type>
+
 
     <type name="Magento\CatalogInventory\Ui\DataProvider\Product\AddQuantityFieldToCollection">
         <!-- Join 'cataloginventory_stock_item' & 'prxgt_wrhs_qty' tables to get totals for all lots/warehouses. -->
