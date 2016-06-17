@@ -16,17 +16,21 @@ class StockRegistryProvider
     protected $_repoStockItem;
     /** @var  \Magento\CatalogInventory\Model\StockRegistryStorage */
     protected $_storageStockRegistry;
+    /** @var  \Praxigento\Warehouse\Tool\IStockManager */
+    protected $_toolStockManager;
 
     public function __construct(
         \Magento\CatalogInventory\Model\StockRegistryStorage $storageStockRegistry,
         \Magento\CatalogInventory\Api\Data\StockItemInterfaceFactory $factoryStockItem,
         \Magento\CatalogInventory\Api\StockItemCriteriaInterfaceFactory $factoryStockItemCrit,
-        \Magento\CatalogInventory\Api\StockItemRepositoryInterface $repoStockItem
+        \Magento\CatalogInventory\Api\StockItemRepositoryInterface $repoStockItem,
+        \Praxigento\Warehouse\Tool\IStockManager $toolStockMan
     ) {
         $this->_storageStockRegistry = $storageStockRegistry;
         $this->_factoryStockItem = $factoryStockItem;
         $this->_factoryStockItemCrit = $factoryStockItemCrit;
         $this->_repoStockItem = $repoStockItem;
+        $this->_toolStockManager = $toolStockMan;
     }
 
     /**
@@ -48,7 +52,8 @@ class StockRegistryProvider
         if (null === $result) {
             $criteria = $this->_factoryStockItemCrit->create();
             $criteria->setProductsFilter($productId);
-            $criteria->setStockFilter(2);
+            $stockId = $this->_toolStockManager->getCurrentStockId();
+            $criteria->setStockFilter($stockId);
             $collection = $this->_repoStockItem->getList($criteria);
             $result = current($collection->getItems());
             if ($result && $result->getItemId()) {
