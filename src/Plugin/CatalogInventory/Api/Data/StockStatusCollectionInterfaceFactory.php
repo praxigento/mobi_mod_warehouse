@@ -7,7 +7,8 @@
 
 namespace Praxigento\Warehouse\Plugin\CatalogInventory\Api\Data;
 
-use Magento\CatalogInventory\Model\Stock\Status as StockStatusEntity;
+use Magento\CatalogInventory\Model\Stock\Status as EntityStockStatus;
+use Praxigento\Warehouse\Data\Entity\Quantity as EntityQty;
 
 class StockStatusCollectionInterfaceFactory
 {
@@ -22,10 +23,10 @@ class StockStatusCollectionInterfaceFactory
         $select = $query->getSelectSql();
         /* add "SUM(qty) as qty" to select */
         $select->columns([
-            StockStatusEntity::KEY_QTY => 'SUM(' . StockStatusEntity::KEY_QTY . ')'
+            EntityStockStatus::KEY_QTY => 'SUM(' . EntityQty::ATTR_TOTAL . ')'
         ]);
         /* add GROUP BY 'product_id' */
-        $select->group(StockStatusEntity::KEY_PRODUCT_ID);
+        $select->group(EntityStockStatus::KEY_PRODUCT_ID);
         return $result;
     }
 }
