@@ -2,20 +2,12 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
-namespace Praxigento\Warehouse\Observer;
 
-use Magento\Framework\Event\Observer;
-use Magento\Framework\Event\ObserverInterface;
+namespace Praxigento\Warehouse\Observer\Sub;
 
-/**
- * Split items qty by lots and register it.
- */
-class SalesModelServiceQuoteSubmitSuccess implements ObserverInterface
+
+class Register
 {
-    /* Names for the items in the event's data */
-    const DATA_ORDER = 'order';
-    const DATA_QUOTE = 'quote';
-
     /** @var \Praxigento\Warehouse\Service\IQtyDistributor */
     protected $_callQtyDistributor;
     /** @var  \Praxigento\Warehouse\Tool\IStockManager */
@@ -29,10 +21,8 @@ class SalesModelServiceQuoteSubmitSuccess implements ObserverInterface
         $this->_callQtyDistributor = $callQtyDistributor;
     }
 
-    public function execute(\Magento\Framework\Event\Observer $observer)
+    public function splitQty(\Magento\Sales\Api\Data\OrderInterface $order)
     {
-        /** @var \Magento\Sales\Model\Order $order */
-        $order = $observer->getData(self::DATA_ORDER);
         $storeId = $order->getStoreId();
         /* get stock ID for the store view */
         $stockId = $this->_manStock->getStockIdByStoreId($storeId);
@@ -56,6 +46,5 @@ class SalesModelServiceQuoteSubmitSuccess implements ObserverInterface
         $reqSale = new \Praxigento\Warehouse\Service\QtyDistributor\Request\RegisterSale();
         $reqSale->setSaleItems($itemsData);
         $this->_callQtyDistributor->registerSale($reqSale);
-        return;
     }
 }
