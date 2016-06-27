@@ -19,4 +19,16 @@ class Sale extends BaseEntityRepo implements IEntityRepo
         parent::__construct($resource, $repoGeneric, Entity::class);
     }
 
+    /** @inheritdoc */
+    public function getBySaleItemId($id)
+    {
+        $result = [];
+        $where = '=' . (int)$id;
+        $rows = $this->get($where);
+        foreach ($rows as $row) {
+            $item = new Entity($row);
+            $result[] = $item;
+        }
+        return $result;
+    }
 }
