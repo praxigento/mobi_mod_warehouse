@@ -19,7 +19,7 @@ class Warehouse extends DataObject
     const AS_ID = 'Id';
     const AS_NOTE = 'Note';
     const AS_WEBSITE_ID = 'WebsiteId';
-    /**#@-*/
+    /**#@- */
 
     /**
      * @return string
