@@ -2,13 +2,12 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
-
 namespace Praxigento\Warehouse\Repo\Agg;
 
-use Praxigento\Core\Repo\IAggregate;
 use Praxigento\Warehouse\Data\Agg\Warehouse as AggWarehouse;
 
-interface IWarehouse extends IAggregate
+interface IWarehouse
+    extends \Praxigento\Core\Repo\IBaseCrud
 {
     const AS_STOCK = 'cs';
     const AS_WRHS = 'pww';

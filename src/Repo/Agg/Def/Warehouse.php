@@ -9,15 +9,14 @@ namespace Praxigento\Warehouse\Repo\Agg\Def;
 
 use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\ObjectManagerInterface;
-use Praxigento\Core\Repo\Def\Aggregate as BaseAggRepo;
 use Praxigento\Core\Repo\IGeneric as IGenericRepo;
-use Praxigento\Core\Repo\Transaction\IManager;
 use Praxigento\Warehouse\Config as Cfg;
 use Praxigento\Warehouse\Data\Agg\Warehouse as AggWarehouse;
 use Praxigento\Warehouse\Data\Entity\Warehouse as EntityWarehouse;
-use Praxigento\Warehouse\Repo\Agg\IWarehouse;
 
-class Warehouse extends BaseAggRepo implements IWarehouse
+class Warehouse
+    extends \Praxigento\Core\Repo\Def\BaseCrud
+    implements \Praxigento\Warehouse\Repo\Agg\IWarehouse
 {
 
     /** @var  \Magento\Framework\DB\Adapter\AdapterInterface */
