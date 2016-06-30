@@ -11,7 +11,7 @@ use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\ObjectManagerInterface;
 use Praxigento\Core\Repo\Def\Aggregate as BaseAggRepo;
 use Praxigento\Core\Repo\IGeneric as IGenericRepo;
-use Praxigento\Core\Repo\ITransactionManager;
+use Praxigento\Core\Repo\Transaction\IManager;
 use Praxigento\Warehouse\Config as Cfg;
 use Praxigento\Warehouse\Data\Agg\Warehouse as AggWarehouse;
 use Praxigento\Warehouse\Data\Entity\Warehouse as EntityWarehouse;
@@ -26,7 +26,7 @@ class Warehouse extends BaseAggRepo implements IWarehouse
     protected $_factorySelect;
     /** @var  ObjectManagerInterface */
     protected $_manObj;
-    /** @var  \Praxigento\Core\Repo\ITransactionManager */
+    /** @var  \Praxigento\Core\Repo\Transaction\IManager */
     protected $_manTrans;
     /** @var  \Praxigento\Warehouse\Repo\Entity\IWarehouse */
     protected $_repoEntityWarehouse;
@@ -37,7 +37,7 @@ class Warehouse extends BaseAggRepo implements IWarehouse
 
     public function __construct(
         \Magento\Framework\ObjectManagerInterface $manObj,
-        \Praxigento\Core\Repo\ITransactionManager $manTrans,
+        \Praxigento\Core\Repo\Transaction\IManager $manTrans,
         \Magento\Framework\App\ResourceConnection $resource,
         \Praxigento\Core\Repo\IGeneric $repoGeneric,
         \Praxigento\Warehouse\Repo\Entity\IWarehouse $repoEntityWarehouse,

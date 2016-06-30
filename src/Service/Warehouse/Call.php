@@ -6,7 +6,7 @@
 namespace Praxigento\Warehouse\Service\Warehouse;
 
 use Magento\Framework\ObjectManagerInterface;
-use Praxigento\Core\Repo\ITransactionManager;
+use Praxigento\Core\Repo\Transaction\IManager;
 use Praxigento\Warehouse\Api\WarehouseInterface;
 use Praxigento\Warehouse\Data\Entity\Warehouse as EntityWarehouse;
 
@@ -14,14 +14,14 @@ class Call implements WarehouseInterface
 {
     /** @var ObjectManagerInterface */
     protected $_manObj;
-    /** @var  ITransactionManager */
+    /** @var  IManager */
     protected $_manTrans;
     /** @var \Praxigento\Warehouse\Repo\Entity\IWarehouse */
     protected $_repoEntityWarehouse;
 
     public function __construct(
         \Magento\Framework\ObjectManagerInterface $manObj,
-        \Praxigento\Core\Repo\ITransactionManager $manTrans,
+        \Praxigento\Core\Repo\Transaction\IManager $manTrans,
         \Praxigento\Warehouse\Repo\Entity\IWarehouse $repoEntityWarehouse
     ) {
         $this->_manObj = $manObj;

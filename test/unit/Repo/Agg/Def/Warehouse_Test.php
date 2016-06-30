@@ -71,7 +71,7 @@ class Warehouse_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         ]);
         /** === Setup Mocks === */
         // $trans = $this->_manTrans->transactionBegin();
-        $mTrans = $this->_mock(\Praxigento\Core\Repo\ITransactionDefinition::class);
+        $mTrans = $this->_mock(\Praxigento\Core\Repo\Transaction\IDefinition::class);
         $this->mManTrans
             ->shouldReceive('transactionBegin')->once()
             ->andReturn($mTrans);
@@ -112,7 +112,7 @@ class Warehouse_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         ]);
         /** === Setup Mocks === */
         // $trans = $this->_manTrans->transactionBegin();
-        $mTrans = $this->_mock(\Praxigento\Core\Repo\ITransactionDefinition::class);
+        $mTrans = $this->_mock(\Praxigento\Core\Repo\Transaction\IDefinition::class);
         $this->mManTrans
             ->shouldReceive('transactionBegin')->once()
             ->andReturn($mTrans);

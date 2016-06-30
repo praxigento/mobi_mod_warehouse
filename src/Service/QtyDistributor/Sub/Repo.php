@@ -12,7 +12,7 @@ use Praxigento\Warehouse\Data\Entity\Quantity\Sale as QtySale;
 
 class Repo
 {
-    /** @var  \Praxigento\Core\Repo\ITransactionManager */
+    /** @var  \Praxigento\Core\Repo\Transaction\IManager */
     protected $_manTrans;
     /** @var \Praxigento\Core\Repo\IGeneric */
     protected $_repoGeneric;
@@ -22,7 +22,7 @@ class Repo
     protected $_repoQtySale;
 
     public function __construct(
-        \Praxigento\Core\Repo\ITransactionManager $manTrans,
+        \Praxigento\Core\Repo\Transaction\IManager $manTrans,
         \Praxigento\Core\Repo\IGeneric $repoGeneric,
         \Praxigento\Warehouse\Repo\Entity\IQuantity $repoQty,
         \Praxigento\Warehouse\Repo\Entity\Quantity\ISale $repoQtySale
