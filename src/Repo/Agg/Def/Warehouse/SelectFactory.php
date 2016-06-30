@@ -2,18 +2,16 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
-
 namespace Praxigento\Warehouse\Repo\Agg\Def\Warehouse;
 
-
 use Magento\Framework\App\ResourceConnection;
-use Praxigento\Core\Repo\IHasSelectQuery;
 use Praxigento\Warehouse\Config as Cfg;
 use Praxigento\Warehouse\Data\Agg\Warehouse as AggWarehouse;
 use Praxigento\Warehouse\Data\Entity\Warehouse as EntityWarehouse;
 use Praxigento\Warehouse\Repo\Agg\IWarehouse as IRepoWarehouse;
 
-class SelectFactory implements IHasSelectQuery
+class SelectFactory
+    implements \Praxigento\Core\Repo\Query\IHasSelect
 {
     /** @var  \Magento\Framework\DB\Adapter\AdapterInterface */
     protected $_conn;

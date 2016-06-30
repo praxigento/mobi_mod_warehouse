@@ -11,7 +11,7 @@ use Magento\Framework\App\RequestInterface;
 use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Element\UiComponent\DataProvider\Reporting;
 use Magento\Store\Model\StoreManagerInterface;
-use Praxigento\Core\Repo\Criteria\IAdapter as ICriteriaAdapter;
+use Praxigento\Core\Repo\Query\Criteria\IAdapter as ICriteriaAdapter;
 use Praxigento\Core\Ui\DataProvider\Base as BaseDataProvider;
 use Praxigento\Warehouse\Repo\Entity\ILot as IRepoEntityLot;
 
