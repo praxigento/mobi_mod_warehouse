@@ -16,7 +16,6 @@ use Praxigento\Warehouse\Config as Cfg;
 use Praxigento\Warehouse\Data\Agg\Warehouse as AggWarehouse;
 use Praxigento\Warehouse\Data\Entity\Warehouse as EntityWarehouse;
 use Praxigento\Warehouse\Repo\Agg\IWarehouse;
-use Praxigento\Warehouse\Repo\Entity\IWarehouse as RepoEntityWarehouse;
 
 class Warehouse extends BaseAggRepo implements IWarehouse
 {
@@ -37,11 +36,11 @@ class Warehouse extends BaseAggRepo implements IWarehouse
     protected $_resource;
 
     public function __construct(
-        ObjectManagerInterface $manObj,
-        ITransactionManager $manTrans,
-        ResourceConnection $resource,
-        IGenericRepo $repoGeneric,
-        RepoEntityWarehouse $repoEntityWarehouse,
+        \Magento\Framework\ObjectManagerInterface $manObj,
+        \Praxigento\Core\Repo\ITransactionManager $manTrans,
+        \Magento\Framework\App\ResourceConnection $resource,
+        \Praxigento\Core\Repo\IGeneric $repoGeneric,
+        \Praxigento\Warehouse\Repo\Entity\IWarehouse $repoEntityWarehouse,
         Warehouse\SelectFactory $factorySelect
     ) {
         $this->_manObj = $manObj;

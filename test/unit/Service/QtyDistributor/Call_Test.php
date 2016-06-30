@@ -9,6 +9,8 @@ include_once(__DIR__ . '/../../phpunit_bootstrap.php');
 class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
 {
     /** @var  \Mockery\MockInterface */
+    private $mManTrans;
+    /** @var  \Mockery\MockInterface */
     private $mSubRepo;
     /** @var  Call */
     private $obj;
@@ -17,9 +19,11 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
     {
         parent::setUp();
         /** create mocks */
+        $this->mManTrans = $this->_mockTransactionManager();
         $this->mSubRepo = $this->_mock(\Praxigento\Warehouse\Service\QtyDistributor\Sub\Repo::class);
         /** create object to test */
         $this->obj = new Call(
+            $this->mManTrans,
             $this->mSubRepo
         );
     }

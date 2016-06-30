@@ -21,6 +21,8 @@ class Warehouse_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
     /** @var  \Mockery\MockInterface */
     private $mRepoGeneric;
     /** @var  \Mockery\MockInterface */
+    private $mRepoEntityWarehouse;
+    /** @var  \Mockery\MockInterface */
     private $mResource;
     /** @var  Warehouse */
     private $obj;
@@ -34,6 +36,7 @@ class Warehouse_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         $this->mConn = $this->_mockConn();
         $this->mResource = $this->_mockResourceConnection($this->mConn);
         $this->mRepoGeneric = $this->_mockRepoGeneric();
+        $this->mRepoEntityWarehouse = $this->_mock(\Praxigento\Warehouse\Repo\Entity\IWarehouse::class);
         $this->mFactorySelect = $this->_mock(Warehouse\SelectFactory::class);
         /** setup mocks for constructor */
         /** create object to test */
@@ -42,6 +45,7 @@ class Warehouse_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
             $this->mManTrans,
             $this->mResource,
             $this->mRepoGeneric,
+            $this->mRepoEntityWarehouse,
             $this->mFactorySelect
         );
     }

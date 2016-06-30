@@ -10,25 +10,34 @@ class StockStatusCollectionInterfaceFactory_UnitTest extends \Praxigento\Core\Te
 {
     /** @var  StockStatusCollectionInterfaceFactory */
     private $obj;
+    /** @var  \Mockery\MockInterface */
+    private $mToolStockMan;
 
     protected function setUp()
     {
         parent::setUp();
+        /** create mocks */
+        $this->mToolStockMan = $this->_mock(\Praxigento\Warehouse\Tool\IStockManager::class);
         /** create object to test */
-        $this->obj = new StockStatusCollectionInterfaceFactory();
+        $this->obj = new StockStatusCollectionInterfaceFactory(
+            $this->mToolStockMan
+        );
     }
 
     public function test_beforeCreate()
     {
         /** === Test Data === */
+        $STOCK_ID = 12;
         /** === Setup Mocks === */
         $mQuery = $this->_mock(\Magento\Framework\Db\Query::class);
-        $mSelect = $this->_mock(\Magento\Framework\Db\Select::class);
+        $mSelect = $this->_mockDbSelect(['columns', 'joinLeft', 'where', 'group']);
         // $select = $query->getSelectSql();
         $mQuery->shouldReceive('getSelectSql')->once()
             ->andReturn($mSelect);
-        // $select->columns(...);
-        $mSelect->shouldReceive('columns', 'group');
+        // $stockId = (int)$this->_toolStockManager->getCurrentStockId();
+        $this->mToolStockMan
+            ->shouldReceive('getCurrentStockId')->once()
+            ->andReturn($STOCK_ID);
         /** === Call and asserts  === */
         $data = ['query' => $mQuery];
         $res = $this->obj->beforeCreate(null, $data);
