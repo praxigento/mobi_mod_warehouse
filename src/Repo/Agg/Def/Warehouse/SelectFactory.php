@@ -32,8 +32,8 @@ class SelectFactory
         /* aliases and tables */
         $asStock = IRepoWarehouse::AS_STOCK;
         $asWrhs = IRepoWarehouse::AS_WRHS;
-        $tblStock = [$asStock => $this->_conn->getTableName(Cfg::ENTITY_MAGE_CATALOGINVENTORY_STOCK)];
-        $tblWrhs = [$asWrhs => $this->_conn->getTableName(EntityWarehouse::ENTITY_NAME)];
+        $tblStock = [$asStock => $this->_resource->getTableName(Cfg::ENTITY_MAGE_CATALOGINVENTORY_STOCK)];
+        $tblWrhs = [$asWrhs => $this->_resource->getTableName(EntityWarehouse::ENTITY_NAME)];
         /* SELECT FROM cataloginventory_stock */
         $cols = "COUNT(" . Cfg::E_CATINV_STOCK_A_STOCK_ID . ")";
         $result->from($tblStock, $cols);
@@ -51,8 +51,8 @@ class SelectFactory
         /* aliases and tables */
         $asStock = IRepoWarehouse::AS_STOCK;
         $asWrhs = IRepoWarehouse::AS_WRHS;
-        $tblStock = [$asStock => $this->_conn->getTableName(Cfg::ENTITY_MAGE_CATALOGINVENTORY_STOCK)];
-        $tblWrhs = [$asWrhs => $this->_conn->getTableName(EntityWarehouse::ENTITY_NAME)];
+        $tblStock = [$asStock => $this->_resource->getTableName(Cfg::ENTITY_MAGE_CATALOGINVENTORY_STOCK)];
+        $tblWrhs = [$asWrhs => $this->_resource->getTableName(EntityWarehouse::ENTITY_NAME)];
         /* SELECT FROM cataloginventory_stock */
         $cols = [
             AggWarehouse::AS_ID => Cfg::E_CATINV_STOCK_A_STOCK_ID,
