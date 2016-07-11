@@ -20,13 +20,17 @@ class Repo
     protected $_repoQty;
     /** @var \Praxigento\Warehouse\Repo\Entity\Quantity\ISale */
     protected $_repoQtySale;
+    /** @var  \Magento\Framework\App\ResourceConnection */
+    protected $_resource;
 
     public function __construct(
+        \Magento\Framework\App\ResourceConnection $resource,
         \Praxigento\Core\Repo\Transaction\IManager $manTrans,
         \Praxigento\Core\Repo\IGeneric $repoGeneric,
         \Praxigento\Warehouse\Repo\Entity\IQuantity $repoQty,
         \Praxigento\Warehouse\Repo\Entity\Quantity\ISale $repoQtySale
     ) {
+        $this->_resource = $resource;
         $this->_manTrans = $manTrans;
         $this->_repoGeneric = $repoGeneric;
         $this->_repoQty = $repoQty;
@@ -41,9 +45,9 @@ class Repo
         $asStockItem = 'csi';
         $asQty = 'pwq';
         $asLot = 'pwl';
-        $tblStockItem = [$asStockItem => $conn->getTableName(Cfg::ENTITY_MAGE_CATALOGINVENTORY_STOCK_ITEM)];
-        $tblQty = [$asQty => $conn->getTableName(Quantity::ENTITY_NAME)];
-        $tblLot = [$asLot => $conn->getTableName(Lot::ENTITY_NAME)];
+        $tblStockItem = [$asStockItem => $this->_resource->getTableName(Cfg::ENTITY_MAGE_CATALOGINVENTORY_STOCK_ITEM)];
+        $tblQty = [$asQty => $this->_resource->getTableName(Quantity::ENTITY_NAME)];
+        $tblLot = [$asLot => $this->_resource->getTableName(Lot::ENTITY_NAME)];
         /* SELECT FROM cataloginventory_stock_item */
         $query = $conn->select();
         $cols = [Alias::AS_STOCK_ITEM_ID => Cfg::E_CATINV_STOCK_ITEM_A_ITEM_ID];

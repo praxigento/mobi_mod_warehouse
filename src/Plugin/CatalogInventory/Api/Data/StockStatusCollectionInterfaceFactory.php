@@ -15,10 +15,14 @@ class StockStatusCollectionInterfaceFactory
 {
     /** @var  \Praxigento\Warehouse\Tool\IStockManager */
     protected $_toolStockManager;
+    /** @var  \Magento\Framework\App\ResourceConnection */
+    protected $_resource;
 
     public function __construct(
+        \Magento\Framework\App\ResourceConnection $resource,
         \Praxigento\Warehouse\Tool\IStockManager $toolStockMan
     ) {
+        $this->_resource = $resource;
         $this->_toolStockManager = $toolStockMan;
     }
 
@@ -38,7 +42,7 @@ class StockStatusCollectionInterfaceFactory
             EntityStockStatus::KEY_QTY => 'SUM(' . self::AS_TBL_QTY . '.' . EntityQty::ATTR_TOTAL . ')'
         ]);
         /* LEFT JOIN cataloginventory_stock_item */
-        $tbl = [self::AS_TBL_STOCK_ITEM => EntityStockItem::ENTITY];
+        $tbl = [self::AS_TBL_STOCK_ITEM => $this->_resource->getTableName(EntityStockItem::ENTITY)];
         $cols = [];
         $on = self::AS_TBL_STOCK_ITEM . '.' . EntityStockItem::PRODUCT_ID . '='
             . 'main_table.' . EntityStockStatus::PRODUCT_ID;
@@ -46,7 +50,7 @@ class StockStatusCollectionInterfaceFactory
             . 'main_table.' . EntityStockStatus::STOCK_ID;
         $select->joinLeft($tbl, $on, $cols);
         /* LEFT JOIN prxgt_wrhs_qty */
-        $tbl = [self::AS_TBL_QTY => EntityQty::ENTITY_NAME];
+        $tbl = [self::AS_TBL_QTY => $this->_resource->getTableName(EntityQty::ENTITY_NAME)];
         $cols = [];
         $on = self::AS_TBL_QTY . '.' . EntityQty::ATTR_STOCK_ITEM_REF . '='
             . self::AS_TBL_STOCK_ITEM . '.' . EntityStockItem::ITEM_ID;

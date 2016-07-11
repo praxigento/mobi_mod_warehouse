@@ -42,9 +42,9 @@ class SelectFactory_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         $this->mConn
             ->shouldReceive('select')->once()
             ->andReturn($mResult);
-        // $tblStock = [$asStock => $this->_conn->getTableName(Cfg::ENTITY_MAGE_CATALOGINVENTORY_STOCK)];
-        // $tblWrhs = [$asWrhs => $this->_conn->getTableName(EntityWarehouse::ENTITY_NAME)];
-        $this->mConn
+        // $tblStock = [$asStock => $this->_resource->getTableName(Cfg::ENTITY_MAGE_CATALOGINVENTORY_STOCK)];
+        // $tblWrhs = [$asWrhs => $this->_resource->getTableName(EntityWarehouse::ENTITY_NAME)];
+        $this->mResource
             ->shouldReceive('getTableName')->twice();
         // $result->from($tblStock, $cols);
         $mResult->shouldReceive('from', 'joinLeft');
@@ -60,9 +60,9 @@ class SelectFactory_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         $this->mConn
             ->shouldReceive('select')->once()
             ->andReturn($mResult);
-        // $tblStock = [$asStock => $this->_conn->getTableName(Cfg::ENTITY_MAGE_CATALOGINVENTORY_STOCK)];
-        // $tblWrhs = [$asWrhs => $this->_conn->getTableName(EntityWarehouse::ENTITY_NAME)];
-        $this->mConn
+        // $tblStock = [$asStock => $this->_resource->getTableName(Cfg::ENTITY_MAGE_CATALOGINVENTORY_STOCK)];
+        // $tblWrhs = [$asWrhs => $this->_resource->getTableName(EntityWarehouse::ENTITY_NAME)];
+        $this->mResource
             ->shouldReceive('getTableName')->twice();
         // $result->from($tblStock, $cols);
         $mResult->shouldReceive('from', 'joinLeft');
