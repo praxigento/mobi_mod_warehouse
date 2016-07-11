@@ -12,14 +12,18 @@ class StockStatusCollectionInterfaceFactory_UnitTest extends \Praxigento\Core\Te
     private $obj;
     /** @var  \Mockery\MockInterface */
     private $mToolStockMan;
+    /** @var  \Mockery\MockInterface */
+    private $mResource;
 
     protected function setUp()
     {
         parent::setUp();
         /** create mocks */
+        $this->mResource = $this->_mockResourceConnection();
         $this->mToolStockMan = $this->_mock(\Praxigento\Warehouse\Tool\IStockManager::class);
         /** create object to test */
         $this->obj = new StockStatusCollectionInterfaceFactory(
+            $this->mResource,
             $this->mToolStockMan
         );
     }

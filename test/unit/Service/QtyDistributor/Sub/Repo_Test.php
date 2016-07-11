@@ -15,6 +15,8 @@ class Repo_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
     /** @var  \Mockery\MockInterface */
     private $mRepoQty;
     /** @var  \Mockery\MockInterface */
+    private $mResource;
+    /** @var  \Mockery\MockInterface */
     private $mRepoQtySale;
     /** @var  Repo */
     private $obj;
@@ -23,12 +25,14 @@ class Repo_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
     {
         parent::setUp();
         /** create mocks */
+        $this->mResource = $this->_mockResourceConnection();
         $this->mManTrans = $this->_mockTransactionManager();
         $this->mRepoGeneric = $this->_mockRepoGeneric();
         $this->mRepoQty = $this->_mock(\Praxigento\Warehouse\Repo\Entity\IQuantity::class);
         $this->mRepoQtySale = $this->_mock(\Praxigento\Warehouse\Repo\Entity\Quantity\ISale::class);
         /** create object to test */
         $this->obj = new Repo(
+            $this->mResource,
             $this->mManTrans,
             $this->mRepoGeneric,
             $this->mRepoQty,
