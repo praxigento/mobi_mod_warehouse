@@ -28,11 +28,11 @@ class AddQuantityFieldToCollection_UnitTest extends \Praxigento\Core\Test\BaseMo
         $mProceed = function () {
         };
         $mCollection = $this->_mock(\Magento\Catalog\Model\ResourceModel\Product\Collection::class);
-        // $resource = $collection->getResource();
-        $mResource = $this->_mockConn(['getTableName']);
+        // $resourceModel = $collection->getResource();
+        $mResourceModel = $this->_mockConn(['getTable']);
         $mCollection
             ->shouldReceive('getResource')->once()
-            ->andReturn($mResource);
+            ->andReturn($mResourceModel);
         // $select = $collection->getSelect();
         $mSelect = $this->_mockDbSelect(['joinLeft', 'group']);
         $mCollection
