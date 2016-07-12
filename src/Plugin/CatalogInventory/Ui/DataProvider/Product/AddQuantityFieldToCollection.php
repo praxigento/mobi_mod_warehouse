@@ -25,12 +25,13 @@ class AddQuantityFieldToCollection
         \Closure $proceed,
         \Magento\Catalog\Model\ResourceModel\Product\Collection $collection
     ) {
-        $resource = $collection->getResource();
+        /** @var \Magento\Catalog\Model\ResourceModel\AbstractResource $resourceModel */
+        $resourceModel = $collection->getResource();
         $select = $collection->getSelect();
         /* aliases for tables ... */
         $tblEntity = 'e'; // this is alias for 'catalog_product_entity' table
-        $tblStockItem = $resource->getTableName(\Magento\CatalogInventory\Model\Stock\Item::ENTITY);
-        $tblWrhsQty = $resource->getTableName(\Praxigento\Warehouse\Data\Entity\Quantity::ENTITY_NAME);
+        $tblStockItem = $resourceModel->getTable(\Magento\CatalogInventory\Model\Stock\Item::ENTITY);
+        $tblWrhsQty = $resourceModel->getTable(\Praxigento\Warehouse\Data\Entity\Quantity::ENTITY_NAME);
         /* ... and fields */
         $fldStockItemProdId = \Magento\CatalogInventory\Model\Stock\Item::PRODUCT_ID;
         $fldStockItemId = \Magento\CatalogInventory\Model\Stock\Item::ITEM_ID;
