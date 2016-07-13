@@ -33,13 +33,13 @@ class Register
         foreach ($items as $item) {
             $prodId = $item->getProductId();
             $itemId = $item->getItemId();
-            /* qty of the product can be changed in invoice */
-            $qtyInvoiced = $item->getQtyInvoiced();
+            /* qty of the product can be changed in invoice, but we use ordered only  */
+            $qty = $item->getQtyOrdered();
             /* register sale item (fragment total qty by lots) */
             $itemData = new \Praxigento\Warehouse\Service\QtyDistributor\Data\Item;
             $itemData->setItemId($itemId);
             $itemData->setProductId($prodId);
-            $itemData->setQuantity($qtyInvoiced);
+            $itemData->setQuantity($qty);
             $itemData->setStockId($stockId);
             $itemsData[] = $itemData;
         }
