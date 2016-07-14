@@ -103,5 +103,12 @@
                 disabled="false"/>
     </type>
 
+    <type name="Magento\Tax\Model\Calculation">
+        <plugin name="prxgt_wrhs_plugin"
+                type="Praxigento\Warehouse\Plugin\Tax\Model\Calculation"
+                sortOrder="100"
+                disabled="false"/>
+    </type>
+
 
 </config>
