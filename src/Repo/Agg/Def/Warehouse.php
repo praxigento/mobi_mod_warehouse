@@ -99,6 +99,7 @@ class Warehouse
                 EntityWarehouse::ATTR_STOCK_REF => $stockId,
                 EntityWarehouse::ATTR_CODE => $data->getCode(),
                 EntityWarehouse::ATTR_CURRENCY => $data->getCurrency(),
+                EntityWarehouse::ATTR_COUNTRY_CODE => $data->getCountryCode(),
                 EntityWarehouse::ATTR_NOTE => $data->getNote()
             ];
             $this->_repoGeneric->addEntity($tbl, $bind);
@@ -143,6 +144,7 @@ class Warehouse
         $bind = [
             EntityWarehouse::ATTR_CODE => $data->getData(AggWarehouse::AS_CODE),
             EntityWarehouse::ATTR_CURRENCY => $data->getData(AggWarehouse::AS_CURRENCY),
+            EntityWarehouse::ATTR_COUNTRY_CODE => $data->getData(AggWarehouse::AS_COUNTRY_CODE),
             EntityWarehouse::ATTR_NOTE => $data->getData(AggWarehouse::AS_NOTE)
         ];
         $this->_repoEntityWarehouse->updateById($id, $bind);

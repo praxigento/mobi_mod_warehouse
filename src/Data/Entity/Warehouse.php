@@ -57,14 +57,6 @@ class Warehouse
     }
 
     /**
-     * @param string $data
-     */
-    public function setCountryCode($data)
-    {
-        parent::setData(self::ATTR_COUNTRY_CODE, $data);
-    }
-
-    /**
      * @return int
      */
     public function getStockRef()
@@ -79,6 +71,14 @@ class Warehouse
     public function setCode($data)
     {
         parent::setData(self::ATTR_CODE, $data);
+    }
+
+    /**
+     * @param string $data
+     */
+    public function setCountryCode($data)
+    {
+        parent::setData(self::ATTR_COUNTRY_CODE, $data);
     }
 
     /**

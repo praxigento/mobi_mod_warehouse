@@ -238,7 +238,7 @@
                   "CountryCode": {
                     "alias": "country_code",
                     "comment": "Code for country of the location. Used in tax calculation.",
-                    "nullable": false,
+                    "nullable": true,
                     "type": {"text": {"length": 2}}
                   },
                   "Note": {
