@@ -4,9 +4,8 @@
  */
 namespace Praxigento\Warehouse\Data\Entity;
 
-use Praxigento\Core\Data\Entity\Base as EntityBase;
-
-class Customer extends EntityBase
+class Customer
+    extends \Praxigento\Core\Data\Entity\Base
 {
     const ATTR_CUST_REF = 'customer_ref';
     const ATTR_STOCK_REF = 'stock_ref';
@@ -19,14 +18,6 @@ class Customer extends EntityBase
     {
         $result = parent::getData(self::ATTR_CUST_REF);
         return $result;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getEntityName()
-    {
-        return self::ENTITY_NAME;
     }
 
     /**

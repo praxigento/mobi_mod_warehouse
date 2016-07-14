@@ -4,9 +4,8 @@
  */
 namespace Praxigento\Warehouse\Data\Entity;
 
-use Praxigento\Core\Data\Entity\Base as EntityBase;
-
-class Lot extends EntityBase
+class Lot
+    extends \Praxigento\Core\Data\Entity\Base
 {
     const ATTR_CODE = 'code';
     const ATTR_EXP_DATE = 'exp_date';
@@ -20,14 +19,6 @@ class Lot extends EntityBase
     {
         $result = parent::getData(self::ATTR_CODE);
         return $result;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getEntityName()
-    {
-        return self::ENTITY_NAME;
     }
 
     /**

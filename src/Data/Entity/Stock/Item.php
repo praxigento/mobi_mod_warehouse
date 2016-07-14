@@ -4,21 +4,12 @@
  */
 namespace Praxigento\Warehouse\Data\Entity\Stock;
 
-use Praxigento\Core\Data\Entity\Base as EntityBase;
-
-class Item extends EntityBase
+class Item
+    extends \Praxigento\Core\Data\Entity\Base
 {
     const ATTR_PRICE = 'price';
     const ATTR_STOCK_ITEM_REF = 'stock_item_ref';
     const ENTITY_NAME = 'prxgt_wrhs_stock_item';
-
-    /**
-     * @inheritdoc
-     */
-    public function getEntityName()
-    {
-        return self::ENTITY_NAME;
-    }
 
     /**
      * @return double

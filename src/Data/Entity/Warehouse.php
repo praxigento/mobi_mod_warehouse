@@ -4,11 +4,11 @@
  */
 namespace Praxigento\Warehouse\Data\Entity;
 
-use Praxigento\Core\Data\Entity\Base as EntityBase;
-
-class Warehouse extends EntityBase
+class Warehouse
+    extends \Praxigento\Core\Data\Entity\Base
 {
     const ATTR_CODE = 'code';
+    const ATTR_COUNTRY_CODE = 'country_code';
     const ATTR_CURRENCY = 'currency';
     const ATTR_NOTE = 'note';
     const ATTR_STOCK_REF = 'stock_ref';
@@ -26,18 +26,19 @@ class Warehouse extends EntityBase
     /**
      * @return string
      */
-    public function getCurrency()
+    public function getCountryCode()
     {
-        $result = parent::getData(self::ATTR_CURRENCY);
+        $result = parent::getData(self::ATTR_COUNTRY_CODE);
         return $result;
     }
 
     /**
-     * @inheritdoc
+     * @return string
      */
-    public function getEntityName()
+    public function getCurrency()
     {
-        return self::ENTITY_NAME;
+        $result = parent::getData(self::ATTR_CURRENCY);
+        return $result;
     }
 
     /**
@@ -49,12 +50,18 @@ class Warehouse extends EntityBase
         return $result;
     }
 
-    /**
-     * @inheritdoc
-     */
+    /** @inheritdoc */
     public function getPrimaryKeyAttrs()
     {
         return [self::ATTR_STOCK_REF];
+    }
+
+    /**
+     * @param string $data
+     */
+    public function setCountryCode($data)
+    {
+        parent::setData(self::ATTR_COUNTRY_CODE, $data);
     }
 
     /**

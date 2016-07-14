@@ -235,6 +235,12 @@
                     "nullable": false,
                     "type": {"text": {"length": 3}}
                   },
+                  "CountryCode": {
+                    "alias": "country_code",
+                    "comment": "Code for country of the location. Used in tax calculation.",
+                    "nullable": false,
+                    "type": {"text": {"length": 2}}
+                  },
                   "Note": {
                     "alias": "note",
                     "comment": "Description of the warehouse.",
@@ -252,6 +258,14 @@
                     "reference": {
                       "entity": {"completeAlias": "cataloginventory_stock"},
                       "aliases": ["stock_id"]
+                    },
+                    "action": {"delete": "restrict", "update": "restrict"}
+                  },
+                  "toMageCountryCode": {
+                    "own": {"aliases": ["country_code"]},
+                    "reference": {
+                      "entity": {"completeAlias": "directory_country"},
+                      "aliases": ["country_id"]
                     },
                     "action": {"delete": "restrict", "update": "restrict"}
                   }
