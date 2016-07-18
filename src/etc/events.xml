@@ -3,16 +3,18 @@
 
     <event name="checkout_submit_all_after">
         <!-- Split total items qty by lots and register it (credit cards payments). -->
-        <observer
-                name="praxigento_warehouse_on_checkout_submit_all_after"
-                instance="Praxigento\Warehouse\Observer\CheckoutSubmitAllAfter"/>
+        <observer name="praxigento_warehouse_on_checkout_submit_all_after" instance="Praxigento\Warehouse\Observer\CheckoutSubmitAllAfter"/>
     </event>
 
-    <event name="sales_order_invoice_pay">
+    <!--<event name="sales_order_invoice_pay">-->
+    <!--&lt;!&ndash; Split total items qty by lots and register it (check/money order). &ndash;&gt;-->
+    <!--<observer-->
+    <!--name="praxigento_warehouse_on_sales_order_invoice_pay"-->
+    <!--instance="Praxigento\Warehouse\Observer\SalesOrderInvoicePay"/>-->
+    <!--</event>-->
+    <event name="sales_order_invoice_save_commit_after">
         <!-- Split total items qty by lots and register it (check/money order). -->
-        <observer
-                name="praxigento_warehouse_on_sales_order_invoice_pay"
-                instance="Praxigento\Warehouse\Observer\SalesOrderInvoicePay"/>
+        <observer name="praxigento_warehouse_on_sales_order_invoice_save_commit_after" instance="Praxigento\Warehouse\Observer\SalesOrderInvoiceSaveCommitAfter"/>
     </event>
 
 </config>

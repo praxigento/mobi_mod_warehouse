@@ -10,7 +10,7 @@ use Magento\Framework\Event\ObserverInterface;
 /**
  * Split items qty by lots and register it (check/money order).
  */
-class SalesOrderInvoicePay implements ObserverInterface
+class SalesOrderInvoiceSaveCommitAfter implements ObserverInterface
 {
     /* Names for the items in the event's data */
     const DATA_INVOICE = 'invoice';

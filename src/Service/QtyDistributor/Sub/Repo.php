@@ -120,7 +120,7 @@ class Repo
                     $this->_repoQtySale->create($qtySaleData);
                     /* delete zero quantity records from 'prxgt_wrhs_qty' */
                     $this->_repoQty->deleteById($qtyPk);
-                    /* decrease $rest of $totol*/
+                    /* decrease $rest of $total*/
                     $rest -= $qty;
                 }
                 if ($rest <= 0) {

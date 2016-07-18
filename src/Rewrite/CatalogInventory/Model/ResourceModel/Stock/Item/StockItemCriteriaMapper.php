@@ -6,14 +6,8 @@
 namespace Praxigento\Warehouse\Rewrite\CatalogInventory\Model\ResourceModel\Stock\Item;
 
 
-use Magento\Framework\Data\Collection\Db\FetchStrategyInterface;
-use Magento\Framework\Data\ObjectFactory;
-use Magento\Framework\DB\MapperFactory;
-use Magento\Framework\DB\Select;
-use Magento\Store\Model\StoreManagerInterface;
-use Psr\Log\LoggerInterface as Logger;
-use \Praxigento\Warehouse\Data\Entity\Quantity as EntityQuantity;
-use \Magento\CatalogInventory\Model\Stock\Item as EntityStockItem;
+use Magento\CatalogInventory\Model\Stock\Item as EntityStockItem;
+use Praxigento\Warehouse\Data\Entity\Quantity as EntityQuantity;
 
 class StockItemCriteriaMapper extends \Magento\CatalogInventory\Model\ResourceModel\Stock\Item\StockItemCriteriaMapper
 {

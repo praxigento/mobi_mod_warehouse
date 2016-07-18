@@ -4,13 +4,11 @@
  */
 namespace Praxigento\Warehouse\Observer;
 
-use Magento\Framework\Event\Observer;
-use Magento\Framework\Event\ObserverInterface;
-
 /**
  * Split items qty by lots and register it (for credit cards payments).
  */
-class CheckoutSubmitAllAfter implements ObserverInterface
+class CheckoutSubmitAllAfter
+    implements \Magento\Framework\Event\ObserverInterface
 {
     /* Names for the items in the event's data */
     const DATA_ORDER = 'order';
@@ -20,7 +18,6 @@ class CheckoutSubmitAllAfter implements ObserverInterface
     public function __construct(
         \Praxigento\Warehouse\Observer\Sub\Register $subRegister
     ) {
-
         $this->_subRegister = $subRegister;
     }
 

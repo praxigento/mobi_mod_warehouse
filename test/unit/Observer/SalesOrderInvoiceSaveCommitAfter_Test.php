@@ -8,14 +8,14 @@ use Praxigento\Warehouse\Data\Entity\Quantity;
 
 include_once(__DIR__ . '/../phpunit_bootstrap.php');
 
-class SalesOrderInvoicePay_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
+class SalesOrderInvoiceSaveCommitAfter_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
 {
 
     /** @var  \Mockery\MockInterface */
     private $mObserver;
     /** @var  \Mockery\MockInterface */
     private $mSubRegister;
-    /** @var  SalesOrderInvoicePay */
+    /** @var  SalesOrderInvoiceSaveCommitAfter */
     private $obj;
 
     public function setUp()
@@ -26,7 +26,7 @@ class SalesOrderInvoicePay_UnitTest extends \Praxigento\Core\Test\BaseMockeryCas
         $this->mObserver = $this->_mock(\Magento\Framework\Event\Observer::class);
         /** setup mocks for constructor */
         /** create object to test */
-        $this->obj = new SalesOrderInvoicePay(
+        $this->obj = new SalesOrderInvoiceSaveCommitAfter(
             $this->mSubRegister
         );
     }
