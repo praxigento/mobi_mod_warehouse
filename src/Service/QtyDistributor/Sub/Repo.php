@@ -12,7 +12,7 @@ use Praxigento\Warehouse\Data\Entity\Quantity\Sale as QtySale;
 
 class Repo
 {
-    /** @var  \Praxigento\Core\Repo\Transaction\IManager */
+    /** @var  \Praxigento\Core\Transaction\Database\IManager */
     protected $_manTrans;
     /** @var \Praxigento\Core\Repo\IGeneric */
     protected $_repoGeneric;
@@ -25,7 +25,7 @@ class Repo
 
     public function __construct(
         \Magento\Framework\App\ResourceConnection $resource,
-        \Praxigento\Core\Repo\Transaction\IManager $manTrans,
+        \Praxigento\Core\Transaction\Database\IManager $manTrans,
         \Praxigento\Core\Repo\IGeneric $repoGeneric,
         \Praxigento\Warehouse\Repo\Entity\IQuantity $repoQty,
         \Praxigento\Warehouse\Repo\Entity\Quantity\ISale $repoQtySale
@@ -87,7 +87,7 @@ class Repo
     public function registerSaleItemQty($saleItemId, $total, $lotsData)
     {
         $rest = $total;
-        $trans = $this->_manTrans->transactionBegin();
+        $def = $this->_manTrans->begin();
         try {
             foreach ($lotsData as $lot) {
                 $stockItemId = $lot[Alias::AS_STOCK_ITEM_ID];
@@ -127,10 +127,10 @@ class Repo
                     break;
                 }
             }
-            $this->_manTrans->transactionCommit($trans);
+            $this->_manTrans->commit($def);
         } finally {
             // transaction will be rolled back if commit is not done (otherwise - do nothing)
-            $this->_manTrans->transactionClose($trans);
+            $this->_manTrans->end($def);
         }
     }
 }

@@ -25,7 +25,7 @@ class Warehouse
     protected $_factorySelect;
     /** @var  ObjectManagerInterface */
     protected $_manObj;
-    /** @var  \Praxigento\Core\Repo\Transaction\IManager */
+    /** @var  \Praxigento\Core\Transaction\Database\IManager */
     protected $_manTrans;
     /** @var  \Praxigento\Warehouse\Repo\Entity\IWarehouse */
     protected $_repoEntityWarehouse;
@@ -36,7 +36,7 @@ class Warehouse
 
     public function __construct(
         \Magento\Framework\ObjectManagerInterface $manObj,
-        \Praxigento\Core\Repo\Transaction\IManager $manTrans,
+        \Praxigento\Core\Transaction\Database\IManager $manTrans,
         \Magento\Framework\App\ResourceConnection $resource,
         \Praxigento\Core\Repo\IGeneric $repoGeneric,
         \Praxigento\Warehouse\Repo\Entity\IWarehouse $repoEntityWarehouse,
@@ -70,7 +70,7 @@ class Warehouse
     public function create($data)
     {
         $result = null;
-        $trans = $this->_manTrans->transactionBegin();
+        $def = $this->_manTrans->begin();
         try {
             $tbl = Cfg::ENTITY_MAGE_CATALOGINVENTORY_STOCK;
             $stockId = $data->getId();
@@ -104,11 +104,11 @@ class Warehouse
             ];
             $this->_repoGeneric->addEntity($tbl, $bind);
             /* commit changes and compose result data object */
-            $this->_manTrans->transactionCommit($trans);
+            $this->_manTrans->commit($def);
             $result = $data;
             $result->setId($stockId);
         } finally {
-            $this->_manTrans->transactionClose($trans);
+            $this->_manTrans->end($def);
         }
         return $result;
     }

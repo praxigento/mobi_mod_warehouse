@@ -8,13 +8,13 @@ namespace Praxigento\Warehouse\Service\QtyDistributor;
 
 class Call implements \Praxigento\Warehouse\Service\IQtyDistributor
 {
-    /** @var  \Praxigento\Core\Repo\Transaction\IManager */
+    /** @var  \Praxigento\Core\Transaction\Database\IManager */
     protected $_manTrans;
     /** @var \Praxigento\Warehouse\Service\QtyDistributor\Sub\Repo */
     protected $_subRepo;
 
     public function __construct(
-        \Praxigento\Core\Repo\Transaction\IManager $manTrans,
+        \Praxigento\Core\Transaction\Database\IManager $manTrans,
         \Praxigento\Warehouse\Service\QtyDistributor\Sub\Repo $subRepo
     ) {
         $this->_manTrans = $manTrans;
@@ -41,7 +41,7 @@ class Call implements \Praxigento\Warehouse\Service\IQtyDistributor
     public function registerSale(Request\RegisterSale $req)
     {
         $result = new Response\RegisterSale();
-        $trans = $this->_manTrans->transactionBegin();
+        $def = $this->_manTrans->begin();
         try {
             /** @var \Praxigento\Warehouse\Service\QtyDistributor\Data\Item[] $reqItems */
             $reqItems = $req->getSaleItems();
@@ -56,11 +56,11 @@ class Call implements \Praxigento\Warehouse\Service\IQtyDistributor
                     $this->_subRepo->registerSaleItemQty($itemId, $qty, $lots);
                 }
             }
-            $this->_manTrans->transactionCommit($trans);
+            $this->_manTrans->commit($def);
             $result->markSucceed();
         } finally {
             // transaction will be rolled back if commit is not done (otherwise - do nothing)
-            $this->_manTrans->transactionClose($trans);
+            $this->_manTrans->end($def);
         }
         return $result;
     }

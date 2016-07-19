@@ -70,11 +70,11 @@ class Warehouse_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
             AggWarehouse::AS_ID => $ID
         ]);
         /** === Setup Mocks === */
-        // $trans = $this->_manTrans->transactionBegin();
-        $mTrans = $this->_mock(\Praxigento\Core\Repo\Transaction\IDefinition::class);
+        // $def = $this->_manTrans->begin();
+        $mDef = $this->_mock(\Praxigento\Core\Transaction\Database\IDefinition::class);
         $this->mManTrans
-            ->shouldReceive('transactionBegin')->once()
-            ->andReturn($mTrans);
+            ->shouldReceive('begin')->once()
+            ->andReturn($mDef);
         // $stockData = $this->_repoBasic->getEntityByPk($tbl, [Cfg::E_CATINV_STOCK_A_STOCK_ID => $stockId]);
         $this->mRepoGeneric
             ->shouldReceive('getEntityByPk')->once()
@@ -86,14 +86,14 @@ class Warehouse_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         // $this->_repoBasic->addEntity($tbl, $bind);
         $this->mRepoGeneric
             ->shouldReceive('addEntity')->once();
-        // $this->_manTrans->transactionCommit($trans);
+        // $this->_manTrans->commit($def);
         $this->mManTrans
-            ->shouldReceive('transactionCommit')->once()
-            ->with($mTrans);
-        // $this->_manTrans->transactionClose($trans);
+            ->shouldReceive('commit')->once()
+            ->with($mDef);
+        // $this->_manTrans->end($def);
         $this->mManTrans
-            ->shouldReceive('transactionClose')->once()
-            ->with($mTrans);
+            ->shouldReceive('end')->once()
+            ->with($mDef);
         /** === Call and asserts  === */
         $res = $this->obj->create($DATA);
         $this->assertInstanceOf(AggWarehouse::class, $res);
@@ -111,11 +111,11 @@ class Warehouse_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
             AggWarehouse::AS_NOTE => 'note'
         ]);
         /** === Setup Mocks === */
-        // $trans = $this->_manTrans->transactionBegin();
-        $mTrans = $this->_mock(\Praxigento\Core\Repo\Transaction\IDefinition::class);
+        // $def = $this->_manTrans->begin();
+        $mDef = $this->_mock(\Praxigento\Core\Transaction\Database\IDefinition::class);
         $this->mManTrans
-            ->shouldReceive('transactionBegin')->once()
-            ->andReturn($mTrans);
+            ->shouldReceive('begin')->once()
+            ->andReturn($mDef);
         // $id = $this->_repoBasic->addEntity($tbl, $bind);
         $this->mRepoGeneric
             ->shouldReceive('addEntity')->once()
@@ -123,14 +123,14 @@ class Warehouse_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         // $this->_repoBasic->addEntity($tbl, $bind);
         $this->mRepoGeneric
             ->shouldReceive('addEntity')->once();
-        // $this->_manTrans->transactionCommit($trans);
+        // $this->_manTrans->commit($def);
         $this->mManTrans
-            ->shouldReceive('transactionCommit')->once()
-            ->with($mTrans);
-        // $this->_manTrans->transactionClose($trans);
+            ->shouldReceive('commit')->once()
+            ->with($mDef);
+        // $this->_manTrans->end($def);
         $this->mManTrans
-            ->shouldReceive('transactionClose')->once()
-            ->with($mTrans);
+            ->shouldReceive('end')->once()
+            ->with($mDef);
         /** === Call and asserts  === */
         $res = $this->obj->create($DATA);
         $this->assertInstanceOf(AggWarehouse::class, $res);

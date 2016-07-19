@@ -53,10 +53,10 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
             ->with(Response\Create::class)
             ->andReturn($mResult);
         // $tran = $this->_manTrans->transactionBegin();
-        $mTrans = $this->_mockTransactionDefinition();
+        $mDef = $this->_mockTransactionDefinition();
         $this->mManTrans
-            ->shouldReceive('transactionBegin')->once()
-            ->andReturn($mTrans);
+            ->shouldReceive('begin')->once()
+            ->andReturn($mDef);
         // $warehouse = $data->getWarehouse();
         // $id = $this->_repoEntityWarehouse->create($bind);
         $this->mRepoEntityWarehouse
@@ -64,12 +64,10 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
             ->andReturn($ID);
         // $this->_manTrans->transactionCommit($tran);
         $this->mManTrans
-            ->shouldReceive('transactionCommit')->once()
-            ->with($mTrans);
+            ->shouldReceive('commit')->once();
         // $this->_manTrans->transactionClose($tran);
         $this->mManTrans
-            ->shouldReceive('transactionClose')->once()
-            ->with($mTrans);
+            ->shouldReceive('end')->once();
         /** === Call and asserts  === */
         $req = new Request\Create();
         $req->setWarehouse($WRHS);

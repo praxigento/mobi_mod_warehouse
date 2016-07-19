@@ -6,7 +6,7 @@
 namespace Praxigento\Warehouse\Service\Warehouse;
 
 use Magento\Framework\ObjectManagerInterface;
-use Praxigento\Core\Repo\Transaction\IManager;
+use Praxigento\Core\Transaction\Database\IManager;
 use Praxigento\Warehouse\Api\WarehouseInterface;
 use Praxigento\Warehouse\Data\Entity\Warehouse as EntityWarehouse;
 
@@ -21,7 +21,7 @@ class Call implements WarehouseInterface
 
     public function __construct(
         \Magento\Framework\ObjectManagerInterface $manObj,
-        \Praxigento\Core\Repo\Transaction\IManager $manTrans,
+        \Praxigento\Core\Transaction\Database\IManager $manTrans,
         \Praxigento\Warehouse\Repo\Entity\IWarehouse $repoEntityWarehouse
     ) {
         $this->_manObj = $manObj;
@@ -36,7 +36,7 @@ class Call implements WarehouseInterface
     {
         /** @var Response\Create $result */
         $result = $this->_manObj->create(Response\Create::class);
-        $tran = $this->_manTrans->transactionBegin();
+        $def = $this->_manTrans->begin();
         try {
             $warehouse = $data->getWarehouse();
             $bind = [
@@ -48,9 +48,9 @@ class Call implements WarehouseInterface
             $id = $this->_repoEntityWarehouse->create($bind);
             $result->setId($id);
             $result->markSucceed();
-            $this->_manTrans->transactionCommit($tran);
+            $this->_manTrans->commit($def);
         } finally {
-            $this->_manTrans->transactionClose($tran);
+            $this->_manTrans->end($def);
         }
         return $result;
     }

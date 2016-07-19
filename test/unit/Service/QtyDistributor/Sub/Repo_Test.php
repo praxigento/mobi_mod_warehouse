@@ -83,10 +83,10 @@ class Repo_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
             ]
         ];
         /** === Setup Mocks === */
-        $mTrans = $this->_mockTransactionDefinition();
+        $mDef = $this->_mockTransactionDefinition();
         $this->mManTrans
-            ->shouldReceive('transactionBegin')->once()
-            ->andReturn($mTrans);
+            ->shouldReceive('begin')->once()
+            ->andReturn($mDef);
         /**
          * First loop
          */
@@ -108,12 +108,12 @@ class Repo_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         /**
          * Close transaction.
          */
-        // $this->_manTrans->transactionCommit($trans);
+        // $this->_manTrans->commit($def);
         $this->mManTrans
-            ->shouldReceive('transactionCommit')->once();
-        // $this->_manTrans->transactionClose($trans);
+            ->shouldReceive('commit')->once();
+        // $this->_manTrans->end($def);
         $this->mManTrans
-            ->shouldReceive('transactionClose')->once();
+            ->shouldReceive('end')->once();
         /** === Call and asserts  === */
         $this->obj->registerSaleItemQty($SALE_ITEM_ID, $TOTAL, $LOTS_DATA);
     }
