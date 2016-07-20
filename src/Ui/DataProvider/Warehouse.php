@@ -5,27 +5,18 @@
 
 namespace Praxigento\Warehouse\Ui\DataProvider;
 
-use Magento\Framework\Api\FilterBuilder;
-use Magento\Framework\Api\Search\SearchCriteriaBuilder;
-use Magento\Framework\App\RequestInterface;
-use Magento\Framework\UrlInterface;
-use Magento\Framework\View\Element\UiComponent\DataProvider\Reporting;
-use Magento\Store\Model\StoreManagerInterface;
-use Praxigento\Core\Repo\Query\Criteria\IAdapter as ICriteriaAdapter;
-use Praxigento\Core\Ui\DataProvider\Base as BaseDataProvider;
-use Praxigento\Warehouse\Repo\Agg\IWarehouse as IRepoAggWarehouse;
-
-class Warehouse extends BaseDataProvider
+class Warehouse
+    extends \Praxigento\Core\Ui\DataProvider\Base
 {
 
     public function __construct(
-        UrlInterface $url,
-        ICriteriaAdapter $criteriaAdapter,
-        IRepoAggWarehouse $repo,
-        Reporting $reporting,
-        SearchCriteriaBuilder $searchCriteriaBuilder,
-        RequestInterface $request,
-        FilterBuilder $filterBuilder,
+        \Magento\Framework\UrlInterface $url,
+        \Praxigento\Core\Repo\Query\Criteria\IAdapter $criteriaAdapter,
+        \Praxigento\Warehouse\Repo\Agg\IWarehouse $repo,
+        \Magento\Framework\View\Element\UiComponent\DataProvider\Reporting $reporting,
+        \Magento\Framework\Api\Search\SearchCriteriaBuilder $searchCriteriaBuilder,
+        \Magento\Framework\App\RequestInterface $request,
+        \Magento\Framework\Api\FilterBuilder $filterBuilder,
         $name,
         array $meta = [],
         array $data = []
