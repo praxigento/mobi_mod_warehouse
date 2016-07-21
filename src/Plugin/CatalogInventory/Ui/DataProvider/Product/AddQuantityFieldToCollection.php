@@ -11,6 +11,14 @@ use Magento\CatalogInventory\Ui\DataProvider\Product\AddQuantityFieldToCollectio
 
 class AddQuantityFieldToCollection
 {
+    /** @var \Praxigento\Warehouse\Repo\Modifier\Product\Grid */
+    protected $_queryModGrid;
+
+    public function __construct(
+        \Praxigento\Warehouse\Repo\Modifier\Product\Grid $queryModGrid
+    ) {
+        $this->_queryModGrid = $queryModGrid;
+    }
 
     /**
      * @param Subject $subject
@@ -25,33 +33,8 @@ class AddQuantityFieldToCollection
         \Closure $proceed,
         \Magento\Catalog\Model\ResourceModel\Product\Collection $collection
     ) {
-        /** @var \Magento\Catalog\Model\ResourceModel\AbstractResource $resourceModel */
-        $resourceModel = $collection->getResource();
         $select = $collection->getSelect();
-        /* aliases for tables ... */
-        $tblEntity = 'e'; // this is alias for 'catalog_product_entity' table
-        $tblStockItem = $resourceModel->getTable(\Magento\CatalogInventory\Model\Stock\Item::ENTITY);
-        $tblWrhsQty = $resourceModel->getTable(\Praxigento\Warehouse\Data\Entity\Quantity::ENTITY_NAME);
-        /* ... and fields */
-        $fldStockItemProdId = \Magento\CatalogInventory\Model\Stock\Item::PRODUCT_ID;
-        $fldStockItemId = \Magento\CatalogInventory\Model\Stock\Item::ITEM_ID;
-        $fldEntityId = \Magento\Eav\Model\Entity::DEFAULT_ENTITY_ID_FIELD;
-        $fldQty = \Magento\CatalogInventory\Api\Data\StockItemInterface::QTY;
-        $fldStockItemRef = \Praxigento\Warehouse\Data\Entity\Quantity::ATTR_STOCK_ITEM_REF;
-        $fldTotal = \Praxigento\Warehouse\Data\Entity\Quantity::ATTR_TOTAL;
-
-        /* LEFT JOIN `cataloginventory_stock_item` */
-        $on = "`$tblStockItem`.`$fldStockItemProdId`=`$tblEntity`.`$fldEntityId`";
-        $fields = [];
-        $select->joinLeft($tblStockItem, $on, $fields);
-
-        /* LEFT JOIN `prxgt_wrhs_qty` */
-        $on = "`$tblWrhsQty`.`$fldStockItemRef`=`$tblStockItem`.`$fldStockItemId`";
-        $fields = [$fldQty => "SUM(`$tblWrhsQty`.`$fldTotal`)"];
-        $select->joinLeft($tblWrhsQty, $on, $fields);
-
-        /* GROUP BY */
-        $select->group("$tblEntity.$fldEntityId");
+        $this->_queryModGrid->modifySelect($select);
         return;
     }
 }
