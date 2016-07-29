@@ -1,12 +1,12 @@
 <?php
 /**
- * Replace default stock ID by stock ID correlated to store (group) 
  * User: Alex Gusev <alex@flancer64.com>
  */
-
 namespace Praxigento\Warehouse\Plugin\CatalogInventory\Model\ResourceModel\Stock;
 
-
+/**
+ * Replace default stock ID by stock ID correlated to store (group).
+ */
 class Status
 {
     /** @var  \Praxigento\Warehouse\Tool\IStockManager */

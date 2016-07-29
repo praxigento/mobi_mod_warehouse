@@ -40,6 +40,10 @@
         <plugin name="praxigento_warehouse_plugin" type="Praxigento\Warehouse\Plugin\CatalogInventory\Api\Data\StockStatusCollectionInterfaceFactory" sortOrder="100" disabled="false"/>
     </type>
 
+    <type name="Magento\CatalogInventory\Model\ResourceModel\Stock">
+        <!-- Update stock qty when sale order is placed -->
+        <plugin name="praxigento_warehouse_plugin" type="Praxigento\Warehouse\Plugin\CatalogInventory\Model\ResourceModel\Stock" sortOrder="100" disabled="false"/>
+    </type>
     <type name="Magento\CatalogInventory\Model\ResourceModel\Stock\Status">
         <!-- Switch stockId for products collections (MOBI-311) -->
         <plugin name="praxigento_warehouse_plugin" type="Praxigento\Warehouse\Plugin\CatalogInventory\Model\ResourceModel\Stock\Status" sortOrder="100" disabled="false"/>
