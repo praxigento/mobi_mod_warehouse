@@ -20,7 +20,8 @@ class StockManagement
         \Magento\CatalogInventory\Api\StockConfigurationInterface $stockConfiguration,
         \Magento\Catalog\Api\ProductRepositoryInterface $productRepository,
         \Magento\CatalogInventory\Model\ResourceModel\QtyCounterInterface $qtyCounter,
-        \Praxigento\Warehouse\Tool\IStockManager $manStock
+        \Praxigento\Warehouse\Tool\IStockManager $manStock,
+        \Praxigento\Warehouse\Service\IQtyDistributor $callQtyDistributor
     ) {
         parent::__construct(
             $stockResource,
@@ -31,6 +32,7 @@ class StockManagement
             $qtyCounter
         );
         $this->_manStock = $manStock;
+        $this->_callQtyDistributor = $callQtyDistributor;
     }
 
     /**
@@ -50,6 +52,7 @@ class StockManagement
         $websiteId
     ) {
         //if (!$websiteId) {
+        /* replace websiteId by stockId */
         $stockId = $this->_manStock->getCurrentStockId();
         //}
         $this->getResource()->beginTransaction();
@@ -57,8 +60,8 @@ class StockManagement
         $fullSaveItems = $registeredItems = [];
         foreach ($lockedItems as $lockedItemRecord) {
             $productId = $lockedItemRecord['product_id'];
-            /** @var StockItemInterface $stockItem */
             $orderedQty = $items[$productId];
+            /** @var \Magento\CatalogInventory\Api\Data\StockItemInterface $stockItem */
             $stockItem = $this->stockRegistryProvider->getStockItem($productId, $stockId);
             $canSubtractQty = $stockItem->getItemId() && $this->canSubtractQty($stockItem);
             if (!$canSubtractQty || !$this->stockConfiguration->isQty($lockedItemRecord['type_id'])) {

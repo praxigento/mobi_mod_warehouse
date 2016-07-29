@@ -2,19 +2,8 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
 
     <event name="checkout_submit_all_after">
-        <!-- Split total items qty by lots and register it (credit cards payments). -->
+        <!-- Split total items qty by lots and register it. -->
         <observer name="praxigento_warehouse_on_checkout_submit_all_after" instance="Praxigento\Warehouse\Observer\CheckoutSubmitAllAfter"/>
-    </event>
-
-    <!--<event name="sales_order_invoice_pay">-->
-    <!--&lt;!&ndash; Split total items qty by lots and register it (check/money order). &ndash;&gt;-->
-    <!--<observer-->
-    <!--name="praxigento_warehouse_on_sales_order_invoice_pay"-->
-    <!--instance="Praxigento\Warehouse\Observer\SalesOrderInvoicePay"/>-->
-    <!--</event>-->
-    <event name="sales_order_invoice_save_commit_after">
-        <!-- Split total items qty by lots and register it (check/money order). -->
-        <observer name="praxigento_warehouse_on_sales_order_invoice_save_commit_after" instance="Praxigento\Warehouse\Observer\SalesOrderInvoiceSaveCommitAfter"/>
     </event>
 
 </config>

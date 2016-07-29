@@ -25,7 +25,6 @@ class CheckoutSubmitAllAfter
     {
         /** @var \Magento\Sales\Model\Order $order */
         $order = $observer->getData(self::DATA_ORDER);
-        $state = $order->getState();
         $this->_subRegister->splitQty($order);
         return;
     }
