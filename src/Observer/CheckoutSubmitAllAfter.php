@@ -26,9 +26,7 @@ class CheckoutSubmitAllAfter
         /** @var \Magento\Sales\Model\Order $order */
         $order = $observer->getData(self::DATA_ORDER);
         $state = $order->getState();
-        if ($state == \Magento\Sales\Model\Order::STATE_PROCESSING) {
-            $this->_subRegister->splitQty($order);
-        }
+        $this->_subRegister->splitQty($order);
         return;
     }
 }
