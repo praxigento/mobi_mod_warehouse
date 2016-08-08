@@ -36,6 +36,7 @@
         <!-- Enable order &filter for additional fields ('qty' override) in products collection -->
         <plugin name="praxigento_warehouse_plugin" type="Praxigento\Warehouse\Plugin\Catalog\Model\ResourceModel\Product\Collection" sortOrder="100" disabled="false"/>
     </type>
+
     <type name="Magento\CatalogInventory\Api\Data\StockStatusCollectionInterfaceFactory">
         <plugin name="praxigento_warehouse_plugin" type="Praxigento\Warehouse\Plugin\CatalogInventory\Api\Data\StockStatusCollectionInterfaceFactory" sortOrder="100" disabled="false"/>
     </type>
@@ -68,7 +69,6 @@
         <plugin name="praxigento_warehouse_plugin" type="Praxigento\Warehouse\Plugin\CatalogInventory\Model\StockRegistryProvider" sortOrder="100" disabled="false"/>
     </type>
 
-
     <type name="Magento\CatalogInventory\Ui\DataProvider\Product\AddQuantityFieldToCollection">
         <!-- Join 'cataloginventory_stock_item' & 'prxgt_wrhs_qty' tables to get totals for all lots/warehouses. -->
         <plugin name="praxigento_warehouse_plugin" type="Praxigento\Warehouse\Plugin\CatalogInventory\Ui\DataProvider\Product\AddQuantityFieldToCollection" sortOrder="100" disabled="false"/>
@@ -76,6 +76,10 @@
 
     <type name="Magento\CatalogInventory\Ui\DataProvider\Product\AddQuantityFilterToCollection">
         <plugin name="praxigento_warehouse_plugin" type="Praxigento\Warehouse\Plugin\CatalogInventory\Ui\DataProvider\Product\AddQuantityFilterToCollection" sortOrder="100" disabled="false"/>
+    </type>
+
+    <type name="Magento\CatalogSearch\Model\Search\IndexBuilder">
+        <plugin name="praxigento_warehouse_plugin" type="Praxigento\Warehouse\Plugin\CatalogSearch\Model\Search\IndexBuilder" sortOrder="100" disabled="false"/>
     </type>
 
     <type name="Magento\Tax\Model\Calculation">
