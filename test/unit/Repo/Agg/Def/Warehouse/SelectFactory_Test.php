@@ -49,7 +49,7 @@ class SelectFactory_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         // $result->from($tblStock, $cols);
         $mResult->shouldReceive('from', 'joinLeft');
         /** === Call and asserts  === */
-        $this->obj->getSelectCountQuery();
+        $this->obj->getQueryToSelectCount();
     }
 
     public function test_getSelectQuery()
@@ -67,7 +67,7 @@ class SelectFactory_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         // $result->from($tblStock, $cols);
         $mResult->shouldReceive('from', 'joinLeft');
         /** === Call and asserts  === */
-        $this->obj->getSelectQuery();
+        $this->obj->getQueryToSelect();
     }
 
 }

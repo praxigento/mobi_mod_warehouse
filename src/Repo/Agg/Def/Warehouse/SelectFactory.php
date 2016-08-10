@@ -26,7 +26,7 @@ class SelectFactory
     }
 
     /** @inheritdoc */
-    public function getSelectCountQuery()
+    public function getQueryToSelectCount()
     {
         $result = $this->_conn->select();
         /* aliases and tables */
@@ -45,7 +45,7 @@ class SelectFactory
     }
 
     /** @inheritdoc */
-    public function getSelectQuery()
+    public function getQueryToSelect()
     {
         $result = $this->_conn->select();
         /* aliases and tables */

@@ -117,7 +117,7 @@ class Warehouse
     {
         /** @var  $result AggWarehouse */
         $result = null;
-        $query = $this->_factorySelect->getSelectQuery();
+        $query = $this->_factorySelect->getQueryToSelect();
         $query->where(static::AS_STOCK . '.' . Cfg::E_CATINV_STOCK_A_STOCK_ID . '=:id');
         $data = $this->_conn->fetchRow($query, ['id' => $id]);
         if ($data) {
@@ -129,13 +129,13 @@ class Warehouse
 
     public function getQueryToSelect()
     {
-        $result = $this->_factorySelect->getSelectQuery();
+        $result = $this->_factorySelect->getQueryToSelect();
         return $result;
     }
 
     public function getQueryToSelectCount()
     {
-        $result = $this->_factorySelect->getSelectCountQuery();
+        $result = $this->_factorySelect->getQueryToSelectCount();
         return $result;
     }
 

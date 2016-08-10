@@ -143,10 +143,10 @@ class Warehouse_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         $ID = 21;
         $DATA = ['data'];
         /** === Setup Mocks === */
-        // $query = $this->_factorySelect->getSelectQuery();
+        // $query = $this->_factorySelect->getQueryToSelect();
         $mQuery = $this->_mockDbSelect();
         $this->mFactorySelect
-            ->shouldReceive('getSelectQuery')->once()
+            ->shouldReceive('getQueryToSelect')->once()
             ->andReturn($mQuery);
         // $query->where(self::AS_STOCK . '.' . Cfg::E_CATINV_STOCK_A_STOCK_ID . '=:id');
         $mQuery->shouldReceive('where')->once();
@@ -169,9 +169,9 @@ class Warehouse_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         /** === Test Data === */
         $QUERY = 'query';
         /** === Setup Mocks === */
-        // $result = $this->_factorySelect->getSelectQuery();
+        // $result = $this->_factorySelect->getQueryToSelect();
         $this->mFactorySelect
-            ->shouldReceive('getSelectQuery')->once()
+            ->shouldReceive('getQueryToSelect')->once()
             ->andReturn($QUERY);
         /** === Call and asserts  === */
         $res = $this->obj->getQueryToSelect();
@@ -183,9 +183,9 @@ class Warehouse_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         /** === Test Data === */
         $QUERY = 'query';
         /** === Setup Mocks === */
-        // $result = $this->_factorySelect->getSelectCountQuery();
+        // $result = $this->_factorySelect->getQueryToSelectCount();
         $this->mFactorySelect
-            ->shouldReceive('getSelectCountQuery')->once()
+            ->shouldReceive('getQueryToSelectCount')->once()
             ->andReturn($QUERY);
         /** === Call and asserts  === */
         $res = $this->obj->getQueryToSelectCount();
