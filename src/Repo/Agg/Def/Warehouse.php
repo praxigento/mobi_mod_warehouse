@@ -7,7 +7,6 @@
 
 namespace Praxigento\Warehouse\Repo\Agg\Def;
 
-use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\ObjectManagerInterface;
 use Praxigento\Core\Repo\IGeneric as IGenericRepo;
 use Praxigento\Warehouse\Config as Cfg;
@@ -111,6 +110,18 @@ class Warehouse
             $this->_manTrans->end($def);
         }
         return $result;
+    }
+
+    public function get(
+        $where = null,
+        $order = null,
+        $limit = null,
+        $offset = null,
+        $columns = null,
+        $group = null,
+        $having = null
+    ) {
+        throw new \Exception('Method is not implemented yet.');
     }
 
     public function getById($id)
