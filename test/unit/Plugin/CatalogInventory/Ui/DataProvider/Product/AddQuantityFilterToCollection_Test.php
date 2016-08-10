@@ -23,12 +23,33 @@ class AddQuantityFilterToCollection_UnitTest extends \Praxigento\Core\Test\BaseM
     public function test_aroundAddFilter()
     {
         /** === Test Data === */
+        $FIELD = 'field';
+        $CONDITION = 'condition';
         /** === Setup Mocks === */
         $mSubject = $this->_mock(\Magento\CatalogInventory\Ui\DataProvider\Product\AddQuantityFilterToCollection::class);
         $mProceed = function () {
         };
+        $mCollection = $this->_mock(\Magento\Catalog\Model\ResourceModel\Product\Collection::class);
+        // $conn = $collection->getConnection();
+        $mConn = $this->_mockConn();
+        $mCollection
+            ->shouldReceive('getConnection')->once()
+            ->andReturn($mConn);
+        // $select = $collection->getSelect();
+        $mSelect = $this->_mockDbSelect();
+        $mCollection
+            ->shouldReceive('getSelect')->once()
+            ->andReturn($mSelect);
+        // $prepared = $conn->prepareSqlCondition($equation, $condition);
+        $mPrepared = 'PREPARED CONDITION FOR HAVING';
+        $mConn
+            ->shouldReceive('prepareSqlCondition')->once()
+            ->andReturn($mPrepared);
+        // $select->having($prepared);
+        $mSelect
+            ->shouldReceive('having')->once();
         /** === Call and asserts  === */
-        $this->obj->aroundAddFilter($mSubject, $mProceed);
+        $this->obj->aroundAddFilter($mSubject, $mProceed, $mCollection, $FIELD, $CONDITION);
 
     }
 

@@ -9,15 +9,20 @@ include_once(__DIR__ . '/../../../../../phpunit_bootstrap.php');
 class AddQuantityFieldToCollection_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
 {
 
-
+    /** @var  \Mockery\MockInterface */
+    private $mQueryModGrid;
     /** @var  AddQuantityFieldToCollection */
     private $obj;
 
     protected function setUp()
     {
         parent::setUp();
+        /** create mocks */
+        $this->mQueryModGrid = $this->_mock(\Praxigento\Warehouse\Repo\Modifier\Product\Grid::class);
         /** create object to test */
-        $this->obj = new AddQuantityFieldToCollection();
+        $this->obj = new AddQuantityFieldToCollection(
+            $this->mQueryModGrid
+        );
     }
 
     public function test_aroundAddField()
@@ -28,18 +33,14 @@ class AddQuantityFieldToCollection_UnitTest extends \Praxigento\Core\Test\BaseMo
         $mProceed = function () {
         };
         $mCollection = $this->_mock(\Magento\Catalog\Model\ResourceModel\Product\Collection::class);
-        // $resourceModel = $collection->getResource();
-        $mResourceModel = $this->_mockConn(['getTable']);
-        $mCollection
-            ->shouldReceive('getResource')->once()
-            ->andReturn($mResourceModel);
         // $select = $collection->getSelect();
-        $mSelect = $this->_mockDbSelect(['joinLeft', 'group']);
+        $mSelect = $this->_mockDbSelect();
         $mCollection
             ->shouldReceive('getSelect')->once()
             ->andReturn($mSelect);
-
-
+        // $this->_queryModGrid->modifySelect($select);
+        $this->mQueryModGrid
+            ->shouldReceive('modifySelect')->once();
         /** === Call and asserts  === */
         $this->obj->aroundAddField($mSubject, $mProceed, $mCollection);
 

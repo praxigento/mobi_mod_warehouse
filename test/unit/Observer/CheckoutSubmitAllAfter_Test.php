@@ -4,18 +4,16 @@
  */
 namespace Praxigento\Warehouse\Observer;
 
-use Praxigento\Warehouse\Data\Entity\Quantity;
-
 include_once(__DIR__ . '/../phpunit_bootstrap.php');
 
-class SalesOrderInvoiceSaveCommitAfter_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
+class CheckoutSubmitAllAfter_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
 {
 
     /** @var  \Mockery\MockInterface */
     private $mObserver;
     /** @var  \Mockery\MockInterface */
     private $mSubRegister;
-    /** @var  SalesOrderInvoiceSaveCommitAfter */
+    /** @var  CheckoutSubmitAllAfter */
     private $obj;
 
     public function setUp()
@@ -26,7 +24,7 @@ class SalesOrderInvoiceSaveCommitAfter_UnitTest extends \Praxigento\Core\Test\Ba
         $this->mObserver = $this->_mock(\Magento\Framework\Event\Observer::class);
         /** setup mocks for constructor */
         /** create object to test */
-        $this->obj = new SalesOrderInvoiceSaveCommitAfter(
+        $this->obj = new CheckoutSubmitAllAfter(
             $this->mSubRegister
         );
     }
@@ -34,18 +32,11 @@ class SalesOrderInvoiceSaveCommitAfter_UnitTest extends \Praxigento\Core\Test\Ba
     public function test_execute()
     {
         /** === Setup Mocks === */
-        // $invoice = $observer->getData(self::DATA_INVOICE);
-        $mInvoice = $this->_mock(\Magento\Sales\Model\Order\Invoice::class);
+        // $order = $observer->getData(self::DATA_ORDER);
+        $mOrder = $this->_mock(\Magento\Sales\Api\Data\OrderInterface::class);
         $this->mObserver
             ->shouldReceive('getData')->once()
-            ->with('invoice')
-            ->andReturn($mInvoice);
-        // $state = $invoice->getState();
-        $mInvoice->shouldReceive('getState')->once()
-            ->andReturn(\Magento\Sales\Model\Order\Invoice::STATE_PAID);
-        // $order = $invoice->getOrder();
-        $mOrder = $this->_mock(\Magento\Sales\Api\Data\OrderInterface::class);
-        $mInvoice->shouldReceive('getOrder')->once()
+            ->with('order')
             ->andReturn($mOrder);
         // $this->_subRegister->splitQty($order);
         $this->mSubRegister
