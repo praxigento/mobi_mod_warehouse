@@ -13,7 +13,6 @@ use Praxigento\Warehouse\Data\Entity\Quantity;
  */
 class Grid
 {
-    const EQ_QTY = 'SUM(`' . self::TBL_WRHS_QTY . '`.`' . Quantity::ATTR_TOTAL . '`)';
     const FLD_QTY = \Magento\CatalogInventory\Api\Data\StockItemInterface::QTY;
     const TBL_STOCK_ITEM = StockItem::ENTITY;
     const TBL_WRHS_QTY = Quantity::ENTITY_NAME;
@@ -24,6 +23,18 @@ class Grid
         \Magento\Framework\App\ResourceConnection $resource
     ) {
         $this->_resource = $resource;
+    }
+
+    /**
+     * MOBI-397
+     *
+     * @return string equation for qty summary.
+     */
+    public function getEquationQty()
+    {
+        $tbl = $this->_resource->getTableName(self::TBL_WRHS_QTY);
+        $result = 'SUM(`' . $tbl . '`.`' . Quantity::ATTR_TOTAL . '`)';
+        return $result;
     }
 
     /**
@@ -44,7 +55,6 @@ class Grid
         $fldEntityId = \Magento\Eav\Model\Entity::DEFAULT_ENTITY_ID_FIELD;
         $fldQty = self::FLD_QTY;
         $fldStockItemRef = Quantity::ATTR_STOCK_ITEM_REF;
-        $fldTotal = Quantity::ATTR_TOTAL;
 
         /* LEFT JOIN `cataloginventory_stock_item` */
         $on = "`$tblStockItem`.`$fldStockItemProdId`=`$tblEntity`.`$fldEntityId`";
@@ -53,7 +63,7 @@ class Grid
 
         /* LEFT JOIN `prxgt_wrhs_qty` */
         $on = "`$tblWrhsQty`.`$fldStockItemRef`=`$tblStockItem`.`$fldStockItemId`";
-        $fields = [$fldQty => self::EQ_QTY];
+        $fields = [$fldQty => $this->getEquationQty()];
         $select->joinLeft($tblWrhsQty, $on, $fields);
 
         /* GROUP BY */

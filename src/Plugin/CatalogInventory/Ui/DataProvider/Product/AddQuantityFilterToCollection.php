@@ -4,7 +4,6 @@
  */
 namespace Praxigento\Warehouse\Plugin\CatalogInventory\Ui\DataProvider\Product;
 
-use Praxigento\Warehouse\Repo\Modifier\Product\Grid;
 
 /**
  * Replace WHERE clause by HAVING clause (used for grouped values).
@@ -12,6 +11,14 @@ use Praxigento\Warehouse\Repo\Modifier\Product\Grid;
 class AddQuantityFilterToCollection
 {
     protected $_regCond = [];
+    /** @var \Praxigento\Warehouse\Repo\Modifier\Product\Grid */
+    protected $_repoModifierProductGFrid;
+
+    public function __construct(
+        \Praxigento\Warehouse\Repo\Modifier\Product\Grid $repoModifierProductGFrid
+    ) {
+        $this->_repoModifierProductGFrid = $repoModifierProductGFrid;
+    }
 
     /**
      * Replace WHERE-filtering by HAVING-filtering.
@@ -34,7 +41,7 @@ class AddQuantityFilterToCollection
         if (!isset($this->_regCond[$regKey])) {
             $conn = $collection->getConnection();
             $select = $collection->getSelect();
-            $equation = Grid::EQ_QTY;
+            $equation = $this->_repoModifierProductGFrid->getEquationQty();
             $prepared = $conn->prepareSqlCondition($equation, $condition);
             $select->having($prepared);
             $this->_regCond[$regKey] = true;
