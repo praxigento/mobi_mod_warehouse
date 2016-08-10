@@ -15,7 +15,7 @@ use Praxigento\Warehouse\Data\Agg\Warehouse as AggWarehouse;
 use Praxigento\Warehouse\Data\Entity\Warehouse as EntityWarehouse;
 
 class Warehouse
-    extends \Praxigento\Core\Repo\Def\BaseCrud
+    extends \Praxigento\Core\Repo\Def\Crud
     implements \Praxigento\Warehouse\Repo\Agg\IWarehouse
 {
 
