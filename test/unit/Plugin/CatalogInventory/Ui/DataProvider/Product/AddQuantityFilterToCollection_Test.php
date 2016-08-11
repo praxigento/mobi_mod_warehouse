@@ -8,7 +8,8 @@ include_once(__DIR__ . '/../../../../../phpunit_bootstrap.php');
 
 class AddQuantityFilterToCollection_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
 {
-
+    /** @var  \Mockery\MockInterface */
+    private $mRepoModifierProductGFrid;
 
     /** @var  AddQuantityFilterToCollection */
     private $obj;
@@ -16,8 +17,12 @@ class AddQuantityFilterToCollection_UnitTest extends \Praxigento\Core\Test\BaseM
     protected function setUp()
     {
         parent::setUp();
+        /** create mocks */
+        $this->mRepoModifierProductGFrid = $this->_mock(\Praxigento\Warehouse\Repo\Modifier\Product\Grid::class);
         /** create object to test */
-        $this->obj = new AddQuantityFilterToCollection();
+        $this->obj = new AddQuantityFilterToCollection(
+            $this->mRepoModifierProductGFrid
+        );
     }
 
     public function test_aroundAddFilter()
@@ -25,6 +30,7 @@ class AddQuantityFilterToCollection_UnitTest extends \Praxigento\Core\Test\BaseM
         /** === Test Data === */
         $FIELD = 'field';
         $CONDITION = 'condition';
+        $EQUATION = 'some equation';
         /** === Setup Mocks === */
         $mSubject = $this->_mock(\Magento\CatalogInventory\Ui\DataProvider\Product\AddQuantityFilterToCollection::class);
         $mProceed = function () {
@@ -40,6 +46,10 @@ class AddQuantityFilterToCollection_UnitTest extends \Praxigento\Core\Test\BaseM
         $mCollection
             ->shouldReceive('getSelect')->once()
             ->andReturn($mSelect);
+        // $equation = $this->_repoModifierProductGFrid->getEquationQty();
+        $this->mRepoModifierProductGFrid
+            ->shouldReceive('getEquationQty')->once()
+            ->andReturn($EQUATION);
         // $prepared = $conn->prepareSqlCondition($equation, $condition);
         $mPrepared = 'PREPARED CONDITION FOR HAVING';
         $mConn
