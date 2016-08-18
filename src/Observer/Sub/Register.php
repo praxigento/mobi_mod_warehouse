@@ -2,7 +2,6 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
-
 namespace Praxigento\Warehouse\Observer\Sub;
 
 
@@ -12,15 +11,22 @@ class Register
     protected $_callQtyDistributor;
     /** @var  \Praxigento\Warehouse\Tool\IStockManager */
     protected $_manStock;
+    /** @var  \Magento\Framework\ObjectManagerInterface */
+    protected $_manObj;
 
     public function __construct(
+        \Magento\Framework\ObjectManagerInterface $manObj,
         \Praxigento\Warehouse\Tool\IStockManager $manStock,
         \Praxigento\Warehouse\Service\IQtyDistributor $callQtyDistributor
     ) {
+        $this->_manObj = $manObj;
         $this->_manStock = $manStock;
         $this->_callQtyDistributor = $callQtyDistributor;
     }
 
+    /**
+     * @param \Magento\Sales\Api\Data\OrderInterface $order
+     */
     public function splitQty(\Magento\Sales\Api\Data\OrderInterface $order)
     {
         $storeId = $order->getStoreId();
@@ -36,14 +42,14 @@ class Register
             /* qty of the product can be changed in invoice, but we use ordered only  */
             $qty = $item->getQtyOrdered();
             /* register sale item (fragment total qty by lots) */
-            $itemData = new \Praxigento\Warehouse\Service\QtyDistributor\Data\Item;
+            $itemData = $this->_manObj->create(\Praxigento\Warehouse\Service\QtyDistributor\Data\Item::class);
             $itemData->setItemId($itemId);
             $itemData->setProductId($prodId);
             $itemData->setQuantity($qty);
             $itemData->setStockId($stockId);
             $itemsData[] = $itemData;
         }
-        $reqSale = new \Praxigento\Warehouse\Service\QtyDistributor\Request\RegisterSale();
+        $reqSale = $this->_manObj->create(\Praxigento\Warehouse\Service\QtyDistributor\Request\RegisterSale::class);
         $reqSale->setSaleItems($itemsData);
         $this->_callQtyDistributor->registerSale($reqSale);
     }
