@@ -18,9 +18,16 @@ class Status
         $this->_manStock = $manStock;
     }
 
+    /**
+     * Replace default stock id in the where clause by stock id corresponded with store id.
+     *
+     * @param \Magento\CatalogInventory\Model\ResourceModel\Stock\Status $subject
+     * @param \Magento\Catalog\Model\ResourceModel\Product\Collection $result
+     * @return \Magento\Catalog\Model\ResourceModel\Product\Collection
+     */
     public function afterAddStockDataToCollection(
         \Magento\CatalogInventory\Model\ResourceModel\Stock\Status $subject,
-        $result
+        \Magento\Catalog\Model\ResourceModel\Product\Collection $result
     ) {
         /** @var \Magento\Framework\Db\Select $select */
         $select = $result->getSelect();

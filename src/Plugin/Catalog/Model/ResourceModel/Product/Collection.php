@@ -2,7 +2,6 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
-
 namespace Praxigento\Warehouse\Plugin\Catalog\Model\ResourceModel\Product;
 
 use Praxigento\Warehouse\Repo\Modifier\Product\Grid;
@@ -22,6 +21,13 @@ class Collection
         $this->_queryModGrid = $queryModGrid;
     }
 
+    /**
+     * @param \Magento\Catalog\Model\ResourceModel\Product\Collection $subject
+     * @param \Closure $proceed
+     * @param $attribute
+     * @param null $condition
+     * @return \Magento\Catalog\Model\ResourceModel\Product\Collection
+     */
     public function aroundAddFieldToFilter(
         \Magento\Catalog\Model\ResourceModel\Product\Collection $subject,
         \Closure $proceed,
@@ -32,14 +38,23 @@ class Collection
             /* use field as-is: */
             $result = $subject;
             $alias = Grid::FLD_QTY;
-            $query = $result->getConnection()->prepareSqlCondition($alias, $condition);
-            $result->getSelect()->where($query);
+            $conn = $result->getConnection();
+            $query = $conn->prepareSqlCondition($alias, $condition);
+            $select = $result->getSelect();
+            $select->where($query);
         } else {
             $result = $proceed($attribute, $condition);
         }
         return $result;
     }
 
+    /**
+     * @param \Magento\Catalog\Model\ResourceModel\Product\Collection $subject
+     * @param \Closure $proceed
+     * @param $field
+     * @param string $dir
+     * @return \Magento\Catalog\Model\ResourceModel\Product\Collection
+     */
     public function aroundAddOrder(
         \Magento\Catalog\Model\ResourceModel\Product\Collection $subject,
         \Closure $proceed,
@@ -50,7 +65,8 @@ class Collection
             /* use field as-is: ORDER BY qty*/
             $result = $subject;
             $order = Grid::FLD_QTY . ' ' . $dir;
-            $result->getSelect()->order($order);
+            $select = $result->getSelect();
+            $select->order($order);
         } else {
             $result = $proceed($field, $dir);
         }
@@ -62,6 +78,7 @@ class Collection
      *
      * @param \Magento\Catalog\Model\ResourceModel\Product\Collection $subject
      * @param \Closure $proceed
+     * @return \Magento\Framework\DB\Select
      */
     public function aroundGetSelectCountSql(
         \Magento\Catalog\Model\ResourceModel\Product\Collection $subject,

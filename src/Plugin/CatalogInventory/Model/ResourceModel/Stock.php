@@ -10,14 +10,6 @@ namespace Praxigento\Warehouse\Plugin\CatalogInventory\Model\ResourceModel;
  */
 class Stock
 {
-//    /** @var  \Praxigento\Warehouse\Tool\IStockManager */
-//    protected $_manStock;
-//
-//    public function __construct(
-//        \Praxigento\Warehouse\Tool\IStockManager $manStock
-//    ) {
-//        $this->_manStock = $manStock;
-//    }
 
     /**
      * Filter locked items by stock ID.
@@ -74,7 +66,6 @@ class Stock
         if (empty($items)) {
             return $this;
         }
-
         $conn = $subject->getConnection();
         $conditions = [];
         foreach ($items as $productId => $qty) {
@@ -82,10 +73,8 @@ class Stock
             $result = $conn->quoteInto("qty{$operator}?", $qty);
             $conditions[$case] = $result;
         }
-
         $value = $conn->getCaseSql('product_id', $conditions, 'qty');
         $where = ['product_id IN (?)' => array_keys($items), 'stock_id = ?' => $stockId];
-
         $conn->beginTransaction();
         $conn->update($subject->getTable('cataloginventory_stock_item'), ['qty' => $value], $where);
         $conn->commit();
