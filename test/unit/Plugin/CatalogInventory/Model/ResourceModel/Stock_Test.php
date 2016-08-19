@@ -23,6 +23,71 @@ class Stock_UnitTest
         $this->obj = new Stock();
     }
 
+    public function test_aroundCorrectItemsQty_empty()
+    {
+        /** === Test Data === */
+        $ITEMS = [];
+        $STOCK_ID = 1;
+        $OPERATOR = '+';
+        /** === Setup Mocks === */
+        $mProceed = function () {
+        };
+        /** === Call and asserts  === */
+        $res = $this->obj->aroundCorrectItemsQty(
+            $this->mSubject,
+            $mProceed,
+            $ITEMS,
+            $STOCK_ID,
+            $OPERATOR
+        );
+        $this->assertEquals($this->mSubject, $res);
+    }
+
+    public function test_aroundCorrectItemsQty_process()
+    {
+        /** === Test Data === */
+        $PROD_ID = 21;
+        $QTY = 43;
+        $ITEMS = [$PROD_ID => $QTY];
+        $STOCK_ID = 1;
+        $OPERATOR = '+';
+        /** === Setup Mocks === */
+        $mProceed = function () {
+        };
+        // $conn = $subject->getConnection();
+        $mConn = $this->_mockConn();
+        $this->mSubject
+            ->shouldReceive('getConnection')->once()
+            ->andReturn($mConn);
+        //
+        // FIRST ITERATION
+        //
+        // $quotedId = $conn->quoteInto('?', $productId);
+        $mConn->shouldReceive('quoteInto')->once()->andReturn("'$PROD_ID'");
+        // $quotedQty = $conn->quoteInto("qty{$operator}?", $qty);
+        $mConn->shouldReceive('quoteInto')->once()->andReturn("qty{'$QTY'}");
+        //
+        // $value = $conn->getCaseSql('product_id', $conditions, 'qty');
+        $mValue = 'subSQL';
+        $mConn->shouldReceive('getCaseSql')->once()->andReturn($mValue);
+        // $conn->beginTransaction();
+        $mConn->shouldReceive('beginTransaction')->once();
+        // $conn->update($subject->getTable('cataloginventory_stock_item'), ['qty' => $value], $where);
+        $this->mSubject->shouldReceive('getTable')->once();
+        $mConn->shouldReceive('update')->once();
+        // $conn->commit();
+        $mConn->shouldReceive('commit')->once();
+        /** === Call and asserts  === */
+        $res = $this->obj->aroundCorrectItemsQty(
+            $this->mSubject,
+            $mProceed,
+            $ITEMS,
+            $STOCK_ID,
+            $OPERATOR
+        );
+        $this->assertNull($res);
+    }
+
     public function test_aroundLockProductsStock_empty()
     {
         /** === Test Data === */

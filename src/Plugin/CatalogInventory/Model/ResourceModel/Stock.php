@@ -12,6 +12,40 @@ class Stock
 {
 
     /**
+     * Update stock item in the stock.
+     *
+     * @param \Magento\CatalogInventory\Model\ResourceModel\Stock $subject
+     * @param \Closure $proceed
+     * @param array $items
+     * @param int $stockId defined in \Praxigento\Warehouse\Plugin\CatalogInventory\Model\StockManagement::aroundRegisterProductsSale
+     * @param string $operator
+     * @return null
+     */
+    public function aroundCorrectItemsQty(
+        \Magento\CatalogInventory\Model\ResourceModel\Stock $subject,
+        \Closure $proceed,
+        array $items,
+        $stockId,
+        $operator
+    ) {
+        if (empty($items)) {
+            return $subject;
+        }
+        $conn = $subject->getConnection();
+        $conditions = [];
+        foreach ($items as $productId => $qty) {
+            $quotedId = $conn->quoteInto('?', $productId);
+            $quotedQty = $conn->quoteInto("qty{$operator}?", $qty);
+            $conditions[$quotedId] = $quotedQty;
+        }
+        $value = $conn->getCaseSql('product_id', $conditions, 'qty');
+        $where = ['product_id IN (?)' => array_keys($items), 'stock_id = ?' => $stockId];
+        $conn->beginTransaction();
+        $conn->update($subject->getTable('cataloginventory_stock_item'), ['qty' => $value], $where);
+        $conn->commit();
+    }
+
+    /**
      * Filter locked items by stock ID.
      *
      * @param \Magento\CatalogInventory\Model\ResourceModel\Stock $subject
@@ -44,39 +78,5 @@ class Stock
         /* select data */
         $result = $conn->fetchAll($select);
         return $result;
-    }
-
-    /**
-     * Update stock item in the stock.
-     *
-     * @param \Magento\CatalogInventory\Model\ResourceModel\Stock $subject
-     * @param \Closure $proceed
-     * @param array $items
-     * @param int $stockId defined in \Praxigento\Warehouse\Plugin\CatalogInventory\Model\StockManagement::aroundRegisterProductsSale
-     * @param string $operator
-     * @return null
-     */
-    public function aroundCorrectItemsQty(
-        \Magento\CatalogInventory\Model\ResourceModel\Stock $subject,
-        \Closure $proceed,
-        array $items,
-        $stockId,
-        $operator
-    ) {
-        if (empty($items)) {
-            return $this;
-        }
-        $conn = $subject->getConnection();
-        $conditions = [];
-        foreach ($items as $productId => $qty) {
-            $case = $conn->quoteInto('?', $productId);
-            $result = $conn->quoteInto("qty{$operator}?", $qty);
-            $conditions[$case] = $result;
-        }
-        $value = $conn->getCaseSql('product_id', $conditions, 'qty');
-        $where = ['product_id IN (?)' => array_keys($items), 'stock_id = ?' => $stockId];
-        $conn->beginTransaction();
-        $conn->update($subject->getTable('cataloginventory_stock_item'), ['qty' => $value], $where);
-        $conn->commit();
     }
 }
