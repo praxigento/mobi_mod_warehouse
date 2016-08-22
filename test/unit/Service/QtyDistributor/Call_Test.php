@@ -58,4 +58,53 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         $res = $this->obj->registerForSaleItem($req);
         $this->assertTrue($res->isSucceed());
     }
+
+    public function test_registerSale()
+    {
+        /** === Test Data === */
+        $ITEM_ID = 32;
+        $PROD_ID = 16;
+        $STOCK_ID = 2;
+        $QTY = 4;
+        $REQ = $this->_mock(Request\RegisterSale::class);
+        /** === Setup Mocks === */
+        // $def = $this->_manTrans->begin();
+        $mDef = $this->_mockTransactionDefinition();
+        $this->mManTrans
+            ->shouldReceive('begin')->once()
+            ->andReturn($mDef);
+        // $reqItems = $req->getSaleItems();
+        $mReqItem = $this->_mock(\Praxigento\Warehouse\Service\QtyDistributor\Data\Item::class);
+        $REQ->shouldReceive('getSaleItems')->once()
+            ->andReturn([$mReqItem]);
+        // $itemId = $item->getItemId();
+        $mReqItem->shouldReceive('getItemId')->once()->andReturn($ITEM_ID);
+        // $prodId = $item->getProductId();
+        $mReqItem->shouldReceive('getProductId')->once()->andReturn($PROD_ID);
+        // $stockId = $item->getStockId();
+        $mReqItem->shouldReceive('getStockId')->once()->andReturn($STOCK_ID);
+        // $qty = $item->getQuantity();
+        $mReqItem->shouldReceive('getQuantity')->once()->andReturn($QTY);
+        // $lots = $this->_subRepo->getLotsByProductId($prodId, $stockId);
+        $mLots = ['lots'];
+        $this->mSubRepo
+            ->shouldReceive('getLotsByProductId')->once()
+            ->andReturn($mLots);
+        // $this->_subRepo->registerSaleItemQty($itemId, $qty, $lots);
+        $this->mSubRepo
+            ->shouldReceive('registerSaleItemQty')->once()
+            ->with($ITEM_ID, $QTY, $mLots);
+        // $this->_manTrans->commit($def);
+        $this->mManTrans
+            ->shouldReceive('commit')->once()
+            ->with($mDef);
+        // $this->_manTrans->end($def);
+        $this->mManTrans
+            ->shouldReceive('end')->once()
+            ->with($mDef);
+        /** === Call and asserts  === */
+        $res = $this->obj->registerSale($REQ);
+        $this->assertTrue($res->isSucceed());
+    }
+
 }
