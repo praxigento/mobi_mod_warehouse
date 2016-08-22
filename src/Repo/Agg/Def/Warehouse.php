@@ -112,18 +112,6 @@ class Warehouse
         return $result;
     }
 
-    public function get(
-        $where = null,
-        $order = null,
-        $limit = null,
-        $offset = null,
-        $columns = null,
-        $group = null,
-        $having = null
-    ) {
-        throw new \Exception('Method is not implemented yet.');
-    }
-
     public function getById($id)
     {
         /** @var  $result AggWarehouse */
@@ -150,14 +138,4 @@ class Warehouse
         return $result;
     }
 
-    public function updateById($id, $data)
-    {
-        $bind = [
-            EntityWarehouse::ATTR_CODE => $data->getData(AggWarehouse::AS_CODE),
-            EntityWarehouse::ATTR_CURRENCY => $data->getData(AggWarehouse::AS_CURRENCY),
-            EntityWarehouse::ATTR_COUNTRY_CODE => $data->getData(AggWarehouse::AS_COUNTRY_CODE),
-            EntityWarehouse::ATTR_NOTE => $data->getData(AggWarehouse::AS_NOTE)
-        ];
-        $this->_repoEntityWarehouse->updateById($id, $bind);
-    }
 }

@@ -19,9 +19,9 @@ class Warehouse_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
     /** @var  \Mockery\MockInterface */
     private $mManTrans;
     /** @var  \Mockery\MockInterface */
-    private $mRepoGeneric;
-    /** @var  \Mockery\MockInterface */
     private $mRepoEntityWarehouse;
+    /** @var  \Mockery\MockInterface */
+    private $mRepoGeneric;
     /** @var  \Mockery\MockInterface */
     private $mResource;
     /** @var  Warehouse */

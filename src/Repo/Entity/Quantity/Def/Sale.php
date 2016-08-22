@@ -4,19 +4,22 @@
  */
 namespace Praxigento\Warehouse\Repo\Entity\Quantity\Def;
 
-use Magento\Framework\App\ResourceConnection;
 use Praxigento\Core\Repo\Def\Entity as BaseEntityRepo;
-use Praxigento\Core\Repo\IGeneric as IRepoGeneric;
 use Praxigento\Warehouse\Data\Entity\Quantity\Sale as Entity;
 use Praxigento\Warehouse\Repo\Entity\Quantity\ISale as IEntityRepo;
 
 class Sale extends BaseEntityRepo implements IEntityRepo
 {
+    /** @var \Magento\Framework\ObjectManagerInterface */
+    protected $_manObj;
+
     public function __construct(
-        ResourceConnection $resource,
-        IRepoGeneric $repoGeneric
+        \Magento\Framework\ObjectManagerInterface $manObj,
+        \Magento\Framework\App\ResourceConnection $resource,
+        \Praxigento\Core\Repo\IGeneric $repoGeneric
     ) {
         parent::__construct($resource, $repoGeneric, Entity::class);
+        $this->_manObj = $manObj;
     }
 
     /** @inheritdoc */
@@ -26,7 +29,7 @@ class Sale extends BaseEntityRepo implements IEntityRepo
         $where = '=' . (int)$id;
         $rows = $this->get($where);
         foreach ($rows as $row) {
-            $item = new Entity($row);
+            $item = $this->_manObj->create(\Praxigento\Warehouse\Data\Entity\Quantity\Sale::class, ['arg1' => $row]);
             $result[] = $item;
         }
         return $result;
