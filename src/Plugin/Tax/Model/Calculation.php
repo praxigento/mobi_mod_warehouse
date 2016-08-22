@@ -27,8 +27,10 @@ class Calculation
         $this->_repoWrhs = $repoWrhs;
     }
 
-    public function afterGetRateRequest(\Magento\Tax\Model\Calculation $subject, $result)
-    {
+    public function afterGetRateRequest(
+        \Magento\Tax\Model\Calculation $subject,
+        $result
+    ) {
         $storeId = $result->getStore();
         $stockId = $this->_manStock->getStockIdByStoreId($storeId);
         $wrhs = $this->_repoWrhs->getById($stockId);

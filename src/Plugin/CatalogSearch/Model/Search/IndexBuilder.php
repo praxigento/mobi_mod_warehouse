@@ -24,6 +24,12 @@ class IndexBuilder
     /** alias for joined 'cataloginventory_stock_status'. */
     const AS_STOCK_INDEX = 'stock_index'; // see \Magento\CatalogSearch\Model\Search\IndexBuilder::build
 
+    /**
+     * @param \Magento\CatalogSearch\Model\Search\IndexBuilder $subject
+     * @param \Closure $proceed
+     * @param \Magento\Framework\Search\RequestInterface $request
+     * @return \Magento\Framework\DB\Select
+     */
     public function aroundBuild(
         \Magento\CatalogSearch\Model\Search\IndexBuilder $subject,
         \Closure $proceed,
@@ -31,8 +37,6 @@ class IndexBuilder
     ) {
         /** @var \Magento\Framework\DB\Select $result */
         $result = $proceed($request);
-//        $storeId = $result->getStoreId();
-//        $stockId = $this->_manStock->getStockIdByStoreId($storeId);
         $from = $result->getPart(\Magento\Framework\DB\Select::FROM);
         if (isset($from[self::AS_STOCK_INDEX])) {
             $dimensions = $request->getDimensions();
@@ -43,11 +47,6 @@ class IndexBuilder
             $byStockId = self::AS_STOCK_INDEX . '.' . Cfg::E_CATINV_STOCK_STATUS_A_STOCK_ID . '=' . $stockId;
             $result->where($byStockId);
         }
-        /** @var \Magento\Framework\DB\Select $sql */
-//        $sql = $result->getSelectSql();
-        /** @var \Magento\Framework\DB\Select $sqlCount */
-//        $sqlCount = $result->getSelectCountSql();
-        $select = (string)$result;
         return $result;
     }
 }

@@ -2,20 +2,18 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
-
 namespace Praxigento\Warehouse\Plugin\CatalogInventory\Model;
-
 
 class StockRegistry
 {
     /**
      * Disable creation for default stock item on product save.
      *
-     * @param Subject $subject
+     * @param \Magento\CatalogInventory\Model\StockRegistry $subject
      * @param \Closure $proceed
-     * @param $productSku
+     * @param string $productSku
      * @param \Magento\CatalogInventory\Api\Data\StockItemInterface $stockItem
-     * @return mixed
+     * @return int
      */
     public function aroundUpdateStockItemBySku(
         \Magento\CatalogInventory\Model\StockRegistry $subject,
@@ -27,7 +25,6 @@ class StockRegistry
         $stockId = $stockItem->getStockId();
         if ($stockId) {
             $result = $proceed($productSku, $stockItem);
-
         }
         return $result;
     }
