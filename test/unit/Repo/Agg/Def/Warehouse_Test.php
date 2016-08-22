@@ -38,7 +38,6 @@ class Warehouse_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         $this->mRepoGeneric = $this->_mockRepoGeneric();
         $this->mRepoEntityWarehouse = $this->_mock(\Praxigento\Warehouse\Repo\Entity\IWarehouse::class);
         $this->mFactorySelect = $this->_mock(Warehouse\SelectFactory::class);
-        /** setup mocks for constructor */
         /** create object to test */
         $this->obj = new Warehouse(
             $this->mManObj,
@@ -52,8 +51,6 @@ class Warehouse_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
 
     public function test_constructor()
     {
-        /** === Test Data === */
-        /** === Setup Mocks === */
         /** === Call and asserts  === */
         $this->assertInstanceOf(Warehouse::class, $this->obj);
     }
