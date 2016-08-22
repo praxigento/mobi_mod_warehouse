@@ -21,9 +21,6 @@
     <preference for="Praxigento\Warehouse\Repo\Entity\Stock\IItem" type="Praxigento\Warehouse\Repo\Entity\Stock\Def\Item"/>
     <preference for="Praxigento\Warehouse\Repo\Entity\Quantity\ISale" type="Praxigento\Warehouse\Repo\Entity\Quantity\Def\Sale"/>
 
-    <!-- REWRITES -->
-    <preference for="Magento\CatalogInventory\Model\ResourceModel\Stock\Item\StockItemCriteriaMapper" type="Praxigento\Warehouse\Rewrite\CatalogInventory\Model\ResourceModel\Stock\Item\StockItemCriteriaMapper"/>
-
 
     <!-- Services -->
     <preference for="Praxigento\Warehouse\Service\IQtyDistributor" type="Praxigento\Warehouse\Service\QtyDistributor\Call"/>
@@ -45,10 +42,12 @@
         <!-- Update stock qty when sale order is placed -->
         <plugin name="praxigento_warehouse_plugin" type="Praxigento\Warehouse\Plugin\CatalogInventory\Model\ResourceModel\Stock" sortOrder="100" disabled="false"/>
     </type>
+
     <type name="Magento\CatalogInventory\Model\ResourceModel\Stock\Status">
         <!-- Switch stockId for products collections (MOBI-311) -->
         <plugin name="praxigento_warehouse_plugin" type="Praxigento\Warehouse\Plugin\CatalogInventory\Model\ResourceModel\Stock\Status" sortOrder="100" disabled="false"/>
     </type>
+
     <type name="Magento\CatalogInventory\Model\Stock\Item">
         <!-- Disable default stock item ID if stock ID is 'null'-->
         <plugin name="praxigento_warehouse_plugin" type="Praxigento\Warehouse\Plugin\CatalogInventory\Model\Stock\Item" sortOrder="100" disabled="false"/>
