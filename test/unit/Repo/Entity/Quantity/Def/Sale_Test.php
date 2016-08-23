@@ -6,7 +6,7 @@ namespace Praxigento\Warehouse\Repo\Entity\Quantity\Def;
 
 include_once(__DIR__ . '/../../../../phpunit_bootstrap.php');
 
-class Item_UnitTest extends \Praxigento\Core\Test\BaseRepoEntityCase
+class Item_UnitTest extends \Praxigento\Core\Test\BaseCase\Repo\Entity
 {
     /** @var  \Mockery\MockInterface */
     private $mManObj;
