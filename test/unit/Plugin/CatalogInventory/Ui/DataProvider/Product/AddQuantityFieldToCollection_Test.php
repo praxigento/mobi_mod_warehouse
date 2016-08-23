@@ -6,7 +6,7 @@ namespace Praxigento\Warehouse\Plugin\CatalogInventory\Ui\DataProvider\Product;
 
 include_once(__DIR__ . '/../../../../../phpunit_bootstrap.php');
 
-class AddQuantityFieldToCollection_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
+class AddQuantityFieldToCollection_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery
 {
 
     /** @var  \Mockery\MockInterface */

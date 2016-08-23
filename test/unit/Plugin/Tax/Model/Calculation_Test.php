@@ -7,7 +7,7 @@ namespace Praxigento\Warehouse\Plugin\Tax\Model;
 include_once(__DIR__ . '/../../../phpunit_bootstrap.php');
 
 class Calculation_UnitTest
-    extends \Praxigento\Core\Test\BaseMockeryCase
+    extends \Praxigento\Core\Test\BaseCase\Mockery
 {
     /** @var  \Mockery\MockInterface */
     protected $mManStock;

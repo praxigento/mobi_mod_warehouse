@@ -9,7 +9,7 @@ use Praxigento\Warehouse\Config as Cfg;
 include_once(__DIR__ . '/../../../../phpunit_bootstrap.php');
 
 class IndexBuilder_UnitTest
-    extends \Praxigento\Core\Test\BaseMockeryCase
+    extends \Praxigento\Core\Test\BaseCase\Mockery
 {
     /** @var  \Mockery\MockInterface */
     protected $mManStock;

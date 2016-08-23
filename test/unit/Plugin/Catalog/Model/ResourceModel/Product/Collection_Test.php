@@ -6,7 +6,7 @@ namespace Praxigento\Warehouse\Plugin\Catalog\Model\ResourceModel\Product;
 
 
 class Collection_UnitTest
-    extends \Praxigento\Core\Test\BaseMockeryCase
+    extends \Praxigento\Core\Test\BaseCase\Mockery
 {
     /** @var \Mockery\MockInterface */
     private $mQueryModGrid;

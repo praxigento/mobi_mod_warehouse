@@ -6,7 +6,7 @@ namespace Praxigento\Warehouse\Service\QtyDistributor\Sub;
 
 include_once(__DIR__ . '/../../../phpunit_bootstrap.php');
 
-class Repo_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
+class Repo_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery
 {
     /** @var  \Mockery\MockInterface */
     private $mManTrans;

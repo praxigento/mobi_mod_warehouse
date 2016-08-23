@@ -6,7 +6,7 @@ namespace Praxigento\Warehouse\Plugin\CatalogInventory\Ui\DataProvider\Product;
 
 include_once(__DIR__ . '/../../../../../phpunit_bootstrap.php');
 
-class AddQuantityFilterToCollection_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
+class AddQuantityFilterToCollection_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery
 {
     /** @var  \Mockery\MockInterface */
     private $mRepoModifierProductGFrid;

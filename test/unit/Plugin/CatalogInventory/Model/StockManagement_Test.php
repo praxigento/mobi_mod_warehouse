@@ -15,7 +15,7 @@ if (!function_exists('__')) {
 }
 
 class StockManagement_UnitTest
-    extends \Praxigento\Core\Test\BaseMockeryCase
+    extends \Praxigento\Core\Test\BaseCase\Mockery
 {
     /** @var  \Mockery\MockInterface */
     protected $mCallQtyDistributor;

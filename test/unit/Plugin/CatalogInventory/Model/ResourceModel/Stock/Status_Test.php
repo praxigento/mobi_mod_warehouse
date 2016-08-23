@@ -6,7 +6,7 @@ namespace Praxigento\Warehouse\Plugin\CatalogInventory\Model\ResourceModel\Stock
 
 
 class Status_UnitTest
-    extends \Praxigento\Core\Test\BaseMockeryCase
+    extends \Praxigento\Core\Test\BaseCase\Mockery
 {
     /** @var \Mockery\MockInterface */
     private $mManStock;

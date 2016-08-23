@@ -6,7 +6,7 @@ namespace Praxigento\Warehouse\Plugin\CatalogInventory\Api\Data;
 
 include_once(__DIR__ . '/../../../../phpunit_bootstrap.php');
 
-class StockStatusCollectionInterfaceFactory_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
+class StockStatusCollectionInterfaceFactory_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery
 {
     /** @var  StockStatusCollectionInterfaceFactory */
     private $obj;
