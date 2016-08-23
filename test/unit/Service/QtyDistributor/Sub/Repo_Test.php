@@ -53,10 +53,16 @@ class Repo_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery
         $STOCK_ID = 54;
         /** === Setup Mocks === */
         // $conn = $this->_repoGeneric->getConnection();
-        $mConn = $this->_mockConn(['getTableName', 'fetchAll']);
+        $mConn = $this->_mockConn(['fetchAll']);
         $this->mRepoGeneric
             ->shouldReceive('getConnection')->once()
             ->andReturn($mConn);
+        // $tblStockItem = [$asStockItem => $this->_resource->getTableName(Cfg::ENTITY_MAGE_CATALOGINVENTORY_STOCK_ITEM)];
+        // $tblQty = [$asQty => $this->_resource->getTableName(Quantity::ENTITY_NAME)];
+        // $tblLot = [$asLot => $this->_resource->getTableName(Lot::ENTITY_NAME)];
+        $this->mResource
+            ->shouldReceive('getTableName')->times(3)
+            ->andReturn('table name');
         // $query = $conn->select();
         $mQuery = $this->_mockDbSelect(['from', 'joinLeft', 'where', 'order']);
         $mConn->shouldReceive('select')->once()

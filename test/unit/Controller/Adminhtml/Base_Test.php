@@ -48,7 +48,6 @@ class Base_UnitTest extends \Praxigento\Core\Test\BaseCase\Controller
     public function test_execute()
     {
         /** === Test Data === */
-        $IS_ALLOWED = true;
         /** === Setup Mocks === */
         // $resultPage = $this->_resultPageFactory->create();
         $mResultPage = $this->_mock(\Magento\Backend\Model\View\Result\Page::class);

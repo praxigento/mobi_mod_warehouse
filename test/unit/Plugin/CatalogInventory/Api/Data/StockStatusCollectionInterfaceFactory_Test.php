@@ -32,12 +32,22 @@ class StockStatusCollectionInterfaceFactory_UnitTest extends \Praxigento\Core\Te
     {
         /** === Test Data === */
         $STOCK_ID = 12;
+        $TBL_STOCK_ITEM = 'stock item';
+        $TBL_QTY = 'qty';
         /** === Setup Mocks === */
         $mQuery = $this->_mock(\Magento\Framework\Db\Query::class);
         $mSelect = $this->_mockDbSelect(['columns', 'joinLeft', 'where', 'group']);
         // $select = $query->getSelectSql();
         $mQuery->shouldReceive('getSelectSql')->once()
             ->andReturn($mSelect);
+        // $tbl = [self::AS_TBL_STOCK_ITEM => $this->_resource->getTableName(EntityStockItem::ENTITY)];
+        $this->mResource
+            ->shouldReceive('getTableName')->once()
+            ->andReturn($TBL_STOCK_ITEM);
+        // $tbl = [self::AS_TBL_QTY => $this->_resource->getTableName(EntityQty::ENTITY_NAME)];
+        $this->mResource
+            ->shouldReceive('getTableName')->once()
+            ->andReturn($TBL_QTY);
         // $stockId = (int)$this->_toolStockManager->getCurrentStockId();
         $this->mToolStockMan
             ->shouldReceive('getCurrentStockId')->once()

@@ -44,6 +44,9 @@ class Item_UnitTest extends \Praxigento\Core\Test\BaseCase\Repo\Entity
         /** === Test Data === */
         $ID = 32;
         /** === Mock object itself === */
+        $this->mResource
+            ->shouldReceive('getConnection')->once()
+            ->andReturn($this->mConn);
         $this->obj = \Mockery::mock(Sale::class . '[get]', $this->objArgs);
         /** === Setup Mocks === */
         // $rows = $this->get($where);

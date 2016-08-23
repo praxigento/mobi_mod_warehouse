@@ -22,6 +22,9 @@ class SelectFactory_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery
         $this->mConn = $this->_mockConn();
         $this->mResource = $this->_mockResourceConnection($this->mConn);
         /** setup mocks for constructor */
+        $this->mResource
+            ->shouldReceive('getConnection')->once()
+            ->andReturn($this->mConn);
         /** create object to test */
         $this->obj = new SelectFactory (
             $this->mResource

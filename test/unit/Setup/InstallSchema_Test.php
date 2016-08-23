@@ -13,30 +13,20 @@ use Praxigento\Warehouse\Data\Entity\Warehouse;
 
 include_once(__DIR__ . '/../phpunit_bootstrap.php');
 
-class InstallSchema_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery
+class InstallSchema_UnitTest
+    extends \Praxigento\Core\Test\BaseCase\Setup\Schema
 {
-    /** @var  \Mockery\MockInterface */
-    private $mConn;
-    /** @var  \Mockery\MockInterface */
-    private $mContext;
-    /** @var  \Mockery\MockInterface */
-    private $mSetup;
-    /** @var  \Mockery\MockInterface */
-    private $mToolDem;
     /** @var  InstallSchema */
     private $obj;
 
     public function setUp()
     {
         parent::setUp();
-        /** create mocks */
-        $this->mConn = $this->_mockConn();
-        $this->mToolDem = $this->_mock(\Praxigento\Core\Setup\Dem\Tool::class);
-        $this->mSetup = $this->_mock(\Magento\Framework\Setup\SchemaSetupInterface::class);
-        $this->mContext = $this->_mock(\Magento\Framework\Setup\ModuleContextInterface::class);
         /** create object to test */
-        $mResource = $this->_mockResourceConnection($this->mConn);
-        $this->obj = new InstallSchema($mResource, $this->mToolDem);
+        $this->obj = new InstallSchema(
+            $this->mResource,
+            $this->mToolDem
+        );
     }
 
     public function test_install()

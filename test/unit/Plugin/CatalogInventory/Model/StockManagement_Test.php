@@ -69,7 +69,8 @@ class StockManagement_UnitTest
         $WEBSITE_ID = 0;
         $STOCK_ID = 4;
         $PROD_ID = 32;
-        $ITEM_ID = 128;
+        $ITEM_ID_01 = 128;
+        $ITEM_ID_02 = 64;
         $TYPE_ID = 'simple';
         $QTY_STORED = 202;
         $QTY_ORDERED = 2;
@@ -104,30 +105,38 @@ class StockManagement_UnitTest
         //
         // FIRST ITERATION
         // $stockItem = $this->_providerStockRegistry->getStockItem($productId, $stockId);
-        $mStockItem = $this->_mock(\Magento\CatalogInventory\Api\Data\StockItemInterface::class);
+        $mStockItem1 = $this->_mock(\Magento\CatalogInventory\Api\Data\StockItemInterface::class);
         $this->mProviderStockRegistry
             ->shouldReceive('getStockItem')->once()
             ->with($PROD_ID, $STOCK_ID)
-            ->andReturn($mStockItem);
+            ->andReturn($mStockItem1);
         // $stockItemId = $stockItem->getItemId();
-        $mStockItem->shouldReceive('getItemId')->once()
-            ->andReturn($ITEM_ID);
+        $mStockItem1->shouldReceive('getItemId')->once()
+            ->andReturn($ITEM_ID_01);
         // $canSubtractQty = $stockItemId && $this->_canSubtractQty($stockItem);
         // protected function _canSubtractQty(StockItemInterface $stockItem)
         // $result = $stockItem->getManageStock() && $this->_configStock->canSubtractQty();
-        $mStockItem->shouldReceive('getManageStock')->once()
+        $mStockItem1->shouldReceive('getManageStock')->once()
             ->andReturn(true);
         $this->mConfigStock
             ->shouldReceive('canSubtractQty')->once()
             ->andReturn(false);
         //
         // SECOND ITERATION
-        //  (some mocks are defined before)
         //
+        // $stockItem = $this->_providerStockRegistry->getStockItem($productId, $stockId);
+        $mStockItem2 = $this->_mock(\Magento\CatalogInventory\Api\Data\StockItemInterface::class);
+        $this->mProviderStockRegistry
+            ->shouldReceive('getStockItem')->once()
+            ->with($PROD_ID, $STOCK_ID)
+            ->andReturn($mStockItem2);
+        // $stockItemId = $stockItem->getItemId();
+        $mStockItem2->shouldReceive('getItemId')->once()
+            ->andReturn($ITEM_ID_02);
         // $canSubtractQty = $stockItemId && $this->_canSubtractQty($stockItem);
         // protected function _canSubtractQty(StockItemInterface $stockItem)
         // $result = $stockItem->getManageStock() && $this->_configStock->canSubtractQty();
-        $mStockItem->shouldReceive('getManageStock')->once()
+        $mStockItem2->shouldReceive('getManageStock')->once()
             ->andReturn(true);
         $this->mConfigStock
             ->shouldReceive('canSubtractQty')->once()
@@ -138,7 +147,7 @@ class StockManagement_UnitTest
             ->with($TYPE_ID)
             ->andReturn(true);
         // if (!$stockItem->hasAdminArea() && ...) {...}
-        $mStockItem->shouldReceive('hasAdminArea')->once()
+        $mStockItem2->shouldReceive('hasAdminArea')->once()
             ->andReturn(false);
         // if (... && !$this->_stockState->checkQty($productId, $orderedQty)) {...}
         $this->mStockState
