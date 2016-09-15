@@ -2,12 +2,10 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
-
 namespace Praxigento\Warehouse\Controller\Adminhtml;
 
-use Magento\Backend\App\Action;
-
-abstract class Base extends \Magento\Backend\App\Action
+abstract class Base
+    extends \Magento\Backend\App\Action
 {
     /** @var  string */
     protected $_aclResource;
@@ -45,7 +43,8 @@ abstract class Base extends \Magento\Backend\App\Action
      */
     protected function _isAllowed()
     {
-        return $this->_authorization->isAllowed($this->_aclResource);
+        $result = $this->_authorization->isAllowed($this->_aclResource);
+        return $result;
     }
 
     /** @inheritdoc */
