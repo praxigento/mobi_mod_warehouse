@@ -4,12 +4,11 @@
  *
  * User: Alex Gusev <alex@flancer64.com>
  */
-
 namespace Praxigento\Warehouse\Data\Agg;
 
-use Flancer32\Lib\DataObject;
 
-class Warehouse extends DataObject
+class Warehouse
+    extends \Flancer32\Lib\DataObject
 {
     /**#@+
      * Aliases for data attributes.
