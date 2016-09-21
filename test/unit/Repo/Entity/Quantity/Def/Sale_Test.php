@@ -6,7 +6,7 @@ namespace Praxigento\Warehouse\Repo\Entity\Quantity\Def;
 
 include_once(__DIR__ . '/../../../../phpunit_bootstrap.php');
 
-class Item_UnitTest extends \Praxigento\Core\Test\BaseCase\Repo\Entity
+class Sale_UnitTest extends \Praxigento\Core\Test\BaseCase\Repo\Entity
 {
     /** @var  \Mockery\MockInterface */
     private $mManObj;
@@ -44,9 +44,6 @@ class Item_UnitTest extends \Praxigento\Core\Test\BaseCase\Repo\Entity
         /** === Test Data === */
         $ID = 32;
         /** === Mock object itself === */
-        $this->mResource
-            ->shouldReceive('getConnection')->once()
-            ->andReturn($this->mConn);
         $this->obj = \Mockery::mock(Sale::class . '[get]', $this->objArgs);
         /** === Setup Mocks === */
         // $rows = $this->get($where);
