@@ -22,20 +22,15 @@ class Base_UnitTest
     const BREADCRUMB_TITLE = 'bc title';
     const PAGE_TITLE = 'page title';
 
-    /** @var  \Mockery\MockInterface */
-    protected $mResultPageFactory;
     /** @var  TestedBase */
     private $obj;
 
     protected function setUp()
     {
         parent::setUp();
-        /** create mocks */
-        $this->mResultPageFactory = $this->_mock(\Magento\Framework\View\Result\PageFactory::class);
         /** create object to test */
         $this->obj = new TestedBase(
             $this->mContext,
-            $this->mResultPageFactory,
             self::ACL_RESOURCE,
             self::ACTIVE_MENU,
             self::BREADCRUMB_LABEL,
@@ -55,10 +50,11 @@ class Base_UnitTest
     {
         /** === Test Data === */
         /** === Setup Mocks === */
-        // $resultPage = $this->_resultPageFactory->create();
+        // $resultPage = $this->resultFactory->create(\Magento\Framework\Controller\ResultFactory::TYPE_PAGE);
         $mResultPage = $this->_mock(\Magento\Backend\Model\View\Result\Page::class);
-        $this->mResultPageFactory
+        $this->mCtxResultFactory
             ->shouldReceive('create')->once()
+            ->with(\Magento\Framework\Controller\ResultFactory::TYPE_PAGE)
             ->andReturn($mResultPage);
         // $resultPage->setActiveMenu($this->_activeMenu);
         $mResultPage->shouldReceive('setActiveMenu')->once();
@@ -79,6 +75,10 @@ class Base_UnitTest
         /** === Test Data === */
         $mIsAllowed = true;
         /** === Setup Mocks === */
+        $this->mCtxAuthorization
+            ->shouldReceive('isAllowed')->once()
+            ->with(\Magento\Backend\App\AbstractAction::ADMIN_RESOURCE)
+            ->andReturn(true);
         $this->mCtxAuthorization
             ->shouldReceive('isAllowed')->once()
             ->with(self::ACL_RESOURCE)

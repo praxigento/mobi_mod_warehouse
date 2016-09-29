@@ -6,13 +6,12 @@
 namespace Praxigento\Warehouse\Controller\Adminhtml\Lots;
 
 use Praxigento\Warehouse\Config as Cfg;
-use Praxigento\Warehouse\Controller\Adminhtml\Base;
 
-class Index extends Base
+class Index
+    extends \Praxigento\Warehouse\Controller\Adminhtml\Base
 {
     public function __construct(
-        \Magento\Backend\App\Action\Context $context,
-        \Magento\Framework\View\Result\PageFactory $resultPageFactory
+        \Magento\Backend\App\Action\Context $context
     ) {
         $aclResource = Cfg::MODULE . '::' . Cfg::ACL_CATALOG_LOTS;
         $activeMenu = Cfg::MODULE . '::' . Cfg::MENU_CATALOG_LOTS;
@@ -21,7 +20,6 @@ class Index extends Base
         $pageTitle = 'Lots';
         parent::__construct(
             $context,
-            $resultPageFactory,
             $aclResource,
             $activeMenu,
             $breadcrumbLabel,
