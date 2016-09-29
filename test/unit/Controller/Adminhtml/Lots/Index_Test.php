@@ -7,7 +7,13 @@ namespace Praxigento\Warehouse\Controller\Adminhtml\Lots;
 
 include_once(__DIR__ . '/../../../phpunit_bootstrap.php');
 
-class Index_UnitTest extends \Praxigento\Core\Test\BaseCase\Controller
+/**
+ * @SuppressWarnings(PHPMD.CamelCaseClassName)
+ * @SuppressWarnings(PHPMD.CamelCasePropertyName)
+ * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+ */
+class Index_UnitTest
+    extends \Praxigento\Core\Test\BaseCase\Controller
 {
 
     /** @var  \Mockery\MockInterface */

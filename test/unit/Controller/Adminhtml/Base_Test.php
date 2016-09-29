@@ -7,7 +7,13 @@ namespace Praxigento\Warehouse\Controller\Adminhtml;
 
 include_once(__DIR__ . '/../../phpunit_bootstrap.php');
 
-class Base_UnitTest extends \Praxigento\Core\Test\BaseCase\Controller
+/**
+ * @SuppressWarnings(PHPMD.CamelCaseClassName)
+ * @SuppressWarnings(PHPMD.CamelCasePropertyName)
+ * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+ */
+class Base_UnitTest
+    extends \Praxigento\Core\Test\BaseCase\Controller
 {
 
     const ACL_RESOURCE = 'acl_resource';
@@ -71,18 +77,22 @@ class Base_UnitTest extends \Praxigento\Core\Test\BaseCase\Controller
     public function test_isAllowed()
     {
         /** === Test Data === */
-        $IS_ALLOWED = true;
+        $mIsAllowed = true;
         /** === Setup Mocks === */
         $this->mCtxAuthorization
             ->shouldReceive('isAllowed')->once()
             ->with(self::ACL_RESOURCE)
-            ->andReturn($IS_ALLOWED);
+            ->andReturn($mIsAllowed);
         /** === Call and asserts  === */
         $this->obj->isAllowed();
     }
 
 }
 
+/**
+ * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+ * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+ */
 class TestedBase extends Base
 {
     protected function _addBreadcrumb($label, $title, $link = null)
