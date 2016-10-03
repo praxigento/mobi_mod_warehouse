@@ -2,19 +2,10 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
-
 namespace Praxigento\Warehouse\Ui\DataProvider;
 
-use Magento\Framework\Api\FilterBuilder;
-use Magento\Framework\Api\Search\SearchCriteriaBuilder;
-use Magento\Framework\App\RequestInterface;
-use Magento\Framework\UrlInterface;
-use Magento\Framework\View\Element\UiComponent\DataProvider\Reporting;
-use Praxigento\Core\Repo\Query\Criteria\IAdapter as ICriteriaAdapter;
-use Praxigento\Core\Ui\DataProvider\Base as BaseDataProvider;
-use Praxigento\Warehouse\Repo\Entity\ILot as IRepoEntityLot;
-
-class Lot extends BaseDataProvider
+class Lot
+    extends \Praxigento\Core\Ui\DataProvider\Base
 {
 
     /**
@@ -23,13 +14,13 @@ class Lot extends BaseDataProvider
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
-        UrlInterface $url,
-        ICriteriaAdapter $critAdapter,
-        IRepoEntityLot $repo,
-        Reporting $reporting,
-        SearchCriteriaBuilder $searchCritBuilder,
-        RequestInterface $request,
-        FilterBuilder $filterBuilder,
+        \Magento\Framework\UrlInterface $url,
+        \Praxigento\Core\Repo\Query\Criteria\IAdapter $critAdapter,
+        \Praxigento\Warehouse\Repo\Entity\ILot $repo,
+        \Magento\Framework\View\Element\UiComponent\DataProvider\Reporting $reporting,
+        \Magento\Framework\Api\Search\SearchCriteriaBuilder $searchCritBuilder,
+        \Magento\Framework\App\RequestInterface $request,
+        \Magento\Framework\Api\FilterBuilder $filterBuilder,
         $name,
         array $meta = [],
         array $data = []
