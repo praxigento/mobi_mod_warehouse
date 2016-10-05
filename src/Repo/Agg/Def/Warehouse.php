@@ -13,6 +13,11 @@ use Praxigento\Warehouse\Config as Cfg;
 use Praxigento\Warehouse\Data\Agg\Warehouse as AggWarehouse;
 use Praxigento\Warehouse\Data\Entity\Warehouse as EntityWarehouse;
 
+/**
+ * @SuppressWarnings(PHPMD.CamelCasePropertyName)
+ * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ */
 class Warehouse
     extends \Praxigento\Core\Repo\Def\Crud
     implements \Praxigento\Warehouse\Repo\Agg\IWarehouse
@@ -49,18 +54,6 @@ class Warehouse
         $this->_repoEntityWarehouse = $repoEntityWarehouse;
         $this->_factorySelect = $factorySelect;
     }
-
-    /**
-     * @deprecated probably deprecated method
-     */
-    protected function _initAggregate($data)
-    {
-        /** @var  $result AggWarehouse */
-        $result = $this->_manObj->create(AggWarehouse::class);
-        $result->setData($data);
-        return $result;
-    }
-
 
     /**
      * @param AggWarehouse $data
@@ -112,6 +105,11 @@ class Warehouse
         return $result;
     }
 
+    /**
+     * @inheritdoc
+     *
+     * @SuppressWarnings(PHPMD.ShortVariable)
+     */
     public function getById($id)
     {
         /** @var  $result AggWarehouse */

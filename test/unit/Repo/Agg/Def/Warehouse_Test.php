@@ -4,10 +4,14 @@
  */
 namespace Praxigento\Warehouse\Repo\Agg\Def;
 
-use Praxigento\Warehouse\Data\Agg\Warehouse as AggWarehouse;
-
 include_once(__DIR__ . '/../../../phpunit_bootstrap.php');
 
+use Praxigento\Warehouse\Data\Agg\Warehouse as AggWarehouse;
+
+/**
+ * @SuppressWarnings(PHPMD.CamelCaseClassName)
+ * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+ */
 class Warehouse_UnitTest
     extends \Praxigento\Core\Test\BaseCase\Repo
 {
@@ -50,16 +54,19 @@ class Warehouse_UnitTest
         $this->assertInstanceOf(Warehouse::class, $this->obj);
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.ShortVariable)
+     */
     public function test_create_isStockId()
     {
         /** === Test Data === */
-        $ID = 32;
-        $DATA = new AggWarehouse([
+        $id = 32;
+        $data = new AggWarehouse([
             AggWarehouse::AS_CODE => 'code',
             AggWarehouse::AS_WEBSITE_ID => 'website_id',
             AggWarehouse::AS_CURRENCY => 'currency',
             AggWarehouse::AS_NOTE => 'note',
-            AggWarehouse::AS_ID => $ID
+            AggWarehouse::AS_ID => $id
         ]);
         /** === Setup Mocks === */
         // $def = $this->_manTrans->begin();
@@ -74,7 +81,7 @@ class Warehouse_UnitTest
         // $id = $this->_repoBasic->addEntity($tbl, $bind);
         $this->mRepoGeneric
             ->shouldReceive('addEntity')->once()
-            ->andReturn($ID);
+            ->andReturn($id);
         // $this->_repoBasic->addEntity($tbl, $bind);
         $this->mRepoGeneric
             ->shouldReceive('addEntity')->once();
@@ -87,16 +94,19 @@ class Warehouse_UnitTest
             ->shouldReceive('end')->once()
             ->with($mDef);
         /** === Call and asserts  === */
-        $res = $this->obj->create($DATA);
+        $res = $this->obj->create($data);
         $this->assertInstanceOf(AggWarehouse::class, $res);
-        $this->assertEquals($ID, $res->getId());
+        $this->assertEquals($id, $res->getId());
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.ShortVariable)
+     */
     public function test_create_noStockId()
     {
         /** === Test Data === */
-        $ID = 32;
-        $DATA = new AggWarehouse([
+        $id = 32;
+        $data = new AggWarehouse([
             AggWarehouse::AS_CODE => 'code',
             AggWarehouse::AS_WEBSITE_ID => 'website_id',
             AggWarehouse::AS_CURRENCY => 'currency',
@@ -111,7 +121,7 @@ class Warehouse_UnitTest
         // $id = $this->_repoBasic->addEntity($tbl, $bind);
         $this->mRepoGeneric
             ->shouldReceive('addEntity')->once()
-            ->andReturn($ID);
+            ->andReturn($id);
         // $this->_repoBasic->addEntity($tbl, $bind);
         $this->mRepoGeneric
             ->shouldReceive('addEntity')->once();
@@ -124,16 +134,19 @@ class Warehouse_UnitTest
             ->shouldReceive('end')->once()
             ->with($mDef);
         /** === Call and asserts  === */
-        $res = $this->obj->create($DATA);
+        $res = $this->obj->create($data);
         $this->assertInstanceOf(AggWarehouse::class, $res);
-        $this->assertEquals($ID, $res->getId());
+        $this->assertEquals($id, $res->getId());
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.ShortVariable)
+     */
     public function test_getById()
     {
         /** === Test Data === */
-        $ID = 21;
-        $DATA = ['data'];
+        $id = 21;
+        $data = ['data'];
         /** === Setup Mocks === */
         // $query = $this->_factorySelect->getQueryToSelect();
         $mQuery = $this->_mockDbSelect();
@@ -145,43 +158,43 @@ class Warehouse_UnitTest
         // $data = $this->_conn->fetchRow($query, ['id' => $id]);
         $this->mConn
             ->shouldReceive('fetchRow')->once()
-            ->andReturn($DATA);
+            ->andReturn($data);
         // $result = $this->_initResultRead($data);
         // $result = $this->_manObj->create(AggWarehouse::class);
         $this->mManObj
             ->shouldReceive('create')->once()
             ->andReturn(new AggWarehouse());
         /** === Call and asserts  === */
-        $res = $this->obj->getById($ID);
+        $res = $this->obj->getById($id);
         $this->assertInstanceOf(AggWarehouse::class, $res);
     }
 
     public function test_getQueryToSelect()
     {
         /** === Test Data === */
-        $QUERY = 'query';
+        $query = 'query';
         /** === Setup Mocks === */
         // $result = $this->_factorySelect->getQueryToSelect();
         $this->mFactorySelect
             ->shouldReceive('getQueryToSelect')->once()
-            ->andReturn($QUERY);
+            ->andReturn($query);
         /** === Call and asserts  === */
         $res = $this->obj->getQueryToSelect();
-        $this->assertEquals($QUERY, $res);
+        $this->assertEquals($query, $res);
     }
 
     public function test_getQueryToSelectCount()
     {
         /** === Test Data === */
-        $QUERY = 'query';
+        $query = 'query';
         /** === Setup Mocks === */
         // $result = $this->_factorySelect->getQueryToSelectCount();
         $this->mFactorySelect
             ->shouldReceive('getQueryToSelectCount')->once()
-            ->andReturn($QUERY);
+            ->andReturn($query);
         /** === Call and asserts  === */
         $res = $this->obj->getQueryToSelectCount();
-        $this->assertEquals($QUERY, $res);
+        $this->assertEquals($query, $res);
     }
 
 }
