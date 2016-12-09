@@ -48,6 +48,7 @@ class StockRegistryProvider
         $productId,
         $scopeId
     ) {
+        // $result = $proceed($productId, $scopeId); // original method will create empty item for stock registry
         $result = $this->_storageStockRegistry->getStockItem($productId, $scopeId);
         if (null === $result) {
             $criteria = $this->_factoryStockItemCrit->create();
