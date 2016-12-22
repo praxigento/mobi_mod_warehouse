@@ -37,7 +37,7 @@ class Item_UnitTest
         /** === Setup Mocks === */
         $mProceed = function () {
         };
-        // $result = $subject->getData(Cfg::E_CATINV_STOCK_ITEM_A_STOCK_ID);
+        // $result = $subject->get(Cfg::E_CATINV_STOCK_ITEM_A_STOCK_ID);
         $this->mSubject
             ->shouldReceive('getData')->once()
             ->with(\Praxigento\Core\Config::E_CATINV_STOCK_ITEM_A_STOCK_ID)

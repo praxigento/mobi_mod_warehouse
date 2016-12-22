@@ -16,7 +16,7 @@ class Customer
      */
     public function getCustomerRef()
     {
-        $result = parent::getData(self::ATTR_CUST_REF);
+        $result = parent::get(self::ATTR_CUST_REF);
         return $result;
     }
 
@@ -33,7 +33,7 @@ class Customer
      */
     public function getStockRef()
     {
-        $result = parent::getData(self::ATTR_STOCK_REF);
+        $result = parent::get(self::ATTR_STOCK_REF);
         return $result;
     }
 
@@ -43,7 +43,7 @@ class Customer
      */
     public function setCustomerRef($data)
     {
-        parent::setData(self::ATTR_CUST_REF, $data);
+        parent::set(self::ATTR_CUST_REF, $data);
     }
 
     /**
@@ -51,6 +51,6 @@ class Customer
      */
     public function setStockRef($data)
     {
-        parent::setData(self::ATTR_STOCK_REF, $data);
+        parent::set(self::ATTR_STOCK_REF, $data);
     }
 }

@@ -24,73 +24,73 @@ class Warehouse
     /** @return string */
     public function getCode()
     {
-        $result = parent::getData(self::AS_CODE);
+        $result = parent::get(self::AS_CODE);
         return $result;
     }
 
     /** @return string */
     public function getCountryCode()
     {
-        $result = parent::getData(self::AS_COUNTRY_CODE);
+        $result = parent::get(self::AS_COUNTRY_CODE);
         return $result;
     }
 
     /** @return string */
     public function getCurrency()
     {
-        $result = parent::getData(self::AS_CURRENCY);
+        $result = parent::get(self::AS_CURRENCY);
         return $result;
     }
 
     /** @return int */
     public function getId()
     {
-        $result = parent::getData(self::AS_ID);
+        $result = parent::get(self::AS_ID);
         return $result;
     }
 
     /** @return string */
     public function getNote()
     {
-        $result = parent::getData(self::AS_NOTE);
+        $result = parent::get(self::AS_NOTE);
         return $result;
     }
 
     /** @return int */
     public function getWebsiteId()
     {
-        $result = parent::getData(self::AS_WEBSITE_ID);
+        $result = parent::get(self::AS_WEBSITE_ID);
         return $result;
     }
 
     public function setCode($data)
     {
-        parent::setData(self::AS_CODE, $data);
+        parent::set(self::AS_CODE, $data);
     }
 
     public function setCountryCode($data)
     {
-        parent::setData(self::AS_COUNTRY_CODE, $data);
+        parent::set(self::AS_COUNTRY_CODE, $data);
     }
 
     public function setCurrency($data)
     {
-        parent::setData(self::AS_CURRENCY, $data);
+        parent::set(self::AS_CURRENCY, $data);
     }
 
     public function setId($data)
     {
-        parent::setData(self::AS_ID, $data);
+        parent::set(self::AS_ID, $data);
     }
 
     public function setNote($data)
     {
-        parent::setData(self::AS_NOTE, $data);
+        parent::set(self::AS_NOTE, $data);
     }
 
     public function setWebsiteId($data)
     {
-        parent::setData(self::AS_WEBSITE_ID, $data);
+        parent::set(self::AS_WEBSITE_ID, $data);
     }
 
 }

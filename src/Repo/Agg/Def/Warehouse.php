@@ -119,7 +119,7 @@ class Warehouse
         $data = $this->_conn->fetchRow($query, ['id' => $id]);
         if ($data) {
             $result = $this->_manObj->create(AggLot::class);
-            $result->setData($data);
+            $result->set($data);
         }
         return $result;
     }

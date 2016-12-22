@@ -24,32 +24,32 @@ class InstallSchema extends \Praxigento\Core\Setup\Schema\Base
 
         /* Stock Item  */
         $entityAlias = Item::ENTITY_NAME;
-        $demEntity = $demPackage->getData('package/Stock/entity/Item');
+        $demEntity = $demPackage->get('package/Stock/entity/Item');
         $this->_toolDem->createEntity($entityAlias, $demEntity);
 
         /* Warehouse */
         $entityAlias = Warehouse::ENTITY_NAME;
-        $demEntity = $demPackage->getData('entity/Warehouse');
+        $demEntity = $demPackage->get('entity/Warehouse');
         $this->_toolDem->createEntity($entityAlias, $demEntity);
 
         /* Lot */
         $entityAlias = Lot::ENTITY_NAME;
-        $demEntity = $demPackage->getData('entity/Lot');
+        $demEntity = $demPackage->get('entity/Lot');
         $this->_toolDem->createEntity($entityAlias, $demEntity);
 
         /* Quant */
         $entityAlias = Quantity::ENTITY_NAME;
-        $demEntity = $demPackage->getData('entity/Quantity');
+        $demEntity = $demPackage->get('entity/Quantity');
         $this->_toolDem->createEntity($entityAlias, $demEntity);
 
         /* Quant / Sale */
         $entityAlias = Sale::ENTITY_NAME;
-        $demEntity = $demPackage->getData('package/Quantity/entity/Sale');
+        $demEntity = $demPackage->get('package/Quantity/entity/Sale');
         $this->_toolDem->createEntity($entityAlias, $demEntity);
 
         /* Customer */
         $entityAlias = Customer::ENTITY_NAME;
-        $demEntity = $demPackage->getData('entity/Customer');
+        $demEntity = $demPackage->get('entity/Customer');
         $this->_toolDem->createEntity($entityAlias, $demEntity);
     }
 }

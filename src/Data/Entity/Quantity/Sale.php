@@ -17,7 +17,7 @@ class Sale
      */
     public function getLotRef()
     {
-        $result = parent::getData(self::ATTR_LOT_REF);
+        $result = parent::get(self::ATTR_LOT_REF);
         return $result;
     }
 
@@ -34,7 +34,7 @@ class Sale
      */
     public function getSaleItemRef()
     {
-        $result = parent::getData(self::ATTR_SALE_ITEM_REF);
+        $result = parent::get(self::ATTR_SALE_ITEM_REF);
         return $result;
     }
 
@@ -43,7 +43,7 @@ class Sale
      */
     public function getTotal()
     {
-        $result = parent::getData(self::ATTR_TOTAL);
+        $result = parent::get(self::ATTR_TOTAL);
         return $result;
     }
 
@@ -52,7 +52,7 @@ class Sale
      */
     public function setLotRef($data)
     {
-        parent::setData(self::ATTR_LOT_REF, $data);
+        parent::set(self::ATTR_LOT_REF, $data);
     }
 
     /**
@@ -60,7 +60,7 @@ class Sale
      */
     public function setSaleItemRef($data)
     {
-        parent::setData(self::ATTR_SALE_ITEM_REF, $data);
+        parent::set(self::ATTR_SALE_ITEM_REF, $data);
     }
 
     /**
@@ -68,6 +68,6 @@ class Sale
      */
     public function setTotal($data)
     {
-        parent::setData(self::ATTR_TOTAL, $data);
+        parent::set(self::ATTR_TOTAL, $data);
     }
 }

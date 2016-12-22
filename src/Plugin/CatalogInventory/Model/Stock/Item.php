@@ -22,7 +22,7 @@ class Item
         \Magento\CatalogInventory\Model\Stock\Item $subject,
         \Closure $proceed
     ) {
-        $result = $subject->getData(Cfg::E_CATINV_STOCK_ITEM_A_STOCK_ID);
+        $result = $subject->get(Cfg::E_CATINV_STOCK_ITEM_A_STOCK_ID);
         return $result;
     }
 }

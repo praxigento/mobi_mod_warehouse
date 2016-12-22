@@ -13,5 +13,4 @@ use Praxigento\Warehouse\Service\QtyDistributor\Data\Item;
  */
 class RegisterSale extends \Praxigento\Core\Service\Base\Request
 {
-
 }

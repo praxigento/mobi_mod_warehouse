@@ -16,7 +16,7 @@ class Item
      */
     public function getPrice()
     {
-        $result = parent::getData(self::ATTR_PRICE);
+        $result = parent::get(self::ATTR_PRICE);
         return $result;
     }
 
@@ -33,7 +33,7 @@ class Item
      */
     public function getStockItemRef()
     {
-        $result = parent::getData(self::ATTR_STOCK_ITEM_REF);
+        $result = parent::get(self::ATTR_STOCK_ITEM_REF);
         return $result;
     }
 
@@ -42,7 +42,7 @@ class Item
      */
     public function setPrice($data)
     {
-        parent::setData(self::ATTR_PRICE, $data);
+        parent::set(self::ATTR_PRICE, $data);
     }
 
     /**
@@ -50,7 +50,7 @@ class Item
      */
     public function setStockItemRef($data)
     {
-        parent::setData(self::ATTR_STOCK_ITEM_REF, $data);
+        parent::set(self::ATTR_STOCK_ITEM_REF, $data);
     }
 
 }

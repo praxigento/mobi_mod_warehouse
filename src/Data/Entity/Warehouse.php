@@ -19,7 +19,7 @@ class Warehouse
      */
     public function getCode()
     {
-        $result = parent::getData(self::ATTR_CODE);
+        $result = parent::get(self::ATTR_CODE);
         return $result;
     }
 
@@ -28,7 +28,7 @@ class Warehouse
      */
     public function getCountryCode()
     {
-        $result = parent::getData(self::ATTR_COUNTRY_CODE);
+        $result = parent::get(self::ATTR_COUNTRY_CODE);
         return $result;
     }
 
@@ -37,7 +37,7 @@ class Warehouse
      */
     public function getCurrency()
     {
-        $result = parent::getData(self::ATTR_CURRENCY);
+        $result = parent::get(self::ATTR_CURRENCY);
         return $result;
     }
 
@@ -46,7 +46,7 @@ class Warehouse
      */
     public function getNote()
     {
-        $result = parent::getData(self::ATTR_NOTE);
+        $result = parent::get(self::ATTR_NOTE);
         return $result;
     }
 
@@ -61,7 +61,7 @@ class Warehouse
      */
     public function getStockRef()
     {
-        $result = parent::getData(self::ATTR_STOCK_REF);
+        $result = parent::get(self::ATTR_STOCK_REF);
         return $result;
     }
 
@@ -70,7 +70,7 @@ class Warehouse
      */
     public function setCode($data)
     {
-        parent::setData(self::ATTR_CODE, $data);
+        parent::set(self::ATTR_CODE, $data);
     }
 
     /**
@@ -78,7 +78,7 @@ class Warehouse
      */
     public function setCountryCode($data)
     {
-        parent::setData(self::ATTR_COUNTRY_CODE, $data);
+        parent::set(self::ATTR_COUNTRY_CODE, $data);
     }
 
     /**
@@ -86,7 +86,7 @@ class Warehouse
      */
     public function setCurrency($data)
     {
-        parent::setData(self::ATTR_CURRENCY, $data);
+        parent::set(self::ATTR_CURRENCY, $data);
     }
 
     /**
@@ -94,7 +94,7 @@ class Warehouse
      */
     public function setNote($data)
     {
-        parent::setData(self::ATTR_NOTE, $data);
+        parent::set(self::ATTR_NOTE, $data);
     }
 
     /**
@@ -102,6 +102,6 @@ class Warehouse
      */
     public function setStockRef($data)
     {
-        parent::setData(self::ATTR_STOCK_REF, $data);
+        parent::set(self::ATTR_STOCK_REF, $data);
     }
 }

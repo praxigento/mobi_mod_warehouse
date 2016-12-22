@@ -17,7 +17,7 @@ class Lot
      */
     public function getCode()
     {
-        $result = parent::getData(self::ATTR_CODE);
+        $result = parent::get(self::ATTR_CODE);
         return $result;
     }
 
@@ -26,7 +26,7 @@ class Lot
      */
     public function getExpDate()
     {
-        $result = parent::getData(self::ATTR_EXP_DATE);
+        $result = parent::get(self::ATTR_EXP_DATE);
         return $result;
     }
 
@@ -35,7 +35,7 @@ class Lot
      */
     public function getId()
     {
-        $result = parent::getData(self::ATTR_ID);
+        $result = parent::get(self::ATTR_ID);
         return $result;
     }
 
@@ -52,7 +52,7 @@ class Lot
      */
     public function setCode($data)
     {
-        parent::setData(self::ATTR_CODE, $data);
+        parent::set(self::ATTR_CODE, $data);
     }
 
     /**
@@ -60,7 +60,7 @@ class Lot
      */
     public function setExpDate($data)
     {
-        parent::setData(self::ATTR_EXP_DATE, $data);
+        parent::set(self::ATTR_EXP_DATE, $data);
     }
 
     /**
@@ -68,6 +68,6 @@ class Lot
      */
     public function setId($data)
     {
-        parent::setData(self::ATTR_ID, $data);
+        parent::set(self::ATTR_ID, $data);
     }
 }
