@@ -29,7 +29,7 @@ class Sale extends BaseEntityRepo implements IEntityRepo
         $where = '=' . (int)$id;
         $rows = $this->get($where);
         foreach ($rows as $row) {
-            $item = $this->_manObj->create(\Praxigento\Warehouse\Data\Entity\Quantity\Sale::class, ['arg1' => $row]);
+            $item = new \Praxigento\Warehouse\Data\Entity\Quantity\Sale($row);
             $result[] = $item;
         }
         return $result;

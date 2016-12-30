@@ -42,14 +42,14 @@ class Register
             /* qty of the product can be changed in invoice, but we use ordered only  */
             $qty = $item->getQtyOrdered();
             /* register sale item (fragment total qty by lots) */
-            $itemData = $this->_manObj->create(\Praxigento\Warehouse\Service\QtyDistributor\Data\Item::class);
+            $itemData = new \Praxigento\Warehouse\Service\QtyDistributor\Data\Item();
             $itemData->setItemId($itemId);
             $itemData->setProductId($prodId);
             $itemData->setQuantity($qty);
             $itemData->setStockId($stockId);
             $itemsData[] = $itemData;
         }
-        $reqSale = $this->_manObj->create(\Praxigento\Warehouse\Service\QtyDistributor\Request\RegisterSale::class);
+        $reqSale = new \Praxigento\Warehouse\Service\QtyDistributor\Request\RegisterSale();
         $reqSale->setSaleItems($itemsData);
         $this->_callQtyDistributor->registerSale($reqSale);
     }
