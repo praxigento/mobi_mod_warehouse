@@ -24,7 +24,7 @@ class Warehouse
 {
 
     /** @var  \Magento\Framework\DB\Adapter\AdapterInterface */
-    protected $_conn;
+    protected $conn;
     /** @var Warehouse\SelectFactory */
     protected $_factorySelect;
     /** @var  ObjectManagerInterface */
@@ -36,7 +36,7 @@ class Warehouse
     /** @var IGenericRepo */
     protected $_repoGeneric;
     /** @var \Magento\Framework\App\ResourceConnection */
-    protected $_resource;
+    protected $resource;
 
     public function __construct(
         \Magento\Framework\ObjectManagerInterface $manObj,
@@ -48,8 +48,8 @@ class Warehouse
     ) {
         $this->_manObj = $manObj;
         $this->_manTrans = $manTrans;
-        $this->_resource = $resource;
-        $this->_conn = $resource->getConnection();
+        $this->resource = $resource;
+        $this->conn = $resource->getConnection();
         $this->_repoGeneric = $repoGeneric;
         $this->_repoEntityWarehouse = $repoEntityWarehouse;
         $this->_factorySelect = $factorySelect;
@@ -116,7 +116,7 @@ class Warehouse
         $result = null;
         $query = $this->_factorySelect->getQueryToSelect();
         $query->where(static::AS_STOCK . '.' . Cfg::E_CATINV_STOCK_A_STOCK_ID . '=:id');
-        $data = $this->_conn->fetchRow($query, ['id' => $id]);
+        $data = $this->conn->fetchRow($query, ['id' => $id]);
         if ($data) {
             $result = $this->_manObj->create(AggLot::class);
             $result->set($data);
