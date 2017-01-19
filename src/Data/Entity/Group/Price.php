@@ -10,7 +10,7 @@ class Price
     const ATTR_CUST_GROUP_REF = 'cust_group_ref';
     const ATTR_PRICE = 'price';
     const ATTR_STOCK_ITEM_REF = 'stock_item_ref';
-    const ENTITY_NAME = 'prxgt_pv_group_price';
+    const ENTITY_NAME = 'prxgt_wrhs_group_price';
 
     /**
      * @return int

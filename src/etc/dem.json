@@ -41,11 +41,11 @@
                       "PK": {"type": "primary", "aliases": ["stock_item_ref", "cust_group_ref"]}
                     },
                     "relation": {
-                      "toWarehouseStockItem": {
+                      "toStockItem": {
                         "own": {"aliases": ["stock_item_ref"]},
                         "reference": {
-                          "entity": {"completeAlias": "prxgt_wrhs_stock_item"},
-                          "aliases": ["stock_item_ref"]
+                          "entity": {"completeAlias": "cataloginventory_stock_item"},
+                          "aliases": ["item_id"]
                         },
                         "action": {"delete": "restrict", "update": "restrict"}
                       },
