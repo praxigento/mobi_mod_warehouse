@@ -9,6 +9,58 @@
             "alias": "wrhs",
             "comment": "Top level package for Praxigento_Warehouse module",
             "package": {
+              "Group": {
+                "alias": "group",
+                "comment": "Customer group subpackage",
+                "entity": {
+                  "Price": {
+                    "alias": "price",
+                    "comment": "Customer group prices for stock items.",
+                    "attribute": {
+                      "StockItemRef": {
+                        "alias": "stock_item_ref",
+                        "comment": "Reference to the stock item.",
+                        "nullable": false,
+                        "type": {"integer": {"unsigned": true}}
+                      },
+                      "CustomerGroupRef": {
+                        "alias": "cust_group_ref",
+                        "comment": "Reference to the customer group.",
+                        "nullable": false,
+                        "type": {"integer": {"subtype": "smallint", "unsigned": true}}
+                      },
+                      "Price": {
+                        "alias": "price",
+                        "comment": "Warehouse price for the customer group for the item.",
+                        "nullable": false,
+                        "default": 0,
+                        "type": {"numeric": {"precision": 12, "scale": 4}}
+                      }
+                    },
+                    "index": {
+                      "PK": {"type": "primary", "aliases": ["stock_item_ref", "cust_group_ref"]}
+                    },
+                    "relation": {
+                      "toWarehouseStockItem": {
+                        "own": {"aliases": ["stock_item_ref"]},
+                        "reference": {
+                          "entity": {"completeAlias": "prxgt_wrhs_stock_item"},
+                          "aliases": ["stock_item_ref"]
+                        },
+                        "action": {"delete": "restrict", "update": "restrict"}
+                      },
+                      "toCustomerGroup": {
+                        "own": {"aliases": ["cust_group_ref"]},
+                        "reference": {
+                          "entity": {"completeAlias": "customer_group"},
+                          "aliases": ["customer_group_id"]
+                        },
+                        "action": {"delete": "restrict", "update": "restrict"}
+                      }
+                    }
+                  }
+                }
+              },
               "Quantity": {
                 "alias": "qty",
                 "comment": "Quantity related entities",

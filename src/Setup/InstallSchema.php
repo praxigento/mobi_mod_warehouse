@@ -6,6 +6,7 @@
 namespace Praxigento\Warehouse\Setup;
 
 use Praxigento\Warehouse\Data\Entity\Customer;
+use Praxigento\Warehouse\Data\Entity\Group\Price;
 use Praxigento\Warehouse\Data\Entity\Lot;
 use Praxigento\Warehouse\Data\Entity\Quantity;
 use Praxigento\Warehouse\Data\Entity\Quantity\Sale;
@@ -25,6 +26,11 @@ class InstallSchema extends \Praxigento\Core\Setup\Schema\Base
         /* Stock Item  */
         $entityAlias = Item::ENTITY_NAME;
         $demEntity = $demPackage->get('package/Stock/entity/Item');
+        $this->_toolDem->createEntity($entityAlias, $demEntity);
+
+        /* Group Price */
+        $entityAlias = Price::ENTITY_NAME;
+        $demEntity = $demPackage->get('package/Group/entity/Price');
         $this->_toolDem->createEntity($entityAlias, $demEntity);
 
         /* Warehouse */
