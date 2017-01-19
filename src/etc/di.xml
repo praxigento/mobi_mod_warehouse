@@ -15,6 +15,7 @@
 
     <!-- Repos: Entities -->
     <preference for="Praxigento\Warehouse\Repo\Entity\ICustomer" type="Praxigento\Warehouse\Repo\Entity\Def\Customer"/>
+    <preference for="Praxigento\Warehouse\Repo\Entity\Group\IPrice" type="Praxigento\Warehouse\Repo\Entity\Group\Def\Price"/>
     <preference for="Praxigento\Warehouse\Repo\Entity\ILot" type="Praxigento\Warehouse\Repo\Entity\Def\Lot"/>
     <preference for="Praxigento\Warehouse\Repo\Entity\IQuantity" type="Praxigento\Warehouse\Repo\Entity\Def\Quantity"/>
     <preference for="Praxigento\Warehouse\Repo\Entity\IWarehouse" type="Praxigento\Warehouse\Repo\Entity\Def\Warehouse"/>
@@ -32,10 +33,6 @@
     <type name="Magento\Catalog\Model\ResourceModel\Product\Collection">
         <!-- Enable order &filter for additional fields ('qty' override) in products collection -->
         <plugin name="praxigento_warehouse_plugin" type="Praxigento\Warehouse\Plugin\Catalog\Model\ResourceModel\Product\Collection" sortOrder="100" disabled="false"/>
-    </type>
-
-    <type name="Magento\CatalogInventory\Api\Data\StockStatusCollectionInterfaceFactory">
-        <plugin name="praxigento_warehouse_plugin" type="Praxigento\Warehouse\Plugin\CatalogInventory\Api\Data\StockStatusCollectionInterfaceFactory" sortOrder="100" disabled="false"/>
     </type>
 
     <type name="Magento\CatalogInventory\Model\ResourceModel\Stock">
