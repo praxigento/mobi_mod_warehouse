@@ -50,87 +50,95 @@
         <!-- Enable order &filter for additional fields ('qty' override) in products collection -->
         <plugin name="praxigento_warehouse_plugin"
                 type="Praxigento\Warehouse\Plugin\Catalog\Model\ResourceModel\Product\Collection"
-                sortOrder="100" disabled="false"/>
+                sortOrder="600" disabled="false"/>
     </type>
+
+    <type name="Magento\Catalog\Model\Layer">
+        <!-- Add warehouse group prices to collection for category view -->
+        <plugin name="praxigento_warehouse_plugin"
+                type="\Praxigento\Warehouse\Plugin\Catalog\Model\Layer"
+                sortOrder="600" disabled="false"/>
+    </type>
+
 
     <type name="Magento\CatalogInventory\Model\ResourceModel\Stock">
         <!-- Update stock qty when sale order is placed -->
         <plugin name="praxigento_warehouse_plugin"
                 type="Praxigento\Warehouse\Plugin\CatalogInventory\Model\ResourceModel\Stock"
-                sortOrder="100" disabled="false"/>
+                sortOrder="600" disabled="false"/>
     </type>
 
     <type name="Magento\CatalogInventory\Model\ResourceModel\Stock\Status\Collection">
         <!-- Create composite primary key (MOBI-582) -->
         <plugin name="praxigento_warehouse_plugin"
                 type="Praxigento\Warehouse\Plugin\CatalogInventory\Model\ResourceModel\Stock\Status\Collection"
-                sortOrder="100" disabled="false"/>
+                sortOrder="600" disabled="false"/>
     </type>
 
     <type name="Magento\CatalogInventory\Model\ResourceModel\Stock\Status">
         <!-- Switch stockId for products collections (MOBI-311) -->
         <plugin name="praxigento_warehouse_plugin"
                 type="Praxigento\Warehouse\Plugin\CatalogInventory\Model\ResourceModel\Stock\Status"
-                sortOrder="100" disabled="false"/>
+                sortOrder="600" disabled="false"/>
     </type>
 
     <type name="Magento\CatalogInventory\Model\Stock\Item">
         <!-- Disable default stock item ID if stock ID is 'null'-->
         <plugin name="praxigento_warehouse_plugin"
                 type="Praxigento\Warehouse\Plugin\CatalogInventory\Model\Stock\Item"
-                sortOrder="100" disabled="false"/>
+                sortOrder="600" disabled="false"/>
     </type>
     <type name="Magento\CatalogInventory\Model\Stock\Status">
         <!-- Composite primary key (MOBI-582) -->
         <plugin name="praxigento_warehouse_plugin"
                 type="Praxigento\Warehouse\Plugin\CatalogInventory\Model\Stock\Status"
-                sortOrder="100" disabled="false"/>
+                sortOrder="600" disabled="false"/>
     </type>
 
     <type name="Magento\CatalogInventory\Model\StockManagement">
         <!-- Update qty on the order placement (MOBI-379) -->
         <plugin name="praxigento_warehouse_plugin"
                 type="Praxigento\Warehouse\Plugin\CatalogInventory\Model\StockManagement"
-                sortOrder="100" disabled="false"/>
+                sortOrder="600" disabled="false"/>
     </type>
 
     <type name="Magento\CatalogInventory\Model\StockRegistry">
         <!-- Disable default stock item ID registration on product save -->
         <plugin name="praxigento_warehouse_plugin"
                 type="Praxigento\Warehouse\Plugin\CatalogInventory\Model\StockRegistry"
-                sortOrder="100" disabled="false"/>
+                sortOrder="600" disabled="false"/>
     </type>
 
     <type name="Magento\CatalogInventory\Model\StockRegistryProvider">
         <!-- Detect current stock and select appropriate stock item -->
         <plugin name="praxigento_warehouse_plugin"
                 type="Praxigento\Warehouse\Plugin\CatalogInventory\Model\StockRegistryProvider"
-                sortOrder="100" disabled="false"/>
+                sortOrder="600" disabled="false"/>
     </type>
 
     <type name="Magento\CatalogInventory\Ui\DataProvider\Product\AddQuantityFieldToCollection">
         <!-- Join 'cataloginventory_stock_item' & 'prxgt_wrhs_qty' tables to get totals for all lots/warehouses. -->
         <plugin name="praxigento_warehouse_plugin"
                 type="Praxigento\Warehouse\Plugin\CatalogInventory\Ui\DataProvider\Product\AddQuantityFieldToCollection"
-                sortOrder="100" disabled="false"/>
+                sortOrder="600" disabled="false"/>
     </type>
 
     <type name="Magento\CatalogInventory\Ui\DataProvider\Product\AddQuantityFilterToCollection">
         <plugin name="praxigento_warehouse_plugin"
                 type="Praxigento\Warehouse\Plugin\CatalogInventory\Ui\DataProvider\Product\AddQuantityFilterToCollection"
-                sortOrder="100" disabled="false"/>
+                sortOrder="600" disabled="false"/>
     </type>
 
     <type name="Magento\CatalogSearch\Model\Search\IndexBuilder">
         <plugin name="praxigento_warehouse_plugin"
                 type="Praxigento\Warehouse\Plugin\CatalogSearch\Model\Search\IndexBuilder"
-                sortOrder="100" disabled="false"/>
+                sortOrder="600" disabled="false"/>
     </type>
 
     <type name="Magento\Tax\Model\Calculation">
         <plugin name="praxigento_warehouse_plugin"
                 type="Praxigento\Warehouse\Plugin\Tax\Model\Calculation"
-                sortOrder="100" disabled="false"/>
+                sortOrder="600" disabled="false"/>
     </type>
 
 
