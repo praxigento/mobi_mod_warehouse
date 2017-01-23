@@ -46,6 +46,13 @@
     <!-- ******* -->
     <!-- Plugins -->
     <!-- ******* -->
+    <type name="\Magento\Catalog\Model\Product\Type\Price">
+        <!-- Replace product regular price by warehouse group price or warehouse price -->
+        <plugin name="praxigento_warehouse_plugin"
+                type="\Praxigento\Warehouse\Plugin\Catalog\Model\Product\Type\Price"
+                sortOrder="600" disabled="false"/>
+    </type>
+
     <type name="Magento\Catalog\Model\ResourceModel\Product\Collection">
         <!-- Enable order &filter for additional fields ('qty' override) in products collection -->
         <plugin name="praxigento_warehouse_plugin"
@@ -59,7 +66,6 @@
                 type="\Praxigento\Warehouse\Plugin\Catalog\Model\Layer"
                 sortOrder="600" disabled="false"/>
     </type>
-
 
     <type name="Magento\CatalogInventory\Model\ResourceModel\Stock">
         <!-- Update stock qty when sale order is placed -->
