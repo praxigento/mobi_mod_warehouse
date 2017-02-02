@@ -136,4 +136,40 @@ class Warehouse
         return $result;
     }
 
+    /**
+     * @param int $id
+     * @param array|\Flancer32\Lib\DataObject $data
+     * @return null
+     */
+    public function updateById($id, $data)
+    {
+        $def = $this->_manTrans->begin();
+        try {
+            /* update catalog inventory stock by ID */
+            $tbl = Cfg::ENTITY_MAGE_CATALOGINVENTORY_STOCK;
+            $bindStock = [
+                Cfg::E_CATINV_STOCK_A_WEBSITE_ID => $data->getWebsiteId(),
+                Cfg::E_CATINV_STOCK_A_STOCK_NAME => $data->getCode()
+            ];
+            $idStock = [Cfg::E_CATINV_STOCK_A_STOCK_ID => $id];
+            $this->_repoGeneric->updateEntityById($tbl, $bindStock, $idStock);
+
+            /* then update next level object (warehouse) */
+            $tbl = EntityWarehouse::ENTITY_NAME;
+            $bindWrhs = [
+                EntityWarehouse::ATTR_CODE => $data->getCode(),
+                EntityWarehouse::ATTR_CURRENCY => $data->getCurrency(),
+                EntityWarehouse::ATTR_COUNTRY_CODE => $data->getCountryCode(),
+                EntityWarehouse::ATTR_NOTE => $data->getNote()
+            ];
+            $idWrhs = [EntityWarehouse::ATTR_STOCK_REF => $id];
+            $this->_repoGeneric->updateEntityById($tbl, $bindWrhs, $idWrhs);
+            /* commit changes and compose result data object */
+            $this->_manTrans->commit($def);
+        } finally {
+            $this->_manTrans->end($def);
+        }
+    }
+
+
 }
