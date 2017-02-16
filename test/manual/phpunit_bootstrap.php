@@ -21,8 +21,8 @@ if(is_file(__DIR__ . '/../../../../../htdocs/app/Mage.php')) {
         $params = $_SERVER;
         /** @var  $bootstrap \Magento\Framework\App\Bootstrap */
         $bootstrap = \Magento\Framework\App\Bootstrap::create(BP, $params);
-        /** @var  $app \Praxigento\Test\App */
-        $app = $bootstrap->createApplication('\Praxigento\Test\App');
+        /** @var  $app \Praxigento\Core\Test\App */
+        $app = $bootstrap->createApplication(\Praxigento\Core\Test\App::class);
         $bootstrap->run($app);
     }
 }
