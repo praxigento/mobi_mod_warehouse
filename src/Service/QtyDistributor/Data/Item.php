@@ -18,7 +18,7 @@ namespace Praxigento\Warehouse\Service\QtyDistributor\Data;
  * @method void setStockId(int $data)
  *
  */
-class Item extends \Flancer32\Lib\DataObject
+class Item extends \Flancer32\Lib\Data
 {
 
 }

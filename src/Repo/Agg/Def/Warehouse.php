@@ -138,7 +138,7 @@ class Warehouse
 
     /**
      * @param int $id
-     * @param array|\Flancer32\Lib\DataObject $data
+     * @param array|\Flancer32\Lib\Data $data
      * @return null
      */
     public function updateById($id, $data)
