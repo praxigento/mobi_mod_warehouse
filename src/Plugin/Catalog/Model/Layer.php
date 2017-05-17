@@ -8,7 +8,7 @@ use Praxigento\Warehouse\Config as Cfg;
 
 class Layer
 {
-    const AS_ATTR_PRICE_WRHS = 'prxgt_wrhs_group_price';
+    const AS_ATTR_PRICE_WRHS = \Praxigento\Warehouse\Repo\Query\Catalog\Model\ResourceModel\Product\Collection\Group\Price\Builder::A_PRICE;
     const AS_TBL_CATALOGINVENTORY_STOCK_ITEM = 'prxgt_csi';
     /** see \Magento\CatalogInventory\Model\ResourceModel\Stock\Status::addStockDataToCollection */
     const AS_TBL_STOCK_STATUS_INDEX = 'stock_status_index';

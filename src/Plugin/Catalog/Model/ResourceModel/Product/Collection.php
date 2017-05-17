@@ -4,6 +4,7 @@
  */
 namespace Praxigento\Warehouse\Plugin\Catalog\Model\ResourceModel\Product;
 
+use Praxigento\Warehouse\Config as Cfg;
 use Praxigento\Warehouse\Repo\Modifier\Product\Grid;
 
 /**
@@ -12,13 +13,46 @@ use Praxigento\Warehouse\Repo\Modifier\Product\Grid;
  */
 class Collection
 {
+    /** @var \Praxigento\Warehouse\Repo\Query\Catalog\Model\ResourceModel\Product\Collection\Group\Price\Builder */
+    protected $qbldGroupPrice;
     /** @var \Praxigento\Warehouse\Repo\Modifier\Product\Grid */
-    protected $_queryModGrid;
+    protected $queryModGrid;
+    /** @var  \Magento\Framework\App\ResourceConnection */
+    protected $resource;
 
     public function __construct(
-        \Praxigento\Warehouse\Repo\Modifier\Product\Grid $queryModGrid
+        \Magento\Framework\App\ResourceConnection $resource,
+        \Praxigento\Warehouse\Repo\Modifier\Product\Grid $queryModGrid,
+        \Praxigento\Warehouse\Repo\Query\Catalog\Model\ResourceModel\Product\Collection\Group\Price\Builder $qbldGroupPrice
     ) {
-        $this->_queryModGrid = $queryModGrid;
+        $this->resource = $resource;
+        $this->queryModGrid = $queryModGrid;
+        $this->qbldGroupPrice = $qbldGroupPrice;
+    }
+
+    /**
+     * Add warehouse prices to product collection.
+     *
+     * @param \Magento\Catalog\Model\ResourceModel\Product\Collection $subject
+     * @param \Closure $proceed
+     * @param array $attribute
+     * @param bool|string $joinType
+     */
+    public function aroundAddAttributeToSelect(
+        \Magento\Catalog\Model\ResourceModel\Product\Collection $subject,
+        \Closure $proceed,
+        $attribute,
+        $joinType = false
+    ) {
+        /** @var \Magento\Catalog\Model\ResourceModel\Product\Collection $result */
+        $result = $proceed($attribute, $joinType);
+        if ($attribute == \Magento\Catalog\Api\Data\ProductAttributeInterface::CODE_PRICE) {
+            $query = $result->getSelect();
+            if ($this->canProcessGroupPrices($query)) {
+                $this->qbldGroupPrice->build($query);
+            }
+        }
+        return $result;
     }
 
     /**
@@ -86,7 +120,29 @@ class Collection
     ) {
         /** @var \Magento\Framework\DB\Select $result */
         $result = $proceed();
-        $this->_queryModGrid->modifySelect($result);
+        $this->queryModGrid->modifySelect($result);
+        return $result;
+    }
+
+    /**
+     * Return 'true' if we need to add warehouse group prices to the collection query.
+     *
+     * @param \Magento\Framework\DB\Select $query
+     */
+    protected function canProcessGroupPrices($query)
+    {
+        $result = true;
+        $from = $query->getPart('from');
+        $tblCisi = $this->resource->getTableName(Cfg::ENTITY_MAGE_CATALOGINVENTORY_STOCK_ITEM);
+        foreach ($from as $as => $item) {
+            if (
+                isset($item['tableName']) &&
+                $item['tableName'] == $tblCisi
+            ) {
+                $result = false;
+                break;
+            }
+        }
         return $result;
     }
 }
