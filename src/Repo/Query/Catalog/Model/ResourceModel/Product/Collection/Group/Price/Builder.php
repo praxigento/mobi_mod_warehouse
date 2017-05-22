@@ -40,7 +40,7 @@ class Builder
     }
 
 
-    public function build($source = null)
+    public function build(\Magento\Framework\DB\Select $source = null)
     {
         $query = $source;
         /* aliases for tables in query */
