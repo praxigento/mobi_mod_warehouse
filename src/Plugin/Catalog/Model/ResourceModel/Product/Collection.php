@@ -121,7 +121,6 @@ class Collection
         /** @var \Magento\Framework\DB\Select $result */
         $result = $proceed();
         $this->qbldCountSql->build($result);
-//        $this->queryModGrid->modifySelect($result);
         return $result;
     }
 
@@ -132,7 +131,7 @@ class Collection
      */
     protected function canProcessGroupPrices($query)
     {
-        $result = true;
+        $result = false;
         $from = $query->getPart('from');
         $tblCisi = $this->resource->getTableName(Cfg::ENTITY_MAGE_CATALOGINVENTORY_STOCK_ITEM);
         foreach ($from as $as => $item) {
