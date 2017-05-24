@@ -13,21 +13,21 @@ use Praxigento\Warehouse\Repo\Modifier\Product\Grid;
  */
 class Collection
 {
+    /** @var \Praxigento\Warehouse\Repo\Query\Catalog\Model\ResourceModel\Product\Collection\GetSelectCountSql\Builder */
+    protected $qbldCountSql;
     /** @var \Praxigento\Warehouse\Repo\Query\Catalog\Model\ResourceModel\Product\Collection\Group\Price\Builder */
     protected $qbldGroupPrice;
-    /** @var \Praxigento\Warehouse\Repo\Modifier\Product\Grid */
-    protected $queryModGrid;
     /** @var  \Magento\Framework\App\ResourceConnection */
     protected $resource;
 
     public function __construct(
         \Magento\Framework\App\ResourceConnection $resource,
-        \Praxigento\Warehouse\Repo\Modifier\Product\Grid $queryModGrid,
-        \Praxigento\Warehouse\Repo\Query\Catalog\Model\ResourceModel\Product\Collection\Group\Price\Builder $qbldGroupPrice
+        \Praxigento\Warehouse\Repo\Query\Catalog\Model\ResourceModel\Product\Collection\Group\Price\Builder $qbldGroupPrice,
+        \Praxigento\Warehouse\Repo\Query\Catalog\Model\ResourceModel\Product\Collection\GetSelectCountSql\Builder $qbldCountSql
     ) {
         $this->resource = $resource;
-        $this->queryModGrid = $queryModGrid;
         $this->qbldGroupPrice = $qbldGroupPrice;
+        $this->qbldCountSql = $qbldCountSql;
     }
 
     /**
@@ -120,7 +120,8 @@ class Collection
     ) {
         /** @var \Magento\Framework\DB\Select $result */
         $result = $proceed();
-        $this->queryModGrid->modifySelect($result);
+        $this->qbldCountSql->build($result);
+//        $this->queryModGrid->modifySelect($result);
         return $result;
     }
 

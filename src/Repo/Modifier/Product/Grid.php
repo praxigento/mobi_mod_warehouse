@@ -10,6 +10,8 @@ use Praxigento\Warehouse\Data\Entity\Quantity;
 
 /**
  * Query modifier for Products grid.
+ *
+ * @deprecated query builders should be used (TODO)
  */
 class Grid
 {
