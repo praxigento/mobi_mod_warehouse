@@ -130,6 +130,13 @@
                 sortOrder="600" disabled="false"/>
     </type>
 
+    <type name="Magento\Store\Model\Store">
+        <!-- Replace Magento base currency by warehouse currency -->
+        <plugin name="praxigento_warehouse_plugin"
+                type="Praxigento\Warehouse\Plugin\Store\Model\Store"
+                sortOrder="600" disabled="false"/>
+    </type>
+
     <type name="Magento\Tax\Model\Calculation">
         <plugin name="praxigento_warehouse_plugin"
                 type="Praxigento\Warehouse\Plugin\Tax\Model\Calculation"
