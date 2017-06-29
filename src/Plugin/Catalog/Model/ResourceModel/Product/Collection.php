@@ -4,7 +4,6 @@
  */
 namespace Praxigento\Warehouse\Plugin\Catalog\Model\ResourceModel\Product;
 
-use Praxigento\Warehouse\Config as Cfg;
 use Praxigento\Warehouse\Repo\Modifier\Product\Grid;
 
 /**
@@ -131,18 +130,18 @@ class Collection
      */
     protected function canProcessGroupPrices($query)
     {
-        $result = false;
-        $from = $query->getPart('from');
-        $tblCisi = $this->resource->getTableName(Cfg::ENTITY_MAGE_CATALOGINVENTORY_STOCK_ITEM);
-        foreach ($from as $as => $item) {
-            if (
-                isset($item['tableName']) &&
-                $item['tableName'] == $tblCisi
-            ) {
-                $result = false;
-                break;
-            }
-        }
+        $result = true;
+//        $from = $query->getPart('from');
+//        $tblCisi = $this->resource->getTableName(Cfg::ENTITY_MAGE_CATALOGINVENTORY_STOCK_ITEM);
+//        foreach ($from as $as => $item) {
+//            if (
+//                isset($item['tableName']) &&
+//                $item['tableName'] == $tblCisi
+//            ) {
+//                $result = true;
+//                break;
+//            }
+//        }
         return $result;
     }
 }

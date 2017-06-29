@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
 
     <!-- Data / API -->
     <preference for="Praxigento\Warehouse\Data\Api\IWarehouse"
@@ -48,6 +49,14 @@
                 type="Praxigento\Warehouse\Plugin\Catalog\Model\ResourceModel\Product\Collection"
                 sortOrder="600" disabled="false"/>
     </type>
+
+    <type name="Magento\Catalog\Model\ResourceModel\Product">
+        <!-- Replace product price (retail) by warehouse/group price -->
+        <plugin name="praxigento_warehouse_plugin"
+                type="Praxigento\Warehouse\Plugin\Catalog\Model\ResourceModel\Product"
+                sortOrder="600" disabled="false"/>
+    </type>
+
 
     <type name="Magento\Catalog\Model\Layer">
         <!-- Add warehouse group prices to collection for category view -->

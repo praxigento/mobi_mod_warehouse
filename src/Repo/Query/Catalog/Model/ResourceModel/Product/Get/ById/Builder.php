@@ -3,29 +3,24 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Warehouse\Repo\Query\Catalog\Model\ResourceModel\Product\Collection\Group\Price;
+namespace Praxigento\Warehouse\Repo\Query\Catalog\Model\ResourceModel\Product\Get\ById;
 
 use Praxigento\Warehouse\Config as Cfg;
 use Praxigento\Warehouse\Data\Entity\Group\Price as EGroupPrice;
 
 /**
- * Add warehouse group price data to input query.
+ * Create base query to get
  */
 class Builder
     implements \Praxigento\Core\Repo\Query\IBuilder2
 {
     /* Tables aliases */
-    const AS_CATALOGINVENTORY_STOCK_ITEM = 'cisi';
-    const AS_WRHS_GROUP_PRICE = 'prxgtWgp';
+    const AS_CATALOG_PRODUCT = 'cp';
 
     /** Columns aliases */
-    const A_PRICE = 'prxgt_wrhs_group_price';
+    const A_ID = 'id';
 
 
-    /** @var \Praxigento\Warehouse\Tool\IStockManager */
-    protected $manStock;
-    /** @var \Magento\Customer\Model\Session */
-    protected $modSession;
     /** @var \Magento\Framework\App\ResourceConnection */
     protected $resource;
 
