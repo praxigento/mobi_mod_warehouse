@@ -26,7 +26,7 @@ class Sale extends BaseEntityRepo implements IEntityRepo
     public function getBySaleItemId($id)
     {
         $result = [];
-        $where = '=' . (int)$id;
+        $where = Entity::ATTR_SALE_ITEM_REF . '=' . (int)$id;
         $rows = $this->get($where);
         foreach ($rows as $row) {
             $item = new \Praxigento\Warehouse\Data\Entity\Quantity\Sale($row);
