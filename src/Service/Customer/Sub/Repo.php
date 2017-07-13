@@ -6,8 +6,6 @@
 namespace Praxigento\Warehouse\Service\Customer\Sub;
 
 
-use Praxigento\Warehouse\Data\Entity\Warehouse;
-
 class Repo
 {
     /** @var \Praxigento\Warehouse\Repo\Entity\IWarehouse */
@@ -24,8 +22,9 @@ class Repo
         $result = null;
         $all = $this->_repoWrhs->get();
         if ($all) {
+            /** @var \Praxigento\Warehouse\Data\Entity\Warehouse $one */
             $one = reset($all);
-            $result = $one[Warehouse::ATTR_STOCK_REF];
+            $result = $one->getStockRef();
         }
         return $result;
     }
