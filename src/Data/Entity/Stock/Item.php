@@ -23,7 +23,7 @@ class Item
     /**
      * @inheritdoc
      */
-    public function getPrimaryKeyAttrs()
+    public static function getPrimaryKeyAttrs()
     {
         return [self::ATTR_STOCK_ITEM_REF];
     }

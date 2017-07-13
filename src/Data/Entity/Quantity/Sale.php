@@ -24,7 +24,7 @@ class Sale
     /**
      * @inheritdoc
      */
-    public function getPrimaryKeyAttrs()
+    public static function getPrimaryKeyAttrs()
     {
         return [self::ATTR_SALE_ITEM_REF, self::ATTR_LOT_REF];
     }

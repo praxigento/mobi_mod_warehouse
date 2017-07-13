@@ -30,7 +30,7 @@ class Price
         return $result;
     }
 
-    public function getPrimaryKeyAttrs()
+    public static function getPrimaryKeyAttrs()
     {
         return [self::ATTR_STOCK_ITEM_REF, self::ATTR_CUST_GROUP_REF];
     }
