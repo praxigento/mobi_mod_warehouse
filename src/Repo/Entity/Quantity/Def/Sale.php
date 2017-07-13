@@ -22,16 +22,17 @@ class Sale extends BaseEntityRepo implements IEntityRepo
         $this->_manObj = $manObj;
     }
 
-    /** @inheritdoc */
+    /**
+     * Method to get Sale Item by Id.
+     *
+     * @param integer $id
+     * @return \Praxigento\Warehouse\Data\Entity\Quantity\Sale[] or empty array if no data found.
+     */
     public function getBySaleItemId($id)
     {
-        $result = [];
         $where = Entity::ATTR_SALE_ITEM_REF . '=' . (int)$id;
-        $rows = $this->get($where);
-        foreach ($rows as $row) {
-            $item = new \Praxigento\Warehouse\Data\Entity\Quantity\Sale($row);
-            $result[] = $item;
-        }
+        /** @var \Praxigento\Warehouse\Data\Entity\Quantity\Sale[] $result */
+        $result = $this->get($where);
         return $result;
     }
 }
