@@ -144,7 +144,16 @@ class StockRegistryProvider
             $collection = $this->repoStockStatus->getList($crit);
             $rows = $collection->getItems();
             $stockStatus = reset($rows);
-            $this->storeStockRegistry->setStockStatus($productId, $scopeId, $stockStatus);
+            if ($stockStatus instanceof \Magento\CatalogInventory\Api\Data\StockStatusInterface) {
+                $this->storeStockRegistry->setStockStatus($productId, $scopeId, $stockStatus);
+            } else {
+                $obm = \Magento\Framework\App\ObjectManager::getInstance();
+                /** @var \Magento\CatalogInventory\Model\Stock\Status $stockStatus */
+                $stockStatus = $obm->create(\Magento\CatalogInventory\Model\Stock\Status::class);
+                $stockStatus->setProductId($productId);
+                $stockStatus->setStockStatus(0);
+                $stockStatus->setQty(0);
+            }
         }
         return $stockStatus;
     }
