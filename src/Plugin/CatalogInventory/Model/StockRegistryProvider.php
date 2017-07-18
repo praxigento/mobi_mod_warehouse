@@ -21,6 +21,10 @@ class StockRegistryProvider
      */
     protected $repoStock;
     /**
+     * @var \Magento\CatalogInventory\Api\StockStatusRepositoryInterface
+     */
+    protected $repoStockStatus;
+    /**
      * @var  \Magento\CatalogInventory\Api\StockItemRepositoryInterface
      */
     protected $repoStockItem;
@@ -39,6 +43,7 @@ class StockRegistryProvider
         \Magento\CatalogInventory\Api\StockItemCriteriaInterfaceFactory $factStockItemCrit,
         \Magento\CatalogInventory\Api\StockRepositoryInterface $repoStock,
         \Magento\CatalogInventory\Api\StockItemRepositoryInterface $repoStockItem,
+        \Magento\CatalogInventory\Api\StockStatusRepositoryInterface $repoStockStatus,
         \Praxigento\Warehouse\Tool\IStockManager $toolStockMan
     ) {
         $this->storeStockRegistry = $storeStockRegistry;
@@ -46,6 +51,7 @@ class StockRegistryProvider
         $this->factStockItemCrit = $factStockItemCrit;
         $this->repoStock = $repoStock;
         $this->repoStockItem = $repoStockItem;
+        $this->repoStockStatus = $repoStockStatus;
         $this->toolStockManager = $toolStockMan;
     }
 
@@ -106,5 +112,40 @@ class StockRegistryProvider
             }
         }
         return $result;
+    }
+
+    /**
+     * @param \Magento\CatalogInventory\Model\StockRegistryProvider $subject
+     * @param \Closure $proceed
+     * @param int $productId
+     * @param int $scopeId
+     * @return \Magento\CatalogInventory\Api\Data\StockStatusInterface
+     */
+    public function aroundGetStockStatus(
+        \Magento\CatalogInventory\Model\StockRegistryProvider $subject,
+        \Closure $proceed,
+        $productId,
+        $scopeId
+    )
+    {
+        // $result = $proceed($productId, $scopeId); - don't use dumb code.
+        /* get stock status by productId and scopeId (websiteId) from app cache if was cached before */
+        $stockStatus = $this->storeStockRegistry->getStockStatus($productId, $scopeId);
+        if (null === $stockStatus) {
+            /* ... or load current stock status and save to app cache */
+            $stockId = $this->toolStockManager->getCurrentStockId();
+            $crit = new \Magento\CatalogInventory\Model\ResourceModel\Stock\Status\StockStatusCriteria();
+            $crit->setProductsFilter($productId);
+            $crit->addFilter(
+                null,
+                \Magento\CatalogInventory\Api\Data\StockStatusInterface::STOCK_ID,
+                $stockId
+            );
+            $collection = $this->repoStockStatus->getList($crit);
+            $rows = $collection->getItems();
+            $stockStatus = reset($rows);
+            $this->storeStockRegistry->setStockStatus($productId, $scopeId, $stockStatus);
+        }
+        return $stockStatus;
     }
 }
