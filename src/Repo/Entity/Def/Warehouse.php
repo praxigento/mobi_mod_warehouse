@@ -4,19 +4,60 @@
  */
 namespace Praxigento\Warehouse\Repo\Entity\Def;
 
-use Magento\Framework\App\ResourceConnection;
-use Praxigento\Core\Repo\Def\Entity as BaseEntityRepo;
-use Praxigento\Core\Repo\IGeneric as IRepoGeneric;
-use Praxigento\Warehouse\Data\Entity\Warehouse as Entity;
-use Praxigento\Warehouse\Repo\Entity\IWarehouse as IEntityRepo;
-
-class Warehouse extends BaseEntityRepo implements IEntityRepo
+class Warehouse extends \Praxigento\Core\Repo\Def\Entity
 {
     public function __construct(
-        ResourceConnection $resource,
-        IRepoGeneric $repoGeneric
+        \Magento\Framework\App\ResourceConnection $resource,
+        \Praxigento\Core\Repo\IGeneric $repoGeneric
     ) {
-        parent::__construct($resource, $repoGeneric, Entity::class);
+        parent::__construct($resource, $repoGeneric, \Praxigento\Warehouse\Data\Entity\Warehouse::class);
     }
 
+    /**
+     * @param array|\Praxigento\Warehouse\Data\Entity\Warehouse $data
+     * @return \Praxigento\Warehouse\Data\Entity\Warehouse
+     */
+    public function create($data)
+    {
+        $result = parent::create($data);
+        return $result;
+    }
+
+    /**
+     * Generic method to get data from repository.
+     *
+     * @param null $where
+     * @param null $order
+     * @param null $limit
+     * @param null $offset
+     * @param null $columns
+     * @param null $group
+     * @param null $having
+     * @return \Praxigento\Warehouse\Data\Entity\Warehouse[] Found data or empty array if no data found.
+     */
+    public function get(
+        $where = null,
+        $order = null,
+        $limit = null,
+        $offset = null,
+        $columns = null,
+        $group = null,
+        $having = null
+    )
+    {
+        $result = parent::get($where, $order, $limit, $offset, $columns, $group, $having);
+        return $result;
+    }
+
+    /**
+     * Get the data instance by ID.
+     *
+     * @param int $id
+     * @return \Praxigento\Warehouse\Data\Entity\Warehouse|bool Found instance data or 'false'
+     */
+    public function getById($id)
+    {
+        $result = parent::getById($id);
+        return $result;
+    }
 }

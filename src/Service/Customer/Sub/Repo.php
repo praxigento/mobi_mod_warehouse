@@ -8,11 +8,11 @@ namespace Praxigento\Warehouse\Service\Customer\Sub;
 
 class Repo
 {
-    /** @var \Praxigento\Warehouse\Repo\Entity\IWarehouse */
+    /** @var \Praxigento\Warehouse\Repo\Entity\Def\Warehouse */
     protected $_repoWrhs;
 
     public function __construct(
-        \Praxigento\Warehouse\Repo\Entity\IWarehouse $repoWrhs
+        \Praxigento\Warehouse\Repo\Entity\Def\Warehouse $repoWrhs
     ) {
         $this->_repoWrhs = $repoWrhs;
     }

@@ -22,7 +22,7 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery
         parent::setUp();
         /** create mocks */
         $this->mSession = $this->_mock(\Magento\Customer\Model\Session::class);
-        $this->mRepoCustomer = $this->_mock(\Praxigento\Warehouse\Repo\Entity\ICustomer::class);
+        $this->mRepoCustomer = $this->_mock(\Praxigento\Warehouse\Repo\Entity\Def\Customer::class);
         $this->mSubRepo = $this->_mock(\Praxigento\Warehouse\Service\Customer\Sub\Repo::class);
         /** create object to test */
         $this->obj = new Call(

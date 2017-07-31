@@ -35,7 +35,7 @@ class Warehouse_UnitTest
         $this->mManObj = $this->_mockObjectManager();
         $this->mManTrans = $this->_mockTransactionManager();
         $this->mRepoGeneric = $this->_mockRepoGeneric();
-        $this->mRepoEntityWarehouse = $this->_mock(\Praxigento\Warehouse\Repo\Entity\IWarehouse::class);
+        $this->mRepoEntityWarehouse = $this->_mock(\Praxigento\Warehouse\Repo\Entity\Def\Warehouse::class);
         $this->mFactorySelect = $this->_mock(Warehouse\SelectFactory::class);
         /** create object to test */
         $this->obj = new Warehouse(

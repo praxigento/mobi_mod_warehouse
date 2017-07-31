@@ -12,7 +12,6 @@ use Praxigento\Warehouse\Data\Entity\Lot;
 use Praxigento\Warehouse\Data\Entity\Quantity;
 use Praxigento\Warehouse\Data\Entity\Stock\Item as EntityStockItem;
 use Praxigento\Warehouse\Data\Entity\Warehouse;
-use Praxigento\Warehouse\Repo\Entity\Stock\IItem as IRepoStockItem;
 
 include_once(__DIR__ . '/../phpunit_bootstrap.php');
 
@@ -24,7 +23,7 @@ class Main_IntegrationTest extends \Praxigento\Core\Test\BaseIntegrationTest
     private $_repoMageStock;
     /** @var  \Magento\CatalogInventory\Api\StockItemRepositoryInterface */
     private $_repoMageStockItem;
-    /** @var  IRepoStockItem */
+    /** @var  \Praxigento\Warehouse\Repo\Entity\Stock\Def\Item */
     private $_repoStockItem;
     /** @var  \Praxigento\Core\Tool\IDate */
     private $_toolDate;
@@ -36,7 +35,7 @@ class Main_IntegrationTest extends \Praxigento\Core\Test\BaseIntegrationTest
         $this->_toolDate = $this->_manObj->get(\Praxigento\Core\Tool\IDate::class);
         $this->_repoMageStock = $this->_manObj->get(StockRepositoryInterface::class);
         $this->_repoMageStockItem = $this->_manObj->get(StockItemRepositoryInterface::class);
-        $this->_repoStockItem = $this->_manObj->get(IRepoStockItem::class);
+        $this->_repoStockItem = $this->_manObj->get(\Praxigento\Warehouse\Repo\Entity\Stock\Def\Item::class);
     }
 
     /**

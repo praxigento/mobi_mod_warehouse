@@ -23,18 +23,18 @@ class Warehouse
     implements \Praxigento\Warehouse\Repo\Agg\IWarehouse
 {
 
-    /** @var  \Magento\Framework\DB\Adapter\AdapterInterface */
-    protected $conn;
     /** @var Warehouse\SelectFactory */
     protected $_factorySelect;
     /** @var  ObjectManagerInterface */
     protected $_manObj;
     /** @var  \Praxigento\Core\Transaction\Database\IManager */
     protected $_manTrans;
-    /** @var  \Praxigento\Warehouse\Repo\Entity\IWarehouse */
+    /** @var  \Praxigento\Warehouse\Repo\Entity\Def\Warehouse */
     protected $_repoEntityWarehouse;
     /** @var IGenericRepo */
     protected $_repoGeneric;
+    /** @var  \Magento\Framework\DB\Adapter\AdapterInterface */
+    protected $conn;
     /** @var \Magento\Framework\App\ResourceConnection */
     protected $resource;
 
@@ -43,7 +43,7 @@ class Warehouse
         \Praxigento\Core\Transaction\Database\IManager $manTrans,
         \Magento\Framework\App\ResourceConnection $resource,
         \Praxigento\Core\Repo\IGeneric $repoGeneric,
-        \Praxigento\Warehouse\Repo\Entity\IWarehouse $repoEntityWarehouse,
+        \Praxigento\Warehouse\Repo\Entity\Def\Warehouse $repoEntityWarehouse,
         Warehouse\SelectFactory $factorySelect
     ) {
         $this->_manObj = $manObj;

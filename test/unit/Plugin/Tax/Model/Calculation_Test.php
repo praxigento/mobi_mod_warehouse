@@ -24,7 +24,7 @@ class Calculation_UnitTest
         /** create mocks */
         $this->mSubject = $this->_mock(\Magento\Tax\Model\Calculation::class);
         $this->mManStock = $this->_mock(\Praxigento\Warehouse\Tool\IStockManager::class);
-        $this->mRepoWrhs = $this->_mock(\Praxigento\Warehouse\Repo\Entity\IWarehouse::class);
+        $this->mRepoWrhs = $this->_mock(\Praxigento\Warehouse\Repo\Entity\Def\Warehouse::class);
         /** create object to test */
         $this->obj = new Calculation(
             $this->mManStock,

@@ -16,12 +16,12 @@ class Calculation
 {
     /** @var \Praxigento\Warehouse\Tool\IStockManager */
     protected $_manStock;
-    /** @var \Praxigento\Warehouse\Repo\Entity\IWarehouse */
+    /** @var \Praxigento\Warehouse\Repo\Entity\Def\Warehouse */
     protected $_repoWrhs;
 
     public function __construct(
         \Praxigento\Warehouse\Tool\IStockManager $manStock,
-        \Praxigento\Warehouse\Repo\Entity\IWarehouse $repoWrhs
+        \Praxigento\Warehouse\Repo\Entity\Def\Warehouse $repoWrhs
     ) {
         $this->_manStock = $manStock;
         $this->_repoWrhs = $repoWrhs;

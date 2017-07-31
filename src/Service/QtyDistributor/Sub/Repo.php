@@ -16,9 +16,9 @@ class Repo
     protected $_manTrans;
     /** @var \Praxigento\Core\Repo\IGeneric */
     protected $_repoGeneric;
-    /** @var \Praxigento\Warehouse\Repo\Entity\IQuantity */
+    /** @var \Praxigento\Warehouse\Repo\Entity\Def\Quantity */
     protected $_repoQty;
-    /** @var \Praxigento\Warehouse\Repo\Entity\Quantity\ISale */
+    /** @var \Praxigento\Warehouse\Repo\Entity\Quantity\Def\Sale */
     protected $_repoQtySale;
     /** @var  \Magento\Framework\App\ResourceConnection */
     protected $_resource;
@@ -27,8 +27,8 @@ class Repo
         \Magento\Framework\App\ResourceConnection $resource,
         \Praxigento\Core\Transaction\Database\IManager $manTrans,
         \Praxigento\Core\Repo\IGeneric $repoGeneric,
-        \Praxigento\Warehouse\Repo\Entity\IQuantity $repoQty,
-        \Praxigento\Warehouse\Repo\Entity\Quantity\ISale $repoQtySale
+        \Praxigento\Warehouse\Repo\Entity\Def\Quantity $repoQty,
+        \Praxigento\Warehouse\Repo\Entity\Quantity\Def\Sale $repoQtySale
     ) {
         $this->_resource = $resource;
         $this->_manTrans = $manTrans;
