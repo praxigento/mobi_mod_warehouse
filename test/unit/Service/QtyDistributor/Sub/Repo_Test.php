@@ -28,8 +28,8 @@ class Repo_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery
         $this->mResource = $this->_mockResourceConnection();
         $this->mManTrans = $this->_mockTransactionManager();
         $this->mRepoGeneric = $this->_mockRepoGeneric();
-        $this->mRepoQty = $this->_mock(\Praxigento\Warehouse\Repo\Entity\Def\Quantity::class);
-        $this->mRepoQtySale = $this->_mock(\Praxigento\Warehouse\Repo\Entity\Quantity\Def\Sale::class);
+        $this->mRepoQty = $this->_mock(\Praxigento\Warehouse\Repo\Entity\Quantity::class);
+        $this->mRepoQtySale = $this->_mock(\Praxigento\Warehouse\Repo\Entity\Quantity\Sale::class);
         /** create object to test */
         $this->obj = new Repo(
             $this->mResource,

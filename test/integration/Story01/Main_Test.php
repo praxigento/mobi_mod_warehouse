@@ -23,7 +23,7 @@ class Main_IntegrationTest extends \Praxigento\Core\Test\BaseIntegrationTest
     private $_repoMageStock;
     /** @var  \Magento\CatalogInventory\Api\StockItemRepositoryInterface */
     private $_repoMageStockItem;
-    /** @var  \Praxigento\Warehouse\Repo\Entity\Stock\Def\Item */
+    /** @var  \Praxigento\Warehouse\Repo\Entity\Stock\Item */
     private $_repoStockItem;
     /** @var  \Praxigento\Core\Tool\IDate */
     private $_toolDate;
@@ -35,7 +35,7 @@ class Main_IntegrationTest extends \Praxigento\Core\Test\BaseIntegrationTest
         $this->_toolDate = $this->_manObj->get(\Praxigento\Core\Tool\IDate::class);
         $this->_repoMageStock = $this->_manObj->get(StockRepositoryInterface::class);
         $this->_repoMageStockItem = $this->_manObj->get(StockItemRepositoryInterface::class);
-        $this->_repoStockItem = $this->_manObj->get(\Praxigento\Warehouse\Repo\Entity\Stock\Def\Item::class);
+        $this->_repoStockItem = $this->_manObj->get(\Praxigento\Warehouse\Repo\Entity\Stock\Item::class);
     }
 
     /**

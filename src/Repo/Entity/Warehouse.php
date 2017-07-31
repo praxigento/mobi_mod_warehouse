@@ -2,21 +2,21 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
-namespace Praxigento\Warehouse\Repo\Entity\Group\Def;
 
-class Price
-    extends \Praxigento\Core\Repo\Def\Entity
+namespace Praxigento\Warehouse\Repo\Entity;
+
+class Warehouse extends \Praxigento\Core\Repo\Def\Entity
 {
     public function __construct(
         \Magento\Framework\App\ResourceConnection $resource,
         \Praxigento\Core\Repo\IGeneric $repoGeneric
     ) {
-        parent::__construct($resource, $repoGeneric, \Praxigento\Warehouse\Data\Entity\Group\Price::class);
+        parent::__construct($resource, $repoGeneric, \Praxigento\Warehouse\Data\Entity\Warehouse::class);
     }
 
     /**
-     * @param array|\Praxigento\Warehouse\Data\Entity\Group\Price $data
-     * @return \Praxigento\Warehouse\Data\Entity\Group\Price
+     * @param array|\Praxigento\Warehouse\Data\Entity\Warehouse $data
+     * @return \Praxigento\Warehouse\Data\Entity\Warehouse
      */
     public function create($data)
     {
@@ -34,7 +34,7 @@ class Price
      * @param null $columns
      * @param null $group
      * @param null $having
-     * @return \Praxigento\Warehouse\Data\Entity\Group\Price[] Found data or empty array if no data found.
+     * @return \Praxigento\Warehouse\Data\Entity\Warehouse[] Found data or empty array if no data found.
      */
     public function get(
         $where = null,
@@ -54,12 +54,11 @@ class Price
      * Get the data instance by ID.
      *
      * @param int $id
-     * @return \Praxigento\Warehouse\Data\Entity\Group\Price|bool Found instance data or 'false'
+     * @return \Praxigento\Warehouse\Data\Entity\Warehouse|bool Found instance data or 'false'
      */
     public function getById($id)
     {
         $result = parent::getById($id);
         return $result;
     }
-
 }

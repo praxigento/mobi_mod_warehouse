@@ -29,7 +29,7 @@ class Warehouse
     protected $_manObj;
     /** @var  \Praxigento\Core\Transaction\Database\IManager */
     protected $_manTrans;
-    /** @var  \Praxigento\Warehouse\Repo\Entity\Def\Warehouse */
+    /** @var  \Praxigento\Warehouse\Repo\Entity\Warehouse */
     protected $_repoEntityWarehouse;
     /** @var IGenericRepo */
     protected $_repoGeneric;
@@ -43,7 +43,7 @@ class Warehouse
         \Praxigento\Core\Transaction\Database\IManager $manTrans,
         \Magento\Framework\App\ResourceConnection $resource,
         \Praxigento\Core\Repo\IGeneric $repoGeneric,
-        \Praxigento\Warehouse\Repo\Entity\Def\Warehouse $repoEntityWarehouse,
+        \Praxigento\Warehouse\Repo\Entity\Warehouse $repoEntityWarehouse,
         Warehouse\SelectFactory $factorySelect
     ) {
         $this->_manObj = $manObj;

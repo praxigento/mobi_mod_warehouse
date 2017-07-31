@@ -20,7 +20,7 @@ class Repo_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery
     {
         parent::setUp();
         /** create mocks */
-        $this->mRepoWrhs = $this->_mock(\Praxigento\Warehouse\Repo\Entity\Def\Warehouse::class);
+        $this->mRepoWrhs = $this->_mock(\Praxigento\Warehouse\Repo\Entity\Warehouse::class);
         /** create object to test */
         $this->obj = new Repo(
             $this->mRepoWrhs

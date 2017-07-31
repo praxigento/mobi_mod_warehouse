@@ -13,12 +13,12 @@ class Store
 {
     /** @var \Praxigento\Warehouse\Tool\IStockManager */
     protected $hlpStock;
-    /** @var \Praxigento\Warehouse\Repo\Entity\Def\Warehouse */
+    /** @var \Praxigento\Warehouse\Repo\Entity\Warehouse */
     protected $repoWrhs;
 
     public function __construct(
         \Praxigento\Warehouse\Tool\IStockManager $hlpStock,
-        \Praxigento\Warehouse\Repo\Entity\Def\Warehouse $repoWrhs
+        \Praxigento\Warehouse\Repo\Entity\Warehouse $repoWrhs
     ) {
         $this->hlpStock = $hlpStock;
         $this->repoWrhs = $repoWrhs;

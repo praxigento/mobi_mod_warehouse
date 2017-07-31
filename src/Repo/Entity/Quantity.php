@@ -2,15 +2,16 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
-namespace Praxigento\Warehouse\Repo\Entity\Def;
 
-class Lot extends \Praxigento\Core\Repo\Def\Entity
+namespace Praxigento\Warehouse\Repo\Entity;
+
+class Quantity extends \Praxigento\Core\Repo\Def\Entity
 {
     public function __construct(
         \Magento\Framework\App\ResourceConnection $resource,
         \Praxigento\Core\Repo\IGeneric $repoGeneric
     ) {
-        parent::__construct($resource, $repoGeneric, \Praxigento\Warehouse\Data\Entity\Lot::class);
+        parent::__construct($resource, $repoGeneric, \Praxigento\Warehouse\Data\Entity\Quantity::class);
     }
 
 }

@@ -3,7 +3,7 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Warehouse\Repo\Entity\Stock\Def;
+namespace Praxigento\Warehouse\Repo\Entity\Stock;
 
 class Item extends \Praxigento\Core\Repo\Def\Entity
 {

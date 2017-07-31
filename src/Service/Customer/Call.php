@@ -10,7 +10,7 @@ use Praxigento\Warehouse\Service\Customer;
 
 class Call implements \Praxigento\Warehouse\Service\ICustomer
 {
-    /** @var \Praxigento\Warehouse\Repo\Entity\Def\Customer */
+    /** @var \Praxigento\Warehouse\Repo\Entity\Customer */
     protected $_repoCustomer;
     /** @var \Magento\Customer\Model\Session */
     protected $_session;
@@ -19,7 +19,7 @@ class Call implements \Praxigento\Warehouse\Service\ICustomer
 
     public function __construct(
         \Magento\Customer\Model\Session $session,
-        \Praxigento\Warehouse\Repo\Entity\Def\Customer $repoCustomer,
+        \Praxigento\Warehouse\Repo\Entity\Customer $repoCustomer,
         \Praxigento\Warehouse\Service\Customer\Sub\Repo $subRepo
     ) {
         $this->_session = $session;

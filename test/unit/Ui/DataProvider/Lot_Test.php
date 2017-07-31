@@ -22,7 +22,7 @@ class Lot_UnitTest
     {
         parent::setUp();
         /** create mocks */
-        $this->mRepo = $this->_mock(\Praxigento\Warehouse\Repo\Entity\Def\Lot::class);
+        $this->mRepo = $this->_mock(\Praxigento\Warehouse\Repo\Entity\Lot::class);
         /** create object to test */
         $this->obj = new Lot(
             $this->mUrl,

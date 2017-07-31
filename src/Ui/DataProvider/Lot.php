@@ -16,7 +16,7 @@ class Lot
     public function __construct(
         \Magento\Framework\UrlInterface $url,
         \Praxigento\Core\Repo\Query\Criteria\IAdapter $critAdapter,
-        \Praxigento\Warehouse\Repo\Entity\Def\Lot $repo,
+        \Praxigento\Warehouse\Repo\Entity\Lot $repo,
         \Magento\Framework\View\Element\UiComponent\DataProvider\Reporting $reporting,
         \Magento\Framework\Api\Search\SearchCriteriaBuilder $searchCritBuilder,
         \Magento\Framework\App\RequestInterface $request,
