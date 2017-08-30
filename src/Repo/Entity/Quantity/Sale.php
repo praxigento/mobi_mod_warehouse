@@ -12,7 +12,7 @@ class Sale extends \Praxigento\Core\Repo\Def\Entity
         \Magento\Framework\App\ResourceConnection $resource,
         \Praxigento\Core\Repo\IGeneric $repoGeneric
     ) {
-        parent::__construct($resource, $repoGeneric, \Praxigento\Warehouse\Data\Entity\Quantity\Sale::class);
+        parent::__construct($resource, $repoGeneric, \Praxigento\Warehouse\Repo\Entity\Data\Quantity\Sale::class);
     }
 
 }

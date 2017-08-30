@@ -11,12 +11,12 @@ class Warehouse extends \Praxigento\Core\Repo\Def\Entity
         \Magento\Framework\App\ResourceConnection $resource,
         \Praxigento\Core\Repo\IGeneric $repoGeneric
     ) {
-        parent::__construct($resource, $repoGeneric, \Praxigento\Warehouse\Data\Entity\Warehouse::class);
+        parent::__construct($resource, $repoGeneric, \Praxigento\Warehouse\Repo\Entity\Data\Warehouse::class);
     }
 
     /**
-     * @param array|\Praxigento\Warehouse\Data\Entity\Warehouse $data
-     * @return \Praxigento\Warehouse\Data\Entity\Warehouse
+     * @param array|\Praxigento\Warehouse\Repo\Entity\Data\Warehouse $data
+     * @return \Praxigento\Warehouse\Repo\Entity\Data\Warehouse
      */
     public function create($data)
     {
@@ -34,7 +34,7 @@ class Warehouse extends \Praxigento\Core\Repo\Def\Entity
      * @param null $columns
      * @param null $group
      * @param null $having
-     * @return \Praxigento\Warehouse\Data\Entity\Warehouse[] Found data or empty array if no data found.
+     * @return \Praxigento\Warehouse\Repo\Entity\Data\Warehouse[] Found data or empty array if no data found.
      */
     public function get(
         $where = null,
@@ -54,7 +54,7 @@ class Warehouse extends \Praxigento\Core\Repo\Def\Entity
      * Get the data instance by ID.
      *
      * @param int $id
-     * @return \Praxigento\Warehouse\Data\Entity\Warehouse|bool Found instance data or 'false'
+     * @return \Praxigento\Warehouse\Repo\Entity\Data\Warehouse|bool Found instance data or 'false'
      */
     public function getById($id)
     {

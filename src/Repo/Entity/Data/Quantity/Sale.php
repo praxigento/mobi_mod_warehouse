@@ -2,7 +2,8 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
-namespace Praxigento\Warehouse\Data\Entity\Quantity;
+
+namespace Praxigento\Warehouse\Repo\Entity\Data\Quantity;
 
 class Sale
     extends \Praxigento\Core\Data\Entity\Base

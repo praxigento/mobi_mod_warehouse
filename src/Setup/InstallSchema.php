@@ -5,13 +5,13 @@
  */
 namespace Praxigento\Warehouse\Setup;
 
-use Praxigento\Warehouse\Data\Entity\Customer;
-use Praxigento\Warehouse\Data\Entity\Group\Price;
-use Praxigento\Warehouse\Data\Entity\Lot;
-use Praxigento\Warehouse\Data\Entity\Quantity;
-use Praxigento\Warehouse\Data\Entity\Quantity\Sale;
-use Praxigento\Warehouse\Data\Entity\Stock\Item;
-use Praxigento\Warehouse\Data\Entity\Warehouse;
+use Praxigento\Warehouse\Repo\Entity\Data\Customer;
+use Praxigento\Warehouse\Repo\Entity\Data\Group\Price;
+use Praxigento\Warehouse\Repo\Entity\Data\Lot;
+use Praxigento\Warehouse\Repo\Entity\Data\Quantity;
+use Praxigento\Warehouse\Repo\Entity\Data\Quantity\Sale;
+use Praxigento\Warehouse\Repo\Entity\Data\Stock\Item;
+use Praxigento\Warehouse\Repo\Entity\Data\Warehouse;
 
 class InstallSchema extends \Praxigento\Core\Setup\Schema\Base
 {

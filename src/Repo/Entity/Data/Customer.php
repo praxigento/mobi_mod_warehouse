@@ -2,7 +2,8 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
-namespace Praxigento\Warehouse\Data\Entity;
+
+namespace Praxigento\Warehouse\Repo\Entity\Data;
 
 class Customer
     extends \Praxigento\Core\Data\Entity\Base

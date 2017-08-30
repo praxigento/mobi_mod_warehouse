@@ -22,7 +22,7 @@ class Repo
         $result = null;
         $all = $this->_repoWrhs->get();
         if ($all) {
-            /** @var \Praxigento\Warehouse\Data\Entity\Warehouse $one */
+            /** @var \Praxigento\Warehouse\Repo\Entity\Data\Warehouse $one */
             $one = reset($all);
             $result = $one->getStockRef();
         }

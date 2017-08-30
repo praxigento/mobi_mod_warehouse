@@ -11,7 +11,7 @@ class Quantity extends \Praxigento\Core\Repo\Def\Entity
         \Magento\Framework\App\ResourceConnection $resource,
         \Praxigento\Core\Repo\IGeneric $repoGeneric
     ) {
-        parent::__construct($resource, $repoGeneric, \Praxigento\Warehouse\Data\Entity\Quantity::class);
+        parent::__construct($resource, $repoGeneric, \Praxigento\Warehouse\Repo\Entity\Data\Quantity::class);
     }
 
 }

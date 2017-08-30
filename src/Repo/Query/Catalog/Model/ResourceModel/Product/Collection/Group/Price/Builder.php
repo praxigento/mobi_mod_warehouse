@@ -6,7 +6,7 @@
 namespace Praxigento\Warehouse\Repo\Query\Catalog\Model\ResourceModel\Product\Collection\Group\Price;
 
 use Praxigento\Warehouse\Config as Cfg;
-use Praxigento\Warehouse\Data\Entity\Group\Price as EGroupPrice;
+use Praxigento\Warehouse\Repo\Entity\Data\Group\Price as EGroupPrice;
 
 /**
  * Add warehouse group price data to input query.

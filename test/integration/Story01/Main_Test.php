@@ -8,10 +8,10 @@ use Magento\CatalogInventory\Api\Data\StockInterface;
 use Magento\CatalogInventory\Api\Data\StockItemInterface;
 use Magento\CatalogInventory\Api\StockItemRepositoryInterface;
 use Magento\CatalogInventory\Api\StockRepositoryInterface;
-use Praxigento\Warehouse\Data\Entity\Lot;
-use Praxigento\Warehouse\Data\Entity\Quantity;
-use Praxigento\Warehouse\Data\Entity\Stock\Item as EntityStockItem;
-use Praxigento\Warehouse\Data\Entity\Warehouse;
+use Praxigento\Warehouse\Repo\Entity\Data\Lot;
+use Praxigento\Warehouse\Repo\Entity\Data\Quantity;
+use Praxigento\Warehouse\Repo\Entity\Data\Stock\Item as EntityStockItem;
+use Praxigento\Warehouse\Repo\Entity\Data\Warehouse;
 
 include_once(__DIR__ . '/../phpunit_bootstrap.php');
 

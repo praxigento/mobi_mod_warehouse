@@ -11,7 +11,7 @@ use Magento\Framework\ObjectManagerInterface;
 use Praxigento\Core\Repo\IGeneric as IGenericRepo;
 use Praxigento\Warehouse\Config as Cfg;
 use Praxigento\Warehouse\Data\Agg\Warehouse as AggWarehouse;
-use Praxigento\Warehouse\Data\Entity\Warehouse as EntityWarehouse;
+use Praxigento\Warehouse\Repo\Entity\Data\Warehouse as EntityWarehouse;
 
 /**
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)

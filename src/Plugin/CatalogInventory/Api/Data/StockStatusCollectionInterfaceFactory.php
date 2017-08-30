@@ -9,14 +9,16 @@ namespace Praxigento\Warehouse\Plugin\CatalogInventory\Api\Data;
 
 use Magento\CatalogInventory\Model\Stock\Item as EntityStockItem;
 use Magento\CatalogInventory\Model\Stock\Status as EntityStockStatus;
-use Praxigento\Warehouse\Data\Entity\Quantity as EntityQty;
+use Praxigento\Warehouse\Repo\Entity\Data\Quantity as EntityQty;
 
 class StockStatusCollectionInterfaceFactory
 {
-    /** @var  \Praxigento\Warehouse\Tool\IStockManager */
-    protected $_toolStockManager;
+    const AS_TBL_QTY = 'prxgtQty';
+    const AS_TBL_STOCK_ITEM = 'prxgtCsi';
     /** @var  \Magento\Framework\App\ResourceConnection */
     protected $_resource;
+    /** @var  \Praxigento\Warehouse\Tool\IStockManager */
+    protected $_toolStockManager;
 
     public function __construct(
         \Magento\Framework\App\ResourceConnection $resource,
@@ -25,9 +27,6 @@ class StockStatusCollectionInterfaceFactory
         $this->_resource = $resource;
         $this->_toolStockManager = $toolStockMan;
     }
-
-    const AS_TBL_QTY = 'prxgtQty';
-    const AS_TBL_STOCK_ITEM = 'prxgtCsi';
 
     public function beforeCreate($subject, array $data = [])
     {

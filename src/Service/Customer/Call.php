@@ -5,7 +5,7 @@
 
 namespace Praxigento\Warehouse\Service\Customer;
 
-use Praxigento\Warehouse\Data\Entity\Customer as EntityCustomer;
+use Praxigento\Warehouse\Repo\Entity\Data\Customer as EntityCustomer;
 use Praxigento\Warehouse\Service\Customer;
 
 class Call implements \Praxigento\Warehouse\Service\ICustomer

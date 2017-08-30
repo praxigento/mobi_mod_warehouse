@@ -6,7 +6,7 @@
 namespace Praxigento\Warehouse\Repo\Modifier\Product;
 
 use Magento\CatalogInventory\Model\Stock\Item as StockItem;
-use Praxigento\Warehouse\Data\Entity\Quantity;
+use Praxigento\Warehouse\Repo\Entity\Data\Quantity;
 
 /**
  * Query modifier for Products grid.

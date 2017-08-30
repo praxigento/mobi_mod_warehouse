@@ -6,9 +6,9 @@
 namespace Praxigento\Warehouse\Service\QtyDistributor\Sub;
 
 use Praxigento\Warehouse\Config as Cfg;
-use Praxigento\Warehouse\Data\Entity\Lot;
-use Praxigento\Warehouse\Data\Entity\Quantity;
-use Praxigento\Warehouse\Data\Entity\Quantity\Sale as QtySale;
+use Praxigento\Warehouse\Repo\Entity\Data\Lot;
+use Praxigento\Warehouse\Repo\Entity\Data\Quantity;
+use Praxigento\Warehouse\Repo\Entity\Data\Quantity\Sale as QtySale;
 
 class Repo
 {

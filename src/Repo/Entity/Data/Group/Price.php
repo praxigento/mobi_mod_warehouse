@@ -2,14 +2,25 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
-namespace Praxigento\Warehouse\Data\Entity\Stock;
 
-class Item
+namespace Praxigento\Warehouse\Repo\Entity\Data\Group;
+
+class Price
     extends \Praxigento\Core\Data\Entity\Base
 {
+    const ATTR_CUST_GROUP_REF = 'cust_group_ref';
     const ATTR_PRICE = 'price';
     const ATTR_STOCK_ITEM_REF = 'stock_item_ref';
-    const ENTITY_NAME = 'prxgt_wrhs_stock_item';
+    const ENTITY_NAME = 'prxgt_wrhs_group_price';
+
+    /**
+     * @return int
+     */
+    public function getCustomerGroupRef()
+    {
+        $result = parent::get(self::ATTR_CUST_GROUP_REF);
+        return $result;
+    }
 
     /**
      * @return double
@@ -20,12 +31,9 @@ class Item
         return $result;
     }
 
-    /**
-     * @inheritdoc
-     */
     public static function getPrimaryKeyAttrs()
     {
-        return [self::ATTR_STOCK_ITEM_REF];
+        return [self::ATTR_STOCK_ITEM_REF, self::ATTR_CUST_GROUP_REF];
     }
 
     /**
@@ -35,6 +43,14 @@ class Item
     {
         $result = parent::get(self::ATTR_STOCK_ITEM_REF);
         return $result;
+    }
+
+    /**
+     * @param int $data
+     */
+    public function setCustomerGroupRef($data)
+    {
+        parent::set(self::ATTR_CUST_GROUP_REF, $data);
     }
 
     /**
@@ -52,5 +68,4 @@ class Item
     {
         parent::set(self::ATTR_STOCK_ITEM_REF, $data);
     }
-
 }

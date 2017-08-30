@@ -8,7 +8,7 @@ namespace Praxigento\Warehouse\Repo\Entity;
 use Magento\Framework\App\ResourceConnection;
 use Praxigento\Core\Repo\Def\Entity as BaseEntityRepo;
 use Praxigento\Core\Repo\IGeneric as IRepoGeneric;
-use Praxigento\Warehouse\Data\Entity\Customer as Entity;
+use Praxigento\Warehouse\Repo\Entity\Data\Customer as Entity;
 
 class Customer extends BaseEntityRepo
 {
@@ -20,8 +20,8 @@ class Customer extends BaseEntityRepo
     }
 
     /**
-     * @param array|\Praxigento\Warehouse\Data\Entity\Customer $data
-     * @return \Praxigento\Warehouse\Data\Entity\Customer
+     * @param array|\Praxigento\Warehouse\Repo\Entity\Data\Customer $data
+     * @return \Praxigento\Warehouse\Repo\Entity\Data\Customer
      */
     public function create($data)
     {
@@ -31,7 +31,7 @@ class Customer extends BaseEntityRepo
 
     /**
      * @param int $id
-     * @return \Praxigento\Warehouse\Data\Entity\Customer|bool Found instance data or 'false'
+     * @return \Praxigento\Warehouse\Repo\Entity\Data\Customer|bool Found instance data or 'false'
      */
     public function getById($id)
     {

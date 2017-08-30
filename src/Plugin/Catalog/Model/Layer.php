@@ -36,7 +36,7 @@ class Layer
         $asGroupPrice = self::AS_TBL_WRHS_GROUP_PRICE;
         $tblStockItem = [$asStockItem => $collection->getTable(Cfg::ENTITY_MAGE_CATALOGINVENTORY_STOCK_ITEM)];
         $tblGroupPrice = [
-            $asGroupPrice => $collection->getTable(\Praxigento\Warehouse\Data\Entity\Group\Price::ENTITY_NAME)
+            $asGroupPrice => $collection->getTable(\Praxigento\Warehouse\Repo\Entity\Data\Group\Price::ENTITY_NAME)
         ];
         /* INNER JOIN cataloginventory_stock_item AS prxgt_csi */
         $on = $asStockItem . '.' . Cfg::E_CATINV_STOCK_ITEM_A_PROD_ID . '='
@@ -46,11 +46,11 @@ class Layer
         $cols = [];
         $query->joinInner($tblStockItem, $on, $cols);
         // LEFT JOIN prxgt_wrhs_group_price pwgp
-        $on = $asGroupPrice . '.' . \Praxigento\Warehouse\Data\Entity\Group\Price::ATTR_STOCK_ITEM_REF . '='
+        $on = $asGroupPrice . '.' . \Praxigento\Warehouse\Repo\Entity\Data\Group\Price::ATTR_STOCK_ITEM_REF . '='
             . $asStockItem . '.' . Cfg::E_CATINV_STOCK_ITEM_A_ITEM_ID;
-        $on .= ' AND ' . $asGroupPrice . '.' . \Praxigento\Warehouse\Data\Entity\Group\Price::ATTR_CUST_GROUP_REF . '='
+        $on .= ' AND ' . $asGroupPrice . '.' . \Praxigento\Warehouse\Repo\Entity\Data\Group\Price::ATTR_CUST_GROUP_REF . '='
             . $asPriceIndex . '.' . Cfg::E_CAT_PROD_IDX_A_CUST_GROUP_ID;
-        $cols = [self::AS_ATTR_PRICE_WRHS => \Praxigento\Warehouse\Data\Entity\Group\Price::ATTR_PRICE];
+        $cols = [self::AS_ATTR_PRICE_WRHS => \Praxigento\Warehouse\Repo\Entity\Data\Group\Price::ATTR_PRICE];
         $query->joinLeft($tblGroupPrice, $on, $cols);
 
         return $result;
