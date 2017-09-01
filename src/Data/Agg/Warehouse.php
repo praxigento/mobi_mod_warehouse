@@ -8,7 +8,7 @@ namespace Praxigento\Warehouse\Data\Agg;
 
 
 class Warehouse
-    extends \Flancer32\Lib\Data
+    extends \Praxigento\Core\Data
 {
     /**#@+
      * Aliases for data attributes.
