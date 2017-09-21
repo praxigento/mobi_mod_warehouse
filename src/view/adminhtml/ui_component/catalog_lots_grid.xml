@@ -22,9 +22,16 @@
     <!-- Data Source definition -->
     <!-- **************************************************** -->
     <dataSource name="catalog_lots_grid_data_source">
-        <argument name="dataProvider" xsi:type="configurableObject">
+        <!--<argument name="dataProvider" xsi:type="configurableObject">
             <argument name="class" xsi:type="string">Praxigento\Warehouse\Ui\DataProvider\Lot</argument>
             <argument name="name" xsi:type="string">catalog_lots_grid_data_source</argument>
+        </argument>-->
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">\Praxigento\Core\Ui\DataProvider\Grid\Base</argument>
+            <argument name="name" xsi:type="string">catalog_lots_grid_data_source</argument>
+            <argument name="gridQueryBuilder"
+                      xsi:type="object">\Praxigento\Warehouse\Ui\DataProvider\Grid\Lot\QueryBuilder
+            </argument>
         </argument>
         <argument name="data" xsi:type="array">
             <item name="js_config" xsi:type="array">
@@ -125,7 +132,7 @@
                 </item>
             </argument>
         </column>
-        <column name="exp_date">
+        <column name="expDate">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="filter" xsi:type="string">text</item>
