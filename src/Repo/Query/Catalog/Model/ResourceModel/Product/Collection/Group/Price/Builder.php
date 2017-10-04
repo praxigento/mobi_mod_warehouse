@@ -21,22 +21,25 @@ class Builder
     /** Columns aliases */
     const A_PRICE = 'prxgt_wrhs_group_price';
 
-
     /** @var \Praxigento\Warehouse\Tool\IStockManager */
-    protected $manStock;
+    private $manStock;
+    /** @var \Magento\Backend\Model\Session\Quote */
+    private $modQuoteSession;
     /** @var \Magento\Customer\Model\Session */
-    protected $modSession;
+    private $modSession;
     /** @var \Magento\Framework\App\ResourceConnection */
-    protected $resource;
+    private $resource;
 
     public function __construct(
         \Magento\Framework\App\ResourceConnection $resource,
-        \Praxigento\Warehouse\Tool\IStockManager $manStock,
-        \Magento\Customer\Model\Session $modSession
+        \Magento\Backend\Model\Session\Quote $modQuoteSession,
+        \Magento\Customer\Model\Session $modSession,
+        \Praxigento\Warehouse\Tool\IStockManager $manStock
     ) {
         $this->resource = $resource;
-        $this->manStock = $manStock;
+        $this->modQuoteSession = $modQuoteSession;
         $this->modSession = $modSession;
+        $this->manStock = $manStock;
     }
 
 
@@ -50,9 +53,14 @@ class Builder
         $asPrice = self::AS_WRHS_GROUP_PRICE;
 
         /* query parameters */
-        $stockId = $this->manStock->getCurrentStockId();
+        $storeId = $this->modQuoteSession->getStoreId();
+        $stockId = $this->manStock->getStockIdByStoreId($storeId);
         $custGroupId = $this->modSession->getCustomerGroupId();
-
+        $quote = $this->modQuoteSession->getQuote();
+        $quoteCustGroupId = $quote->getCustomerGroupId();
+        if ($quoteCustGroupId) {
+            $custGroupId = $quoteCustGroupId;
+        }
         /* INNER JOIN cataloginventory_stock_item */
         $tbl = $this->resource->getTableName(Cfg::ENTITY_MAGE_CATALOGINVENTORY_STOCK_ITEM);
         $as = $asInvItem;

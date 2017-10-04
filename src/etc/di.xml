@@ -125,6 +125,13 @@
                 sortOrder="600" disabled="false"/>
     </type>
 
+    <!-- Replace product price by warehouse group price before rendering. -->
+    <type name="Magento\Sales\Block\Adminhtml\Order\Create\Search\Grid\Renderer\Product">
+        <plugin name="praxigento_warehouse_plugin"
+                type="Praxigento\Warehouse\Plugin\Sales\Block\Adminhtml\Order\Create\Search\Grid\Renderer\Product"
+                sortOrder="600" disabled="false"/>
+    </type>
+
     <type name="Magento\Store\Model\Store">
         <!-- Replace Magento base currency by warehouse currency -->
         <plugin name="praxigento_warehouse_plugin"
