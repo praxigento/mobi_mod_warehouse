@@ -54,7 +54,13 @@ class Builder
 
         /* query parameters */
         $storeId = $this->modQuoteSession->getStoreId();
-        $stockId = $this->manStock->getStockIdByStoreId($storeId);
+        if ($storeId) {
+            /* backend mode */
+            $stockId = $this->manStock->getStockIdByStoreId($storeId);
+        } else {
+            /* frontend mode */
+            $stockId = $this->manStock->getCurrentStockId();
+        }
         $custGroupId = $this->modSession->getCustomerGroupId();
         $quote = $this->modQuoteSession->getQuote();
         $quoteCustGroupId = $quote->getCustomerGroupId();

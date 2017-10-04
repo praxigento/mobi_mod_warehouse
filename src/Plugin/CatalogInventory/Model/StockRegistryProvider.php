@@ -11,31 +11,35 @@ class StockRegistryProvider
     /**
      * @var \Magento\CatalogInventory\Api\Data\StockItemInterfaceFactory
      */
-    protected $factStockItem;
+    private $factStockItem;
     /**
      * @var \Magento\CatalogInventory\Api\StockItemCriteriaInterfaceFactory
      */
-    protected $factStockItemCrit;
+    private $factStockItemCrit;
+    /**
+     * @var \Magento\Backend\Model\Session\Quote
+     */
+    private $modQuoteSession;
     /**
      * @var \Magento\CatalogInventory\Api\StockRepositoryInterface
      */
-    protected $repoStock;
-    /**
-     * @var \Magento\CatalogInventory\Api\StockStatusRepositoryInterface
-     */
-    protected $repoStockStatus;
+    private $repoStock;
     /**
      * @var  \Magento\CatalogInventory\Api\StockItemRepositoryInterface
      */
-    protected $repoStockItem;
+    private $repoStockItem;
+    /**
+     * @var \Magento\CatalogInventory\Api\StockStatusRepositoryInterface
+     */
+    private $repoStockStatus;
     /**
      * @var  \Magento\CatalogInventory\Model\StockRegistryStorage
      */
-    protected $storeStockRegistry;
+    private $storeStockRegistry;
     /**
      * @var  \Praxigento\Warehouse\Tool\IStockManager
      */
-    protected $toolStockManager;
+    private $manStock;
 
     public function __construct(
         \Magento\CatalogInventory\Model\StockRegistryStorage $storeStockRegistry,
@@ -44,7 +48,8 @@ class StockRegistryProvider
         \Magento\CatalogInventory\Api\StockRepositoryInterface $repoStock,
         \Magento\CatalogInventory\Api\StockItemRepositoryInterface $repoStockItem,
         \Magento\CatalogInventory\Api\StockStatusRepositoryInterface $repoStockStatus,
-        \Praxigento\Warehouse\Tool\IStockManager $toolStockMan
+        \Magento\Backend\Model\Session\Quote $modQuoteSession,
+        \Praxigento\Warehouse\Tool\IStockManager $manStock
     ) {
         $this->storeStockRegistry = $storeStockRegistry;
         $this->factStockItem = $factStockItem;
@@ -52,7 +57,8 @@ class StockRegistryProvider
         $this->repoStock = $repoStock;
         $this->repoStockItem = $repoStockItem;
         $this->repoStockStatus = $repoStockStatus;
-        $this->toolStockManager = $toolStockMan;
+        $this->modQuoteSession = $modQuoteSession;
+        $this->manStock = $manStock;
     }
 
     /**
@@ -74,7 +80,7 @@ class StockRegistryProvider
         $stock = $this->storeStockRegistry->getStock($scopeId);
         if (null === $stock) {
             /* ... or load current stock and save to app cache */
-            $stockId = $this->toolStockManager->getCurrentStockId();
+            $stockId = $this->manStock->getCurrentStockId();
             $stock = $this->repoStock->get($stockId);
             $this->storeStockRegistry->setStock($scopeId, $stock);
         }
@@ -101,7 +107,7 @@ class StockRegistryProvider
         if (null === $result) {
             $criteria = $this->factStockItemCrit->create();
             $criteria->setProductsFilter($productId);
-            $stockId = $this->toolStockManager->getCurrentStockId();
+            $stockId = $this->manStock->getCurrentStockId();
             $criteria->setStockFilter($stockId);
             $collection = $this->repoStockItem->getList($criteria);
             $result = current($collection->getItems());
@@ -133,7 +139,14 @@ class StockRegistryProvider
         $stockStatus = $this->storeStockRegistry->getStockStatus($productId, $scopeId);
         if (null === $stockStatus) {
             /* ... or load current stock status and save to app cache */
-            $stockId = $this->toolStockManager->getCurrentStockId();
+            $storeId = $this->modQuoteSession->getStoreId();
+            if ($storeId) {
+                /* backend mode */
+                $stockId = $this->manStock->getStockIdByStoreId($storeId);
+            } else {
+                /* frontend mode */
+                $stockId = $this->manStock->getCurrentStockId();
+            }
             $crit = new \Magento\CatalogInventory\Model\ResourceModel\Stock\Status\StockStatusCriteria();
             $crit->setProductsFilter($productId);
             $crit->addFilter(
