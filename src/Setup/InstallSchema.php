@@ -5,7 +5,6 @@
  */
 namespace Praxigento\Warehouse\Setup;
 
-use Praxigento\Warehouse\Repo\Entity\Data\Customer;
 use Praxigento\Warehouse\Repo\Entity\Data\Group\Price;
 use Praxigento\Warehouse\Repo\Entity\Data\Lot;
 use Praxigento\Warehouse\Repo\Entity\Data\Quantity;
@@ -53,9 +52,5 @@ class InstallSchema extends \Praxigento\Core\Setup\Schema\Base
         $demEntity = $demPackage->get('package/Quantity/entity/Sale');
         $this->_toolDem->createEntity($entityAlias, $demEntity);
 
-        /* Customer */
-        $entityAlias = Customer::ENTITY_NAME;
-        $demEntity = $demPackage->get('entity/Customer');
-        $this->_toolDem->createEntity($entityAlias, $demEntity);
     }
 }

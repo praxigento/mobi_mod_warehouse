@@ -16,8 +16,6 @@
     <!-- Services -->
     <preference for="Praxigento\Warehouse\Service\IQtyDistributor"
             type="Praxigento\Warehouse\Service\QtyDistributor\Call"/>
-    <preference for="Praxigento\Warehouse\Service\ICustomer"
-            type="Praxigento\Warehouse\Service\Customer\Call"/>
 
     <!-- ******* -->
     <!-- Plugins -->
