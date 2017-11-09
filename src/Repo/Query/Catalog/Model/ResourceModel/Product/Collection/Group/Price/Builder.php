@@ -12,7 +12,7 @@ use Praxigento\Warehouse\Repo\Entity\Data\Group\Price as EGroupPrice;
  * Add warehouse group price data to input query.
  */
 class Builder
-    implements \Praxigento\Core\Repo\Query\IBuilder2
+    implements \Praxigento\Core\Repo\Query\IBuilder
 {
     /* Tables aliases */
     const AS_CATALOGINVENTORY_STOCK_ITEM = 'cisi';

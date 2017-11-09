@@ -12,7 +12,7 @@ use Praxigento\Warehouse\Repo\Entity\Data\Group\Price as EGroupPrice;
  * Create base query to get
  */
 class Builder
-    implements \Praxigento\Core\Repo\Query\IBuilder2
+    implements \Praxigento\Core\Repo\Query\IBuilder
 {
     /* Tables aliases */
     const AS_CATALOG_PRODUCT = 'cp';
