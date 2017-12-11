@@ -11,6 +11,6 @@ use Praxigento\Warehouse\Service\QtyDistributor\Data\Item;
  * @method Item[] getSaleItems()
  * @method void setSaleItems(Item[] $data)
  */
-class RegisterSale extends \Praxigento\Core\Service\Base\Request
+class RegisterSale extends \Praxigento\Core\App\Service\Base\Request
 {
 }

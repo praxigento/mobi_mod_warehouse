@@ -10,7 +10,7 @@ use Praxigento\Warehouse\Repo\Agg\IWarehouse as IRepoWarehouse;
 use Praxigento\Warehouse\Repo\Entity\Data\Warehouse as EntityWarehouse;
 
 class SelectFactory
-    extends \Praxigento\Core\Repo\Agg\BaseSelectFactory
+    extends \Praxigento\Core\App\Repo\Agg\BaseSelectFactory
 {
 
     public function getQueryToSelect()

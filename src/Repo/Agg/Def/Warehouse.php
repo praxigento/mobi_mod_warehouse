@@ -8,7 +8,7 @@
 namespace Praxigento\Warehouse\Repo\Agg\Def;
 
 use Magento\Framework\ObjectManagerInterface;
-use Praxigento\Core\Repo\IGeneric as IGenericRepo;
+use Praxigento\Core\App\Repo\IGeneric as IGenericRepo;
 use Praxigento\Warehouse\Config as Cfg;
 use Praxigento\Warehouse\Data\Agg\Warehouse as AggWarehouse;
 use Praxigento\Warehouse\Repo\Entity\Data\Warehouse as EntityWarehouse;
@@ -19,7 +19,7 @@ use Praxigento\Warehouse\Repo\Entity\Data\Warehouse as EntityWarehouse;
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class Warehouse
-    extends \Praxigento\Core\Repo\Def\Crud
+    extends \Praxigento\Core\App\Repo\Def\Crud
     implements \Praxigento\Warehouse\Repo\Agg\IWarehouse
 {
 
@@ -27,7 +27,7 @@ class Warehouse
     protected $_factorySelect;
     /** @var  ObjectManagerInterface */
     protected $_manObj;
-    /** @var  \Praxigento\Core\Transaction\Database\IManager */
+    /** @var  \Praxigento\Core\App\Transaction\Database\IManager */
     protected $_manTrans;
     /** @var  \Praxigento\Warehouse\Repo\Entity\Warehouse */
     protected $_repoEntityWarehouse;
@@ -40,9 +40,9 @@ class Warehouse
 
     public function __construct(
         \Magento\Framework\ObjectManagerInterface $manObj,
-        \Praxigento\Core\Transaction\Database\IManager $manTrans,
+        \Praxigento\Core\App\Transaction\Database\IManager $manTrans,
         \Magento\Framework\App\ResourceConnection $resource,
-        \Praxigento\Core\Repo\IGeneric $repoGeneric,
+        \Praxigento\Core\App\Repo\IGeneric $repoGeneric,
         \Praxigento\Warehouse\Repo\Entity\Warehouse $repoEntityWarehouse,
         Warehouse\SelectFactory $factorySelect
     ) {

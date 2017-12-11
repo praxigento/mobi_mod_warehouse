@@ -12,7 +12,7 @@ use Praxigento\Warehouse\Repo\Entity\Data\Quantity\Sale;
 use Praxigento\Warehouse\Repo\Entity\Data\Stock\Item;
 use Praxigento\Warehouse\Repo\Entity\Data\Warehouse;
 
-class InstallSchema extends \Praxigento\Core\Setup\Schema\Base
+class InstallSchema extends \Praxigento\Core\App\Setup\Schema\Base
 {
 
     protected function _setup()

@@ -10,7 +10,7 @@ namespace Praxigento\Warehouse\Repo\Query\Catalog\Model\ResourceModel\Product\Co
  * Fix Select Count SQL for products collection.
  */
 class Builder
-    implements \Praxigento\Core\Repo\Query\IBuilder
+    implements \Praxigento\Core\App\Repo\Query\IBuilder
 {
 
 

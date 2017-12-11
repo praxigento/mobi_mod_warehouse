@@ -6,7 +6,7 @@
 namespace Praxigento\Warehouse\Repo\Entity\Data;
 
 class Quantity
-    extends \Praxigento\Core\Data\Entity\Base
+    extends \Praxigento\Core\App\Repo\Data\Entity\Base
 {
     const ATTR_LOT_REF = 'lot_ref';
     const ATTR_STOCK_ITEM_REF = 'stock_item_ref';

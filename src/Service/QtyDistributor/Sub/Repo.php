@@ -12,9 +12,9 @@ use Praxigento\Warehouse\Repo\Entity\Data\Quantity\Sale as QtySale;
 
 class Repo
 {
-    /** @var  \Praxigento\Core\Transaction\Database\IManager */
+    /** @var  \Praxigento\Core\App\Transaction\Database\IManager */
     protected $_manTrans;
-    /** @var \Praxigento\Core\Repo\IGeneric */
+    /** @var \Praxigento\Core\App\Repo\IGeneric */
     protected $_repoGeneric;
     /** @var \Praxigento\Warehouse\Repo\Entity\Quantity */
     protected $_repoQty;
@@ -25,8 +25,8 @@ class Repo
 
     public function __construct(
         \Magento\Framework\App\ResourceConnection $resource,
-        \Praxigento\Core\Transaction\Database\IManager $manTrans,
-        \Praxigento\Core\Repo\IGeneric $repoGeneric,
+        \Praxigento\Core\App\Transaction\Database\IManager $manTrans,
+        \Praxigento\Core\App\Repo\IGeneric $repoGeneric,
         \Praxigento\Warehouse\Repo\Entity\Quantity $repoQty,
         \Praxigento\Warehouse\Repo\Entity\Quantity\Sale $repoQtySale
     ) {

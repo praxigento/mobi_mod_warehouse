@@ -16,7 +16,7 @@ namespace Praxigento\Warehouse\Service\QtyDistributor\Request;
  * @method void setStockId(int $data)
  *
  */
-class RegisterForSaleItem extends \Praxigento\Core\Service\Base\Request
+class RegisterForSaleItem extends \Praxigento\Core\App\Service\Base\Request
 {
 
 }

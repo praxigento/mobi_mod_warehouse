@@ -5,7 +5,7 @@
 namespace Praxigento\Warehouse\Service\QtyDistributor\Response;
 
 
-class RegisterForSaleItem extends \Praxigento\Core\Service\Base\Response
+class RegisterForSaleItem extends \Praxigento\Core\App\Service\Base\Response
 {
 
 }

@@ -17,7 +17,7 @@ include_once(__DIR__ . '/../phpunit_bootstrap.php');
 
 class Main_IntegrationTest extends \Praxigento\Core\Test\BaseIntegrationTest
 {
-    /** @var \Praxigento\Core\Repo\IGeneric */
+    /** @var \Praxigento\Core\App\Repo\IGeneric */
     private $_repoGeneric;
     /** @var  \Magento\CatalogInventory\Api\StockRepositoryInterface */
     private $_repoMageStock;
@@ -31,7 +31,7 @@ class Main_IntegrationTest extends \Praxigento\Core\Test\BaseIntegrationTest
     public function __construct()
     {
         parent::__construct();
-        $this->_repoGeneric = $this->_manObj->get(\Praxigento\Core\Repo\IGeneric::class);
+        $this->_repoGeneric = $this->_manObj->get(\Praxigento\Core\App\Repo\IGeneric::class);
         $this->_toolDate = $this->_manObj->get(\Praxigento\Core\Tool\IDate::class);
         $this->_repoMageStock = $this->_manObj->get(StockRepositoryInterface::class);
         $this->_repoMageStockItem = $this->_manObj->get(StockItemRepositoryInterface::class);

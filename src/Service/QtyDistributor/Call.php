@@ -8,13 +8,13 @@ namespace Praxigento\Warehouse\Service\QtyDistributor;
 
 class Call implements \Praxigento\Warehouse\Service\IQtyDistributor
 {
-    /** @var  \Praxigento\Core\Transaction\Database\IManager */
+    /** @var  \Praxigento\Core\App\Transaction\Database\IManager */
     protected $_manTrans;
     /** @var \Praxigento\Warehouse\Service\QtyDistributor\Sub\Repo */
     protected $_subRepo;
 
     public function __construct(
-        \Praxigento\Core\Transaction\Database\IManager $manTrans,
+        \Praxigento\Core\App\Transaction\Database\IManager $manTrans,
         \Praxigento\Warehouse\Service\QtyDistributor\Sub\Repo $subRepo
     ) {
         $this->_manTrans = $manTrans;

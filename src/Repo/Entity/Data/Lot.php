@@ -6,7 +6,7 @@
 namespace Praxigento\Warehouse\Repo\Entity\Data;
 
 class Lot
-    extends \Praxigento\Core\Data\Entity\Base
+    extends \Praxigento\Core\App\Repo\Data\Entity\Base
 {
     const ATTR_CODE = 'code';
     const ATTR_EXP_DATE = 'exp_date';

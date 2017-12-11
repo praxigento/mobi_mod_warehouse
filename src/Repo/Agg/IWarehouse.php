@@ -7,7 +7,7 @@ namespace Praxigento\Warehouse\Repo\Agg;
 use Praxigento\Warehouse\Data\Agg\Warehouse as AggWarehouse;
 
 interface IWarehouse
-    extends \Praxigento\Core\Repo\ICrud
+    extends \Praxigento\Core\App\Repo\ICrud
 {
     const AS_STOCK = 'cs';
     const AS_WRHS = 'pww';

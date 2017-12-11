@@ -6,7 +6,7 @@
 namespace Praxigento\Warehouse\Repo\Entity\Data\Group;
 
 class Price
-    extends \Praxigento\Core\Data\Entity\Base
+    extends \Praxigento\Core\App\Repo\Data\Entity\Base
 {
     const ATTR_CUST_GROUP_REF = 'cust_group_ref';
     const ATTR_PRICE = 'price';

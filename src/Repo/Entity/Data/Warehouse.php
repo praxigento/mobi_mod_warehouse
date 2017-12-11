@@ -6,7 +6,7 @@
 namespace Praxigento\Warehouse\Repo\Entity\Data;
 
 class Warehouse
-    extends \Praxigento\Core\Data\Entity\Base
+    extends \Praxigento\Core\App\Repo\Data\Entity\Base
 {
     const ATTR_CODE = 'code';
     const ATTR_COUNTRY_CODE = 'country_code';
