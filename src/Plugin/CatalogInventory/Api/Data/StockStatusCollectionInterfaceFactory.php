@@ -17,12 +17,12 @@ class StockStatusCollectionInterfaceFactory
     const AS_TBL_STOCK_ITEM = 'prxgtCsi';
     /** @var  \Magento\Framework\App\ResourceConnection */
     protected $_resource;
-    /** @var  \Praxigento\Warehouse\Tool\IStockManager */
+    /** @var  \Praxigento\Warehouse\Api\Helper\Stock */
     protected $_toolStockManager;
 
     public function __construct(
         \Magento\Framework\App\ResourceConnection $resource,
-        \Praxigento\Warehouse\Tool\IStockManager $toolStockMan
+        \Praxigento\Warehouse\Api\Helper\Stock $toolStockMan
     ) {
         $this->_resource = $resource;
         $this->_toolStockManager = $toolStockMan;

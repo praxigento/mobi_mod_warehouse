@@ -9,14 +9,14 @@ class Register
 {
     /** @var \Praxigento\Warehouse\Service\IQtyDistributor */
     protected $_callQtyDistributor;
-    /** @var  \Praxigento\Warehouse\Tool\IStockManager */
+    /** @var  \Praxigento\Warehouse\Api\Helper\Stock */
     protected $_manStock;
     /** @var  \Magento\Framework\ObjectManagerInterface */
     protected $_manObj;
 
     public function __construct(
         \Magento\Framework\ObjectManagerInterface $manObj,
-        \Praxigento\Warehouse\Tool\IStockManager $manStock,
+        \Praxigento\Warehouse\Api\Helper\Stock $manStock,
         \Praxigento\Warehouse\Service\IQtyDistributor $callQtyDistributor
     ) {
         $this->_manObj = $manObj;

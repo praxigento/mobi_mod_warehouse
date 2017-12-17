@@ -37,7 +37,7 @@ class StockRegistryProvider
      */
     private $storeStockRegistry;
     /**
-     * @var  \Praxigento\Warehouse\Tool\IStockManager
+     * @var  \Praxigento\Warehouse\Api\Helper\Stock
      */
     private $manStock;
 
@@ -49,7 +49,7 @@ class StockRegistryProvider
         \Magento\CatalogInventory\Api\StockItemRepositoryInterface $repoStockItem,
         \Magento\CatalogInventory\Api\StockStatusRepositoryInterface $repoStockStatus,
         \Magento\Backend\Model\Session\Quote $modQuoteSession,
-        \Praxigento\Warehouse\Tool\IStockManager $manStock
+        \Praxigento\Warehouse\Api\Helper\Stock $manStock
     ) {
         $this->storeStockRegistry = $storeStockRegistry;
         $this->factStockItem = $factStockItem;

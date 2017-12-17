@@ -13,7 +13,7 @@ class StockManagement
     protected $_callQtyDistributor;
     /** @var \Magento\CatalogInventory\Api\StockConfigurationInterface */
     protected $_configStock;
-    /** @var  \Praxigento\Warehouse\Tool\IStockManager */
+    /** @var  \Praxigento\Warehouse\Api\Helper\Stock */
     protected $_manStock;
     /** @var  \Praxigento\Core\App\Transaction\Database\IManager */
     protected $_manTrans;
@@ -29,7 +29,7 @@ class StockManagement
         \Magento\CatalogInventory\Model\Spi\StockRegistryProviderInterface $providerStockRegistry,
         \Magento\CatalogInventory\Api\StockConfigurationInterface $configStock,
         \Magento\CatalogInventory\Model\StockState $stockState,
-        \Praxigento\Warehouse\Tool\IStockManager $manStock,
+        \Praxigento\Warehouse\Api\Helper\Stock $manStock,
         \Praxigento\Core\App\Transaction\Database\IManager $manTrans,
         \Praxigento\Warehouse\Service\IQtyDistributor $callQtyDistributor
     ) {

@@ -14,13 +14,13 @@ namespace Praxigento\Warehouse\Plugin\Tax\Model;
  */
 class Calculation
 {
-    /** @var \Praxigento\Warehouse\Tool\IStockManager */
+    /** @var \Praxigento\Warehouse\Api\Helper\Stock */
     protected $_manStock;
     /** @var \Praxigento\Warehouse\Repo\Entity\Warehouse */
     protected $_repoWrhs;
 
     public function __construct(
-        \Praxigento\Warehouse\Tool\IStockManager $manStock,
+        \Praxigento\Warehouse\Api\Helper\Stock $manStock,
         \Praxigento\Warehouse\Repo\Entity\Warehouse $repoWrhs
     ) {
         $this->_manStock = $manStock;

@@ -11,13 +11,13 @@ namespace Praxigento\Warehouse\Plugin\Store\Model;
  */
 class Store
 {
-    /** @var \Praxigento\Warehouse\Tool\IStockManager */
+    /** @var \Praxigento\Warehouse\Api\Helper\Stock */
     protected $hlpStock;
     /** @var \Praxigento\Warehouse\Repo\Entity\Warehouse */
     protected $repoWrhs;
 
     public function __construct(
-        \Praxigento\Warehouse\Tool\IStockManager $hlpStock,
+        \Praxigento\Warehouse\Api\Helper\Stock $hlpStock,
         \Praxigento\Warehouse\Repo\Entity\Warehouse $repoWrhs
     ) {
         $this->hlpStock = $hlpStock;

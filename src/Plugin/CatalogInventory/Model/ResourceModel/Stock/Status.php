@@ -9,11 +9,11 @@ namespace Praxigento\Warehouse\Plugin\CatalogInventory\Model\ResourceModel\Stock
  */
 class Status
 {
-    /** @var  \Praxigento\Warehouse\Tool\IStockManager */
+    /** @var  \Praxigento\Warehouse\Api\Helper\Stock */
     protected $_manStock;
 
     public function __construct(
-        \Praxigento\Warehouse\Tool\IStockManager $manStock
+        \Praxigento\Warehouse\Api\Helper\Stock $manStock
     ) {
         $this->_manStock = $manStock;
     }

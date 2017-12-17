@@ -26,7 +26,7 @@ class Builder
 
     public function __construct(
         \Magento\Framework\App\ResourceConnection $resource,
-        \Praxigento\Warehouse\Tool\IStockManager $manStock,
+        \Praxigento\Warehouse\Api\Helper\Stock $manStock,
         \Magento\Customer\Model\Session $modSession
     ) {
         $this->resource = $resource;

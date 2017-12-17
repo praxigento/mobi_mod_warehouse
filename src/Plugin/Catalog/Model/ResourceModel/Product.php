@@ -14,7 +14,7 @@ class Product
 {
 
     /**
-     * @var \Praxigento\Warehouse\Tool\IStockManager
+     * @var \Praxigento\Warehouse\Api\Helper\Stock
      */
     protected $hlpStock;
     /**

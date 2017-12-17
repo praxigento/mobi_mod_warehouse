@@ -21,7 +21,7 @@ class Builder
     /** Columns aliases */
     const A_PRICE = 'prxgt_wrhs_group_price';
 
-    /** @var \Praxigento\Warehouse\Tool\IStockManager */
+    /** @var \Praxigento\Warehouse\Api\Helper\Stock */
     private $manStock;
     /** @var \Magento\Backend\Model\Session\Quote */
     private $modQuoteSession;
@@ -34,7 +34,7 @@ class Builder
         \Magento\Framework\App\ResourceConnection $resource,
         \Magento\Backend\Model\Session\Quote $modQuoteSession,
         \Magento\Customer\Model\Session $modSession,
-        \Praxigento\Warehouse\Tool\IStockManager $manStock
+        \Praxigento\Warehouse\Api\Helper\Stock $manStock
     ) {
         $this->resource = $resource;
         $this->modQuoteSession = $modQuoteSession;
