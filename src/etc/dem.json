@@ -27,7 +27,7 @@
                         "alias": "cust_group_ref",
                         "comment": "Reference to the customer group.",
                         "nullable": false,
-                        "type": {"integer": {"subtype": "smallint", "unsigned": true}}
+                        "type": {"integer": {"unsigned": true}}
                       },
                       "Price": {
                         "alias": "price",
