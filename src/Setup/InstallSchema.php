@@ -3,6 +3,7 @@
  * Create DB schema.
  * User: Alex Gusev <alex@flancer64.com>
  */
+
 namespace Praxigento\Warehouse\Setup;
 
 use Praxigento\Warehouse\Repo\Entity\Data\Group\Price;
@@ -15,42 +16,36 @@ use Praxigento\Warehouse\Repo\Entity\Data\Warehouse;
 class InstallSchema extends \Praxigento\Core\App\Setup\Schema\Base
 {
 
-    protected function _setup()
+    protected function setup()
     {
         /** Read and parse JSON schema. */
         $pathToFile = __DIR__ . '/../etc/dem.json';
         $pathToNode = '/dBEAR/package/Praxigento/package/Warehouse';
-        $demPackage = $this->_toolDem->readDemPackage($pathToFile, $pathToNode);
+        $demPackage = $this->toolDem->readDemPackage($pathToFile, $pathToNode);
 
         /* Stock Item  */
-        $entityAlias = Item::ENTITY_NAME;
         $demEntity = $demPackage->get('package/Stock/entity/Item');
-        $this->_toolDem->createEntity($entityAlias, $demEntity);
+        $this->toolDem->createEntity(Item::ENTITY_NAME, $demEntity);
 
         /* Group Price */
-        $entityAlias = Price::ENTITY_NAME;
         $demEntity = $demPackage->get('package/Group/entity/Price');
-        $this->_toolDem->createEntity($entityAlias, $demEntity);
+        $this->toolDem->createEntity(Price::ENTITY_NAME, $demEntity);
 
         /* Warehouse */
-        $entityAlias = Warehouse::ENTITY_NAME;
         $demEntity = $demPackage->get('entity/Warehouse');
-        $this->_toolDem->createEntity($entityAlias, $demEntity);
+        $this->toolDem->createEntity(Warehouse::ENTITY_NAME, $demEntity);
 
         /* Lot */
-        $entityAlias = Lot::ENTITY_NAME;
         $demEntity = $demPackage->get('entity/Lot');
-        $this->_toolDem->createEntity($entityAlias, $demEntity);
+        $this->toolDem->createEntity(Lot::ENTITY_NAME, $demEntity);
 
         /* Quant */
-        $entityAlias = Quantity::ENTITY_NAME;
         $demEntity = $demPackage->get('entity/Quantity');
-        $this->_toolDem->createEntity($entityAlias, $demEntity);
+        $this->toolDem->createEntity(Quantity::ENTITY_NAME, $demEntity);
 
         /* Quant / Sale */
-        $entityAlias = Sale::ENTITY_NAME;
         $demEntity = $demPackage->get('package/Quantity/entity/Sale');
-        $this->_toolDem->createEntity($entityAlias, $demEntity);
+        $this->toolDem->createEntity(Sale::ENTITY_NAME, $demEntity);
 
     }
 }
