@@ -6,6 +6,7 @@
 namespace Praxigento\Warehouse\Plugin\Catalog\Model\ResourceModel;
 
 use Praxigento\Warehouse\Config as Cfg;
+use Praxigento\Warehouse\Repo\Query\Catalog\Model\ResourceModel\Product\Collection\Group\Price\Builder as QBGroupPrice;
 
 /**
  * MOBI-784: replace "price" attribute on Catalog Product loading,
@@ -71,8 +72,8 @@ class Product
             $query = $this->qbGroupPrice->build($baseQuery);
             $bind = [$bindProdId => $entityId];
             $row = $conn->fetchRow($query, $bind);
-            if (is_array($row) && isset($row[$this->qbGroupPrice::A_PRICE])) {
-                $priceWrhsGroup = $row[$this->qbGroupPrice::A_PRICE];
+            if (is_array($row) && isset($row[QBGroupPrice::A_PRICE])) {
+                $priceWrhsGroup = $row[QBGroupPrice::A_PRICE];
                 $object->setPrice($priceWrhsGroup);
             }
         }

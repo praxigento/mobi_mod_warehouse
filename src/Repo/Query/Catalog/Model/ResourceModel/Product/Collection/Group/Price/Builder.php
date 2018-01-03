@@ -19,7 +19,7 @@ class Builder
     const AS_WRHS_GROUP_PRICE = 'prxgtWgp';
 
     /** Columns aliases */
-    const A_PRICE = 'prxgt_wrhs_group_price';
+    const A_PRICE = Cfg::A_PROD_PRICE_WRHS_GROUP;
 
     /** @var \Praxigento\Warehouse\Api\Helper\Stock */
     private $manStock;
