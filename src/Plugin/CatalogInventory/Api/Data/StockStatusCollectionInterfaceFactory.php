@@ -15,17 +15,17 @@ class StockStatusCollectionInterfaceFactory
 {
     const AS_TBL_QTY = 'prxgtQty';
     const AS_TBL_STOCK_ITEM = 'prxgtCsi';
-    /** @var  \Magento\Framework\App\ResourceConnection */
-    protected $_resource;
     /** @var  \Praxigento\Warehouse\Api\Helper\Stock */
-    protected $_toolStockManager;
+    protected $hlpStockManager;
+    /** @var  \Magento\Framework\App\ResourceConnection */
+    protected $resource;
 
     public function __construct(
         \Magento\Framework\App\ResourceConnection $resource,
-        \Praxigento\Warehouse\Api\Helper\Stock $toolStockMan
+        \Praxigento\Warehouse\Api\Helper\Stock $hlpStockMan
     ) {
-        $this->_resource = $resource;
-        $this->_toolStockManager = $toolStockMan;
+        $this->resource = $resource;
+        $this->hlpStockManager = $hlpStockMan;
     }
 
     public function beforeCreate($subject, array $data = [])
@@ -41,7 +41,7 @@ class StockStatusCollectionInterfaceFactory
             EntityStockStatus::KEY_QTY => 'SUM(' . self::AS_TBL_QTY . '.' . EntityQty::ATTR_TOTAL . ')'
         ]);
         /* LEFT JOIN cataloginventory_stock_item */
-        $tbl = [self::AS_TBL_STOCK_ITEM => $this->_resource->getTableName(EntityStockItem::ENTITY)];
+        $tbl = [self::AS_TBL_STOCK_ITEM => $this->resource->getTableName(EntityStockItem::ENTITY)];
         $cols = [];
         $on = self::AS_TBL_STOCK_ITEM . '.' . EntityStockItem::PRODUCT_ID . '='
             . 'main_table.' . EntityStockStatus::PRODUCT_ID;
@@ -49,13 +49,13 @@ class StockStatusCollectionInterfaceFactory
             . 'main_table.' . EntityStockStatus::STOCK_ID;
         $select->joinLeft($tbl, $on, $cols);
         /* LEFT JOIN prxgt_wrhs_qty */
-        $tbl = [self::AS_TBL_QTY => $this->_resource->getTableName(EntityQty::ENTITY_NAME)];
+        $tbl = [self::AS_TBL_QTY => $this->resource->getTableName(EntityQty::ENTITY_NAME)];
         $cols = [];
         $on = self::AS_TBL_QTY . '.' . EntityQty::ATTR_STOCK_ITEM_REF . '='
             . self::AS_TBL_STOCK_ITEM . '.' . EntityStockItem::ITEM_ID;
         $select->joinLeft($tbl, $on, $cols);
         /* WHERE: filter by $stockId  */
-        $stockId = (int)$this->_toolStockManager->getCurrentStockId();
+        $stockId = (int)$this->hlpStockManager->getCurrentStockId();
         if ($stockId) {
             $select->where('main_table.' . EntityStockStatus::STOCK_ID . '=' . $stockId);
         }
