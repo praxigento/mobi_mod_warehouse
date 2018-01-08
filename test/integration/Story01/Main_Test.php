@@ -25,14 +25,14 @@ class Main_IntegrationTest extends \Praxigento\Core\Test\BaseIntegrationTest
     private $_repoMageStockItem;
     /** @var  \Praxigento\Warehouse\Repo\Entity\Stock\Item */
     private $_repoStockItem;
-    /** @var  \Praxigento\Core\Tool\IDate */
+    /** @var  \Praxigento\Core\Api\Helper\Date */
     private $_toolDate;
 
     public function __construct()
     {
         parent::__construct();
         $this->_repoGeneric = $this->_manObj->get(\Praxigento\Core\App\Repo\IGeneric::class);
-        $this->_toolDate = $this->_manObj->get(\Praxigento\Core\Tool\IDate::class);
+        $this->_toolDate = $this->_manObj->get(\Praxigento\Core\Api\Helper\Date::class);
         $this->_repoMageStock = $this->_manObj->get(StockRepositoryInterface::class);
         $this->_repoMageStockItem = $this->_manObj->get(StockItemRepositoryInterface::class);
         $this->_repoStockItem = $this->_manObj->get(\Praxigento\Warehouse\Repo\Entity\Stock\Item::class);
