@@ -12,5 +12,11 @@ interface  Stock
 {
     public function getCurrentStockId();
 
+    /**
+     * ID of the default stock to process regular prices in adminhtml (one stock only in the grid).
+     * @return int
+     */
+    public function getDefaultStockId();
+
     public function getStockIdByStoreId($storeId);
 }
