@@ -10,7 +10,6 @@ use Praxigento\Warehouse\Config as Cfg;
 use Praxigento\Warehouse\Repo\Entity\Data\Lot as ELot;
 use Praxigento\Warehouse\Repo\Entity\Data\Quantity as EQuantity;
 
-
 class Get
     extends \Praxigento\Core\App\Repo\Query\Builder
 {
@@ -44,7 +43,7 @@ class Get
         $tbl = $this->resource->getTableName(Cfg::ENTITY_MAGE_CATALOGINVENTORY_STOCK_ITEM);
         $as = $asStockItem;
         $cols = [
-            self::A_STOCK_ITEM_ID => EDwnlCust::ATTR_MLM_ID
+            self::A_STOCK_ITEM_ID => Cfg::E_CATINV_STOCK_ITEM_A_ITEM_ID
         ];
         $result->from([$as => $tbl], $cols);
 
@@ -65,7 +64,7 @@ class Get
             self::A_LOT_CODE => ELot::ATTR_CODE,
             self::A_LOT_EXP_DATE => ELot::ATTR_EXP_DATE
         ];
-        $cond = $as . '.' . ELot::ATTR_ID . '=' . $asQty . '.' . Quantity::ATTR_LOT_REF;
+        $cond = $as . '.' . ELot::ATTR_ID . '=' . $asQty . '.' . EQuantity::ATTR_LOT_REF;
         $result->joinLeft([$as => $tbl], $cond, $cols);
 
         /* query tuning */
