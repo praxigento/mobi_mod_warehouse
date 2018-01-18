@@ -9,8 +9,6 @@ namespace Praxigento\Warehouse\Plugin\CatalogInventory\Model;
  */
 class StockManagement
 {
-    /** @var \Praxigento\Warehouse\Service\IQtyDistributor */
-    protected $_callQtyDistributor;
     /** @var \Magento\CatalogInventory\Api\StockConfigurationInterface */
     protected $_configStock;
     /** @var  \Praxigento\Warehouse\Api\Helper\Stock */
@@ -30,8 +28,7 @@ class StockManagement
         \Magento\CatalogInventory\Api\StockConfigurationInterface $configStock,
         \Magento\CatalogInventory\Model\StockState $stockState,
         \Praxigento\Warehouse\Api\Helper\Stock $manStock,
-        \Praxigento\Core\App\Transaction\Database\IManager $manTrans,
-        \Praxigento\Warehouse\Service\IQtyDistributor $callQtyDistributor
+        \Praxigento\Core\App\Transaction\Database\IManager $manTrans
     ) {
         $this->_resourceStock = $resourceStock;
         $this->_providerStockRegistry = $providerStockRegistry;
@@ -39,7 +36,6 @@ class StockManagement
         $this->_stockState = $stockState;
         $this->_manStock = $manStock;
         $this->_manTrans = $manTrans;
-        $this->_callQtyDistributor = $callQtyDistributor;
     }
 
     /**

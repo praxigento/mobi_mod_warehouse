@@ -3,7 +3,7 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Warehouse\Service\QtyDistributor\Request;
+namespace Praxigento\Warehouse\Service\QtyDistributor\Register\SaleItem;
 
 /**
  * @method int getItemId()
@@ -16,7 +16,8 @@ namespace Praxigento\Warehouse\Service\QtyDistributor\Request;
  * @method void setStockId(int $data)
  *
  */
-class RegisterForSaleItem extends \Praxigento\Core\App\Service\Base\Request
+class Request
+    extends \Praxigento\Core\App\Service\Base\Request
 {
 
 }

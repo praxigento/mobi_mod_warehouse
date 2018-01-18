@@ -7,21 +7,21 @@ namespace Praxigento\Warehouse\Observer\Sub;
 
 class Register
 {
-    /** @var \Praxigento\Warehouse\Service\IQtyDistributor */
-    protected $_callQtyDistributor;
-    /** @var  \Praxigento\Warehouse\Api\Helper\Stock */
-    protected $_manStock;
     /** @var  \Magento\Framework\ObjectManagerInterface */
     protected $_manObj;
+    /** @var  \Praxigento\Warehouse\Api\Helper\Stock */
+    protected $_manStock;
+    /** @var \Praxigento\Warehouse\Service\QtyDistributor\Register\Sale */
+    protected $_sale;
 
     public function __construct(
         \Magento\Framework\ObjectManagerInterface $manObj,
         \Praxigento\Warehouse\Api\Helper\Stock $manStock,
-        \Praxigento\Warehouse\Service\IQtyDistributor $callQtyDistributor
+        \Praxigento\Warehouse\Service\QtyDistributor\Register\Sale $sale
     ) {
         $this->_manObj = $manObj;
         $this->_manStock = $manStock;
-        $this->_callQtyDistributor = $callQtyDistributor;
+        $this->_sale = $sale;
     }
 
     /**
@@ -49,8 +49,8 @@ class Register
             $itemData->setStockId($stockId);
             $itemsData[] = $itemData;
         }
-        $reqSale = new \Praxigento\Warehouse\Service\QtyDistributor\Request\RegisterSale();
+        $reqSale = new \Praxigento\Warehouse\Service\QtyDistributor\Register\Sale\Request();
         $reqSale->setSaleItems($itemsData);
-        $this->_callQtyDistributor->registerSale($reqSale);
+        $this->_sale->exec($reqSale);
     }
 }
