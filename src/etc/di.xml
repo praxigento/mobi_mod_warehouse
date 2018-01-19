@@ -14,8 +14,6 @@
     <!-- MOBI-805 # Remove repo interfaces and use implementations only -->
 
     <!-- Services -->
-    <preference for="Praxigento\Warehouse\Service\IQtyDistributor"
-            type="Praxigento\Warehouse\Service\QtyDistributor\Call"/>
 
     <!-- ******* -->
     <!-- Plugins -->
