@@ -9,20 +9,23 @@ use Praxigento\Warehouse\Repo\Entity\Data\Quantity as EQuantity;
 use Praxigento\Warehouse\Repo\Entity\Data\Quantity\Sale as EQtySale;
 use Praxigento\Warehouse\Repo\Query\Lots\By\Product\Id\Get as AGet;
 
+/**
+ * Internal service for group of classes (\Praxigento\Warehouse\Service\QtyDistributor\Register\...).
+ */
 class Qty
 {
     /** @var \Praxigento\Warehouse\Repo\Entity\Quantity */
-    protected $_repoQty;
+    private $repoQty;
     /** @var \Praxigento\Warehouse\Repo\Entity\Quantity\Sale */
-    protected $_repoQtySale;
+    private $repoQtySale;
 
     public function __construct(
         \Praxigento\Warehouse\Repo\Entity\Quantity $repoQty,
         \Praxigento\Warehouse\Repo\Entity\Quantity\Sale $repoQtySale
     )
     {
-        $this->_repoQty = $repoQty;
-        $this->_repoQtySale = $repoQtySale;
+        $this->repoQty = $repoQty;
+        $this->repoQtySale = $repoQtySale;
     }
 
     /**
@@ -53,11 +56,11 @@ class Qty
                     EQtySale::ATTR_LOT_REF => $lotId,
                     EQtySale::ATTR_TOTAL => $rest
                 ];
-                $this->_repoQtySale->create($qtySaleData);
+                $this->repoQtySale->create($qtySaleData);
                 /* decrease lot's qty */
                 $qtyRest = $qty - $rest;
                 $qtyUpdateData = [EQuantity::ATTR_TOTAL => $qtyRest];
-                $this->_repoQty->updateById($qtyPk, $qtyUpdateData);
+                $this->repoQty->updateById($qtyPk, $qtyUpdateData);
                 break;
             } else {
                 /* lot's $qty is less or equal to $total (or $rest) */
@@ -66,9 +69,9 @@ class Qty
                     EQtySale::ATTR_LOT_REF => $lotId,
                     EQtySale::ATTR_TOTAL => $qty
                 ];
-                $this->_repoQtySale->create($qtySaleData);
+                $this->repoQtySale->create($qtySaleData);
                 /* delete zero quantity records from 'prxgt_wrhs_qty' */
-                $this->_repoQty->deleteById($qtyPk);
+                $this->repoQty->deleteById($qtyPk);
                 /* decrease $rest of $total*/
                 $rest -= $qty;
             }

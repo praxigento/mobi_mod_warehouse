@@ -6,7 +6,7 @@
 namespace Praxigento\Warehouse\Service\QtyDistributor\Data;
 
 /**
- * Item to transfer data to register qty separation by lots.
+ * Service level item to transfer data to register qty separation by lots.
  *
  * @method int getItemId()
  * @method void setItemId(int $data)

@@ -15,17 +15,17 @@ use Praxigento\Warehouse\Service\QtyDistributor\Register\SaleItem\Response as AR
 class SaleItem
 {
     /** @var \Praxigento\Warehouse\Repo\Query\Lots\By\Product\Id\Get */
-    protected $_get;
+    protected $repoGetLots;
     /** @var \Praxigento\Warehouse\Service\QtyDistributor\Register\A\Sale\Item\Qty */
-    private $_qty;
+    private $subQtyReg;
 
     public function __construct(
-        \Praxigento\Warehouse\Repo\Query\Lots\By\Product\Id\Get $get,
-        \Praxigento\Warehouse\Service\QtyDistributor\Register\A\Sale\Item\Qty $qty
+        \Praxigento\Warehouse\Repo\Query\Lots\By\Product\Id\Get $repoGetLots,
+        \Praxigento\Warehouse\Service\QtyDistributor\Register\A\Sale\Item\Qty $subQtyReg
     )
     {
-        $this->_get = $get;
-        $this->_qty = $qty;
+        $this->repoGetLots = $repoGetLots;
+        $this->subQtyReg = $subQtyReg;
     }
 
     /**
@@ -41,14 +41,14 @@ class SaleItem
         $qty = $request->getQuantity();
         if ($qty > 0) {
             /* get list of lots for the product */
-            $query = $this->_get->build();
+            $query = $this->repoGetLots->build();
             $conn = $query->getConnection();
             $bind = [
                 AGet::BND_PROD_ID => $prodId,
                 AGet::BND_STOCK_ID => $stockId
             ];
             $lots = $conn->fetchAll($query, $bind);
-            $this->_qty->exec($itemId, $qty, $lots);
+            $this->subQtyReg->exec($itemId, $qty, $lots);
         }
         $result->markSucceed();
         return $result;
