@@ -128,6 +128,13 @@
                 sortOrder="600" disabled="false"/>
     </type>
 
+    <!-- Return products to inventory on order cancellation. -->
+    <type name="Magento\Sales\Model\Service\OrderService">
+        <plugin name="praxigento_warehouse_plugin"
+                type="Praxigento\Warehouse\Plugin\Sales\Model\Service\OrderService"
+                sortOrder="600" disabled="false"/>
+    </type>
+
     <type name="Magento\Store\Model\Store">
         <!-- Replace Magento base currency by warehouse currency -->
         <plugin name="praxigento_warehouse_plugin"
