@@ -36,6 +36,7 @@ class OrderService
         if ($result === true) {
             $req = new ARequest();
             $req->setSaleId($id);
+            $req->setCleanDb(true);
             $resp = $this->servSaleDelete->exec($req);
         }
         return $result;

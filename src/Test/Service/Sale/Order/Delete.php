@@ -20,6 +20,7 @@ class Delete
         $this->setAreaCode();
         $req = new ARequest();
         $req->setSaleId(5);
+        $req->setCleanDb(true);
         /** @var AService $serv */
         $serv = $this->manObj->get(AService::class);
         $def = $this->manTrans->begin();

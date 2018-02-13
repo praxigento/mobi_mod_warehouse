@@ -7,6 +7,8 @@
 namespace Praxigento\Warehouse\Service\Sale\Order;
 
 use Praxigento\Core\App\Repo\Query\Expression as AnExpression;
+use Praxigento\Pv\Repo\Entity\Data\Sale as EPvSale;
+use Praxigento\Pv\Repo\Entity\Data\Sale\Item as EPvSaleItem;
 use Praxigento\Warehouse\Config as Cfg;
 use Praxigento\Warehouse\Repo\Entity\Data\Quantity as EQty;
 use Praxigento\Warehouse\Repo\Entity\Data\Quantity\Sale as EQtySale;
@@ -27,6 +29,10 @@ class Delete
     private $repoGeneric;
     /** \Magento\Sales\Api\OrderRepositoryInterface */
     private $repoOrder;
+    /** @var \Praxigento\Pv\Repo\Entity\Sale */
+    private $repoPvSale;
+    /** @var \Praxigento\Pv\Repo\Entity\Sale\Item */
+    private $repoPvSaleItem;
     /** @var \Praxigento\Warehouse\Repo\Entity\Quantity */
     private $repoQty;
     /** @var \Praxigento\Warehouse\Repo\Entity\Quantity\Sale */
@@ -35,6 +41,8 @@ class Delete
     public function __construct(
         \Magento\Sales\Api\OrderRepositoryInterface $repoOrder,
         \Praxigento\Core\App\Repo\IGeneric $repoGeneric,
+        \Praxigento\Pv\Repo\Entity\Sale $repoPvSale,
+        \Praxigento\Pv\Repo\Entity\Sale\Item $repoPvSaleItem,
         \Praxigento\Warehouse\Repo\Entity\Quantity $repoQty,
         \Praxigento\Warehouse\Repo\Entity\Quantity\Sale $repoQtySale,
         \Praxigento\Warehouse\Api\Helper\Stock $hlpStock,
@@ -42,6 +50,8 @@ class Delete
     ) {
         $this->repoOrder = $repoOrder;
         $this->repoGeneric = $repoGeneric;
+        $this->repoPvSale = $repoPvSale;
+        $this->repoPvSaleItem = $repoPvSaleItem;
         $this->repoQty = $repoQty;
         $this->repoQtySale = $repoQtySale;
         $this->hlpStock = $hlpStock;
@@ -58,6 +68,7 @@ class Delete
         /** define local working data */
         assert($request instanceof ARequest);
         $saleId = $request->getSaleId();
+        $cleanDb = $request->getCleanDb();
 
         /** perform processing */
         /** @var \Magento\Sales\Api\Data\OrderInterface $sale */
@@ -85,6 +96,20 @@ class Delete
                 /* return qty summary to Magento inventory */
                 $this->returnQtyToCatalogInventory($stockItemId, $qtyTotal);
                 $this->returnQtyToCatalogInventoryStatus($prodId, $stockId, $qtyTotal);
+                if ($cleanDb) {
+                    /* delete item from prxgt_wrhs_qty_sale */
+                    $this->removeSaleItemQty($saleItemId);
+                    /* this code should be moved into PV module */
+                    $this->removeSaleItemPv($saleItemId);
+                    /* delete sale order item (we can remove all items by one stmt using saleId) */
+                    $this->removeSaleItem($saleItemId);
+                }
+            }
+            /* delete sale order from DB */
+            if ($cleanDb) {
+                /* TODO: move PV related stuff to PV module */
+                $this->removeSalePv($saleId);
+                $this->removeSale($saleId);
             }
         }
         /** compose result */
@@ -121,6 +146,38 @@ class Delete
         ];
         $result = $conn->fetchOne($query, $bind);
         return $result;
+    }
+
+    private function removeSale($saleId)
+    {
+        $entity = Cfg::ENTITY_MAGE_SALES_ORDER;
+        $id = [Cfg::E_SALE_ORDER_A_ENTITY_ID => $saleId];
+        $this->repoGeneric->deleteEntityByPk($entity, $id);
+    }
+
+    private function removeSaleItem($saleItemId)
+    {
+        $entity = Cfg::ENTITY_MAGE_SALES_ORDER_ITEM;
+        $id = [Cfg::E_SALE_ORDER_ITEM_A_ITEM_ID => $saleItemId];
+        $this->repoGeneric->deleteEntityByPk($entity, $id);
+    }
+
+    private function removeSaleItemPv($saleItemId)
+    {
+        $where = EPvSaleItem::ATTR_ITEM_REF . '=' . (int)$saleItemId;
+        $this->repoPvSaleItem->delete($where);
+    }
+
+    private function removeSaleItemQty($saleItemId)
+    {
+        $where = EQtySale::ATTR_SALE_ITEM_REF . '=' . (int)$saleItemId;
+        $this->repoQtySale->delete($where);
+    }
+
+    private function removeSalePv($saleId)
+    {
+        $where = EPvSale::ATTR_SALE_REF . '=' . (int)$saleId;
+        $this->repoPvSale->delete($where);
     }
 
     private function returnQtyToCatalogInventory($stockItemId, $qty)
