@@ -22,7 +22,9 @@ class Delete
         $req->setSaleId(5);
         /** @var AService $serv */
         $serv = $this->manObj->get(AService::class);
+        $def = $this->manTrans->begin();
         $resp = $serv->exec($req);
+        $this->manTrans->rollback($def);
         $this->assertInstanceOf(AResponse::class, $resp);
     }
 }

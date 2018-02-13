@@ -5,6 +5,8 @@
 
 namespace Praxigento\Warehouse\Repo\Entity\Quantity;
 
+use Praxigento\Warehouse\Repo\Entity\Data\Quantity\Sale as Entity;
+
 class Sale extends \Praxigento\Core\App\Repo\Def\Entity
 {
 
@@ -12,7 +14,7 @@ class Sale extends \Praxigento\Core\App\Repo\Def\Entity
         \Magento\Framework\App\ResourceConnection $resource,
         \Praxigento\Core\App\Repo\IGeneric $repoGeneric
     ) {
-        parent::__construct($resource, $repoGeneric, \Praxigento\Warehouse\Repo\Entity\Data\Quantity\Sale::class);
+        parent::__construct($resource, $repoGeneric, Entity::class);
     }
 
 }
