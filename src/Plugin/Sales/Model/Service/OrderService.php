@@ -10,6 +10,8 @@ use Praxigento\Warehouse\Service\Sale\Order\Delete\Request as ARequest;
 
 class OrderService
 {
+    /** @var \Praxigento\Warehouse\Helper\Config */
+    private $hlpConfig;
     /** @var \Praxigento\Core\App\Transaction\Database\IManager */
     private $manTrans;
     /** @var \Praxigento\Warehouse\Service\Sale\Order\Delete */
@@ -17,9 +19,11 @@ class OrderService
 
     public function __construct(
         \Praxigento\Core\App\Transaction\Database\IManager $manTrans,
+        \Praxigento\Warehouse\Helper\Config $hlpConfig,
         \Praxigento\Warehouse\Service\Sale\Order\Delete $servSaleDelete
     ) {
         $this->manTrans = $manTrans;
+        $this->hlpConfig = $hlpConfig;
         $this->servSaleDelete = $servSaleDelete;
     }
 
@@ -42,7 +46,8 @@ class OrderService
             if ($result === true) {
                 $req = new ARequest();
                 $req->setSaleId($id);
-                $req->setCleanDb(true);
+                $deleteSales = $this->hlpConfig->getSalesGeneralDeleteCancelled();
+                $req->setCleanDb($deleteSales);
                 $this->servSaleDelete->exec($req);
             }
             $this->manTrans->commit($def);

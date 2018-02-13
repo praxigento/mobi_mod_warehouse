@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<config
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="praxigento_sales">
+            <group id="general">
+                <field id="delete_cancelled" translate="label comment" type="select"
+                       sortOrder="100" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Delete Cancelled Sales</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Delete sales orders on 'Cancel' button or just return products to warehouses.</comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
