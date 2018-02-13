@@ -109,6 +109,7 @@ class Delete
             if ($cleanDb) {
                 /* TODO: move PV related stuff to PV module */
                 $this->removeSalePv($saleId);
+                $this->removeSaleGrid($saleId);
                 $this->removeSale($saleId);
             }
         }
@@ -152,6 +153,13 @@ class Delete
     {
         $entity = Cfg::ENTITY_MAGE_SALES_ORDER;
         $id = [Cfg::E_SALE_ORDER_A_ENTITY_ID => $saleId];
+        $this->repoGeneric->deleteEntityByPk($entity, $id);
+    }
+
+    private function removeSaleGrid($saleId)
+    {
+        $entity = Cfg::ENTITY_MAGE_SALES_ORDER_GRID;
+        $id = [Cfg::E_SALE_ORDER_GRID_A_ENTITY_ID => $saleId];
         $this->repoGeneric->deleteEntityByPk($entity, $id);
     }
 
