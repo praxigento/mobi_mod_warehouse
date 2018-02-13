@@ -10,31 +10,27 @@
     <preference for="Praxigento\Warehouse\Repo\Agg\IWarehouse"
             type="Praxigento\Warehouse\Repo\Agg\Def\Warehouse"/>
 
-    <!-- Repos: Entities -->
-    <!-- MOBI-805 # Remove repo interfaces and use implementations only -->
-
-    <!-- Services -->
 
     <!-- ******* -->
     <!-- Plugins -->
     <!-- ******* -->
     <type name="\Magento\Catalog\Model\Product\Type\Price">
         <!-- Replace product regular price by warehouse group price or warehouse price -->
-        <plugin name="praxigento_warehouse_plugin"
+        <plugin name="prxgt_wrhs_plugin"
                 type="\Praxigento\Warehouse\Plugin\Catalog\Model\Product\Type\Price"
                 sortOrder="600" disabled="false"/>
     </type>
 
     <type name="Magento\Catalog\Model\ResourceModel\Product\Collection">
         <!-- Enable order &filter for additional fields ('qty' override) in products collection -->
-        <plugin name="praxigento_warehouse_plugin"
+        <plugin name="prxgt_wrhs_plugin"
                 type="Praxigento\Warehouse\Plugin\Catalog\Model\ResourceModel\Product\Collection"
                 sortOrder="600" disabled="false"/>
     </type>
 
     <type name="Magento\Catalog\Model\ResourceModel\Product">
         <!-- Replace product price (retail) by warehouse/group price -->
-        <plugin name="praxigento_warehouse_plugin"
+        <plugin name="prxgt_wrhs_plugin"
                 type="Praxigento\Warehouse\Plugin\Catalog\Model\ResourceModel\Product"
                 sortOrder="600" disabled="false"/>
     </type>
@@ -42,108 +38,108 @@
 
     <type name="Magento\Catalog\Model\Layer">
         <!-- Add warehouse group prices to collection for category view -->
-        <plugin name="praxigento_warehouse_plugin"
+        <plugin name="prxgt_wrhs_plugin"
                 type="\Praxigento\Warehouse\Plugin\Catalog\Model\Layer"
                 sortOrder="600" disabled="false"/>
     </type>
 
     <type name="Magento\CatalogInventory\Model\ResourceModel\Stock">
         <!-- Update stock qty when sale order is placed -->
-        <plugin name="praxigento_warehouse_plugin"
+        <plugin name="prxgt_wrhs_plugin"
                 type="Praxigento\Warehouse\Plugin\CatalogInventory\Model\ResourceModel\Stock"
                 sortOrder="600" disabled="false"/>
     </type>
 
     <type name="Magento\CatalogInventory\Model\ResourceModel\Stock\Status\Collection">
         <!-- Create composite primary key (MOBI-582) -->
-        <plugin name="praxigento_warehouse_plugin"
+        <plugin name="prxgt_wrhs_plugin"
                 type="Praxigento\Warehouse\Plugin\CatalogInventory\Model\ResourceModel\Stock\Status\Collection"
                 sortOrder="600" disabled="false"/>
     </type>
 
     <type name="Magento\CatalogInventory\Model\ResourceModel\Stock\Status">
         <!-- Switch stockId for products collections (MOBI-311) -->
-        <plugin name="praxigento_warehouse_plugin"
+        <plugin name="prxgt_wrhs_plugin"
                 type="Praxigento\Warehouse\Plugin\CatalogInventory\Model\ResourceModel\Stock\Status"
                 sortOrder="600" disabled="false"/>
     </type>
 
     <type name="Magento\CatalogInventory\Model\Stock\Item">
         <!-- Disable default stock item ID if stock ID is 'null'-->
-        <plugin name="praxigento_warehouse_plugin"
+        <plugin name="prxgt_wrhs_plugin"
                 type="Praxigento\Warehouse\Plugin\CatalogInventory\Model\Stock\Item"
                 sortOrder="600" disabled="false"/>
     </type>
     <type name="Magento\CatalogInventory\Model\Stock\Status">
         <!-- Composite primary key (MOBI-582) -->
-        <plugin name="praxigento_warehouse_plugin"
+        <plugin name="prxgt_wrhs_plugin"
                 type="Praxigento\Warehouse\Plugin\CatalogInventory\Model\Stock\Status"
                 sortOrder="600" disabled="false"/>
     </type>
 
     <type name="Magento\CatalogInventory\Model\StockManagement">
         <!-- Update qty on the order placement (MOBI-379) -->
-        <plugin name="praxigento_warehouse_plugin"
+        <plugin name="prxgt_wrhs_plugin"
                 type="Praxigento\Warehouse\Plugin\CatalogInventory\Model\StockManagement"
                 sortOrder="600" disabled="false"/>
     </type>
 
     <type name="Magento\CatalogInventory\Model\StockRegistry">
         <!-- Disable default stock item ID registration on product save -->
-        <plugin name="praxigento_warehouse_plugin"
+        <plugin name="prxgt_wrhs_plugin"
                 type="Praxigento\Warehouse\Plugin\CatalogInventory\Model\StockRegistry"
                 sortOrder="600" disabled="false"/>
     </type>
 
     <type name="Magento\CatalogInventory\Model\StockRegistryProvider">
         <!-- Detect current stock and select appropriate stock item -->
-        <plugin name="praxigento_warehouse_plugin"
+        <plugin name="prxgt_wrhs_plugin"
                 type="Praxigento\Warehouse\Plugin\CatalogInventory\Model\StockRegistryProvider"
                 sortOrder="600" disabled="false"/>
     </type>
 
     <type name="Magento\CatalogInventory\Ui\DataProvider\Product\AddQuantityFieldToCollection">
         <!-- Join 'cataloginventory_stock_item' & 'prxgt_wrhs_qty' tables to get totals for all lots/warehouses. -->
-        <plugin name="praxigento_warehouse_plugin"
+        <plugin name="prxgt_wrhs_plugin"
                 type="Praxigento\Warehouse\Plugin\CatalogInventory\Ui\DataProvider\Product\AddQuantityFieldToCollection"
                 sortOrder="600" disabled="false"/>
     </type>
 
     <type name="Magento\CatalogInventory\Ui\DataProvider\Product\AddQuantityFilterToCollection">
-        <plugin name="praxigento_warehouse_plugin"
+        <plugin name="prxgt_wrhs_plugin"
                 type="Praxigento\Warehouse\Plugin\CatalogInventory\Ui\DataProvider\Product\AddQuantityFilterToCollection"
                 sortOrder="600" disabled="false"/>
     </type>
 
     <type name="Magento\CatalogSearch\Model\Search\IndexBuilder">
-        <plugin name="praxigento_warehouse_plugin"
+        <plugin name="prxgt_wrhs_plugin"
                 type="Praxigento\Warehouse\Plugin\CatalogSearch\Model\Search\IndexBuilder"
                 sortOrder="600" disabled="false"/>
     </type>
 
-    <!-- Replace product price by warehouse group price before rendering. -->
     <type name="Magento\Sales\Block\Adminhtml\Order\Create\Search\Grid\Renderer\Product">
-        <plugin name="praxigento_warehouse_plugin"
+        <!-- Replace product price by warehouse group price before rendering. -->
+        <plugin name="prxgt_wrhs_plugin"
                 type="Praxigento\Warehouse\Plugin\Sales\Block\Adminhtml\Order\Create\Search\Grid\Renderer\Product"
                 sortOrder="600" disabled="false"/>
     </type>
 
-    <!-- Return products to inventory on order cancellation. -->
     <type name="Magento\Sales\Model\Service\OrderService">
-        <plugin name="praxigento_warehouse_plugin"
+        <!-- Return products to inventory on order cancellation. -->
+        <plugin name="prxgt_wrhs_plugin"
                 type="Praxigento\Warehouse\Plugin\Sales\Model\Service\OrderService"
                 sortOrder="600" disabled="false"/>
     </type>
 
     <type name="Magento\Store\Model\Store">
         <!-- Replace Magento base currency by warehouse currency -->
-        <plugin name="praxigento_warehouse_plugin"
+        <plugin name="prxgt_wrhs_plugin"
                 type="Praxigento\Warehouse\Plugin\Store\Model\Store"
                 sortOrder="600" disabled="false"/>
     </type>
 
     <type name="Magento\Tax\Model\Calculation">
-        <plugin name="praxigento_warehouse_plugin"
+        <plugin name="prxgt_wrhs_plugin"
                 type="Praxigento\Warehouse\Plugin\Tax\Model\Calculation"
                 sortOrder="600" disabled="false"/>
     </type>

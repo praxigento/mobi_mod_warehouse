@@ -7,8 +7,6 @@
 namespace Praxigento\Warehouse\Service\Sale\Order;
 
 use Praxigento\Core\App\Repo\Query\Expression as AnExpression;
-use Praxigento\Pv\Repo\Entity\Data\Sale as EPvSale;
-use Praxigento\Pv\Repo\Entity\Data\Sale\Item as EPvSaleItem;
 use Praxigento\Warehouse\Config as Cfg;
 use Praxigento\Warehouse\Repo\Entity\Data\Quantity as EQty;
 use Praxigento\Warehouse\Repo\Entity\Data\Quantity\Sale as EQtySale;
@@ -17,7 +15,7 @@ use Praxigento\Warehouse\Service\Sale\Order\Delete\Request as ARequest;
 use Praxigento\Warehouse\Service\Sale\Order\Delete\Response as AResponse;
 
 /**
- * Load cancelled order and return products to the inventory.
+ * Return products of the cancelled order to the inventory then remove sale order and items..
  */
 class Delete
 {
@@ -27,31 +25,23 @@ class Delete
     private $qbGetStockItem;
     /** @var \Praxigento\Core\App\Repo\IGeneric */
     private $repoGeneric;
-    /** \Magento\Sales\Api\OrderRepositoryInterface */
-    private $repoOrder;
-    /** @var \Praxigento\Pv\Repo\Entity\Sale */
-    private $repoPvSale;
-    /** @var \Praxigento\Pv\Repo\Entity\Sale\Item */
-    private $repoPvSaleItem;
     /** @var \Praxigento\Warehouse\Repo\Entity\Quantity */
     private $repoQty;
     /** @var \Praxigento\Warehouse\Repo\Entity\Quantity\Sale */
     private $repoQtySale;
+    /** \Magento\Sales\Api\OrderRepositoryInterface */
+    private $repoSaleOrder;
 
     public function __construct(
-        \Magento\Sales\Api\OrderRepositoryInterface $repoOrder,
+        \Magento\Sales\Api\OrderRepositoryInterface $repoSaleOrder,
         \Praxigento\Core\App\Repo\IGeneric $repoGeneric,
-        \Praxigento\Pv\Repo\Entity\Sale $repoPvSale,
-        \Praxigento\Pv\Repo\Entity\Sale\Item $repoPvSaleItem,
         \Praxigento\Warehouse\Repo\Entity\Quantity $repoQty,
         \Praxigento\Warehouse\Repo\Entity\Quantity\Sale $repoQtySale,
         \Praxigento\Warehouse\Api\Helper\Stock $hlpStock,
         OwnQbGetStockItem $qbGetStockItem
     ) {
-        $this->repoOrder = $repoOrder;
+        $this->repoSaleOrder = $repoSaleOrder;
         $this->repoGeneric = $repoGeneric;
-        $this->repoPvSale = $repoPvSale;
-        $this->repoPvSaleItem = $repoPvSaleItem;
         $this->repoQty = $repoQty;
         $this->repoQtySale = $repoQtySale;
         $this->hlpStock = $hlpStock;
@@ -72,7 +62,7 @@ class Delete
 
         /** perform processing */
         /** @var \Magento\Sales\Api\Data\OrderInterface $sale */
-        $sale = $this->repoOrder->get($saleId);
+        $sale = $this->repoSaleOrder->get($saleId);
         if ($sale) {
             $storeId = $sale->getStoreId();
             $stockId = $this->hlpStock->getStockIdByStoreId($storeId);
@@ -99,22 +89,19 @@ class Delete
                 if ($cleanDb) {
                     /* delete item from prxgt_wrhs_qty_sale */
                     $this->removeSaleItemQty($saleItemId);
-                    /* this code should be moved into PV module */
-                    $this->removeSaleItemPv($saleItemId);
                     /* delete sale order item (we can remove all items by one stmt using saleId) */
                     $this->removeSaleItem($saleItemId);
                 }
             }
             /* delete sale order from DB */
             if ($cleanDb) {
-                /* TODO: move PV related stuff to PV module */
-                $this->removeSalePv($saleId);
                 $this->removeSaleGrid($saleId);
                 $this->removeSale($saleId);
             }
         }
         /** compose result */
         $result = new AResponse();
+        $result->isSucceed();
         return $result;
     }
 
@@ -170,22 +157,10 @@ class Delete
         $this->repoGeneric->deleteEntityByPk($entity, $id);
     }
 
-    private function removeSaleItemPv($saleItemId)
-    {
-        $where = EPvSaleItem::ATTR_ITEM_REF . '=' . (int)$saleItemId;
-        $this->repoPvSaleItem->delete($where);
-    }
-
     private function removeSaleItemQty($saleItemId)
     {
         $where = EQtySale::ATTR_SALE_ITEM_REF . '=' . (int)$saleItemId;
         $this->repoQtySale->delete($where);
-    }
-
-    private function removeSalePv($saleId)
-    {
-        $where = EPvSale::ATTR_SALE_REF . '=' . (int)$saleId;
-        $this->repoPvSale->delete($where);
     }
 
     private function returnQtyToCatalogInventory($stockItemId, $qty)
