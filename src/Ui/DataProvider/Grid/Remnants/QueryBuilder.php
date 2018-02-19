@@ -81,7 +81,7 @@ class QueryBuilder
         $tbl = $this->resource->getTableName(Cfg::ENTITY_MAGE_CATALOGINVENTORY_STOCK_ITEM);
         $as = $asCatInvStock;
         $cols = [
-            self::A_PRODUCT_ID => Cfg::E_PRODUCT_A_ENTITY_ID
+            // ref table
         ];
         $cond = $as . '.' . Cfg::E_CATINV_STOCK_ITEM_A_PROD_ID . '=' . $asCatProd . '.' . Cfg::E_PRODUCT_A_ENTITY_ID;
         $result->joinLeft([$as => $tbl], $cond, $cols);
