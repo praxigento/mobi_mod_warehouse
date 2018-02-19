@@ -6,6 +6,7 @@
             <resource id="Magento_Backend::admin">
                 <resource id="Magento_Catalog::catalog">
                     <resource id="Magento_Catalog::catalog_inventory">
+                        <resource id="Praxigento_Warehouse::catalog_remnants" title="Remnants" sortOrder="60"/>
                         <resource id="Praxigento_Warehouse::catalog_lots" title="Lots" sortOrder="70"/>
                         <resource id="Praxigento_Warehouse::catalog_warehouses" title="Warehouses" sortOrder="80"/>
                     </resource>

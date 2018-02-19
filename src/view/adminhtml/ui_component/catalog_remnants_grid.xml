@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+
+    <!-- **************************************************** -->
+    <!-- Data loader (???) -->
+    <!-- **************************************************** -->
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">catalog_remnants_grid.catalog_remnants_grid_data_source</item>
+            <item name="deps" xsi:type="string">catalog_remnants_grid.catalog_remnants_grid_data_source</item>
+        </item>
+        <item name="spinner" xsi:type="string">catalog_remnants_columns</item>
+    </argument>
+
+    <!-- **************************************************** -->
+    <!-- Data Source definition -->
+    <!-- **************************************************** -->
+    <dataSource name="catalog_remnants_grid_data_source">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">\Praxigento\Core\App\Ui\DataProvider\Grid\Base</argument>
+            <argument name="name" xsi:type="string">catalog_remnants_grid_data_source</argument>
+            <argument name="gridQueryBuilder"
+                      xsi:type="object">\Praxigento\Warehouse\Ui\DataProvider\Grid\Remnants\QueryBuilder
+            </argument>
+        </argument>
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/grid/provider</item>
+            </item>
+        </argument>
+    </dataSource>
+    <container name="listing_top">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="template" xsi:type="string">ui/grid/toolbar</item>
+            </item>
+        </argument>
+        <bookmark name="bookmarks">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="storageConfig" xsi:type="array">
+                        <item name="namespace" xsi:type="string">catalog_remnants_grid</item>
+                    </item>
+                </item>
+            </argument>
+        </bookmark>
+        <component name="columns_controls">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="columnsData" xsi:type="array">
+                        <item name="provider"
+                              xsi:type="string">catalog_remnants_grid.catalog_remnants_grid.catalog_remnants_columns
+                        </item>
+                    </item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/controls/columns</item>
+                    <item name="displayArea" xsi:type="string">dataGridActions</item>
+                </item>
+            </argument>
+        </component>
+        <filters name="listing_filters">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="columnsProvider"
+                          xsi:type="string">catalog_remnants_grid.catalog_remnants_grid.catalog_remnants_columns
+                    </item>
+                    <item name="storageConfig" xsi:type="array">
+                        <item name="provider"
+                              xsi:type="string">catalog_remnants_grid.catalog_remnants_grid.listing_top.bookmarks
+                        </item>
+                        <item name="namespace" xsi:type="string">current.filters</item>
+                    </item>
+                    <item name="childDefaults" xsi:type="array">
+                        <item name="provider"
+                              xsi:type="string">catalog_remnants_grid.catalog_remnants_grid.listing_top.listing_filters
+                        </item>
+                        <item name="imports" xsi:type="array">
+                            <item name="visible"
+                                  xsi:type="string">catalog_remnants_grid.catalog_remnants_grid.catalog_remnants_columns.${ $.index }:visible
+                            </item>
+                        </item>
+                    </item>
+                </item>
+            </argument>
+        </filters>
+        <paging name="listing_paging">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="storageConfig" xsi:type="array">
+                        <item name="provider"
+                              xsi:type="string">catalog_remnants_grid.catalog_remnants_grid.listing_top.bookmarks
+                        </item>
+                        <item name="namespace" xsi:type="string">current.paging</item>
+                    </item>
+                    <item name="selectProvider"
+                          xsi:type="string">catalog_remnants_grid.catalog_remnants_grid.catalog_remnants_columns.ids
+                    </item>
+                </item>
+            </argument>
+        </paging>
+    </container>
+
+    <!-- **************************************************** -->
+    <!-- Grid Columns -->
+    <!-- **************************************************** -->
+    <columns name="catalog_remnants_columns">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="storageConfig" xsi:type="array">
+                    <item name="provider"
+                          xsi:type="string">catalog_remnants_grid.catalog_remnants_grid.listing_top.bookmarks
+                    </item>
+                    <item name="namespace" xsi:type="string">current</item>
+                </item>
+                <item name="childDefaults" xsi:type="array">
+                    <item name="storageConfig" xsi:type="array">
+                        <item name="provider"
+                              xsi:type="string">catalog_remnants_grid.catalog_remnants_grid.listing_top.bookmarks
+                        </item>
+                        <item name="root" xsi:type="string">columns.${ $.index }</item>
+                        <item name="namespace" xsi:type="string">current.${ $.storageConfig.root}</item>
+                    </item>
+                </item>
+            </item>
+        </argument>
+
+        <column name="productId">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">number</item>
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="sorting" xsi:type="string">asc</item>
+                    <item name="label" xsi:type="string" translate="true">Product Id</item>
+                </item>
+            </argument>
+        </column>
+        <column name="sku">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">SKU</item>
+                </item>
+            </argument>
+        </column>
+        <column name="wrhsId">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Warehouse Id</item>
+                </item>
+            </argument>
+        </column>
+        <column name="wrhsCode">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Warehouse Code</item>
+                </item>
+            </argument>
+        </column>
+        <column name="wrhsPrice">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">price</item>
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="label" xsi:type="string" translate="true">Warehouse Price</item>
+                </item>
+            </argument>
+        </column>
+        <column name="wrhsCur">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Warehouse Currency</item>
+                </item>
+            </argument>
+        </column>
+        <column name="lotCode">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Lot Code</item>
+                </item>
+            </argument>
+        </column>
+        <column name="dateExp">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Date Expiration</item>
+                </item>
+            </argument>
+        </column>
+        <column name="qty">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">number</item>
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="label" xsi:type="string" translate="true">Qty</item>
+                </item>
+            </argument>
+        </column>
+    </columns>
+</listing>
