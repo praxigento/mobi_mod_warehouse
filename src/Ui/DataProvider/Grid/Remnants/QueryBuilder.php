@@ -15,29 +15,27 @@ use Praxigento\Warehouse\Repo\Entity\Data\Warehouse as EWarehouse;
 class QueryBuilder
     extends \Praxigento\Core\App\Ui\DataProvider\Grid\Query\Builder
 {
-    const AS_CATALOG_INVENTORY_STOCK_ITEM = 'cist';
     /**#@+ Tables aliases for external usage ('camelCase' naming) */
+    const AS_CATALOG_INVENTORY_STOCK_ITEM = 'cist';
     const AS_CATALOG_PRODUCT_ENTITY = 'cpe';
     const AS_PRXGT_WRHS_LOT = 'pwl';
     const AS_PRXGT_WRHS_QTY = 'pwq';
     const AS_PRXGT_WRHS_STOCK_ITEM = 'pwsi';
     const AS_PRXGT_WRHS_WRHS = 'pww';
     /**#@- */
+    /**#@+
+     * Aliases for data attributes.
+     */
     const A_CURRENCY = 'wrhsCur';
     const A_EXP_DATE = 'dateExp';
     const A_LOT_CODE = 'lotCode';
     const A_PRICE = 'wrhsPrice';
-    /**#@+
-     * Aliases for data attributes.
-     */
     const A_PRODUCT_ID = 'productId';
     const A_SKU = 'sku';
     const A_STOCK_REF = 'wrhsId';
     const A_TOTAL = 'qty';
     const A_WRHS_CODE = 'wrhsCode';
-
     /**#@- */
-
 
     protected function getMapper()
     {
