@@ -23,5 +23,12 @@
              parent="Magento_Catalog::inventory"
              action="catalog/warehouses"
              resource="Praxigento_Warehouse::catalog_warehouses"/>
+        <add id="Praxigento_Warehouse::catalog_group_prices"
+             title="Group Prices"
+             module="Praxigento_Warehouse"
+             sortOrder="90"
+             parent="Magento_Catalog::inventory"
+             action="catalog/group_prices"
+             resource="Praxigento_Warehouse::catalog_group_prices"/>
     </menu>
 </config>

@@ -9,6 +9,7 @@
                         <resource id="Praxigento_Warehouse::catalog_remnants" title="Remnants" sortOrder="60"/>
                         <resource id="Praxigento_Warehouse::catalog_lots" title="Lots" sortOrder="70"/>
                         <resource id="Praxigento_Warehouse::catalog_warehouses" title="Warehouses" sortOrder="80"/>
+                        <resource id="Praxigento_Warehouse::catalog_group_prices" title="Group Prices" sortOrder="90"/>
                     </resource>
                 </resource>
             </resource>
