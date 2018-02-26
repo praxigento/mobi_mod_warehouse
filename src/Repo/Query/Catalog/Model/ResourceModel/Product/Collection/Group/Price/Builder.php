@@ -77,13 +77,13 @@ class Builder
         $cols = [];
         $query->{$mJoin}([$as => $tbl], $on, $cols);
 
-        /* LEFT JOIN prxgt_wrhs_group_price */
+        /* INNER/LEFT JOIN prxgt_wrhs_group_price */
         $tbl = $this->resource->getTableName(EGroupPrice::ENTITY_NAME);
         $as = $asPrice;
         $on = $asPrice . '.' . EGroupPrice::ATTR_STOCK_ITEM_REF . '=' . $asInvItem . '.' . Cfg::E_CATINV_STOCK_ITEM_A_ITEM_ID;
         $on .= " AND ($asPrice." . EGroupPrice::ATTR_CUST_GROUP_REF . '=' . (int)$custGroupId . ')';
         $cols = [self::A_PRICE => EGroupPrice::ATTR_PRICE];
-        $query->joinLeft([$as => $tbl], $on, $cols);
+        $query->{$mJoin}([$as => $tbl], $on, $cols);
 
         /* result */
         return $query;
