@@ -67,13 +67,13 @@ class Builder
         if ($quoteCustGroupId) {
             $custGroupId = $quoteCustGroupId;
         }
-        /* INNER JOIN cataloginventory_stock_item */
+        /* LEFT JOIN cataloginventory_stock_item */
         $tbl = $this->resource->getTableName(Cfg::ENTITY_MAGE_CATALOGINVENTORY_STOCK_ITEM);
         $as = $asInvItem;
         $on = $asInvItem . '.' . Cfg::E_CATINV_STOCK_ITEM_A_PROD_ID . '=' . $asMain . '.' . Cfg::E_PRODUCT_A_ENTITY_ID;
         $on .= " AND ($asInvItem." . Cfg::E_CATINV_STOCK_ITEM_A_STOCK_ID . '=' . (int)$stockId . ')';
         $cols = [];
-        $query->join([$as => $tbl], $on, $cols);
+        $query->joinLeft([$as => $tbl], $on, $cols);
 
         /* LEFT JOIN prxgt_wrhs_group_price */
         $tbl = $this->resource->getTableName(EGroupPrice::ENTITY_NAME);
@@ -81,7 +81,7 @@ class Builder
         $on = $asPrice . '.' . EGroupPrice::ATTR_STOCK_ITEM_REF . '=' . $asInvItem . '.' . Cfg::E_CATINV_STOCK_ITEM_A_ITEM_ID;
         $on .= " AND ($asPrice." . EGroupPrice::ATTR_CUST_GROUP_REF . '=' . (int)$custGroupId . ')';
         $cols = [self::A_PRICE => EGroupPrice::ATTR_PRICE];
-        $query->join([$as => $tbl], $on, $cols);
+        $query->joinLeft([$as => $tbl], $on, $cols);
 
         /* result */
         return $query;
