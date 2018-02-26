@@ -57,9 +57,11 @@ class Builder
         if ($storeId) {
             /* backend mode */
             $stockId = $this->manStock->getStockIdByStoreId($storeId);
+            $mJoin = 'joinInner';
         } else {
             /* frontend mode */
             $stockId = $this->manStock->getCurrentStockId();
+            $mJoin = 'joinLeft';
         }
         $custGroupId = $this->modSession->getCustomerGroupId();
         $quote = $this->modQuoteSession->getQuote();
@@ -67,13 +69,13 @@ class Builder
         if ($quoteCustGroupId) {
             $custGroupId = $quoteCustGroupId;
         }
-        /* LEFT JOIN cataloginventory_stock_item */
+        /* INNER/LEFT JOIN cataloginventory_stock_item */
         $tbl = $this->resource->getTableName(Cfg::ENTITY_MAGE_CATALOGINVENTORY_STOCK_ITEM);
         $as = $asInvItem;
         $on = $asInvItem . '.' . Cfg::E_CATINV_STOCK_ITEM_A_PROD_ID . '=' . $asMain . '.' . Cfg::E_PRODUCT_A_ENTITY_ID;
         $on .= " AND ($asInvItem." . Cfg::E_CATINV_STOCK_ITEM_A_STOCK_ID . '=' . (int)$stockId . ')';
         $cols = [];
-        $query->joinLeft([$as => $tbl], $on, $cols);
+        $query->{$mJoin}([$as => $tbl], $on, $cols);
 
         /* LEFT JOIN prxgt_wrhs_group_price */
         $tbl = $this->resource->getTableName(EGroupPrice::ENTITY_NAME);
