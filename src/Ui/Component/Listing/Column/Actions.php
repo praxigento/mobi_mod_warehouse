@@ -11,7 +11,7 @@ namespace Praxigento\Warehouse\Ui\Component\Listing\Column;
 class Actions
     extends \Magento\Ui\Component\Listing\Columns\Column
 {
-    const A_PRODUCT_ID = \Praxigento\Warehouse\Ui\DataProvider\Grid\Remnants\QueryBuilder::A_PRODUCT_ID;
+    const A_PRODUCT_ID = \Praxigento\Warehouse\Ui\DataProvider\Grid\Inventory\QueryBuilder::A_PRODUCT_ID;
     /**
      * @var \Magento\Framework\UrlInterface
      */

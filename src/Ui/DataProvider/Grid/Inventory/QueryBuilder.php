@@ -4,7 +4,7 @@
  * File creator: makhovdmitrii@inbox.ru
  */
 
-namespace Praxigento\Warehouse\Ui\DataProvider\Grid\Remnants;
+namespace Praxigento\Warehouse\Ui\DataProvider\Grid\Inventory;
 
 use Praxigento\Warehouse\Config as Cfg;
 use Praxigento\Warehouse\Repo\Entity\Data\Lot as ELot;

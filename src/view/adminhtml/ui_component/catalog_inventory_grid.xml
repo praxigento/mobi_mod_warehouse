@@ -7,21 +7,21 @@
     <!-- **************************************************** -->
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
-            <item name="provider" xsi:type="string">catalog_remnants_grid.catalog_remnants_grid_data_source</item>
-            <item name="deps" xsi:type="string">catalog_remnants_grid.catalog_remnants_grid_data_source</item>
+            <item name="provider" xsi:type="string">catalog_inventory_grid.catalog_inventory_grid_data_source</item>
+            <item name="deps" xsi:type="string">catalog_inventory_grid.catalog_inventory_grid_data_source</item>
         </item>
-        <item name="spinner" xsi:type="string">catalog_remnants_columns</item>
+        <item name="spinner" xsi:type="string">catalog_inventory_columns</item>
     </argument>
 
     <!-- **************************************************** -->
     <!-- Data Source definition -->
     <!-- **************************************************** -->
-    <dataSource name="catalog_remnants_grid_data_source">
+    <dataSource name="catalog_inventory_grid_data_source">
         <argument name="dataProvider" xsi:type="configurableObject">
             <argument name="class" xsi:type="string">\Praxigento\Core\App\Ui\DataProvider\Grid\Base</argument>
-            <argument name="name" xsi:type="string">catalog_remnants_grid_data_source</argument>
+            <argument name="name" xsi:type="string">catalog_inventory_grid_data_source</argument>
             <argument name="gridQueryBuilder"
-                      xsi:type="object">\Praxigento\Warehouse\Ui\DataProvider\Grid\Remnants\QueryBuilder
+                      xsi:type="object">\Praxigento\Warehouse\Ui\DataProvider\Grid\Inventory\QueryBuilder
             </argument>
         </argument>
         <argument name="data" xsi:type="array">
@@ -40,7 +40,7 @@
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="storageConfig" xsi:type="array">
-                        <item name="namespace" xsi:type="string">catalog_remnants_grid</item>
+                        <item name="namespace" xsi:type="string">catalog_inventory_grid</item>
                     </item>
                 </item>
             </argument>
@@ -50,7 +50,7 @@
                 <item name="config" xsi:type="array">
                     <item name="columnsData" xsi:type="array">
                         <item name="provider"
-                              xsi:type="string">catalog_remnants_grid.catalog_remnants_grid.catalog_remnants_columns
+                              xsi:type="string">catalog_inventory_grid.catalog_inventory_grid.catalog_inventory_columns
                         </item>
                     </item>
                     <item name="component" xsi:type="string">Magento_Ui/js/grid/controls/columns</item>
@@ -62,21 +62,21 @@
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="columnsProvider"
-                          xsi:type="string">catalog_remnants_grid.catalog_remnants_grid.catalog_remnants_columns
+                          xsi:type="string">catalog_inventory_grid.catalog_inventory_grid.catalog_inventory_columns
                     </item>
                     <item name="storageConfig" xsi:type="array">
                         <item name="provider"
-                              xsi:type="string">catalog_remnants_grid.catalog_remnants_grid.listing_top.bookmarks
+                              xsi:type="string">catalog_inventory_grid.catalog_inventory_grid.listing_top.bookmarks
                         </item>
                         <item name="namespace" xsi:type="string">current.filters</item>
                     </item>
                     <item name="childDefaults" xsi:type="array">
                         <item name="provider"
-                              xsi:type="string">catalog_remnants_grid.catalog_remnants_grid.listing_top.listing_filters
+                              xsi:type="string">catalog_inventory_grid.catalog_inventory_grid.listing_top.listing_filters
                         </item>
                         <item name="imports" xsi:type="array">
                             <item name="visible"
-                                  xsi:type="string">catalog_remnants_grid.catalog_remnants_grid.catalog_remnants_columns.${ $.index }:visible
+                                  xsi:type="string">catalog_inventory_grid.catalog_inventory_grid.catalog_inventory_columns.${ $.index }:visible
                             </item>
                         </item>
                     </item>
@@ -88,12 +88,12 @@
                 <item name="config" xsi:type="array">
                     <item name="storageConfig" xsi:type="array">
                         <item name="provider"
-                              xsi:type="string">catalog_remnants_grid.catalog_remnants_grid.listing_top.bookmarks
+                              xsi:type="string">catalog_inventory_grid.catalog_inventory_grid.listing_top.bookmarks
                         </item>
                         <item name="namespace" xsi:type="string">current.paging</item>
                     </item>
                     <item name="selectProvider"
-                          xsi:type="string">catalog_remnants_grid.catalog_remnants_grid.catalog_remnants_columns.ids
+                          xsi:type="string">catalog_inventory_grid.catalog_inventory_grid.catalog_inventory_columns.ids
                     </item>
                 </item>
             </argument>
@@ -103,19 +103,19 @@
     <!-- **************************************************** -->
     <!-- Grid Columns -->
     <!-- **************************************************** -->
-    <columns name="catalog_remnants_columns">
+    <columns name="catalog_inventory_columns">
         <argument name="data" xsi:type="array">
             <item name="config" xsi:type="array">
                 <item name="storageConfig" xsi:type="array">
                     <item name="provider"
-                          xsi:type="string">catalog_remnants_grid.catalog_remnants_grid.listing_top.bookmarks
+                          xsi:type="string">catalog_inventory_grid.catalog_inventory_grid.listing_top.bookmarks
                     </item>
                     <item name="namespace" xsi:type="string">current</item>
                 </item>
                 <item name="childDefaults" xsi:type="array">
                     <item name="storageConfig" xsi:type="array">
                         <item name="provider"
-                              xsi:type="string">catalog_remnants_grid.catalog_remnants_grid.listing_top.bookmarks
+                              xsi:type="string">catalog_inventory_grid.catalog_inventory_grid.listing_top.bookmarks
                         </item>
                         <item name="root" xsi:type="string">columns.${ $.index }</item>
                         <item name="namespace" xsi:type="string">current.${ $.storageConfig.root}</item>

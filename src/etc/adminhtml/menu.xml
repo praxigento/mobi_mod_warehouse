@@ -2,13 +2,13 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
     <menu>
-        <add id="Praxigento_Warehouse::catalog_remnants"
+        <add id="Praxigento_Warehouse::catalog_inventory"
              title="Inventory"
              module="Praxigento_Warehouse"
              sortOrder="60"
              parent="Magento_Catalog::inventory"
-             action="catalog/remnants"
-             resource="Praxigento_Warehouse::catalog_remnants"/>
+             action="catalog/inventory"
+             resource="Praxigento_Warehouse::catalog_inventory"/>
         <add id="Praxigento_Warehouse::catalog_lots"
              title="Lots"
              module="Praxigento_Warehouse"

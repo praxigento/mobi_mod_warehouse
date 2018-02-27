@@ -3,7 +3,7 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Warehouse\Controller\Adminhtml\Remnants;
+namespace Praxigento\Warehouse\Controller\Adminhtml\Inventory;
 
 use Praxigento\Warehouse\Config as Cfg;
 
@@ -14,8 +14,8 @@ class Index
         \Magento\Backend\App\Action\Context $context
     )
     {
-        $aclResource = Cfg::MODULE . '::' . Cfg::ACL_CATALOG_REMNANTS;
-        $activeMenu = Cfg::MODULE . '::' . Cfg::MENU_CATALOG_REMNANTS;
+        $aclResource = Cfg::MODULE . '::' . Cfg::ACL_CATALOG_INVENTORY;
+        $activeMenu = Cfg::MODULE . '::' . Cfg::MENU_CATALOG_INVENTORY;
         $breadcrumbLabel = 'Catalog Inventory';
         $breadcrumbTitle = 'Catalog Inventory';
         $pageTitle = 'Catalog Inventory';
