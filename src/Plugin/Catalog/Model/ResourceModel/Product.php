@@ -12,6 +12,8 @@ use Praxigento\Warehouse\Repo\Entity\Data\Stock\Item as EWrhsStockItem;
 
 /**
  * MOBI-784, MOBI-1175: replace retail & special prices with warehouse & group prices on Catalog Product loading.
+ *
+ * TODO: use \Praxigento\Warehouse\Repo\Query\Product\GetPrices to build query
  */
 class Product
 {

@@ -117,6 +117,13 @@
                 sortOrder="600" disabled="false"/>
     </type>
 
+    <type name="Magento\Quote\Model\Quote\Item\AbstractItem">
+        <!-- add warehouse & group price to product used in quote item -->
+        <plugin name="prxgt_wrhs_plugin"
+                type="\Praxigento\Warehouse\Plugin\Quote\Model\Quote\Item\AbstractItem"
+                sortOrder="600" disabled="false"/>
+    </type>
+
     <type name="Magento\Sales\Block\Adminhtml\Order\Create\Search\Grid\Renderer\Product">
         <!-- Replace product price by warehouse group price before rendering. -->
         <plugin name="prxgt_wrhs_plugin"
