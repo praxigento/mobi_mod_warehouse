@@ -6,25 +6,30 @@
 namespace Praxigento\Warehouse\Plugin\Catalog\Model;
 
 use Praxigento\Warehouse\Config as Cfg;
-use Praxigento\Warehouse\Repo\Entity\Data\Group\Price as EGroupPrice;
-use Praxigento\Warehouse\Repo\Query\Catalog\Model\ResourceModel\Product\Collection\Group\Price\Builder as QBGrpPrice;
+use Praxigento\Warehouse\Repo\Entity\Data\Group\Price as EWrhsGroupPrice;
+use Praxigento\Warehouse\Repo\Entity\Data\Stock\Item as EWrhsStockItem;
+
+//use Praxigento\Warehouse\Repo\Query\Catalog\Model\ResourceModel\Product\Collection\Group\Price\Builder as QBGrpPrice;
 
 class Layer
 {
     /** Aliases for tables used in query */
-    const AS_CATALOGINVENTORY_STOCK_ITEM = QBGrpPrice::AS_CATALOGINVENTORY_STOCK_ITEM;
+    const AS_CATINV_STOCK_ITEM = 'prxgt_catinv';
     const AS_WRHS_GROUP_PRICE = 'prxgt_wgp';
+    const AS_WRHS_STOCK_ITEM = 'prxgt_wsi';
 
     /** Aliases for attributes used in query */
+    const A_PRICE_WRHS = Cfg::A_PROD_PRICE_WRHS;
     const A_PRICE_WRHS_GROUP = Cfg::A_PROD_PRICE_WRHS_GROUP;
 
     /**
-     * Join warehouse group prices to product collection.
+     * Join warehouse price & warehouse group prices to product collection in catalog page.
      *
      * @param \Magento\Catalog\Model\Layer $subject
      * @param \Closure $proceed
      * @param \Magento\Catalog\Model\ResourceModel\Product\Collection $collection
      * @return \Magento\Catalog\Model\Layer
+     * @throws \Zend_Db_Select_Exception
      */
     public function aroundPrepareProductCollection(
         \Magento\Catalog\Model\Layer $subject,
@@ -34,21 +39,65 @@ class Layer
         $result = $proceed($collection);
         $query = $collection->getSelect();
         /* aliases and tables */
-        $asPriceIndex = \Magento\Catalog\Model\ResourceModel\Product\Collection::INDEX_TABLE_ALIAS;
-        $asStockItem = self::AS_CATALOGINVENTORY_STOCK_ITEM;
-        $asGroupPrice = self::AS_WRHS_GROUP_PRICE;
-        $tblGroupPrice = [$asGroupPrice => $collection->getTable(EGroupPrice::ENTITY_NAME)];
+        list($asStockStatus, $asPrice) = $this->parseAliases($query);
+        $asStockItem = self::AS_CATINV_STOCK_ITEM;
 
-        // LEFT JOIN prxgt_wrhs_group_price pwgp
-        $on = $asGroupPrice . '.' . EGroupPrice::ATTR_STOCK_ITEM_REF . '='
-            . $asStockItem . '.' . Cfg::E_CATINV_STOCK_ITEM_A_ITEM_ID;
-        $on .= ' AND ' . $asGroupPrice . '.' . EGroupPrice::ATTR_CUST_GROUP_REF . '='
-            . $asPriceIndex . '.' . Cfg::E_CAT_PROD_IDX_A_CUST_GROUP_ID;
+        /* LEFT JOIN cataloginventory_stock_item */
+        $tbl = $collection->getTable(Cfg::ENTITY_MAGE_CATALOGINVENTORY_STOCK_ITEM);
+        $as = $asStockItem;
+        $cols = [];
+        $byProdId = $as . '.' . Cfg::E_CATINV_STOCK_ITEM_A_PROD_ID . '='
+            . $asStockStatus . '.' . Cfg::E_CATINV_STOCK_STATUS_A_PROD_ID;
+        $byStockId = $as . '.' . Cfg::E_CATINV_STOCK_ITEM_A_STOCK_ID . '='
+            . $asStockStatus . '.' . Cfg::E_CATINV_STOCK_STATUS_A_STOCK_ID;
+        $cond = "($byProdId) AND ($byStockId)";
+        $query->joinLeft([$as => $tbl], $cond, $cols);
+
+        /* LEFT JOIN prxgt_wrhs_stock_item */
+        $tbl = $collection->getTable(EWrhsStockItem::ENTITY_NAME);
+        $as = self::AS_WRHS_STOCK_ITEM;
         $cols = [
-            self::A_PRICE_WRHS_GROUP => EGroupPrice::ATTR_PRICE
+            self::A_PRICE_WRHS => EWrhsStockItem::ATTR_PRICE
         ];
-        $query->joinLeft($tblGroupPrice, $on, $cols);
+        $cond = $as . '.' . EWrhsStockItem::ATTR_STOCK_ITEM_REF . '='
+            . $asStockItem . '.' . Cfg::E_CATINV_STOCK_ITEM_A_ITEM_ID;
+        $query->joinLeft([$as => $tbl], $cond, $cols);
+
+
+        /* LEFT JOIN prxgt_wrhs_group_price */
+        $tbl = $collection->getTable(EWrhsGroupPrice::ENTITY_NAME);
+        $as = self::AS_WRHS_GROUP_PRICE;
+        $cols = [
+            self::A_PRICE_WRHS_GROUP => EWrhsGroupPrice::ATTR_PRICE
+        ];
+        $byStockItem = $as . '.' . EWrhsGroupPrice::ATTR_STOCK_ITEM_REF . '='
+            . $asStockItem . '.' . Cfg::E_CATINV_STOCK_ITEM_A_ITEM_ID;
+        $byGroupId = $as . '.' . EWrhsGroupPrice::ATTR_CUST_GROUP_REF . '='
+            . $asPrice . '.' . Cfg::E_CATPROD_IDX_PRICE_A_CUST_GROUP_ID;
+        $cond = "($byStockItem) AND ($byGroupId)";
+        $query->joinLeft([$as => $tbl], $cond, $cols);
 
         return $result;
+    }
+
+    /**
+     * @param \Magento\Framework\DB\Select $query
+     * @return array
+     * @throws \Zend_Db_Select_Exception
+     */
+    private function parseAliases($query)
+    {
+        $stock = $price = null;
+        $from = $query->getPart(\Magento\Framework\DB\Select::FROM);
+        foreach ($from as $alias => $one) {
+            $table = $one['tableName'];
+            if ($table == Cfg::ENTITY_MAGE_CATALOGINVENTORY_STOCK_STATUS) {
+                $stock = $alias;
+            }
+            if ($table == Cfg::ENTITY_MAGE_CATALOG_PRODUCT_INDEX_PRICE) {
+                $price = $alias;
+            }
+        }
+        return [$stock, $price];
     }
 }

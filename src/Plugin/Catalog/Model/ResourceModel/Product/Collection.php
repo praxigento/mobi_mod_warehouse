@@ -5,7 +5,7 @@
 namespace Praxigento\Warehouse\Plugin\Catalog\Model\ResourceModel\Product;
 
 use Praxigento\Warehouse\Repo\Modifier\Product\Grid;
-
+use \Praxigento\Odoo\Config as Cfg;
 /**
  * Plugin for "\Magento\Catalog\Model\ResourceModel\Product\Collection" to enable order & filter for
  * complex attributes (qty).
@@ -130,18 +130,18 @@ class Collection
      */
     protected function canProcessGroupPrices($query)
     {
-        $result = true;
-//        $from = $query->getPart('from');
-//        $tblCisi = $this->resource->getTableName(Cfg::ENTITY_MAGE_CATALOGINVENTORY_STOCK_ITEM);
-//        foreach ($from as $as => $item) {
-//            if (
-//                isset($item['tableName']) &&
-//                $item['tableName'] == $tblCisi
-//            ) {
-//                $result = true;
-//                break;
-//            }
-//        }
+        $result = false;
+        $from = $query->getPart(\Magento\Framework\DB\Select::FROM);
+        $tblCisi = $this->resource->getTableName(Cfg::ENTITY_MAGE_CATALOGINVENTORY_STOCK_ITEM);
+        foreach ($from as $as => $item) {
+            if (
+                isset($item['tableName']) &&
+                $item['tableName'] == $tblCisi
+            ) {
+                $result = true;
+                break;
+            }
+        }
         return $result;
     }
 }

@@ -29,7 +29,7 @@
     </type>
 
     <type name="Magento\Catalog\Model\ResourceModel\Product">
-        <!-- Replace product price (retail) by warehouse/group price -->
+        <!-- Replace product price & special price attributes for $object by warehouse/group price -->
         <plugin name="prxgt_wrhs_plugin"
                 type="Praxigento\Warehouse\Plugin\Catalog\Model\ResourceModel\Product"
                 sortOrder="600" disabled="false"/>

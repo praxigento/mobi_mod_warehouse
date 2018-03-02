@@ -50,7 +50,7 @@ class Builder
     {
         $query = $source;
         /* aliases for tables in query */
-        $from = $query->getPart('from');
+        $from = $query->getPart(\Magento\Framework\DB\Select::FROM);
         $asMain = key($from);
         $asInvItem = self::AS_CATALOGINVENTORY_STOCK_ITEM;
         $asPrice = self::AS_WRHS_GROUP_PRICE;

@@ -31,7 +31,7 @@ class Status
     ) {
         /** @var \Magento\Framework\Db\Select $select */
         $select = $result->getSelect();
-        $from = $select->getPart('from');
+        $from = $select->getPart(\Magento\Framework\DB\Select::FROM);
         $join = $from['stock_status_index'];
         $cond = $join['joinCondition'];
         $stockId = $this->_manStock->getCurrentStockId();

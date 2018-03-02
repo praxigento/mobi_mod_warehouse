@@ -5,7 +5,7 @@
 
 namespace Praxigento\Warehouse\Plugin\Catalog\Model\Product\Type;
 
-use Magento\Catalog\Api\Data\ProductInterface as EProduct;
+use Magento\Catalog\Api\Data\ProductAttributeInterface as EProdAttr;
 use Praxigento\Warehouse\Config as Cfg;
 
 class Price
@@ -29,12 +29,13 @@ class Price
         $result = $proceed($product);
         $priceWrhs = $product->getData(self::A_PRICE_WRHS);
         $priceWrhsGroup = $product->getData(self::A_PRICE_WRHS_GROUP);
+        if ($priceWrhs > 0) {
+            $result = $priceWrhs;
+            $product->setData(EProdAttr::CODE_PRICE, $priceWrhs);
+        }
         if ($priceWrhsGroup > 0) {
             $result = $priceWrhsGroup;
-            $product->setData(EProduct::PRICE, $priceWrhsGroup);
-        } elseif ($priceWrhs > 0) {
-            $result = $priceWrhs;
-            $product->setData(EProduct::PRICE, $priceWrhs);
+            $product->setData(EProdAttr::CODE_SPECIAL_PRICE, $priceWrhsGroup);
         }
         return $result;
     }
