@@ -4,8 +4,9 @@
  */
 namespace Praxigento\Warehouse\Plugin\Catalog\Model\ResourceModel\Product;
 
+use Praxigento\Odoo\Config as Cfg;
 use Praxigento\Warehouse\Repo\Modifier\Product\Grid;
-use \Praxigento\Odoo\Config as Cfg;
+
 /**
  * Plugin for "\Magento\Catalog\Model\ResourceModel\Product\Collection" to enable order & filter for
  * complex attributes (qty).

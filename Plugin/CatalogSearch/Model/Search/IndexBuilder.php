@@ -12,6 +12,8 @@ use Praxigento\Warehouse\Config as Cfg;
  */
 class IndexBuilder
 {
+    /** alias for joined 'cataloginventory_stock_status'. */
+    const AS_STOCK_INDEX = 'stock_index';
     /** @var \Praxigento\Warehouse\Api\Helper\Stock */
     protected $_manStock;
 
@@ -19,10 +21,7 @@ class IndexBuilder
         \Praxigento\Warehouse\Api\Helper\Stock $manStock
     ) {
         $this->_manStock = $manStock;
-    }
-
-    /** alias for joined 'cataloginventory_stock_status'. */
-    const AS_STOCK_INDEX = 'stock_index'; // see \Magento\CatalogSearch\Model\Search\IndexBuilder::build
+    } // see \Magento\CatalogSearch\Model\Search\IndexBuilder::build
 
     /**
      * @param \Magento\CatalogSearch\Model\Search\IndexBuilder $subject

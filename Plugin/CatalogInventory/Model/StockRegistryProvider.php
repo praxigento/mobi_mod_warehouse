@@ -17,6 +17,10 @@ class StockRegistryProvider
      */
     private $factStockItemCrit;
     /**
+     * @var  \Praxigento\Warehouse\Api\Helper\Stock
+     */
+    private $manStock;
+    /**
      * @var \Magento\Backend\Model\Session\Quote
      */
     private $modQuoteSession;
@@ -36,10 +40,6 @@ class StockRegistryProvider
      * @var  \Magento\CatalogInventory\Model\StockRegistryStorage
      */
     private $storeStockRegistry;
-    /**
-     * @var  \Praxigento\Warehouse\Api\Helper\Stock
-     */
-    private $manStock;
 
     public function __construct(
         \Magento\CatalogInventory\Model\StockRegistryStorage $storeStockRegistry,

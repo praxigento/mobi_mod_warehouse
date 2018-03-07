@@ -12,10 +12,10 @@
   ],
   "autoload": {
     "files": [
-      "src/registration.php"
+      "registration.php"
     ],
     "psr-4": {
-      "Praxigento\\Warehouse\\": "src/"
+      "Praxigento\\Warehouse\\": ""
     }
   },
   "require": {
