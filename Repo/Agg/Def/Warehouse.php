@@ -27,7 +27,7 @@ class Warehouse
     protected $_factorySelect;
     /** @var  ObjectManagerInterface */
     protected $_manObj;
-    /** @var  \Praxigento\Core\App\Api\Repo\Transaction\Manager */
+    /** @var  \Praxigento\Core\Api\App\Repo\Transaction\Manager */
     protected $_manTrans;
     /** @var  \Praxigento\Warehouse\Repo\Entity\Warehouse */
     protected $_repoEntityWarehouse;
@@ -40,7 +40,7 @@ class Warehouse
 
     public function __construct(
         \Magento\Framework\ObjectManagerInterface $manObj,
-        \Praxigento\Core\App\Api\Repo\Transaction\Manager $manTrans,
+        \Praxigento\Core\Api\App\Repo\Transaction\Manager $manTrans,
         \Magento\Framework\App\ResourceConnection $resource,
         \Praxigento\Core\App\Repo\IGeneric $repoGeneric,
         \Praxigento\Warehouse\Repo\Entity\Warehouse $repoEntityWarehouse,
