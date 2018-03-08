@@ -12,13 +12,13 @@ class OrderService
 {
     /** @var \Praxigento\Warehouse\Helper\Config */
     private $hlpConfig;
-    /** @var \Praxigento\Core\App\Transaction\Database\IManager */
+    /** @var \Praxigento\Core\App\Api\Repo\Transaction\Manager */
     private $manTrans;
     /** @var \Praxigento\Warehouse\Service\Sale\Order\Delete */
     private $servSaleDelete;
 
     public function __construct(
-        \Praxigento\Core\App\Transaction\Database\IManager $manTrans,
+        \Praxigento\Core\App\Api\Repo\Transaction\Manager $manTrans,
         \Praxigento\Warehouse\Helper\Config $hlpConfig,
         \Praxigento\Warehouse\Service\Sale\Order\Delete $servSaleDelete
     ) {

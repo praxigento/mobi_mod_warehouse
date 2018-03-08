@@ -13,7 +13,7 @@ class StockManagement
     protected $_configStock;
     /** @var  \Praxigento\Warehouse\Api\Helper\Stock */
     protected $_manStock;
-    /** @var  \Praxigento\Core\App\Transaction\Database\IManager */
+    /** @var  \Praxigento\Core\App\Api\Repo\Transaction\Manager */
     protected $_manTrans;
     /** @var \Magento\CatalogInventory\Model\Spi\StockRegistryProviderInterface */
     protected $_providerStockRegistry;
@@ -28,7 +28,7 @@ class StockManagement
         \Magento\CatalogInventory\Api\StockConfigurationInterface $configStock,
         \Magento\CatalogInventory\Model\StockState $stockState,
         \Praxigento\Warehouse\Api\Helper\Stock $manStock,
-        \Praxigento\Core\App\Transaction\Database\IManager $manTrans
+        \Praxigento\Core\App\Api\Repo\Transaction\Manager $manTrans
     ) {
         $this->_resourceStock = $resourceStock;
         $this->_providerStockRegistry = $providerStockRegistry;
