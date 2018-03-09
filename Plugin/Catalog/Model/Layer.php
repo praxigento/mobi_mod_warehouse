@@ -38,8 +38,9 @@ class Layer
     ) {
         $result = $proceed($collection);
         $query = $collection->getSelect();
+        $resource = $collection->getResource();
         /* aliases and tables */
-        list($asStockStatus, $asPrice) = $this->parseAliases($query);
+        list($asStockStatus, $asPrice) = $this->parseAliases($query, $resource);
         $asStockItem = self::AS_CATINV_STOCK_ITEM;
 
         /* LEFT JOIN cataloginventory_stock_item */
@@ -82,19 +83,22 @@ class Layer
 
     /**
      * @param \Magento\Framework\DB\Select $query
+     * @param \Magento\Framework\Model\ResourceModel\Db\AbstractDb $resource
      * @return array
      * @throws \Zend_Db_Select_Exception
      */
-    private function parseAliases($query)
+    private function parseAliases($query, $resource)
     {
         $stock = $price = null;
+        $tblStockStatus = $resource->getTable(Cfg::ENTITY_MAGE_CATALOGINVENTORY_STOCK_STATUS);
+        $tblPrice = $resource->getTable(Cfg::ENTITY_MAGE_CATALOG_PRODUCT_INDEX_PRICE);
         $from = $query->getPart(\Magento\Framework\DB\Select::FROM);
         foreach ($from as $alias => $one) {
             $table = $one['tableName'];
-            if ($table == Cfg::ENTITY_MAGE_CATALOGINVENTORY_STOCK_STATUS) {
+            if ($table == $tblStockStatus) {
                 $stock = $alias;
             }
-            if ($table == Cfg::ENTITY_MAGE_CATALOG_PRODUCT_INDEX_PRICE) {
+            if ($table == $tblPrice) {
                 $price = $alias;
             }
         }
