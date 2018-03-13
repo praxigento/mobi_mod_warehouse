@@ -19,8 +19,8 @@ class Layer
     const AS_WRHS_STOCK_ITEM = 'prxgt_wsi';
 
     /** Aliases for attributes used in query */
-    const A_PRICE_WRHS = Cfg::A_PROD_PRICE_WRHS;
-    const A_PRICE_WRHS_GROUP = Cfg::A_PROD_PRICE_WRHS_GROUP;
+    const A_PRICE_WRHS = \Praxigento\Warehouse\Plugin\Catalog\Model\Product\Type\Price::A_PRICE_WRHS;
+    const A_PRICE_WRHS_GROUP = \Praxigento\Warehouse\Plugin\Catalog\Model\Product\Type\Price::A_PRICE_WRHS_GROUP;
 
     /**
      * Join warehouse price & warehouse group prices to product collection in catalog page.

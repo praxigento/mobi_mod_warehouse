@@ -4,7 +4,11 @@
  */
 namespace Praxigento\Warehouse\Plugin\Catalog\Model\ResourceModel\Product;
 
-use Praxigento\Odoo\Config as Cfg;
+use Magento\Catalog\Api\Data\ProductAttributeInterface as AProdAttr;
+use Praxigento\Warehouse\Config as Cfg;
+use Praxigento\Warehouse\Plugin\Catalog\Model\Product\Type\Price as APrice;
+use Praxigento\Warehouse\Repo\Entity\Data\Group\Price as EGroupPrice;
+use Praxigento\Warehouse\Repo\Entity\Data\Stock\Item as EStockItem;
 use Praxigento\Warehouse\Repo\Modifier\Product\Grid;
 
 /**
@@ -13,30 +17,36 @@ use Praxigento\Warehouse\Repo\Modifier\Product\Grid;
  */
 class Collection
 {
+
+    const AS_WRHS_GROUP_PRICE = 'prxgtWrhsGrpPrc';
+    const AS_WRHS_STOCK_ITEM = 'prxgtWrhsStckItm';
+
     /** @var \Praxigento\Warehouse\Repo\Query\Catalog\Model\ResourceModel\Product\Collection\GetSelectCountSql\Builder */
-    protected $qbldCountSql;
-    /** @var \Praxigento\Warehouse\Repo\Query\Catalog\Model\ResourceModel\Product\Collection\Group\Price\Builder */
-    protected $qbldGroupPrice;
+    private $qbCountSql;
     /** @var  \Magento\Framework\App\ResourceConnection */
-    protected $resource;
+    private $resource;
+    /** @var \Magento\Customer\Model\Session */
+    private $session;
 
     public function __construct(
         \Magento\Framework\App\ResourceConnection $resource,
-        \Praxigento\Warehouse\Repo\Query\Catalog\Model\ResourceModel\Product\Collection\Group\Price\Builder $qbldGroupPrice,
-        \Praxigento\Warehouse\Repo\Query\Catalog\Model\ResourceModel\Product\Collection\GetSelectCountSql\Builder $qbldCountSql
+        \Magento\Customer\Model\Session $session,
+        \Praxigento\Warehouse\Repo\Query\Catalog\Model\ResourceModel\Product\Collection\GetSelectCountSql\Builder $qbCountSql
     ) {
         $this->resource = $resource;
-        $this->qbldGroupPrice = $qbldGroupPrice;
-        $this->qbldCountSql = $qbldCountSql;
+        $this->session = $session;
+        $this->qbCountSql = $qbCountSql;
     }
 
     /**
-     * Add warehouse prices to product collection.
+     * Add warehouse price to product collection if 'price' attribute is added to select.
+     * Add warehouse group price to product collection if 'special_price' attribute is added to select.
      *
      * @param \Magento\Catalog\Model\ResourceModel\Product\Collection $subject
      * @param \Closure $proceed
      * @param array $attribute
      * @param bool|string $joinType
+     * @return \Magento\Catalog\Model\ResourceModel\Product\Collection
      */
     public function aroundAddAttributeToSelect(
         \Magento\Catalog\Model\ResourceModel\Product\Collection $subject,
@@ -46,11 +56,12 @@ class Collection
     ) {
         /** @var \Magento\Catalog\Model\ResourceModel\Product\Collection $result */
         $result = $proceed($attribute, $joinType);
-        if ($attribute == \Magento\Catalog\Api\Data\ProductAttributeInterface::CODE_PRICE) {
+        if ($attribute == AProdAttr::CODE_PRICE) {
             $query = $result->getSelect();
-            if ($this->canProcessGroupPrices($query)) {
-                $this->qbldGroupPrice->build($query);
-            }
+            $this->queryAddWrhsPrice($query);
+        } elseif ($attribute == AProdAttr::CODE_SPECIAL_PRICE) {
+            $query = $result->getSelect();
+            $this->queryAddWrhsGroupPrice($query);
         }
         return $result;
     }
@@ -120,29 +131,82 @@ class Collection
     ) {
         /** @var \Magento\Framework\DB\Select $result */
         $result = $proceed();
-        $this->qbldCountSql->build($result);
+        $this->qbCountSql->build($result);
         return $result;
     }
 
     /**
-     * Return 'true' if we need to add warehouse group prices to the collection query.
-     *
-     * @param \Magento\Framework\DB\Select $query
+     * @param $query
+     * @return int|null|string
      */
-    protected function canProcessGroupPrices($query)
+    private function getAliasForCataloginventoryTbl($query)
     {
-        $result = false;
+        $result = null;
         $from = $query->getPart(\Magento\Framework\DB\Select::FROM);
-        $tblCisi = $this->resource->getTableName(Cfg::ENTITY_MAGE_CATALOGINVENTORY_STOCK_ITEM);
+        $tbl = $this->resource->getTableName(Cfg::ENTITY_MAGE_CATALOGINVENTORY_STOCK_ITEM);
         foreach ($from as $as => $item) {
             if (
                 isset($item['tableName']) &&
-                $item['tableName'] == $tblCisi
+                $item['tableName'] == $tbl
             ) {
-                $result = true;
+                $result = $as;
                 break;
             }
         }
         return $result;
+    }
+
+
+    /**
+     * Initial method to define customer group for front/adminhtml/...
+     *
+     * @return int
+     */
+    private function getCustomerGroup()
+    {
+        $result = $this->session->getCustomerGroupId();
+        return $result;
+    }
+
+    /**
+     * Add warehouse group price to query if original query contains attribute 'special_price'.
+     *
+     * @param $query
+     */
+    private function queryAddWrhsGroupPrice($query)
+    {
+        $asCatInv = $this->getAliasForCataloginventoryTbl($query);
+        if ($asCatInv) {
+            /* there is 'cataloginventory_stock_item' table - we can JOIN our tables to get warehouse group price  */
+            /* LEFT JOIN prxgt_wrhs_group_price */
+            $tbl = $this->resource->getTableName(EGroupPrice::ENTITY_NAME);
+            $as = self::AS_WRHS_GROUP_PRICE;
+            $cols = [APrice::A_PRICE_WRHS_GROUP => EGroupPrice::ATTR_PRICE];
+            $cond = "$as." . EGroupPrice::ATTR_STOCK_ITEM_REF . "=$asCatInv." . Cfg::E_CATINV_STOCK_ITEM_A_ITEM_ID;
+            $query->joinLeft([$as => $tbl], $cond, $cols);
+            /* filter by current customer group */
+            $groupId = $this->getCustomerGroup();
+            $byGroup = "$as." . EGroupPrice::ATTR_CUST_GROUP_REF . '=' . (int)$groupId;
+            $query->where($byGroup);
+        }
+    }
+
+    /**
+     * Add warehouse price to query if original query contains attribute 'price'.
+     *
+     * @param $query
+     */
+    private function queryAddWrhsPrice($query)
+    {
+        $asCatInv = $this->getAliasForCataloginventoryTbl($query);
+        if ($asCatInv) {
+            /* there is 'cataloginventory_stock_item' table - we can JOIN our tables to get warehouse price  */
+            /* LEFT JOIN prxgt_wrhs_stock_item */
+            $tbl = $this->resource->getTableName(EStockItem::ENTITY_NAME);
+            $as = self::AS_WRHS_STOCK_ITEM;
+            $cols = [APrice::A_PRICE_WRHS => EStockItem::ATTR_PRICE];
+            $cond = "$as." . EStockItem::ATTR_STOCK_ITEM_REF . "=$asCatInv." . Cfg::E_CATINV_STOCK_ITEM_A_ITEM_ID;
+            $query->joinLeft([$as => $tbl], $cond, $cols);
+        }
     }
 }

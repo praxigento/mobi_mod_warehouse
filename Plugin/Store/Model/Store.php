@@ -12,9 +12,9 @@ namespace Praxigento\Warehouse\Plugin\Store\Model;
 class Store
 {
     /** @var \Praxigento\Warehouse\Api\Helper\Stock */
-    protected $hlpStock;
+    private $hlpStock;
     /** @var \Praxigento\Warehouse\Repo\Entity\Warehouse */
-    protected $repoWrhs;
+    private $repoWrhs;
 
     public function __construct(
         \Praxigento\Warehouse\Api\Helper\Stock $hlpStock,

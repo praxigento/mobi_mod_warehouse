@@ -10,6 +10,7 @@ use Praxigento\Warehouse\Repo\Entity\Data\Group\Price as EGroupPrice;
 
 /**
  * Add warehouse group price data to input query.
+ * @deprecated use on-place SQL modifications
  */
 class Builder
     implements \Praxigento\Core\App\Repo\Query\IBuilder
@@ -18,7 +19,7 @@ class Builder
     const AS_CATALOGINVENTORY_STOCK_ITEM = 'cisi';
     const AS_WRHS_GROUP_PRICE = 'prxgtWgp';
     /** Columns aliases */
-    const A_PRICE = Cfg::A_PROD_PRICE_WRHS_GROUP;
+    const A_PRICE = \Praxigento\Warehouse\Plugin\Catalog\Model\Product\Type\Price::A_PRICE_WRHS_GROUP;
 
     /** @var \Magento\Framework\Config\ScopeInterface */
     private $cfgScope;
