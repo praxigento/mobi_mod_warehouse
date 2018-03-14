@@ -66,13 +66,13 @@ class Product
         $result = $proceed($object, $entityId, $attributes);
         /* then replace retail & special prices by warehouse & group prices */
         if ($entityId) {
-            list($priceWrhs, $priceGroup) = $this->getWrhsPrices($entityId);
-            if ($priceWrhs) {
-                $object->setData(EProdAttr::CODE_PRICE, $priceWrhs);
-            }
-            if ($priceGroup) {
-                $object->setData(EProdAttr::CODE_SPECIAL_PRICE, $priceGroup);
-            }
+//            list($priceWrhs, $priceGroup) = $this->getWrhsPrices($entityId);
+//            if ($priceWrhs) {
+//                $object->setData(EProdAttr::CODE_PRICE, $priceWrhs);
+//            }
+//            if ($priceGroup) {
+//                $object->setData(EProdAttr::CODE_SPECIAL_PRICE, $priceGroup);
+//            }
         }
         return $result;
     }

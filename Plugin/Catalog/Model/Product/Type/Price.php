@@ -48,6 +48,8 @@ class Price
             $prodId = $product->getId();
             $storeId = $product->getStoreId();
             list($priceWrhs, $priceWrhsGroup) = $this->hlpPriceLoader->load($prodId, $storeId);
+            $product->setData(self::A_PRICE_WRHS, $priceWrhs);
+            $product->setData(self::A_PRICE_WRHS_GROUP, $priceWrhsGroup);
         }
         /* use warehouse price instead of regular price */
         if ($priceWrhs > 0) {
