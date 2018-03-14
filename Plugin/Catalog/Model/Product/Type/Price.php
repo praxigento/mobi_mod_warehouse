@@ -18,18 +18,10 @@ class Price
 
     /** @var \Praxigento\Warehouse\Helper\PriceLoader */
     private $hlpPriceLoader;
-    /** @var \Praxigento\Warehouse\Api\Helper\Stock */
-    private $hlpStock;
-    /** @var \Magento\Customer\Model\Session */
-    private $session;
 
     public function __construct(
-        \Magento\Customer\Model\Session $session,
-        \Praxigento\Warehouse\Api\Helper\Stock $hlpStock,
         \Praxigento\Warehouse\Helper\PriceLoader $hlpPriceLoader
     ) {
-        $this->session = $session;
-        $this->hlpStock = $hlpStock;
         $this->hlpPriceLoader = $hlpPriceLoader;
     }
 
@@ -48,19 +40,21 @@ class Price
         \Magento\Catalog\Model\Product $product
     ) {
         $result = $proceed($product);
+        /* did warehouse prices loaded before (in model or collection)? */
         $priceWrhs = $product->getData(self::A_PRICE_WRHS);
         $priceWrhsGroup = $product->getData(self::A_PRICE_WRHS_GROUP);
+        /* if didn't then load prices separately */
         if (is_null($priceWrhs) && is_null($priceWrhsGroup)) {
             $prodId = $product->getId();
             $storeId = $product->getStoreId();
-            $stockId = $this->hlpStock->getStockIdByStoreId($storeId);
-            $groupId = $this->session->getCustomerGroupId();
-            list($priceWrhs, $priceWrhsGroup) = $this->hlpPriceLoader->load($prodId, $stockId, $groupId);
+            list($priceWrhs, $priceWrhsGroup) = $this->hlpPriceLoader->load($prodId, $storeId);
         }
+        /* use warehouse price instead of regular price */
         if ($priceWrhs > 0) {
             $result = $priceWrhs;
             $product->setData(EProdAttr::CODE_PRICE, $priceWrhs);
         }
+        /* use warehouse group price as special price */
         if ($priceWrhsGroup > 0) {
             $product->setData(EProdAttr::CODE_SPECIAL_PRICE, $priceWrhsGroup);
         }
