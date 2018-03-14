@@ -19,21 +19,6 @@
                 sortOrder="600" disabled="false"/>
     </type>
 
-    <type name="Magento\Catalog\Model\ResourceModel\Product">
-        <!-- Replace product price & special price attributes for $object by warehouse/group price -->
-        <plugin name="prxgt_wrhs_plugin"
-                type="Praxigento\Warehouse\Plugin\Catalog\Model\ResourceModel\Product"
-                sortOrder="600" disabled="false"/>
-    </type>
-
-
-    <type name="Magento\Catalog\Model\Layer">
-        <!-- Add warehouse group prices to collection for category view -->
-        <plugin name="prxgt_wrhs_plugin"
-                type="\Praxigento\Warehouse\Plugin\Catalog\Model\Layer"
-                sortOrder="600" disabled="false"/>
-    </type>
-
     <type name="Magento\CatalogInventory\Model\ResourceModel\Stock">
         <!-- Update stock qty when sale order is placed -->
         <plugin name="prxgt_wrhs_plugin"

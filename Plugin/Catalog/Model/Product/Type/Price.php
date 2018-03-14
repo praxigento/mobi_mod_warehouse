@@ -33,6 +33,8 @@ class Price
      * @param \Closure $proceed
      * @param \Magento\Catalog\Model\Product $product
      * @return float
+     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function aroundGetPrice(
         \Magento\Catalog\Model\Product\Type\Price $subject,

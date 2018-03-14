@@ -25,15 +25,19 @@ class Collection
     private $qbCountSql;
     /** @var  \Magento\Framework\App\ResourceConnection */
     private $resource;
+    /** @var \Magento\Framework\Config\ScopeInterface */
+    private $scope;
     /** @var \Magento\Customer\Model\Session */
     private $session;
 
     public function __construct(
         \Magento\Framework\App\ResourceConnection $resource,
+        \Magento\Framework\Config\ScopeInterface $scope,
         \Magento\Customer\Model\Session $session,
         \Praxigento\Warehouse\Repo\Query\Catalog\Model\ResourceModel\Product\Collection\GetSelectCountSql\Builder $qbCountSql
     ) {
         $this->resource = $resource;
+        $this->scope = $scope;
         $this->session = $session;
         $this->qbCountSql = $qbCountSql;
     }
@@ -177,17 +181,21 @@ class Collection
     {
         $asCatInv = $this->getAliasForCataloginventoryTbl($query);
         if ($asCatInv) {
+            $scope = $this->scope->getCurrentScope();
             /* there is 'cataloginventory_stock_item' table - we can JOIN our tables to get warehouse group price  */
-            /* LEFT JOIN prxgt_wrhs_group_price */
-            $tbl = $this->resource->getTableName(EGroupPrice::ENTITY_NAME);
-            $as = self::AS_WRHS_GROUP_PRICE;
-            $cols = [APrice::A_PRICE_WRHS_GROUP => EGroupPrice::ATTR_PRICE];
-            $cond = "$as." . EGroupPrice::ATTR_STOCK_ITEM_REF . "=$asCatInv." . Cfg::E_CATINV_STOCK_ITEM_A_ITEM_ID;
-            $query->joinLeft([$as => $tbl], $cond, $cols);
-            /* filter by current customer group */
-            $groupId = $this->getCustomerGroup();
-            $byGroup = "$as." . EGroupPrice::ATTR_CUST_GROUP_REF . '=' . (int)$groupId;
-            $query->where($byGroup);
+            /* don't join warehouse group prices for collection in adminhtml mode */
+            if ($scope == \Magento\Framework\App\Area::AREA_FRONTEND) {
+                /* LEFT JOIN prxgt_wrhs_group_price */
+                $tbl = $this->resource->getTableName(EGroupPrice::ENTITY_NAME);
+                $as = self::AS_WRHS_GROUP_PRICE;
+                $cols = [APrice::A_PRICE_WRHS_GROUP => EGroupPrice::ATTR_PRICE];
+                $cond = "$as." . EGroupPrice::ATTR_STOCK_ITEM_REF . "=$asCatInv." . Cfg::E_CATINV_STOCK_ITEM_A_ITEM_ID;
+                $query->joinLeft([$as => $tbl], $cond, $cols);
+                /* filter by current customer group */
+                $groupId = $this->getCustomerGroup();
+                $byGroup = "$as." . EGroupPrice::ATTR_CUST_GROUP_REF . '=' . (int)$groupId;
+                $query->where($byGroup);
+            }
         }
     }
 

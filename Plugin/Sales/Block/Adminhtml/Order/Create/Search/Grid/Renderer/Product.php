@@ -5,7 +5,7 @@
 
 namespace Praxigento\Warehouse\Plugin\Sales\Block\Adminhtml\Order\Create\Search\Grid\Renderer;
 
-use Praxigento\Warehouse\Repo\Query\Catalog\Model\ResourceModel\Product\Collection\Group\Price\Builder as QBPrice;
+use Praxigento\Warehouse\Plugin\Catalog\Model\Product\Type\Price as APrice;
 
 /**
  * Replace product price by warehouse group price before rendering.
@@ -17,7 +17,7 @@ class Product
         \Magento\Framework\DataObject $row
     )
     {
-        $wrhsPrice = $row->getData(QBPrice::A_PRICE);
+        $wrhsPrice = $row->getData(APrice::A_PRICE_WRHS_GROUP);
         if ($wrhsPrice) {
             $row->setPrice($wrhsPrice);
         }
