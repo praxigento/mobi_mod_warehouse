@@ -6,6 +6,7 @@
 namespace Praxigento\Warehouse\Plugin\Catalog\Model\Product\Type;
 
 use Magento\Catalog\Api\Data\ProductAttributeInterface as EProdAttr;
+use Praxigento\Warehouse\Api\Data\Catalog\Product as AWrhsProd;
 
 class Price
 {
@@ -43,15 +44,15 @@ class Price
     ) {
         $result = $proceed($product);
         /* did warehouse prices loaded before (in model or collection)? */
-        $priceWrhs = $product->getData(self::A_PRICE_WRHS);
-        $priceWrhsGroup = $product->getData(self::A_PRICE_WRHS_GROUP);
+        $priceWrhs = $product->getData(AWrhsProd::A_PRICE_WRHS);
+        $priceWrhsGroup = $product->getData(AWrhsProd::A_PRICE_WRHS_GROUP);
         /* if didn't then load prices separately */
         if (is_null($priceWrhs) && is_null($priceWrhsGroup)) {
             $prodId = $product->getId();
             $storeId = $product->getStoreId();
             list($priceWrhs, $priceWrhsGroup) = $this->hlpPriceLoader->load($prodId, $storeId);
-            $product->setData(self::A_PRICE_WRHS, $priceWrhs);
-            $product->setData(self::A_PRICE_WRHS_GROUP, $priceWrhsGroup);
+            $product->setData(AWrhsProd::A_PRICE_WRHS, $priceWrhs);
+            $product->setData(AWrhsProd::A_PRICE_WRHS_GROUP, $priceWrhsGroup);
         }
         /* use warehouse price instead of regular price */
         if ($priceWrhs > 0) {

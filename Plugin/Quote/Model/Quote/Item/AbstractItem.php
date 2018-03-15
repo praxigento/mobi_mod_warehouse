@@ -49,33 +49,33 @@ class AbstractItem
         \Magento\Catalog\Model\Product $result
     ) {
         $quote = $subject->getQuote();
-        if ($quote) {
-            /* define query params */
-            $storeId = $quote->getStoreId();
-            $stockId = $this->hlpStock->getStockIdByStoreId($storeId);
-            $groupId = $quote->getCustomerGroupId();
-            $prodId = $result->getId();
-
-            /* perform query */
-            $query = $this->qbGetPrices->build();
-            $conn = $query->getConnection();
-            $bind = [
-                QBGetPrices::BND_PROD_ID => $prodId,
-                QBGetPrices::BND_STOCK_ID => $stockId,
-                QBGetPrices::BND_GROUP_ID => $groupId
-            ];
-            $rs = $conn->fetchRow($query, $bind);
-            if (is_array($rs)) {
-                $priceWrhs = $rs[QBGetPrices::A_WRHS_PRICE];
-                $priceGroup = $rs[QBGetPrices::A_WRHS_GROUP_PRICE];
-                if ($priceWrhs) {
-                    $result->setData(EProdAttr::CODE_PRICE, $priceWrhs);
-                }
-                if ($priceGroup) {
-                    $result->setData(EProdAttr::CODE_SPECIAL_PRICE, $priceGroup);
-                }
-            }
-        }
+//        if ($quote) {
+//            /* define query params */
+//            $storeId = $quote->getStoreId();
+//            $stockId = $this->hlpStock->getStockIdByStoreId($storeId);
+//            $groupId = $quote->getCustomerGroupId();
+//            $prodId = $result->getId();
+//
+//            /* perform query */
+//            $query = $this->qbGetPrices->build();
+//            $conn = $query->getConnection();
+//            $bind = [
+//                QBGetPrices::BND_PROD_ID => $prodId,
+//                QBGetPrices::BND_STOCK_ID => $stockId,
+//                QBGetPrices::BND_GROUP_ID => $groupId
+//            ];
+//            $rs = $conn->fetchRow($query, $bind);
+//            if (is_array($rs)) {
+//                $priceWrhs = $rs[QBGetPrices::A_WRHS_PRICE];
+//                $priceGroup = $rs[QBGetPrices::A_WRHS_GROUP_PRICE];
+//                if ($priceWrhs) {
+//                    $result->setData(EProdAttr::CODE_PRICE, $priceWrhs);
+//                }
+//                if ($priceGroup) {
+//                    $result->setData(EProdAttr::CODE_SPECIAL_PRICE, $priceGroup);
+//                }
+//            }
+//        }
         return $result;
     }
 }

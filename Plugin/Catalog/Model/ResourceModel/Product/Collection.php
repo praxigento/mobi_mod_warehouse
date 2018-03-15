@@ -5,8 +5,8 @@
 namespace Praxigento\Warehouse\Plugin\Catalog\Model\ResourceModel\Product;
 
 use Magento\Catalog\Api\Data\ProductAttributeInterface as AProdAttr;
+use Praxigento\Warehouse\Api\Data\Catalog\Product as AWrhsProd;
 use Praxigento\Warehouse\Config as Cfg;
-use Praxigento\Warehouse\Plugin\Catalog\Model\Product\Type\Price as APrice;
 use Praxigento\Warehouse\Repo\Entity\Data\Group\Price as EGroupPrice;
 use Praxigento\Warehouse\Repo\Entity\Data\Stock\Item as EStockItem;
 use Praxigento\Warehouse\Repo\Modifier\Product\Grid;
@@ -21,8 +21,6 @@ class Collection
     const AS_WRHS_GROUP_PRICE = 'prxgtWrhsGrpPrc';
     const AS_WRHS_STOCK_ITEM = 'prxgtWrhsStckItm';
 
-    /** @var \Praxigento\Warehouse\Repo\Query\Catalog\Model\ResourceModel\Product\Collection\GetSelectCountSql\Builder */
-    private $qbCountSql;
     /** @var  \Magento\Framework\App\ResourceConnection */
     private $resource;
     /** @var \Magento\Framework\Config\ScopeInterface */
@@ -33,13 +31,11 @@ class Collection
     public function __construct(
         \Magento\Framework\App\ResourceConnection $resource,
         \Magento\Framework\Config\ScopeInterface $scope,
-        \Magento\Customer\Model\Session $session,
-        \Praxigento\Warehouse\Repo\Query\Catalog\Model\ResourceModel\Product\Collection\GetSelectCountSql\Builder $qbCountSql
+        \Magento\Customer\Model\Session $session
     ) {
         $this->resource = $resource;
         $this->scope = $scope;
         $this->session = $session;
-        $this->qbCountSql = $qbCountSql;
     }
 
     /**
@@ -123,7 +119,7 @@ class Collection
     }
 
     /**
-     * Add JOIN to warehouse data to calculate qty.
+     * Remove group clause to get total count in adminhtml grid.
      *
      * @param \Magento\Catalog\Model\ResourceModel\Product\Collection $subject
      * @param \Closure $proceed
@@ -135,7 +131,7 @@ class Collection
     ) {
         /** @var \Magento\Framework\DB\Select $result */
         $result = $proceed();
-        $this->qbCountSql->build($result);
+        $result->reset(\Zend_Db_Select::GROUP);
         return $result;
     }
 
@@ -188,7 +184,7 @@ class Collection
                 /* LEFT JOIN prxgt_wrhs_group_price */
                 $tbl = $this->resource->getTableName(EGroupPrice::ENTITY_NAME);
                 $as = self::AS_WRHS_GROUP_PRICE;
-                $cols = [APrice::A_PRICE_WRHS_GROUP => EGroupPrice::ATTR_PRICE];
+                $cols = [AWrhsProd::A_PRICE_WRHS_GROUP => EGroupPrice::ATTR_PRICE];
                 $cond = "$as." . EGroupPrice::ATTR_STOCK_ITEM_REF . "=$asCatInv." . Cfg::E_CATINV_STOCK_ITEM_A_ITEM_ID;
                 $query->joinLeft([$as => $tbl], $cond, $cols);
                 /* filter by current customer group */
@@ -212,7 +208,7 @@ class Collection
             /* LEFT JOIN prxgt_wrhs_stock_item */
             $tbl = $this->resource->getTableName(EStockItem::ENTITY_NAME);
             $as = self::AS_WRHS_STOCK_ITEM;
-            $cols = [APrice::A_PRICE_WRHS => EStockItem::ATTR_PRICE];
+            $cols = [AWrhsProd::A_PRICE_WRHS => EStockItem::ATTR_PRICE];
             $cond = "$as." . EStockItem::ATTR_STOCK_ITEM_REF . "=$asCatInv." . Cfg::E_CATINV_STOCK_ITEM_A_ITEM_ID;
             $query->joinLeft([$as => $tbl], $cond, $cols);
         }
