@@ -13,12 +13,12 @@ class Store
 {
     /** @var \Praxigento\Warehouse\Api\Helper\Stock */
     private $hlpStock;
-    /** @var \Praxigento\Warehouse\Repo\Entity\Warehouse */
+    /** @var \Praxigento\Warehouse\Repo\Dao\Warehouse */
     private $repoWrhs;
 
     public function __construct(
         \Praxigento\Warehouse\Api\Helper\Stock $hlpStock,
-        \Praxigento\Warehouse\Repo\Entity\Warehouse $repoWrhs
+        \Praxigento\Warehouse\Repo\Dao\Warehouse $repoWrhs
     ) {
         $this->hlpStock = $hlpStock;
         $this->repoWrhs = $repoWrhs;

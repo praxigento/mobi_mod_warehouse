@@ -3,7 +3,7 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Warehouse\Repo\Entity\Data\Group;
+namespace Praxigento\Warehouse\Repo\Data\Group;
 
 class Price
     extends \Praxigento\Core\App\Repo\Data\Entity\Base

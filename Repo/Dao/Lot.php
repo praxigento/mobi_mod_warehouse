@@ -3,7 +3,7 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Warehouse\Repo\Entity;
+namespace Praxigento\Warehouse\Repo\Dao;
 
 class Lot extends \Praxigento\Core\App\Repo\Def\Entity
 {
@@ -11,7 +11,7 @@ class Lot extends \Praxigento\Core\App\Repo\Def\Entity
         \Magento\Framework\App\ResourceConnection $resource,
         \Praxigento\Core\App\Repo\IGeneric $repoGeneric
     ) {
-        parent::__construct($resource, $repoGeneric, \Praxigento\Warehouse\Repo\Entity\Data\Lot::class);
+        parent::__construct($resource, $repoGeneric, \Praxigento\Warehouse\Repo\Data\Lot::class);
     }
 
 }

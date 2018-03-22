@@ -3,7 +3,7 @@
 namespace Praxigento\Warehouse\Ui\DataProvider\Grid\Lot;
 
 
-use Praxigento\Warehouse\Repo\Entity\Data\Lot as ELot;
+use Praxigento\Warehouse\Repo\Data\Lot as ELot;
 
 class QueryBuilder
     extends \Praxigento\Core\App\Ui\DataProvider\Grid\Query\Builder

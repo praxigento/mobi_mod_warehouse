@@ -3,7 +3,7 @@
 namespace Praxigento\Warehouse\Ui\DataProvider\Grid\Warehouse;
 
 use Praxigento\Warehouse\Config as Cfg;
-use Praxigento\Warehouse\Repo\Entity\Data\Warehouse as EWarehouse;
+use Praxigento\Warehouse\Repo\Data\Warehouse as EWarehouse;
 
 class QueryBuilder
     extends \Praxigento\Core\App\Ui\DataProvider\Grid\Query\Builder

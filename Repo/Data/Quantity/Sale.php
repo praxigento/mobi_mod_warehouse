@@ -3,15 +3,15 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Warehouse\Repo\Entity\Data;
+namespace Praxigento\Warehouse\Repo\Data\Quantity;
 
-class Quantity
+class Sale
     extends \Praxigento\Core\App\Repo\Data\Entity\Base
 {
     const ATTR_LOT_REF = 'lot_ref';
-    const ATTR_STOCK_ITEM_REF = 'stock_item_ref';
+    const ATTR_SALE_ITEM_REF = 'sale_item_ref';
     const ATTR_TOTAL = 'total';
-    const ENTITY_NAME = 'prxgt_wrhs_qty';
+    const ENTITY_NAME = 'prxgt_wrhs_qty_sale';
 
     /**
      * @return int
@@ -27,15 +27,15 @@ class Quantity
      */
     public static function getPrimaryKeyAttrs()
     {
-        return [self::ATTR_STOCK_ITEM_REF, self::ATTR_LOT_REF];
+        return [self::ATTR_SALE_ITEM_REF, self::ATTR_LOT_REF];
     }
 
     /**
      * @return int
      */
-    public function getStockItemRef()
+    public function getSaleItemRef()
     {
-        $result = parent::get(self::ATTR_STOCK_ITEM_REF);
+        $result = parent::get(self::ATTR_SALE_ITEM_REF);
         return $result;
     }
 
@@ -59,9 +59,9 @@ class Quantity
     /**
      * @param int $data
      */
-    public function setStockItemRef($data)
+    public function setSaleItemRef($data)
     {
-        parent::set(self::ATTR_STOCK_ITEM_REF, $data);
+        parent::set(self::ATTR_SALE_ITEM_REF, $data);
     }
 
     /**

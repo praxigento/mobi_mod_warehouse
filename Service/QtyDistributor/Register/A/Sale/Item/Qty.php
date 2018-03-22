@@ -5,8 +5,8 @@
 
 namespace Praxigento\Warehouse\Service\QtyDistributor\Register\A\Sale\Item;
 
-use Praxigento\Warehouse\Repo\Entity\Data\Quantity as EQuantity;
-use Praxigento\Warehouse\Repo\Entity\Data\Quantity\Sale as EQtySale;
+use Praxigento\Warehouse\Repo\Data\Quantity as EQuantity;
+use Praxigento\Warehouse\Repo\Data\Quantity\Sale as EQtySale;
 use Praxigento\Warehouse\Repo\Query\Lots\By\Product\Id\Get as AGet;
 
 /**
@@ -14,14 +14,14 @@ use Praxigento\Warehouse\Repo\Query\Lots\By\Product\Id\Get as AGet;
  */
 class Qty
 {
-    /** @var \Praxigento\Warehouse\Repo\Entity\Quantity */
+    /** @var \Praxigento\Warehouse\Repo\Dao\Quantity */
     private $repoQty;
-    /** @var \Praxigento\Warehouse\Repo\Entity\Quantity\Sale */
+    /** @var \Praxigento\Warehouse\Repo\Dao\Quantity\Sale */
     private $repoQtySale;
 
     public function __construct(
-        \Praxigento\Warehouse\Repo\Entity\Quantity $repoQty,
-        \Praxigento\Warehouse\Repo\Entity\Quantity\Sale $repoQtySale
+        \Praxigento\Warehouse\Repo\Dao\Quantity $repoQty,
+        \Praxigento\Warehouse\Repo\Dao\Quantity\Sale $repoQtySale
     )
     {
         $this->repoQty = $repoQty;

@@ -9,7 +9,7 @@ namespace Praxigento\Warehouse\Plugin\CatalogInventory\Api\Data;
 
 use Magento\CatalogInventory\Model\Stock\Item as EntityStockItem;
 use Magento\CatalogInventory\Model\Stock\Status as EntityStockStatus;
-use Praxigento\Warehouse\Repo\Entity\Data\Quantity as EntityQty;
+use Praxigento\Warehouse\Repo\Data\Quantity as EntityQty;
 
 class StockStatusCollectionInterfaceFactory
 {

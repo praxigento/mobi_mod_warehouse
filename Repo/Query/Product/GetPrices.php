@@ -7,8 +7,8 @@
 namespace Praxigento\Warehouse\Repo\Query\Product;
 
 use Praxigento\Warehouse\Config as Cfg;
-use Praxigento\Warehouse\Repo\Entity\Data\Group\Price as EGroupPrice;
-use Praxigento\Warehouse\Repo\Entity\Data\Stock\Item as EWrhsStockItem;
+use Praxigento\Warehouse\Repo\Data\Group\Price as EGroupPrice;
+use Praxigento\Warehouse\Repo\Data\Stock\Item as EWrhsStockItem;
 
 class GetPrices
     extends \Praxigento\Core\App\Repo\Query\Builder

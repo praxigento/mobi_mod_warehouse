@@ -8,8 +8,8 @@ namespace Praxigento\Warehouse\Service\Sale\Order;
 
 use Praxigento\Core\App\Repo\Query\Expression as AnExpression;
 use Praxigento\Warehouse\Config as Cfg;
-use Praxigento\Warehouse\Repo\Entity\Data\Quantity as EQty;
-use Praxigento\Warehouse\Repo\Entity\Data\Quantity\Sale as EQtySale;
+use Praxigento\Warehouse\Repo\Data\Quantity as EQty;
+use Praxigento\Warehouse\Repo\Data\Quantity\Sale as EQtySale;
 use Praxigento\Warehouse\Service\Sale\Order\Delete\Own\Repo\Query\GetStockItem as OwnQbGetStockItem;
 use Praxigento\Warehouse\Service\Sale\Order\Delete\Request as ARequest;
 use Praxigento\Warehouse\Service\Sale\Order\Delete\Response as AResponse;
@@ -25,9 +25,9 @@ class Delete
     private $qbGetStockItem;
     /** @var \Praxigento\Core\App\Repo\IGeneric */
     private $repoGeneric;
-    /** @var \Praxigento\Warehouse\Repo\Entity\Quantity */
+    /** @var \Praxigento\Warehouse\Repo\Dao\Quantity */
     private $repoQty;
-    /** @var \Praxigento\Warehouse\Repo\Entity\Quantity\Sale */
+    /** @var \Praxigento\Warehouse\Repo\Dao\Quantity\Sale */
     private $repoQtySale;
     /** \Magento\Sales\Api\OrderRepositoryInterface */
     private $repoSaleOrder;
@@ -35,8 +35,8 @@ class Delete
     public function __construct(
         \Magento\Sales\Api\OrderRepositoryInterface $repoSaleOrder,
         \Praxigento\Core\App\Repo\IGeneric $repoGeneric,
-        \Praxigento\Warehouse\Repo\Entity\Quantity $repoQty,
-        \Praxigento\Warehouse\Repo\Entity\Quantity\Sale $repoQtySale,
+        \Praxigento\Warehouse\Repo\Dao\Quantity $repoQty,
+        \Praxigento\Warehouse\Repo\Dao\Quantity\Sale $repoQtySale,
         \Praxigento\Warehouse\Api\Helper\Stock $hlpStock,
         OwnQbGetStockItem $qbGetStockItem
     ) {

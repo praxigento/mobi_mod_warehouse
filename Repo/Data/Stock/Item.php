@@ -3,7 +3,7 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Warehouse\Repo\Entity\Data\Stock;
+namespace Praxigento\Warehouse\Repo\Data\Stock;
 
 class Item
     extends \Praxigento\Core\App\Repo\Data\Entity\Base

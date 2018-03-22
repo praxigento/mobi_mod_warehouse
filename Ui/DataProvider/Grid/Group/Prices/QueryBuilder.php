@@ -7,9 +7,9 @@
 namespace Praxigento\Warehouse\Ui\DataProvider\Grid\Group\Prices;
 
 use Praxigento\Warehouse\Config as Cfg;
-use Praxigento\Warehouse\Repo\Entity\Data\Group\Price as EGroupPrice;
-use Praxigento\Warehouse\Repo\Entity\Data\Stock\Item as EItem;
-use Praxigento\Warehouse\Repo\Entity\Data\Warehouse as EWarehouse;
+use Praxigento\Warehouse\Repo\Data\Group\Price as EGroupPrice;
+use Praxigento\Warehouse\Repo\Data\Stock\Item as EItem;
+use Praxigento\Warehouse\Repo\Data\Warehouse as EWarehouse;
 
 
 class QueryBuilder

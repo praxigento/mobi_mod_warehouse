@@ -3,9 +3,9 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Warehouse\Repo\Entity;
+namespace Praxigento\Warehouse\Repo\Dao;
 
-use Praxigento\Warehouse\Repo\Entity\Data\Quantity as Entity;
+use Praxigento\Warehouse\Repo\Data\Quantity as Entity;
 
 class Quantity
     extends \Praxigento\Core\App\Repo\Def\Entity

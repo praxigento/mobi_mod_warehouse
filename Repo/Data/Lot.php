@@ -3,7 +3,7 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Warehouse\Repo\Entity\Data;
+namespace Praxigento\Warehouse\Repo\Data;
 
 class Lot
     extends \Praxigento\Core\App\Repo\Data\Entity\Base

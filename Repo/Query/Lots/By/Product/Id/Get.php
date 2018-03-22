@@ -7,8 +7,8 @@
 namespace Praxigento\Warehouse\Repo\Query\Lots\By\Product\Id;
 
 use Praxigento\Warehouse\Config as Cfg;
-use Praxigento\Warehouse\Repo\Entity\Data\Lot as ELot;
-use Praxigento\Warehouse\Repo\Entity\Data\Quantity as EQuantity;
+use Praxigento\Warehouse\Repo\Data\Lot as ELot;
+use Praxigento\Warehouse\Repo\Data\Quantity as EQuantity;
 
 class Get
     extends \Praxigento\Core\App\Repo\Query\Builder

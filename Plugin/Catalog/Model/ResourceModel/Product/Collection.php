@@ -7,8 +7,8 @@ namespace Praxigento\Warehouse\Plugin\Catalog\Model\ResourceModel\Product;
 use Magento\Catalog\Api\Data\ProductAttributeInterface as AProdAttr;
 use Praxigento\Warehouse\Api\Data\Catalog\Product as AWrhsProd;
 use Praxigento\Warehouse\Config as Cfg;
-use Praxigento\Warehouse\Repo\Entity\Data\Group\Price as EGroupPrice;
-use Praxigento\Warehouse\Repo\Entity\Data\Stock\Item as EStockItem;
+use Praxigento\Warehouse\Repo\Data\Group\Price as EGroupPrice;
+use Praxigento\Warehouse\Repo\Data\Stock\Item as EStockItem;
 use Praxigento\Warehouse\Repo\Modifier\Product\Grid;
 
 /**

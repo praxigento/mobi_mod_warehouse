@@ -7,10 +7,10 @@
 namespace Praxigento\Warehouse\Ui\DataProvider\Grid\Inventory;
 
 use Praxigento\Warehouse\Config as Cfg;
-use Praxigento\Warehouse\Repo\Entity\Data\Lot as ELot;
-use Praxigento\Warehouse\Repo\Entity\Data\Quantity as EQuantity;
-use Praxigento\Warehouse\Repo\Entity\Data\Stock\Item as EItem;
-use Praxigento\Warehouse\Repo\Entity\Data\Warehouse as EWarehouse;
+use Praxigento\Warehouse\Repo\Data\Lot as ELot;
+use Praxigento\Warehouse\Repo\Data\Quantity as EQuantity;
+use Praxigento\Warehouse\Repo\Data\Stock\Item as EItem;
+use Praxigento\Warehouse\Repo\Data\Warehouse as EWarehouse;
 
 class QueryBuilder
     extends \Praxigento\Core\App\Ui\DataProvider\Grid\Query\Builder

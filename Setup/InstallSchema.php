@@ -6,12 +6,12 @@
 
 namespace Praxigento\Warehouse\Setup;
 
-use Praxigento\Warehouse\Repo\Entity\Data\Group\Price;
-use Praxigento\Warehouse\Repo\Entity\Data\Lot;
-use Praxigento\Warehouse\Repo\Entity\Data\Quantity;
-use Praxigento\Warehouse\Repo\Entity\Data\Quantity\Sale;
-use Praxigento\Warehouse\Repo\Entity\Data\Stock\Item;
-use Praxigento\Warehouse\Repo\Entity\Data\Warehouse;
+use Praxigento\Warehouse\Repo\Data\Group\Price;
+use Praxigento\Warehouse\Repo\Data\Lot;
+use Praxigento\Warehouse\Repo\Data\Quantity;
+use Praxigento\Warehouse\Repo\Data\Quantity\Sale;
+use Praxigento\Warehouse\Repo\Data\Stock\Item;
+use Praxigento\Warehouse\Repo\Data\Warehouse;
 
 class InstallSchema extends \Praxigento\Core\App\Setup\Schema\Base
 {
