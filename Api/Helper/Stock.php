@@ -10,6 +10,9 @@ namespace Praxigento\Warehouse\Api\Helper;
  */
 interface  Stock
 {
+    /**
+     * @return int
+     */
     public function getCurrentStockId();
 
     /**
@@ -18,5 +21,17 @@ interface  Stock
      */
     public function getDefaultStockId();
 
+    /**
+     * @param int $storeId
+     * @return int
+     */
     public function getStockIdByStoreId($storeId);
+
+    /**
+     * Currency code for store view.
+     *
+     * @param $storeId
+     * @return string
+     */
+    public function getStockCurrencyByStoreId($storeId);
 }
