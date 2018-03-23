@@ -15,17 +15,17 @@ use Praxigento\Warehouse\Repo\Query\Lots\By\Product\Id\Get as AGet;
 class Qty
 {
     /** @var \Praxigento\Warehouse\Repo\Dao\Quantity */
-    private $repoQty;
+    private $daoQty;
     /** @var \Praxigento\Warehouse\Repo\Dao\Quantity\Sale */
-    private $repoQtySale;
+    private $daoQtySale;
 
     public function __construct(
-        \Praxigento\Warehouse\Repo\Dao\Quantity $repoQty,
-        \Praxigento\Warehouse\Repo\Dao\Quantity\Sale $repoQtySale
+        \Praxigento\Warehouse\Repo\Dao\Quantity $daoQty,
+        \Praxigento\Warehouse\Repo\Dao\Quantity\Sale $daoQtySale
     )
     {
-        $this->repoQty = $repoQty;
-        $this->repoQtySale = $repoQtySale;
+        $this->daoQty = $daoQty;
+        $this->daoQtySale = $daoQtySale;
     }
 
     /**
@@ -56,11 +56,11 @@ class Qty
                     EQtySale::A_LOT_REF => $lotId,
                     EQtySale::A_TOTAL => $rest
                 ];
-                $this->repoQtySale->create($qtySaleData);
+                $this->daoQtySale->create($qtySaleData);
                 /* decrease lot's qty */
                 $qtyRest = $qty - $rest;
                 $qtyUpdateData = [EQuantity::A_TOTAL => $qtyRest];
-                $this->repoQty->updateById($qtyPk, $qtyUpdateData);
+                $this->daoQty->updateById($qtyPk, $qtyUpdateData);
                 break;
             } else {
                 /* lot's $qty is less or equal to $total (or $rest) */
@@ -69,9 +69,9 @@ class Qty
                     EQtySale::A_LOT_REF => $lotId,
                     EQtySale::A_TOTAL => $qty
                 ];
-                $this->repoQtySale->create($qtySaleData);
+                $this->daoQtySale->create($qtySaleData);
                 /* delete zero quantity records from 'prxgt_wrhs_qty' */
-                $this->repoQty->deleteById($qtyPk);
+                $this->daoQty->deleteById($qtyPk);
                 /* decrease $rest of $total*/
                 $rest -= $qty;
             }

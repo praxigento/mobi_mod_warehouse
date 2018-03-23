@@ -15,9 +15,9 @@ class AddQuantityFilterToCollection
     protected $_repoModifierProductGFrid;
 
     public function __construct(
-        \Praxigento\Warehouse\Repo\Modifier\Product\Grid $repoModifierProductGFrid
+        \Praxigento\Warehouse\Repo\Modifier\Product\Grid $daoModifierProductGFrid
     ) {
-        $this->_repoModifierProductGFrid = $repoModifierProductGFrid;
+        $this->_repoModifierProductGFrid = $daoModifierProductGFrid;
     }
 
     /**

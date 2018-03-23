@@ -27,15 +27,15 @@ class StockRegistryProvider
     /**
      * @var \Magento\CatalogInventory\Api\StockRepositoryInterface
      */
-    private $repoStock;
+    private $daoStock;
     /**
      * @var  \Magento\CatalogInventory\Api\StockItemRepositoryInterface
      */
-    private $repoStockItem;
+    private $daoStockItem;
     /**
      * @var \Magento\CatalogInventory\Api\StockStatusRepositoryInterface
      */
-    private $repoStockStatus;
+    private $daoStockStatus;
     /**
      * @var  \Magento\CatalogInventory\Model\StockRegistryStorage
      */
@@ -45,18 +45,18 @@ class StockRegistryProvider
         \Magento\CatalogInventory\Model\StockRegistryStorage $storeStockRegistry,
         \Magento\CatalogInventory\Api\Data\StockItemInterfaceFactory $factStockItem,
         \Magento\CatalogInventory\Api\StockItemCriteriaInterfaceFactory $factStockItemCrit,
-        \Magento\CatalogInventory\Api\StockRepositoryInterface $repoStock,
-        \Magento\CatalogInventory\Api\StockItemRepositoryInterface $repoStockItem,
-        \Magento\CatalogInventory\Api\StockStatusRepositoryInterface $repoStockStatus,
+        \Magento\CatalogInventory\Api\StockRepositoryInterface $daoStock,
+        \Magento\CatalogInventory\Api\StockItemRepositoryInterface $daoStockItem,
+        \Magento\CatalogInventory\Api\StockStatusRepositoryInterface $daoStockStatus,
         \Magento\Backend\Model\Session\Quote $modQuoteSession,
         \Praxigento\Warehouse\Api\Helper\Stock $manStock
     ) {
         $this->storeStockRegistry = $storeStockRegistry;
         $this->factStockItem = $factStockItem;
         $this->factStockItemCrit = $factStockItemCrit;
-        $this->repoStock = $repoStock;
-        $this->repoStockItem = $repoStockItem;
-        $this->repoStockStatus = $repoStockStatus;
+        $this->daoStock = $daoStock;
+        $this->daoStockItem = $daoStockItem;
+        $this->daoStockStatus = $daoStockStatus;
         $this->modQuoteSession = $modQuoteSession;
         $this->manStock = $manStock;
     }
@@ -81,7 +81,7 @@ class StockRegistryProvider
         if (null === $stock) {
             /* ... or load current stock and save to app cache */
             $stockId = $this->manStock->getCurrentStockId();
-            $stock = $this->repoStock->get($stockId);
+            $stock = $this->daoStock->get($stockId);
             $this->storeStockRegistry->setStock($scopeId, $stock);
         }
         return $stock;
@@ -109,7 +109,7 @@ class StockRegistryProvider
             $criteria->setProductsFilter($productId);
             $stockId = $this->manStock->getCurrentStockId();
             $criteria->setStockFilter($stockId);
-            $collection = $this->repoStockItem->getList($criteria);
+            $collection = $this->daoStockItem->getList($criteria);
             $result = current($collection->getItems());
             if ($result && $result->getItemId()) {
                 $this->storeStockRegistry->setStockItem($productId, $scopeId, $result);
@@ -154,7 +154,7 @@ class StockRegistryProvider
                 \Magento\CatalogInventory\Api\Data\StockStatusInterface::STOCK_ID,
                 $stockId
             );
-            $collection = $this->repoStockStatus->getList($crit);
+            $collection = $this->daoStockStatus->getList($crit);
             $rows = $collection->getItems();
             $stockStatus = reset($rows);
             if ($stockStatus instanceof \Magento\CatalogInventory\Api\Data\StockStatusInterface) {

@@ -12,16 +12,16 @@ use Praxigento\Warehouse\Service\QtyDistributor\Register\Sale\Response as ARespo
 class Sale
 {
     /** @var \Praxigento\Warehouse\Repo\Query\Lots\By\Product\Id\Get */
-    private $repoGetLots;
+    private $daoGetLots;
     /** @var \Praxigento\Warehouse\Service\QtyDistributor\Register\A\Sale\Item\Qty */
     private $subQtyReg;
 
     public function __construct(
         \Praxigento\Warehouse\Service\QtyDistributor\Register\A\Sale\Item\Qty $subQtyReg,
-        \Praxigento\Warehouse\Repo\Query\Lots\By\Product\Id\Get $repoGetLots
+        \Praxigento\Warehouse\Repo\Query\Lots\By\Product\Id\Get $daoGetLots
     ) {
         $this->subQtyReg = $subQtyReg;
-        $this->repoGetLots = $repoGetLots;
+        $this->daoGetLots = $daoGetLots;
     }
 
     /**
@@ -40,7 +40,7 @@ class Sale
             $qty = $item->getQuantity();
             if ($qty > 0) {
                 /* get list of lots for the product */
-                $query = $this->repoGetLots->build();
+                $query = $this->daoGetLots->build();
                 $bind = [
                     AGet::BND_PROD_ID => $prodId,
                     AGet::BND_STOCK_ID => $stockId

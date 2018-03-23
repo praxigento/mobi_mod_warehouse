@@ -15,16 +15,16 @@ use Praxigento\Warehouse\Service\QtyDistributor\Register\SaleItem\Response as AR
 class SaleItem
 {
     /** @var \Praxigento\Warehouse\Repo\Query\Lots\By\Product\Id\Get */
-    protected $repoGetLots;
+    protected $daoGetLots;
     /** @var \Praxigento\Warehouse\Service\QtyDistributor\Register\A\Sale\Item\Qty */
     private $subQtyReg;
 
     public function __construct(
-        \Praxigento\Warehouse\Repo\Query\Lots\By\Product\Id\Get $repoGetLots,
+        \Praxigento\Warehouse\Repo\Query\Lots\By\Product\Id\Get $daoGetLots,
         \Praxigento\Warehouse\Service\QtyDistributor\Register\A\Sale\Item\Qty $subQtyReg
     )
     {
-        $this->repoGetLots = $repoGetLots;
+        $this->daoGetLots = $daoGetLots;
         $this->subQtyReg = $subQtyReg;
     }
 
@@ -41,7 +41,7 @@ class SaleItem
         $qty = $request->getQuantity();
         if ($qty > 0) {
             /* get list of lots for the product */
-            $query = $this->repoGetLots->build();
+            $query = $this->daoGetLots->build();
             $conn = $query->getConnection();
             $bind = [
                 AGet::BND_PROD_ID => $prodId,

@@ -21,10 +21,10 @@ class Calculation
 
     public function __construct(
         \Praxigento\Warehouse\Api\Helper\Stock $manStock,
-        \Praxigento\Warehouse\Repo\Dao\Warehouse $repoWrhs
+        \Praxigento\Warehouse\Repo\Dao\Warehouse $daoWrhs
     ) {
         $this->_manStock = $manStock;
-        $this->_repoWrhs = $repoWrhs;
+        $this->_repoWrhs = $daoWrhs;
     }
 
     public function afterGetRateRequest(

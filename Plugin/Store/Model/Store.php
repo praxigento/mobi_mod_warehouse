@@ -14,14 +14,14 @@ class Store
     /** @var \Praxigento\Warehouse\Api\Helper\Stock */
     private $hlpStock;
     /** @var \Praxigento\Warehouse\Repo\Dao\Warehouse */
-    private $repoWrhs;
+    private $daoWrhs;
 
     public function __construct(
         \Praxigento\Warehouse\Api\Helper\Stock $hlpStock,
-        \Praxigento\Warehouse\Repo\Dao\Warehouse $repoWrhs
+        \Praxigento\Warehouse\Repo\Dao\Warehouse $daoWrhs
     ) {
         $this->hlpStock = $hlpStock;
-        $this->repoWrhs = $repoWrhs;
+        $this->daoWrhs = $daoWrhs;
     }
 
     /**
@@ -40,7 +40,7 @@ class Store
         /* then replace store currency code by warehouse currency code */
         $storeId = $subject->getId();
         $stockId = $this->hlpStock->getStockIdByStoreId($storeId);
-        $wrhsDo = $this->repoWrhs->getById($stockId);
+        $wrhsDo = $this->daoWrhs->getById($stockId);
         $curCode = $wrhsDo->getCurrency();
         $result = $curCode;
         return $result;

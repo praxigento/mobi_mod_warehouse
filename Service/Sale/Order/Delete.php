@@ -24,26 +24,26 @@ class Delete
     /** @var \Praxigento\Warehouse\Service\Sale\Order\Delete\Own\Repo\Query\GetStockItem */
     private $qbGetStockItem;
     /** @var \Praxigento\Core\App\Repo\IGeneric */
-    private $repoGeneric;
+    private $daoGeneric;
     /** @var \Praxigento\Warehouse\Repo\Dao\Quantity */
-    private $repoQty;
+    private $daoQty;
     /** @var \Praxigento\Warehouse\Repo\Dao\Quantity\Sale */
-    private $repoQtySale;
+    private $daoQtySale;
     /** \Magento\Sales\Api\OrderRepositoryInterface */
-    private $repoSaleOrder;
+    private $daoSaleOrder;
 
     public function __construct(
-        \Magento\Sales\Api\OrderRepositoryInterface $repoSaleOrder,
-        \Praxigento\Core\App\Repo\IGeneric $repoGeneric,
-        \Praxigento\Warehouse\Repo\Dao\Quantity $repoQty,
-        \Praxigento\Warehouse\Repo\Dao\Quantity\Sale $repoQtySale,
+        \Magento\Sales\Api\OrderRepositoryInterface $daoSaleOrder,
+        \Praxigento\Core\App\Repo\IGeneric $daoGeneric,
+        \Praxigento\Warehouse\Repo\Dao\Quantity $daoQty,
+        \Praxigento\Warehouse\Repo\Dao\Quantity\Sale $daoQtySale,
         \Praxigento\Warehouse\Api\Helper\Stock $hlpStock,
         OwnQbGetStockItem $qbGetStockItem
     ) {
-        $this->repoSaleOrder = $repoSaleOrder;
-        $this->repoGeneric = $repoGeneric;
-        $this->repoQty = $repoQty;
-        $this->repoQtySale = $repoQtySale;
+        $this->daoSaleOrder = $daoSaleOrder;
+        $this->daoGeneric = $daoGeneric;
+        $this->daoQty = $daoQty;
+        $this->daoQtySale = $daoQtySale;
         $this->hlpStock = $hlpStock;
         $this->qbGetStockItem = $qbGetStockItem;
     }
@@ -62,7 +62,7 @@ class Delete
 
         /** perform processing */
         /** @var \Magento\Sales\Api\Data\OrderInterface $sale */
-        $sale = $this->repoSaleOrder->get($saleId);
+        $sale = $this->daoSaleOrder->get($saleId);
         if ($sale) {
             $storeId = $sale->getStoreId();
             $stockId = $this->hlpStock->getStockIdByStoreId($storeId);
@@ -113,7 +113,7 @@ class Delete
     private function getSaleItemQty($saleItemId)
     {
         $where = EQtySale::A_SALE_ITEM_REF . '=' . (int)$saleItemId;
-        $result = $this->repoQtySale->get($where);
+        $result = $this->daoQtySale->get($where);
         return $result;
     }
 
@@ -140,27 +140,27 @@ class Delete
     {
         $entity = Cfg::ENTITY_MAGE_SALES_ORDER;
         $id = [Cfg::E_SALE_ORDER_A_ENTITY_ID => $saleId];
-        $this->repoGeneric->deleteEntityByPk($entity, $id);
+        $this->daoGeneric->deleteEntityByPk($entity, $id);
     }
 
     private function removeSaleGrid($saleId)
     {
         $entity = Cfg::ENTITY_MAGE_SALES_ORDER_GRID;
         $id = [Cfg::E_SALE_ORDER_GRID_A_ENTITY_ID => $saleId];
-        $this->repoGeneric->deleteEntityByPk($entity, $id);
+        $this->daoGeneric->deleteEntityByPk($entity, $id);
     }
 
     private function removeSaleItem($saleItemId)
     {
         $entity = Cfg::ENTITY_MAGE_SALES_ORDER_ITEM;
         $id = [Cfg::E_SALE_ORDER_ITEM_A_ITEM_ID => $saleItemId];
-        $this->repoGeneric->deleteEntityByPk($entity, $id);
+        $this->daoGeneric->deleteEntityByPk($entity, $id);
     }
 
     private function removeSaleItemQty($saleItemId)
     {
         $where = EQtySale::A_SALE_ITEM_REF . '=' . (int)$saleItemId;
-        $this->repoQtySale->delete($where);
+        $this->daoQtySale->delete($where);
     }
 
     private function returnQtyToCatalogInventory($stockItemId, $qty)
@@ -170,7 +170,7 @@ class Delete
         $exp = new AnExpression($exp);
         $data = [Cfg::E_CATINV_STOCK_ITEM_A_QTY => $exp];
         $where = Cfg::E_CATINV_STOCK_ITEM_A_ITEM_ID . '=' . (int)$stockItemId;
-        $updated = $this->repoGeneric->updateEntity($entity, $data, $where);
+        $updated = $this->daoGeneric->updateEntity($entity, $data, $where);
         if ($updated != 1) {
             throw  new \Exception("Data inconsistency on return qty to catalog inventory item ($stockItemId/$qty).");
         }
@@ -185,7 +185,7 @@ class Delete
         $byProd = Cfg::E_CATINV_STOCK_STATUS_A_PROD_ID . '=' . (int)$prodId;
         $byStock = Cfg::E_CATINV_STOCK_STATUS_A_STOCK_ID . '=' . (int)$stockId;
         $where = "($byProd) AND ($byStock)";
-        $updated = $this->repoGeneric->updateEntity($entity, $data, $where);
+        $updated = $this->daoGeneric->updateEntity($entity, $data, $where);
         if ($updated != 1) {
             throw  new \Exception("Data inconsistency on return qty to catalog inventory status ($prodId/$stockId/$qty).");
         }
@@ -199,7 +199,7 @@ class Delete
         $byStock = EQty::A_STOCK_ITEM_REF . '=' . (int)$stockItemId;
         $byLot = EQty::A_LOT_REF . '=' . (int)$lotId;
         $where = "($byStock) AND ($byLot)";
-        $updated = $this->repoQty->update($data, $where);
+        $updated = $this->daoQty->update($data, $where);
         if ($updated != 1) {
             throw  new \Exception("Data inconsistency on return qty to warehouse lot ($stockItemId/$lotId/$qty).");
         }
