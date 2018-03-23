@@ -38,7 +38,7 @@ class StockStatusCollectionInterfaceFactory
         $select = $query->getSelectSql();
         /* add "SUM(prxgtQty.total) AS qty" to select */
         $select->columns([
-            EntityStockStatus::KEY_QTY => 'SUM(' . self::AS_TBL_QTY . '.' . EntityQty::ATTR_TOTAL . ')'
+            EntityStockStatus::KEY_QTY => 'SUM(' . self::AS_TBL_QTY . '.' . EntityQty::A_TOTAL . ')'
         ]);
         /* LEFT JOIN cataloginventory_stock_item */
         $tbl = [self::AS_TBL_STOCK_ITEM => $this->resource->getTableName(EntityStockItem::ENTITY)];
@@ -51,7 +51,7 @@ class StockStatusCollectionInterfaceFactory
         /* LEFT JOIN prxgt_wrhs_qty */
         $tbl = [self::AS_TBL_QTY => $this->resource->getTableName(EntityQty::ENTITY_NAME)];
         $cols = [];
-        $on = self::AS_TBL_QTY . '.' . EntityQty::ATTR_STOCK_ITEM_REF . '='
+        $on = self::AS_TBL_QTY . '.' . EntityQty::A_STOCK_ITEM_REF . '='
             . self::AS_TBL_STOCK_ITEM . '.' . EntityStockItem::ITEM_ID;
         $select->joinLeft($tbl, $on, $cols);
         /* WHERE: filter by $stockId  */

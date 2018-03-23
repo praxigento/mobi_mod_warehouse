@@ -8,8 +8,8 @@ namespace Praxigento\Warehouse\Repo\Data\Stock;
 class Item
     extends \Praxigento\Core\App\Repo\Data\Entity\Base
 {
-    const ATTR_PRICE = 'price';
-    const ATTR_STOCK_ITEM_REF = 'stock_item_ref';
+    const A_PRICE = 'price';
+    const A_STOCK_ITEM_REF = 'stock_item_ref';
     const ENTITY_NAME = 'prxgt_wrhs_stock_item';
 
     /**
@@ -17,7 +17,7 @@ class Item
      */
     public function getPrice()
     {
-        $result = parent::get(self::ATTR_PRICE);
+        $result = parent::get(self::A_PRICE);
         return $result;
     }
 
@@ -26,7 +26,7 @@ class Item
      */
     public static function getPrimaryKeyAttrs()
     {
-        return [self::ATTR_STOCK_ITEM_REF];
+        return [self::A_STOCK_ITEM_REF];
     }
 
     /**
@@ -34,7 +34,7 @@ class Item
      */
     public function getStockItemRef()
     {
-        $result = parent::get(self::ATTR_STOCK_ITEM_REF);
+        $result = parent::get(self::A_STOCK_ITEM_REF);
         return $result;
     }
 
@@ -43,7 +43,7 @@ class Item
      */
     public function setPrice($data)
     {
-        parent::set(self::ATTR_PRICE, $data);
+        parent::set(self::A_PRICE, $data);
     }
 
     /**
@@ -51,7 +51,7 @@ class Item
      */
     public function setStockItemRef($data)
     {
-        parent::set(self::ATTR_STOCK_ITEM_REF, $data);
+        parent::set(self::A_STOCK_ITEM_REF, $data);
     }
 
 }

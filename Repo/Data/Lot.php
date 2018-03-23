@@ -8,9 +8,9 @@ namespace Praxigento\Warehouse\Repo\Data;
 class Lot
     extends \Praxigento\Core\App\Repo\Data\Entity\Base
 {
-    const ATTR_CODE = 'code';
-    const ATTR_EXP_DATE = 'exp_date';
-    const ATTR_ID = 'id';
+    const A_CODE = 'code';
+    const A_EXP_DATE = 'exp_date';
+    const A_ID = 'id';
     const ENTITY_NAME = 'prxgt_wrhs_lot';
 
     /**
@@ -18,7 +18,7 @@ class Lot
      */
     public function getCode()
     {
-        $result = parent::get(self::ATTR_CODE);
+        $result = parent::get(self::A_CODE);
         return $result;
     }
 
@@ -27,7 +27,7 @@ class Lot
      */
     public function getExpDate()
     {
-        $result = parent::get(self::ATTR_EXP_DATE);
+        $result = parent::get(self::A_EXP_DATE);
         return $result;
     }
 
@@ -36,7 +36,7 @@ class Lot
      */
     public function getId()
     {
-        $result = parent::get(self::ATTR_ID);
+        $result = parent::get(self::A_ID);
         return $result;
     }
 
@@ -45,7 +45,7 @@ class Lot
      */
     public static function getPrimaryKeyAttrs()
     {
-        return [self::ATTR_ID];
+        return [self::A_ID];
     }
 
     /**
@@ -53,7 +53,7 @@ class Lot
      */
     public function setCode($data)
     {
-        parent::set(self::ATTR_CODE, $data);
+        parent::set(self::A_CODE, $data);
     }
 
     /**
@@ -61,7 +61,7 @@ class Lot
      */
     public function setExpDate($data)
     {
-        parent::set(self::ATTR_EXP_DATE, $data);
+        parent::set(self::A_EXP_DATE, $data);
     }
 
     /**
@@ -69,6 +69,6 @@ class Lot
      */
     public function setId($data)
     {
-        parent::set(self::ATTR_ID, $data);
+        parent::set(self::A_ID, $data);
     }
 }

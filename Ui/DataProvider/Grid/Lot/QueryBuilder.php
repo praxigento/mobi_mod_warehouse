@@ -25,9 +25,9 @@ class QueryBuilder
     {
         if (is_null($this->mapper)) {
             $map = [
-                self::A_ID => self::AS_LOT . '.' . ELot::ATTR_ID,
-                self::A_EXP_DATE => self::AS_LOT . '.' . ELot::ATTR_EXP_DATE,
-                self::A_CODE => self::AS_LOT . '.' . ELot::ATTR_CODE
+                self::A_ID => self::AS_LOT . '.' . ELot::A_ID,
+                self::A_EXP_DATE => self::AS_LOT . '.' . ELot::A_EXP_DATE,
+                self::A_CODE => self::AS_LOT . '.' . ELot::A_CODE
             ];
             $this->mapper = new \Praxigento\Core\App\Repo\Query\Criteria\Def\Mapper($map);
         }
@@ -45,9 +45,9 @@ class QueryBuilder
         $tbl = $this->resource->getTableName(ELot::ENTITY_NAME);
         $as = $asLot;
         $cols = [
-            self::A_ID => ELot::ATTR_ID,
-            self::A_EXP_DATE => ELot::ATTR_EXP_DATE,
-            self::A_CODE => ELot::ATTR_CODE
+            self::A_ID => ELot::A_ID,
+            self::A_EXP_DATE => ELot::A_EXP_DATE,
+            self::A_CODE => ELot::A_CODE
         ];
         $result->from([$as => $tbl], $cols);
 
@@ -60,7 +60,7 @@ class QueryBuilder
         /** @var \Magento\Framework\DB\Select $result */
         $result = $this->getQueryItems();
         /* ... then replace "columns" part with own expression */
-        $value = 'COUNT(' . self::AS_LOT . '.' . ELot::ATTR_ID . ')';
+        $value = 'COUNT(' . self::AS_LOT . '.' . ELot::A_ID . ')';
 
         /**
          * See method \Magento\Framework\DB\Select\ColumnsRenderer::render:

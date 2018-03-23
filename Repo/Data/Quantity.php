@@ -8,9 +8,9 @@ namespace Praxigento\Warehouse\Repo\Data;
 class Quantity
     extends \Praxigento\Core\App\Repo\Data\Entity\Base
 {
-    const ATTR_LOT_REF = 'lot_ref';
-    const ATTR_STOCK_ITEM_REF = 'stock_item_ref';
-    const ATTR_TOTAL = 'total';
+    const A_LOT_REF = 'lot_ref';
+    const A_STOCK_ITEM_REF = 'stock_item_ref';
+    const A_TOTAL = 'total';
     const ENTITY_NAME = 'prxgt_wrhs_qty';
 
     /**
@@ -18,7 +18,7 @@ class Quantity
      */
     public function getLotRef()
     {
-        $result = parent::get(self::ATTR_LOT_REF);
+        $result = parent::get(self::A_LOT_REF);
         return $result;
     }
 
@@ -27,7 +27,7 @@ class Quantity
      */
     public static function getPrimaryKeyAttrs()
     {
-        return [self::ATTR_STOCK_ITEM_REF, self::ATTR_LOT_REF];
+        return [self::A_STOCK_ITEM_REF, self::A_LOT_REF];
     }
 
     /**
@@ -35,7 +35,7 @@ class Quantity
      */
     public function getStockItemRef()
     {
-        $result = parent::get(self::ATTR_STOCK_ITEM_REF);
+        $result = parent::get(self::A_STOCK_ITEM_REF);
         return $result;
     }
 
@@ -44,7 +44,7 @@ class Quantity
      */
     public function getTotal()
     {
-        $result = parent::get(self::ATTR_TOTAL);
+        $result = parent::get(self::A_TOTAL);
         return $result;
     }
 
@@ -53,7 +53,7 @@ class Quantity
      */
     public function setLotRef($data)
     {
-        parent::set(self::ATTR_LOT_REF, $data);
+        parent::set(self::A_LOT_REF, $data);
     }
 
     /**
@@ -61,7 +61,7 @@ class Quantity
      */
     public function setStockItemRef($data)
     {
-        parent::set(self::ATTR_STOCK_ITEM_REF, $data);
+        parent::set(self::A_STOCK_ITEM_REF, $data);
     }
 
     /**
@@ -69,6 +69,6 @@ class Quantity
      */
     public function setTotal($data)
     {
-        parent::set(self::ATTR_TOTAL, $data);
+        parent::set(self::A_TOTAL, $data);
     }
 }

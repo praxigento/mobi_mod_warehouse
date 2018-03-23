@@ -35,7 +35,7 @@ class Grid
     public function getEquationQty()
     {
         $tbl = $this->_resource->getTableName(self::TBL_WRHS_QTY);
-        $result = 'SUM(`' . $tbl . '`.`' . Quantity::ATTR_TOTAL . '`)';
+        $result = 'SUM(`' . $tbl . '`.`' . Quantity::A_TOTAL . '`)';
         return $result;
     }
 
@@ -56,7 +56,7 @@ class Grid
         $fldStockItemId = StockItem::ITEM_ID;
         $fldEntityId = \Magento\Eav\Model\Entity::DEFAULT_ENTITY_ID_FIELD;
         $fldQty = self::FLD_QTY;
-        $fldStockItemRef = Quantity::ATTR_STOCK_ITEM_REF;
+        $fldStockItemRef = Quantity::A_STOCK_ITEM_REF;
 
         /* LEFT JOIN `cataloginventory_stock_item` */
         $on = "`$tblStockItem`.`$fldStockItemProdId`=`$tblEntity`.`$fldEntityId`";

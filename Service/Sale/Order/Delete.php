@@ -112,7 +112,7 @@ class Delete
      */
     private function getSaleItemQty($saleItemId)
     {
-        $where = EQtySale::ATTR_SALE_ITEM_REF . '=' . (int)$saleItemId;
+        $where = EQtySale::A_SALE_ITEM_REF . '=' . (int)$saleItemId;
         $result = $this->repoQtySale->get($where);
         return $result;
     }
@@ -159,7 +159,7 @@ class Delete
 
     private function removeSaleItemQty($saleItemId)
     {
-        $where = EQtySale::ATTR_SALE_ITEM_REF . '=' . (int)$saleItemId;
+        $where = EQtySale::A_SALE_ITEM_REF . '=' . (int)$saleItemId;
         $this->repoQtySale->delete($where);
     }
 
@@ -193,11 +193,11 @@ class Delete
 
     private function returnQtyToLot($stockItemId, $lotId, $qty)
     {
-        $exp = '(`' . EQty::ATTR_TOTAL . '`+' . abs((float)$qty) . ')';
+        $exp = '(`' . EQty::A_TOTAL . '`+' . abs((float)$qty) . ')';
         $exp = new AnExpression($exp);
-        $data = [EQty::ATTR_TOTAL => $exp];
-        $byStock = EQty::ATTR_STOCK_ITEM_REF . '=' . (int)$stockItemId;
-        $byLot = EQty::ATTR_LOT_REF . '=' . (int)$lotId;
+        $data = [EQty::A_TOTAL => $exp];
+        $byStock = EQty::A_STOCK_ITEM_REF . '=' . (int)$stockItemId;
+        $byLot = EQty::A_LOT_REF . '=' . (int)$lotId;
         $where = "($byStock) AND ($byLot)";
         $updated = $this->repoQty->update($data, $where);
         if ($updated != 1) {

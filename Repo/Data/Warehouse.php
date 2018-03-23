@@ -8,11 +8,11 @@ namespace Praxigento\Warehouse\Repo\Data;
 class Warehouse
     extends \Praxigento\Core\App\Repo\Data\Entity\Base
 {
-    const ATTR_CODE = 'code';
-    const ATTR_COUNTRY_CODE = 'country_code';
-    const ATTR_CURRENCY = 'currency';
-    const ATTR_NOTE = 'note';
-    const ATTR_STOCK_REF = 'stock_ref';
+    const A_CODE = 'code';
+    const A_COUNTRY_CODE = 'country_code';
+    const A_CURRENCY = 'currency';
+    const A_NOTE = 'note';
+    const A_STOCK_REF = 'stock_ref';
     const ENTITY_NAME = 'prxgt_wrhs_wrhs';
 
     /**
@@ -20,7 +20,7 @@ class Warehouse
      */
     public function getCode()
     {
-        $result = parent::get(self::ATTR_CODE);
+        $result = parent::get(self::A_CODE);
         return $result;
     }
 
@@ -29,7 +29,7 @@ class Warehouse
      */
     public function getCountryCode()
     {
-        $result = parent::get(self::ATTR_COUNTRY_CODE);
+        $result = parent::get(self::A_COUNTRY_CODE);
         return $result;
     }
 
@@ -38,7 +38,7 @@ class Warehouse
      */
     public function getCurrency()
     {
-        $result = parent::get(self::ATTR_CURRENCY);
+        $result = parent::get(self::A_CURRENCY);
         return $result;
     }
 
@@ -47,14 +47,14 @@ class Warehouse
      */
     public function getNote()
     {
-        $result = parent::get(self::ATTR_NOTE);
+        $result = parent::get(self::A_NOTE);
         return $result;
     }
 
     /** @inheritdoc */
     public static function getPrimaryKeyAttrs()
     {
-        return [self::ATTR_STOCK_REF];
+        return [self::A_STOCK_REF];
     }
 
     /**
@@ -62,7 +62,7 @@ class Warehouse
      */
     public function getStockRef()
     {
-        $result = parent::get(self::ATTR_STOCK_REF);
+        $result = parent::get(self::A_STOCK_REF);
         return $result;
     }
 
@@ -71,7 +71,7 @@ class Warehouse
      */
     public function setCode($data)
     {
-        parent::set(self::ATTR_CODE, $data);
+        parent::set(self::A_CODE, $data);
     }
 
     /**
@@ -79,7 +79,7 @@ class Warehouse
      */
     public function setCountryCode($data)
     {
-        parent::set(self::ATTR_COUNTRY_CODE, $data);
+        parent::set(self::A_COUNTRY_CODE, $data);
     }
 
     /**
@@ -87,7 +87,7 @@ class Warehouse
      */
     public function setCurrency($data)
     {
-        parent::set(self::ATTR_CURRENCY, $data);
+        parent::set(self::A_CURRENCY, $data);
     }
 
     /**
@@ -95,7 +95,7 @@ class Warehouse
      */
     public function setNote($data)
     {
-        parent::set(self::ATTR_NOTE, $data);
+        parent::set(self::A_NOTE, $data);
     }
 
     /**
@@ -103,6 +103,6 @@ class Warehouse
      */
     public function setStockRef($data)
     {
-        parent::set(self::ATTR_STOCK_REF, $data);
+        parent::set(self::A_STOCK_REF, $data);
     }
 }

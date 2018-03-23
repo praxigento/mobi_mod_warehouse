@@ -51,20 +51,20 @@ class Get
         $tbl = $this->resource->getTableName(EQuantity::ENTITY_NAME);
         $as = $asQty;
         $cols = [
-            self::A_QTY => EQuantity::ATTR_TOTAL
+            self::A_QTY => EQuantity::A_TOTAL
         ];
-        $cond = $as . '.' . EQuantity::ATTR_STOCK_ITEM_REF . '=' . $asStockItem . '.' . Cfg::E_CATINV_STOCK_ITEM_A_ITEM_ID;
+        $cond = $as . '.' . EQuantity::A_STOCK_ITEM_REF . '=' . $asStockItem . '.' . Cfg::E_CATINV_STOCK_ITEM_A_ITEM_ID;
         $result->joinLeft([$as => $tbl], $cond, $cols);
 
         /* LEFT JOIN prxgt_wrhs_lot */
         $tbl = $this->resource->getTableName(ELot::ENTITY_NAME);
         $as = $asLot;
         $cols = [
-            self::A_LOT_ID => ELot::ATTR_ID,
-            self::A_LOT_CODE => ELot::ATTR_CODE,
-            self::A_LOT_EXP_DATE => ELot::ATTR_EXP_DATE
+            self::A_LOT_ID => ELot::A_ID,
+            self::A_LOT_CODE => ELot::A_CODE,
+            self::A_LOT_EXP_DATE => ELot::A_EXP_DATE
         ];
-        $cond = $as . '.' . ELot::ATTR_ID . '=' . $asQty . '.' . EQuantity::ATTR_LOT_REF;
+        $cond = $as . '.' . ELot::A_ID . '=' . $asQty . '.' . EQuantity::A_LOT_REF;
         $result->joinLeft([$as => $tbl], $cond, $cols);
 
         /* query tuning */
@@ -72,7 +72,7 @@ class Get
             ' AND ' . $asStockItem . '.' . Cfg::E_CATINV_STOCK_ITEM_A_STOCK_ID . '=:' . self::BND_STOCK_ID);
 
         /* order by */
-        $order = $asLot . '.' . ELot::ATTR_EXP_DATE . ' ASC';
+        $order = $asLot . '.' . ELot::A_EXP_DATE . ' ASC';
         $result->order($order);
         return $result;
     }

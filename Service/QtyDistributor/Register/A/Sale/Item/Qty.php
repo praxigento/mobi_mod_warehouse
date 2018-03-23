@@ -46,28 +46,28 @@ class Qty
             $lotId = $lot[AGet::A_LOT_ID];
             $qty = $lot[AGet::A_QTY];
             $qtyPk = [
-                EQuantity::ATTR_STOCK_ITEM_REF => $stockItemId,
-                EQuantity::ATTR_LOT_REF => $lotId
+                EQuantity::A_STOCK_ITEM_REF => $stockItemId,
+                EQuantity::A_LOT_REF => $lotId
             ];
             if ($rest < $qty) {
                 /* lot's $qty is greater than $total (or $rest) */
                 $qtySaleData = [
-                    EQtySale::ATTR_SALE_ITEM_REF => $saleItemId,
-                    EQtySale::ATTR_LOT_REF => $lotId,
-                    EQtySale::ATTR_TOTAL => $rest
+                    EQtySale::A_SALE_ITEM_REF => $saleItemId,
+                    EQtySale::A_LOT_REF => $lotId,
+                    EQtySale::A_TOTAL => $rest
                 ];
                 $this->repoQtySale->create($qtySaleData);
                 /* decrease lot's qty */
                 $qtyRest = $qty - $rest;
-                $qtyUpdateData = [EQuantity::ATTR_TOTAL => $qtyRest];
+                $qtyUpdateData = [EQuantity::A_TOTAL => $qtyRest];
                 $this->repoQty->updateById($qtyPk, $qtyUpdateData);
                 break;
             } else {
                 /* lot's $qty is less or equal to $total (or $rest) */
                 $qtySaleData = [
-                    EQtySale::ATTR_SALE_ITEM_REF => $saleItemId,
-                    EQtySale::ATTR_LOT_REF => $lotId,
-                    EQtySale::ATTR_TOTAL => $qty
+                    EQtySale::A_SALE_ITEM_REF => $saleItemId,
+                    EQtySale::A_LOT_REF => $lotId,
+                    EQtySale::A_TOTAL => $qty
                 ];
                 $this->repoQtySale->create($qtySaleData);
                 /* delete zero quantity records from 'prxgt_wrhs_qty' */

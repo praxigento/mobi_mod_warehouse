@@ -25,7 +25,7 @@ class Quantity
      */
     public function getByStockItemId($stockItemId)
     {
-        $where = Entity::ATTR_STOCK_ITEM_REF . '=' . (int)$stockItemId;
+        $where = Entity::A_STOCK_ITEM_REF . '=' . (int)$stockItemId;
         $result = $this->get($where);
         return $result;
     }

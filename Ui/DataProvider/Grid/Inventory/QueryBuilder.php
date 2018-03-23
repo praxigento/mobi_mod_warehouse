@@ -43,13 +43,13 @@ class QueryBuilder
             $map = [
                 self::A_PRODUCT_ID => self::AS_CATALOG_PRODUCT_ENTITY . '.' . Cfg::E_PRODUCT_A_ENTITY_ID,
                 self::A_SKU => self::AS_CATALOG_PRODUCT_ENTITY . '.' . Cfg::E_PRODUCT_A_SKU,
-                self::A_STOCK_REF => self::AS_PRXGT_WRHS_WRHS . '.' . EWarehouse::ATTR_STOCK_REF,
-                self::A_WRHS_CODE => self::AS_PRXGT_WRHS_WRHS . '.' . EWarehouse::ATTR_CODE,
-                self::A_PRICE => self::AS_PRXGT_WRHS_STOCK_ITEM . '.' . EItem::ATTR_PRICE,
-                self::A_CURRENCY => self::AS_PRXGT_WRHS_WRHS . '.' . EWarehouse::ATTR_CURRENCY,
-                self::A_LOT_CODE => self::AS_PRXGT_WRHS_LOT . '.' . ELot::ATTR_CODE,
-                self::A_EXP_DATE => self::AS_PRXGT_WRHS_LOT . '.' . ELot::ATTR_EXP_DATE,
-                self::A_TOTAL => self::AS_PRXGT_WRHS_QTY . '.' . EQuantity::ATTR_TOTAL
+                self::A_STOCK_REF => self::AS_PRXGT_WRHS_WRHS . '.' . EWarehouse::A_STOCK_REF,
+                self::A_WRHS_CODE => self::AS_PRXGT_WRHS_WRHS . '.' . EWarehouse::A_CODE,
+                self::A_PRICE => self::AS_PRXGT_WRHS_STOCK_ITEM . '.' . EItem::A_PRICE,
+                self::A_CURRENCY => self::AS_PRXGT_WRHS_WRHS . '.' . EWarehouse::A_CURRENCY,
+                self::A_LOT_CODE => self::AS_PRXGT_WRHS_LOT . '.' . ELot::A_CODE,
+                self::A_EXP_DATE => self::AS_PRXGT_WRHS_LOT . '.' . ELot::A_EXP_DATE,
+                self::A_TOTAL => self::AS_PRXGT_WRHS_QTY . '.' . EQuantity::A_TOTAL
             ];
             $this->mapper = new \Praxigento\Core\App\Repo\Query\Criteria\Def\Mapper($map);
         }
@@ -90,39 +90,39 @@ class QueryBuilder
         $tbl = $this->resource->getTableName(EWarehouse::ENTITY_NAME);
         $as = $asPrxgtWrhWrh;
         $cols = [
-            self::A_STOCK_REF => EWarehouse::ATTR_STOCK_REF,
-            self::A_WRHS_CODE => EWarehouse::ATTR_CODE,
-            self::A_CURRENCY => EWarehouse::ATTR_CURRENCY
+            self::A_STOCK_REF => EWarehouse::A_STOCK_REF,
+            self::A_WRHS_CODE => EWarehouse::A_CODE,
+            self::A_CURRENCY => EWarehouse::A_CURRENCY
         ];
-        $cond = $as . '.' . EWarehouse::ATTR_STOCK_REF . '=' . $asCatInvStock . '.' . Cfg::E_CATINV_STOCK_ITEM_A_STOCK_ID;
+        $cond = $as . '.' . EWarehouse::A_STOCK_REF . '=' . $asCatInvStock . '.' . Cfg::E_CATINV_STOCK_ITEM_A_STOCK_ID;
         $result->joinLeft([$as => $tbl], $cond, $cols);
 
         /* LEFT JOIN prxgt_wrhs_stock_item */
         $tbl = $this->resource->getTableName(EItem::ENTITY_NAME);
         $as = $asPrxgtWrhStockItem;
         $cols = [
-            self::A_PRICE => EItem::ATTR_PRICE
+            self::A_PRICE => EItem::A_PRICE
         ];
-        $cond = $as . '.' . EItem::ATTR_STOCK_ITEM_REF . '=' . $asCatInvStock . '.' . Cfg::E_CATINV_STOCK_ITEM_A_ITEM_ID;
+        $cond = $as . '.' . EItem::A_STOCK_ITEM_REF . '=' . $asCatInvStock . '.' . Cfg::E_CATINV_STOCK_ITEM_A_ITEM_ID;
         $result->joinLeft([$as => $tbl], $cond, $cols);
 
         /* LEFT JOIN prxgt_wrhs_qty */
         $tbl = $this->resource->getTableName(EQuantity::ENTITY_NAME);
         $as = $asPrxgtWrhQty;
         $cols = [
-            self::A_TOTAL => EQuantity::ATTR_TOTAL
+            self::A_TOTAL => EQuantity::A_TOTAL
         ];
-        $cond = $as . '.' . EQuantity::ATTR_STOCK_ITEM_REF . '=' . $asCatInvStock . '.' . Cfg::E_CATINV_STOCK_ITEM_A_ITEM_ID;
+        $cond = $as . '.' . EQuantity::A_STOCK_ITEM_REF . '=' . $asCatInvStock . '.' . Cfg::E_CATINV_STOCK_ITEM_A_ITEM_ID;
         $result->joinLeft([$as => $tbl], $cond, $cols);
 
         /* LEFT JOIN prxgt_wrhs_lot */
         $tbl = $this->resource->getTableName(ELot::ENTITY_NAME);
         $as = $asPrxgtWrhLot;
         $cols = [
-            self::A_LOT_CODE => ELot::ATTR_CODE,
-            self::A_EXP_DATE => ELot::ATTR_EXP_DATE
+            self::A_LOT_CODE => ELot::A_CODE,
+            self::A_EXP_DATE => ELot::A_EXP_DATE
         ];
-        $cond = $as . '.' . ELot::ATTR_ID . '=' . $asPrxgtWrhQty . '.' . EQuantity::ATTR_LOT_REF;
+        $cond = $as . '.' . ELot::A_ID . '=' . $asPrxgtWrhQty . '.' . EQuantity::A_LOT_REF;
         $result->joinLeft([$as => $tbl], $cond, $cols);
 
         return $result;

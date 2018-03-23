@@ -33,9 +33,9 @@ class QueryBuilder
                 self::A_ID => self::AS_STOCK . '.' . Cfg::E_CATINV_STOCK_A_STOCK_ID,
                 self::A_CODE => self::AS_STOCK . '.' . Cfg::E_CATINV_STOCK_A_STOCK_NAME,
                 self::A_WEBSITE_ID => self::AS_STOCK . '.' . Cfg::E_CATINV_STOCK_A_WEBSITE_ID,
-                self::A_CURRENCY => self::AS_WRHS . '.' . EWarehouse::ATTR_CURRENCY,
-                self::A_COUNTRY_CODE => self::AS_WRHS . '.' . EWarehouse::ATTR_COUNTRY_CODE,
-                self::A_NOTE => self::AS_WRHS . '.' . EWarehouse::ATTR_NOTE
+                self::A_CURRENCY => self::AS_WRHS . '.' . EWarehouse::A_CURRENCY,
+                self::A_COUNTRY_CODE => self::AS_WRHS . '.' . EWarehouse::A_COUNTRY_CODE,
+                self::A_NOTE => self::AS_WRHS . '.' . EWarehouse::A_NOTE
             ];
             $this->mapper = new \Praxigento\Core\App\Repo\Query\Criteria\Def\Mapper($map);
         }
@@ -63,11 +63,11 @@ class QueryBuilder
         /* LEFT JOIN prxgt_wrhs_wrhs */
         $tbl = $this->resource->getTableName(EWarehouse::ENTITY_NAME);
         $as = $asWrhs;
-        $cond = $asWrhs . '.' . EWarehouse::ATTR_STOCK_REF . '=' . $asStock . '.' . Cfg::E_CATINV_STOCK_A_STOCK_ID;
+        $cond = $asWrhs . '.' . EWarehouse::A_STOCK_REF . '=' . $asStock . '.' . Cfg::E_CATINV_STOCK_A_STOCK_ID;
         $cols = [
-            self::A_CURRENCY => EWarehouse::ATTR_CURRENCY,
-            self::A_COUNTRY_CODE => EWarehouse::ATTR_COUNTRY_CODE,
-            self::A_NOTE => EWarehouse::ATTR_NOTE
+            self::A_CURRENCY => EWarehouse::A_CURRENCY,
+            self::A_COUNTRY_CODE => EWarehouse::A_COUNTRY_CODE,
+            self::A_NOTE => EWarehouse::A_NOTE
         ];
         $result->joinLeft([$as => $tbl], $cond, $cols);
         return $result;

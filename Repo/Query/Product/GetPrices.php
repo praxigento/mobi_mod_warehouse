@@ -53,9 +53,9 @@ class GetPrices
         $tbl = $this->resource->getTableName(self::E_WRHS_ITEM);
         $as = $asWrhsItem;
         $cols = [
-            self::A_WRHS_PRICE => EWrhsStockItem::ATTR_PRICE
+            self::A_WRHS_PRICE => EWrhsStockItem::A_PRICE
         ];
-        $cond = $as . '.' . EWrhsStockItem::ATTR_STOCK_ITEM_REF . '='
+        $cond = $as . '.' . EWrhsStockItem::A_STOCK_ITEM_REF . '='
             . $asStockItem . '.' . Cfg::E_CATINV_STOCK_ITEM_A_ITEM_ID;
         $result->joinLeft([$as => $tbl], $cond, $cols);
 
@@ -63,16 +63,16 @@ class GetPrices
         $tbl = $this->resource->getTableName(self::E_WRHS_GROUP);
         $as = $asWrhsGroup;
         $cols = [
-            self::A_WRHS_GROUP_PRICE => EGroupPrice::ATTR_PRICE
+            self::A_WRHS_GROUP_PRICE => EGroupPrice::A_PRICE
         ];
-        $cond = $as . '.' . EGroupPrice::ATTR_STOCK_ITEM_REF . '='
+        $cond = $as . '.' . EGroupPrice::A_STOCK_ITEM_REF . '='
             . $asStockItem . '.' . Cfg::E_CATINV_STOCK_ITEM_A_ITEM_ID;
         $result->joinLeft([$as => $tbl], $cond, $cols);
 
         /* query tuning */
         $byProdId = "$asStockItem." . Cfg::E_CATINV_STOCK_ITEM_A_PROD_ID . '=:' . self::BND_PROD_ID;
         $byStockId = "$asStockItem." . Cfg::E_CATINV_STOCK_ITEM_A_STOCK_ID . '=:' . self::BND_STOCK_ID;
-        $byGroupId = "$asWrhsGroup." . EGroupPrice::ATTR_CUST_GROUP_REF . '=:' . self::BND_GROUP_ID;
+        $byGroupId = "$asWrhsGroup." . EGroupPrice::A_CUST_GROUP_REF . '=:' . self::BND_GROUP_ID;
         $result->where("($byProdId) AND ($byStockId) AND ($byGroupId)");
 
         return $result;

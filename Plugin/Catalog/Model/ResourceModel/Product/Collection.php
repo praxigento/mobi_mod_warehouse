@@ -184,12 +184,12 @@ class Collection
                 /* LEFT JOIN prxgt_wrhs_group_price */
                 $tbl = $this->resource->getTableName(EGroupPrice::ENTITY_NAME);
                 $as = self::AS_WRHS_GROUP_PRICE;
-                $cols = [AWrhsProd::A_PRICE_WRHS_GROUP => EGroupPrice::ATTR_PRICE];
-                $cond = "$as." . EGroupPrice::ATTR_STOCK_ITEM_REF . "=$asCatInv." . Cfg::E_CATINV_STOCK_ITEM_A_ITEM_ID;
+                $cols = [AWrhsProd::A_PRICE_WRHS_GROUP => EGroupPrice::A_PRICE];
+                $cond = "$as." . EGroupPrice::A_STOCK_ITEM_REF . "=$asCatInv." . Cfg::E_CATINV_STOCK_ITEM_A_ITEM_ID;
                 $query->joinLeft([$as => $tbl], $cond, $cols);
                 /* filter by current customer group */
                 $groupId = $this->getCustomerGroup();
-                $byGroup = "$as." . EGroupPrice::ATTR_CUST_GROUP_REF . '=' . (int)$groupId;
+                $byGroup = "$as." . EGroupPrice::A_CUST_GROUP_REF . '=' . (int)$groupId;
                 $query->where($byGroup);
             }
         }
@@ -208,8 +208,8 @@ class Collection
             /* LEFT JOIN prxgt_wrhs_stock_item */
             $tbl = $this->resource->getTableName(EStockItem::ENTITY_NAME);
             $as = self::AS_WRHS_STOCK_ITEM;
-            $cols = [AWrhsProd::A_PRICE_WRHS => EStockItem::ATTR_PRICE];
-            $cond = "$as." . EStockItem::ATTR_STOCK_ITEM_REF . "=$asCatInv." . Cfg::E_CATINV_STOCK_ITEM_A_ITEM_ID;
+            $cols = [AWrhsProd::A_PRICE_WRHS => EStockItem::A_PRICE];
+            $cond = "$as." . EStockItem::A_STOCK_ITEM_REF . "=$asCatInv." . Cfg::E_CATINV_STOCK_ITEM_A_ITEM_ID;
             $query->joinLeft([$as => $tbl], $cond, $cols);
         }
     }

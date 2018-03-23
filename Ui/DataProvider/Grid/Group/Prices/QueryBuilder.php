@@ -44,12 +44,12 @@ class QueryBuilder
             $map = [
                 self::A_PRODUCT_ID => self::AS_CATALOG_PRODUCT_ENTITY . '.' . Cfg::E_PRODUCT_A_ENTITY_ID,
                 self::A_SKU => self::AS_CATALOG_PRODUCT_ENTITY . '.' . Cfg::E_PRODUCT_A_SKU,
-                self::A_STOCK_REF => self::AS_PRXGT_WRHS_WRHS . '.' . EWarehouse::ATTR_STOCK_REF,
-                self::A_WRHS_CODE => self::AS_PRXGT_WRHS_WRHS . '.' . EWarehouse::ATTR_CODE,
-                self::A_PRICE => self::AS_PRXGT_WRHS_STOCK_ITEM . '.' . EItem::ATTR_PRICE,
-                self::A_GROUP_PRICE => self::AS_PRXGT_WRHS_GROUP_PRICE . '.' . EGroupPrice::ATTR_PRICE,
-                self::A_CURRENCY => self::AS_PRXGT_WRHS_WRHS . '.' . EWarehouse::ATTR_CURRENCY,
-                self::A_GROUP_ID => self::AS_PRXGT_WRHS_GROUP_PRICE . '.' . EGroupPrice::ATTR_CUST_GROUP_REF,
+                self::A_STOCK_REF => self::AS_PRXGT_WRHS_WRHS . '.' . EWarehouse::A_STOCK_REF,
+                self::A_WRHS_CODE => self::AS_PRXGT_WRHS_WRHS . '.' . EWarehouse::A_CODE,
+                self::A_PRICE => self::AS_PRXGT_WRHS_STOCK_ITEM . '.' . EItem::A_PRICE,
+                self::A_GROUP_PRICE => self::AS_PRXGT_WRHS_GROUP_PRICE . '.' . EGroupPrice::A_PRICE,
+                self::A_CURRENCY => self::AS_PRXGT_WRHS_WRHS . '.' . EWarehouse::A_CURRENCY,
+                self::A_GROUP_ID => self::AS_PRXGT_WRHS_GROUP_PRICE . '.' . EGroupPrice::A_CUST_GROUP_REF,
                 self::A_CUSTOMER_GROUP_CODE => self::AS_CUSTOMER_GROUP . '.' . Cfg::E_CUSTGROUP_A_CODE
             ];
             $this->mapper = new \Praxigento\Core\App\Repo\Query\Criteria\Def\Mapper($map);
@@ -85,30 +85,30 @@ class QueryBuilder
         $tbl = $this->resource->getTableName(EWarehouse::ENTITY_NAME);
         $as = self::AS_PRXGT_WRHS_WRHS;
         $cols = [
-            self::A_STOCK_REF => EWarehouse::ATTR_STOCK_REF,
-            self::A_WRHS_CODE => EWarehouse::ATTR_CODE,
-            self::A_CURRENCY => EWarehouse::ATTR_CURRENCY
+            self::A_STOCK_REF => EWarehouse::A_STOCK_REF,
+            self::A_WRHS_CODE => EWarehouse::A_CODE,
+            self::A_CURRENCY => EWarehouse::A_CURRENCY
         ];
-        $cond = $as . '.' . EWarehouse::ATTR_STOCK_REF . '=' . self::AS_CATALOG_INVENTORY_STOCK_ITEM . '.' . Cfg::E_CATINV_STOCK_ITEM_A_STOCK_ID;
+        $cond = $as . '.' . EWarehouse::A_STOCK_REF . '=' . self::AS_CATALOG_INVENTORY_STOCK_ITEM . '.' . Cfg::E_CATINV_STOCK_ITEM_A_STOCK_ID;
         $result->joinLeft([$as => $tbl], $cond, $cols);
 
         /* LEFT JOIN prxgt_wrhs_stock_item */
         $tbl = $this->resource->getTableName(EItem::ENTITY_NAME);
         $as = self::AS_PRXGT_WRHS_STOCK_ITEM;
         $cols = [
-            self::A_PRICE => EItem::ATTR_PRICE
+            self::A_PRICE => EItem::A_PRICE
         ];
-        $cond = $as . '.' . EItem::ATTR_STOCK_ITEM_REF . '=' . self::AS_CATALOG_INVENTORY_STOCK_ITEM . '.' . Cfg::E_CATINV_STOCK_ITEM_A_ITEM_ID;
+        $cond = $as . '.' . EItem::A_STOCK_ITEM_REF . '=' . self::AS_CATALOG_INVENTORY_STOCK_ITEM . '.' . Cfg::E_CATINV_STOCK_ITEM_A_ITEM_ID;
         $result->joinLeft([$as => $tbl], $cond, $cols);
 
         /* LEFT JOIN prxgt_wrhs_group_price */
         $tbl = $this->resource->getTableName(EGroupPrice::ENTITY_NAME);
         $as = self::AS_PRXGT_WRHS_GROUP_PRICE;
         $cols = [
-            self::A_GROUP_PRICE => EGroupPrice::ATTR_PRICE,
-            self::A_GROUP_ID => EGroupPrice::ATTR_CUST_GROUP_REF
+            self::A_GROUP_PRICE => EGroupPrice::A_PRICE,
+            self::A_GROUP_ID => EGroupPrice::A_CUST_GROUP_REF
         ];
-        $cond = $as . '.' . EGroupPrice::ATTR_STOCK_ITEM_REF . '=' . self::AS_CATALOG_INVENTORY_STOCK_ITEM . '.' . Cfg::E_CATINV_STOCK_ITEM_A_ITEM_ID;
+        $cond = $as . '.' . EGroupPrice::A_STOCK_ITEM_REF . '=' . self::AS_CATALOG_INVENTORY_STOCK_ITEM . '.' . Cfg::E_CATINV_STOCK_ITEM_A_ITEM_ID;
         $result->joinLeft([$as => $tbl], $cond, $cols);
 
         /* LEFT JOIN customer_group */
@@ -117,7 +117,7 @@ class QueryBuilder
         $cols = [
             self::A_CUSTOMER_GROUP_CODE => Cfg::E_CUSTGROUP_A_CODE
         ];
-        $cond = $as . '.' . Cfg::E_CUSTGROUP_A_ID . '=' . self::AS_PRXGT_WRHS_GROUP_PRICE . '.' . EGroupPrice::ATTR_CUST_GROUP_REF;
+        $cond = $as . '.' . Cfg::E_CUSTGROUP_A_ID . '=' . self::AS_PRXGT_WRHS_GROUP_PRICE . '.' . EGroupPrice::A_CUST_GROUP_REF;
         $result->joinLeft([$as => $tbl], $cond, $cols);
 
         return $result;
