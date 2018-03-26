@@ -1,8 +1,8 @@
 {
-  "name": "praxigento/mobi_mod_mage2_warehouse",
+  "name": "praxigento/mobi_mod_warehouse",
   "description": "MOBI: Praxigento_Warehouse module.",
   "type": "magento2-module",
-  "homepage": "https://github.com/praxigento/mobi_mod_mage2_warehouse",
+  "homepage": "https://github.com/praxigento/mobi_mod_warehouse",
   "license": "MIT",
   "authors": [
     {
@@ -19,6 +19,6 @@
     }
   },
   "require": {
-    "praxigento/mobi_mod_mage2_core": "dev-master"
+    "praxigento/mobi_mod_core": "dev-master"
   }
 }
