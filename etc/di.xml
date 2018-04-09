@@ -93,6 +93,13 @@
                 sortOrder="600" disabled="false"/>
     </type>
 
+    <type name="Magento\Payment\Model\Method\Adapter">
+        <!-- Convert payment amounts from store currency into payment currency. -->
+        <plugin name="prxgt_wrhs_plugin"
+                type="Praxigento\Warehouse\Plugin\Payment\Model\Method\Adapter"
+                sortOrder="600" disabled="false"/>
+    </type>
+
     <type name="Magento\Quote\Model\Quote\Item\AbstractItem">
         <!-- add warehouse & group price to product used in quote item -->
         <plugin name="prxgt_wrhs_plugin"

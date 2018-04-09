@@ -11,6 +11,15 @@ namespace Praxigento\Warehouse\Api\Helper;
 interface  Stock
 {
     /**
+     * Convert $amount according to current $payment details (store currency to payment currency).
+     *
+     * @param \Magento\Payment\Model\InfoInterface $payment
+     * @param float $amount
+     * @return float
+     */
+    public function convertPaymentAmount($payment, $amount);
+
+    /**
      * @return int
      */
     public function getCurrentStockId();
@@ -22,16 +31,16 @@ interface  Stock
     public function getDefaultStockId();
 
     /**
-     * @param int $storeId
-     * @return int
-     */
-    public function getStockIdByStoreId($storeId);
-
-    /**
      * Currency code for store view.
      *
      * @param $storeId
      * @return string
      */
     public function getStockCurrencyByStoreId($storeId);
+
+    /**
+     * @param int $storeId
+     * @return int
+     */
+    public function getStockIdByStoreId($storeId);
 }
