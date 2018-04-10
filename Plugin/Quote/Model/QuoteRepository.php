@@ -6,25 +6,27 @@
 
 namespace Praxigento\Warehouse\Plugin\Quote\Model;
 
-use Praxigento\Warehouse\Config as Cfg;
-
 class QuoteRepository
 {
     private static $counter = 0;
-    /** @var \Praxigento\Core\App\Repo\IGeneric */
-    private $daoGeneric;
+    /** @var \Praxigento\Warehouse\Repo\Dao\Quote */
+    private $daoWrhsQuote;
     /** @var \Praxigento\Warehouse\Api\Helper\Stock */
     private $hlpStock;
+    /** @var \Magento\Framework\Session\SessionManager */
+    private $sessionManager;
     /** @var \Magento\Store\Model\StoreManagerInterface */
     private $storeManager;
 
     public function __construct(
+        \Magento\Framework\Session\SessionManager $sessionManager,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
-        \Praxigento\Core\App\Repo\IGeneric $daoGeneric,
+        \Praxigento\Warehouse\Repo\Dao\Quote $daoWrhsQuote,
         \Praxigento\Warehouse\Api\Helper\Stock $hlpStock
     ) {
+        $this->sessionManager = $sessionManager;
         $this->storeManager = $storeManager;
-        $this->daoGeneric = $daoGeneric;
+        $this->daoWrhsQuote = $daoWrhsQuote;
         $this->hlpStock = $hlpStock;
     }
 
@@ -42,65 +44,37 @@ class QuoteRepository
         \Magento\Quote\Api\Data\CartInterface $result
     ) {
         self::$counter++;
-        /* get store ID for quote from DB */
-        $quoteId = $result->getId();
-        $storeIdQuote = $this->getStoreIdByQuoteId($quoteId);
-        /* get current store ID */
-        $store = $this->storeManager->getStore();
-        $storeIdCurrent = $store->getId();
-
-        $currBase = $result->getBaseCurrencyCode();
-        $quoteCurr = $result->getQuoteCurrencyCode();
-        $storeCurr = $result->getStoreCurrencyCode();
-
-        /* we call to getActive() on total recalc. */
-        if (
-            ($storeIdCurrent != $storeIdQuote) &&
-            (self::$counter >= 1)
-        ) {
-            $result->getQuoteCurrencyCode(null);
-            $this->saveNewStoreId($quoteId, $storeIdCurrent);
+        if (self::$counter <= 1) {
+            /* current store ID is set to quote on load */
+            $quoteId = $result->getId();
+            $storeId = $result->getStoreId();
+            $stockId = $this->hlpStock->getStockIdByStoreId($storeId);
+            /* we need to check original stock ID */
+            $stockIdOrig = $this->getOriginalStoreId($quoteId);
+            if (
+                $stockIdOrig &&
+                ($stockId != $stockIdOrig)
+            ) {
+                /* there is original stock ID in warehouse registry and it is not current stock */
+                /* this exception will be thrown in \Magento\Checkout\Model\Session::getQuote */
+                /* ... and new quote will be created  */
+                throw new \Magento\Framework\Exception\NoSuchEntityException();
+            }
         }
         return $result;
     }
 
     /**
-     * We should directly load storeId for quote, because it is forced
-     * in \Magento\Quote\Model\QuoteRepository::loadQuote
-     *
      * @param int $quoteId
      * @return int
      */
-    private function getStoreIdByQuoteId($quoteId)
+    private function getOriginalStoreId($quoteId)
     {
         $result = 0;
-        $pk = [
-            Cfg::E_QUOTE_A_ENTITY_ID => $quoteId
-        ];
-        $entity = $this->daoGeneric->getEntityByPk(Cfg::ENTITY_MAGE_QUOTE, $pk);
-        if ($entity) {
-            $result = $entity[Cfg::E_QUOTE_A_STORE_ID];
+        $found = $this->daoWrhsQuote->getById($quoteId);
+        if ($found) {
+            $result = $found->getStockRef();
         }
         return $result;
-    }
-
-    private function saveNewStoreId($quoteId, $storeId)
-    {
-        /* update store_id in quote */
-        $bind = [
-            Cfg::E_QUOTE_A_STORE_ID => $storeId
-        ];
-        $pk = [
-            Cfg::E_QUOTE_A_ENTITY_ID => $quoteId
-        ];
-        $updated = $this->daoGeneric->updateEntityById(Cfg::ENTITY_MAGE_QUOTE, $bind, $pk);
-        if ($updated) {
-            /* update store_id in quote items */
-            $bind = [
-                Cfg::E_QUOTE_ITEM_A_STORE_ID => $storeId
-            ];
-            $where = Cfg::E_QUOTE_ITEM_A_QUOTE_ID . '=' . (int)$quoteId;
-            $this->daoGeneric->updateEntity(Cfg::ENTITY_MAGE_QUOTE_ITEM, $bind, $where);
-        }
     }
 }

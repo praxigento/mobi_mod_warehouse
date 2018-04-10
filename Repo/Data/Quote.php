@@ -14,7 +14,7 @@ class Quote
 
     public static function getPrimaryKeyAttrs()
     {
-        return [self::A_STOCK_REF, self::A_QUOTE_REF];
+        return [self::A_QUOTE_REF];
     }
 
     /** @return int */
