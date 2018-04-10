@@ -10,6 +10,7 @@ use Praxigento\Warehouse\Repo\Data\Group\Price;
 use Praxigento\Warehouse\Repo\Data\Lot;
 use Praxigento\Warehouse\Repo\Data\Quantity;
 use Praxigento\Warehouse\Repo\Data\Quantity\Sale;
+use Praxigento\Warehouse\Repo\Data\Quote as EQuote;
 use Praxigento\Warehouse\Repo\Data\Stock\Item;
 use Praxigento\Warehouse\Repo\Data\Warehouse;
 
@@ -30,6 +31,10 @@ class InstallSchema extends \Praxigento\Core\App\Setup\Schema\Base
         /* Group Price */
         $demEntity = $demPackage->get('package/Group/entity/Price');
         $this->toolDem->createEntity(Price::ENTITY_NAME, $demEntity);
+
+        /* Quote */
+        $demEntity = $demPackage->get('entity/Quote');
+        $this->toolDem->createEntity(EQuote::ENTITY_NAME, $demEntity);
 
         /* Warehouse */
         $demEntity = $demPackage->get('entity/Warehouse');

@@ -5,10 +5,10 @@
     <!-- ******* -->
     <!-- Plugins -->
     <!-- ******* -->
-    <type name="\Magento\Catalog\Model\Product\Type\Price">
+    <type name="Magento\Catalog\Model\Product\Type\Price">
         <!-- Replace product regular price by warehouse group price or warehouse price -->
         <plugin name="prxgt_wrhs_plugin"
-                type="\Praxigento\Warehouse\Plugin\Catalog\Model\Product\Type\Price"
+                type="Praxigento\Warehouse\Plugin\Catalog\Model\Product\Type\Price"
                 sortOrder="600" disabled="false"/>
     </type>
 
@@ -103,7 +103,14 @@
     <type name="Magento\Quote\Model\Quote\Item\AbstractItem">
         <!-- add warehouse & group price to product used in quote item -->
         <plugin name="prxgt_wrhs_plugin"
-                type="\Praxigento\Warehouse\Plugin\Quote\Model\Quote\Item\AbstractItem"
+                type="Praxigento\Warehouse\Plugin\Quote\Model\Quote\Item\AbstractItem"
+                sortOrder="600" disabled="false"/>
+    </type>
+
+    <type name="Magento\Quote\Model\QuoteRepository">
+        <!-- Synchronize current store_id with quote.store_id and change quote currency if required. -->
+        <plugin name="prxgt_wrhs_plugin"
+                type="Praxigento\Warehouse\Plugin\Quote\Model\QuoteRepository"
                 sortOrder="600" disabled="false"/>
     </type>
 
