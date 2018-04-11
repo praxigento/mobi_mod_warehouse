@@ -418,6 +418,16 @@
                 "alias": "quote",
                 "comment": "Customer should has a different quotes for different stores.",
                 "attribute": {
+                  "QuoteRef": {
+                    "alias": "quote_ref",
+                    "comment": "Reference to the quote.",
+                    "nullable": false,
+                    "type": {
+                      "integer": {
+                        "unsigned": true
+                      }
+                    }
+                  },
                   "StockRef": {
                     "alias": "stock_ref",
                     "comment": "Reference to inventory stock.",
@@ -429,10 +439,10 @@
                       }
                     }
                   },
-                  "QuoteRef": {
-                    "alias": "quote_ref",
-                    "comment": "Reference to the quote.",
-                    "nullable": false,
+                  "CustomerRef": {
+                    "alias": "cust_ref",
+                    "comment": "Reference to the customer (if registered).",
+                    "nullable": true,
                     "type": {
                       "integer": {
                         "unsigned": true
@@ -443,14 +453,29 @@
                 "index": {
                   "PK": {
                     "type": "primary",
-                    "aliases": ["stock_ref", "quote_ref"]
+                    "aliases": ["quote_ref"]
                   },
                   "uniqueQuote": {
                     "type": "unique",
-                    "aliases": ["quote_ref"]
+                    "aliases": ["cust_ref", "stock_ref"]
                   }
                 },
                 "relation": {
+                  "toQuote": {
+                    "own": {
+                      "aliases": ["quote_ref"]
+                    },
+                    "reference": {
+                      "entity": {
+                        "completeAlias": "quote"
+                      },
+                      "aliases": ["entity_id"]
+                    },
+                    "action": {
+                      "delete": "cascade",
+                      "update": "cascade"
+                    }
+                  },
                   "toStock": {
                     "own": {
                       "aliases": ["stock_ref"]
@@ -466,13 +491,13 @@
                       "update": "cascade"
                     }
                   },
-                  "toQuote": {
+                  "toCustomer": {
                     "own": {
-                      "aliases": ["quote_ref"]
+                      "aliases": ["cust_ref"]
                     },
                     "reference": {
                       "entity": {
-                        "completeAlias": "quote"
+                        "completeAlias": "customer_entity"
                       },
                       "aliases": ["entity_id"]
                     },

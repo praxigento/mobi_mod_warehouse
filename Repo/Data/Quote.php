@@ -8,9 +8,17 @@ namespace Praxigento\Warehouse\Repo\Data;
 class Quote
     extends \Praxigento\Core\App\Repo\Data\Entity\Base
 {
+    const A_CUST_REF = 'cust_ref';
     const A_QUOTE_REF = 'quote_ref';
     const A_STOCK_REF = 'stock_ref';
     const ENTITY_NAME = 'prxgt_wrhs_quote';
+
+    /** @return int */
+    public function getCustRef()
+    {
+        $result = parent::get(self::A_CUST_REF);
+        return $result;
+    }
 
     public static function getPrimaryKeyAttrs()
     {
@@ -29,6 +37,12 @@ class Quote
     {
         $result = parent::get(self::A_STOCK_REF);
         return $result;
+    }
+
+    /** @param int $data */
+    public function setCustRef($data)
+    {
+        parent::set(self::A_CUST_REF, $data);
     }
 
     /** @param int $data */

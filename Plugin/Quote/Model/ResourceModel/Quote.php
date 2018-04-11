@@ -40,19 +40,22 @@ class Quote
         \Closure $proceed,
         \Magento\Quote\Model\Quote $object
     ) {
+        /* TODO: remove it if not used */
         $idBefore = $object->getId();
         $result = $proceed($object);
         $isDeleted = $object->isDeleted();
         $isPreventSaving = $object->isPreventSaving();
-        if (!$idBefore && !$isDeleted && !$isPreventSaving) {
-            $id = $object->getId();
-            $storeId = $object->getStoreId();
-            $stockId = $this->hlpStock->getStockIdByStoreId($storeId);
-            $entiy = new EWrhsQuote();
-            $entiy->setQuoteRef($id);
-            $entiy->setStockRef($stockId);
-            $this->daoWrhsQuote->create($entiy);
-        }
+//        if (!$idBefore && !$isDeleted && !$isPreventSaving) {
+//            $id = $object->getId();
+//            $custId = $object->getCustomerId();
+//            $storeId = $object->getStoreId();
+//            $stockId = $this->hlpStock->getStockIdByStoreId($storeId);
+//            $entity = new EWrhsQuote();
+//            $entity->setCustRef($custId);
+//            $entity->setQuoteRef($id);
+//            $entity->setStockRef($stockId);
+//            $this->daoWrhsQuote->create($entity);
+//        }
         return $result;
     }
 }
