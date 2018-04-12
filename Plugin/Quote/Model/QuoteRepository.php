@@ -11,6 +11,8 @@ use Praxigento\Warehouse\Repo\Data\Quote as EWrhsQuote;
 
 class QuoteRepository
 {
+    const SESS_QUOTE_REGISTRY = 'prxgt_quote_registry';
+
     private static $counter = 0;
     /** @var \Praxigento\Core\App\Repo\IGeneric */
     private $daoGeneric;
@@ -18,23 +20,23 @@ class QuoteRepository
     private $daoWrhsQuote;
     /** @var \Praxigento\Warehouse\Api\Helper\Stock */
     private $hlpStock;
-    /** @var \Magento\Framework\Session\SessionManager */
-    private $sessionManager;
+    /** @var \Magento\Checkout\Model\Session */
+    private $sessCheckout;
+    /** @var \Magento\Customer\Model\Session */
+    private $sessCustomer;
     /** @var \Magento\Store\Model\StoreManagerInterface */
     private $storeManager;
-    /** @var \Magento\Customer\Model\Session */
-    private $customerSession;
 
     public function __construct(
-        \Magento\Framework\Session\SessionManager $sessionManager,
-        \Magento\Customer\Model\Session $customerSession,
+        \Magento\Checkout\Model\Session $sessCheckout,
+        \Magento\Customer\Model\Session $sessCustomer,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Praxigento\Core\App\Repo\IGeneric $daoGeneric,
         \Praxigento\Warehouse\Repo\Dao\Quote $daoWrhsQuote,
         \Praxigento\Warehouse\Api\Helper\Stock $hlpStock
     ) {
-        $this->sessionManager = $sessionManager;
-        $this->customerSession = $customerSession;
+        $this->sessCheckout = $sessCheckout;
+        $this->sessCustomer = $sessCustomer;
         $this->storeManager = $storeManager;
         $this->daoGeneric = $daoGeneric;
         $this->daoWrhsQuote = $daoWrhsQuote;
@@ -53,15 +55,16 @@ class QuoteRepository
     public function aroundGetActive(
         \Magento\Quote\Model\QuoteRepository $subject,
         \Closure $proceed,
-        $quoteId
+        $quoteId,
+        array $sharedStoreIds = []
     ) {
         self::$counter++;
         if (self::$counter <= 1) {
-            $found = $this->daoWrhsQuote->getById($quoteId);
+            $found = $this->findQuoteById($quoteId);
             if (!$found) {
                 /* this quote is not registered yet */
                 /** @var \Magento\Quote\Api\Data\CartInterface $result */
-                $result = $proceed($quoteId);
+                $result = $proceed($quoteId, $sharedStoreIds);
                 $custId = $result->getCustomerId();
                 $storeId = $result->getStoreId();
                 $stockId = $this->hlpStock->getStockIdByStoreId($storeId);
@@ -69,23 +72,43 @@ class QuoteRepository
             } else {
                 /* this quote is already registered */
                 $custId = $found->getCustRef();
-                $stockId = $found->getStockRef();
-                /* we need to check original stock ID */
-                $stockIdCurrent = $this->getCurrentStockId();
-                $custIdCurrent = $this->customerSession->getCustomerId();
-                if (
-                    ($stockId != $stockIdCurrent) ||
-                    ($custId != $custIdCurrent)
-                ) {
-                    /* there is original stock ID in warehouse registry and it is not current stock */
-                    /* this exception will be thrown in \Magento\Checkout\Model\Session::getQuote */
-                    /* ... and new quote will be created  */
-                    throw new \Magento\Framework\Exception\NoSuchEntityException();
+                if (is_null($custId)) {
+                    /* anonymous customer, try to find quote ID by stock ID*/
+                    $stockId = $this->getCurrentStockId();
+                    $fromSession = $this->findQuoteByStockIdInSession($stockId);
+                    if ($fromSession) {
+                        $quoteId = $fromSession->getQuoteRef();
+                        $this->sessCheckout->setQuoteId($quoteId);
+                        $result = $proceed($quoteId, $sharedStoreIds);
+                    } else {
+                        /* new empty session */
+                        /* this exception will be caught in \Magento\Checkout\Model\Session::getQuote */
+                        /* ... and new quote will be created  */
+                        $this->sessCheckout->setQuoteId(null);
+                        throw new \Magento\Framework\Exception\NoSuchEntityException();
+                    }
+                } else {
+                    /* authenticated customer, check current stock */
+                    $stockId = $found->getStockRef();
+                    /* we need to check original stock ID */
+                    $stockIdCurrent = $this->getCurrentStockId();
+                    $custIdCurrent = $this->sessCustomer->getCustomerId();
+                    if (
+                        ($stockId != $stockIdCurrent) ||
+                        ($custId != $custIdCurrent)
+                    ) {
+                        /* there is original stock ID in warehouse registry and it is not current stock */
+                        /* this exception will be caught in \Magento\Checkout\Model\Session::getQuote */
+                        /* ... and new quote will be created  */
+                        $this->sessCheckout->setQuoteId(null);
+                        throw new \Magento\Framework\Exception\NoSuchEntityException();
+                    }
+                    $result = $proceed($quoteId, $sharedStoreIds);
                 }
-                $result = $proceed($quoteId);
+
             }
         } else {
-            $result = $proceed($quoteId);
+            $result = $proceed($quoteId, $sharedStoreIds);
         }
         return $result;
     }
@@ -107,6 +130,51 @@ class QuoteRepository
         }
         /* ... then load active quote */
         $result = $proceed($customerId, $sharedStoreIds);
+        return $result;
+    }
+
+    /**
+     * Find quote registry data in DB (authenticated customers) or session (anonymous).
+     *
+     * @param $quoteId
+     * @return bool|\Praxigento\Warehouse\Repo\Data\Quote
+     * @throws \Exception
+     */
+    private function findQuoteById($quoteId)
+    {
+        $result = false;
+        if ($this->isCustomerAuthenticated()) {
+            $result = $this->daoWrhsQuote->getById($quoteId);
+        } else {
+            $sessionReg = $this->sessCustomer->getData(self::SESS_QUOTE_REGISTRY);
+            if (
+                $sessionReg && isset($sessionReg[$quoteId])
+            ) {
+                $result = $sessionReg[$quoteId];
+            }
+        }
+        return $result;
+    }
+
+    /**
+     * Find quote registry data by stock ID in session (for anonymous customers).
+     *
+     * @param $stockId
+     * @return bool|\Praxigento\Warehouse\Repo\Data\Quote
+     */
+    private function findQuoteByStockIdInSession($stockId)
+    {
+        $result = false;
+        $sessionReg = $this->sessCustomer->getData(self::SESS_QUOTE_REGISTRY);
+        if (is_array($sessionReg)) {
+            /** @var EWrhsQuote $one */
+            foreach ($sessionReg as $one) {
+                if ($one->getStockRef() == $stockId) {
+                    $result = $one;
+                    break;
+                }
+            }
+        }
         return $result;
     }
 
@@ -132,13 +200,27 @@ class QuoteRepository
         return $result;
     }
 
+    /** @return bool */
+    private function isCustomerAuthenticated()
+    {
+        $result = $this->sessCustomer->isLoggedIn();
+        return $result;
+    }
+
     private function registerQuote($quoteId, $custId, $stockId)
     {
         $entity = new EWrhsQuote();
         $entity->setCustRef($custId);
         $entity->setQuoteRef($quoteId);
         $entity->setStockRef($stockId);
-        $this->daoWrhsQuote->create($entity);
+        if ($this->isCustomerAuthenticated()) {
+            $this->daoWrhsQuote->create($entity);
+        } else {
+            $quoteReg = $this->sessCustomer->getData(self::SESS_QUOTE_REGISTRY);
+            if (!is_array($quoteReg)) $quoteReg = [];
+            $quoteReg[$quoteId] = $entity;
+            $this->sessCustomer->setData(self::SESS_QUOTE_REGISTRY, $quoteReg);
+        }
     }
 
     private function setQuoteActive($quoteId)

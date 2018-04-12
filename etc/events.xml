@@ -3,7 +3,9 @@
 
     <event name="checkout_submit_all_after">
         <!-- Split total items qty by lots and register it. -->
-        <observer name="praxigento_warehouse_on_checkout_submit_all_after" instance="Praxigento\Warehouse\Observer\CheckoutSubmitAllAfter"/>
+        <!-- Remove placed quote from warehouse registry. -->
+        <observer name="prxgt_wrhs_on_checkout_submit_all_after"
+                  instance="Praxigento\Warehouse\Observer\CheckoutSubmitAllAfter"/>
     </event>
 
 </config>

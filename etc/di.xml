@@ -107,13 +107,6 @@
                 sortOrder="600" disabled="false"/>
     </type>
 
-    <type name="Magento\Quote\Model\ResourceModel\Quote">
-        <!-- Register relation between new quote and stock on save. -->
-        <plugin name="prxgt_wrhs_plugin"
-                type="Praxigento\Warehouse\Plugin\Quote\Model\ResourceModel\Quote"
-                sortOrder="600" disabled="false"/>
-    </type>
-
     <type name="Magento\Quote\Model\QuoteRepository">
         <!-- Check active quote according to current stock and switch quote if stock is changed. -->
         <plugin name="prxgt_wrhs_plugin"

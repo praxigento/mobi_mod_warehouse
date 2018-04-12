@@ -442,7 +442,7 @@
                   "CustomerRef": {
                     "alias": "cust_ref",
                     "comment": "Reference to the customer (if registered).",
-                    "nullable": true,
+                    "nullable": false,
                     "type": {
                       "integer": {
                         "unsigned": true
