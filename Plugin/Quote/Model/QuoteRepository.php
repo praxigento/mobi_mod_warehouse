@@ -129,7 +129,16 @@ class QuoteRepository
             $this->setQuoteActive($found);
         }
         /* ... then load active quote */
+        /** @var \Magento\Quote\Model\Quote $result */
         $result = $proceed($customerId, $sharedStoreIds);
+        /* merge anonymous session if exists */
+        /* TODO: this code is doubt; session should be reset after authentication */
+        $fromSession = $this->findQuoteByStockIdInSession($stockId);
+        if ($fromSession) {
+            $result->merge($fromSession);
+            $quoteIdSess = $fromSession->getQuoteRef();
+            $this->unsetQuoteInSession($quoteIdSess);
+        }
         return $result;
     }
 
@@ -244,5 +253,15 @@ class QuoteRepository
         ];
         $where = Cfg::E_QUOTE_A_CUSTOMER_ID . '=' . (int)$custId;
         $this->daoGeneric->updateEntity(Cfg::ENTITY_MAGE_QUOTE, $bind, $where);
+    }
+
+    private function unsetQuoteInSession($quoteId)
+    {
+        $registry = $this->sessCustomer->getData(self::SESS_QUOTE_REGISTRY);
+        if (is_array($registry) && isset($registry[$quoteId])) {
+            unset($registry[$quoteId]);
+            $this->sessCustomer->setData(self::SESS_QUOTE_REGISTRY, $registry);
+        }
+
     }
 }
