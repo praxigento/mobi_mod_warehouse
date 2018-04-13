@@ -53,7 +53,7 @@ class PriceLoader
         $scope = $this->scope->getCurrentScope();
         /* stock ID */
         if (is_null($storeId)) {
-            if ($scope != \Magento\Framework\App\Area::AREA_FRONTEND) {
+            if ($scope == \Magento\Framework\App\Area::AREA_ADMINHTML) {
                 /* backend mode */
                 $stockId = $this->hlpStock->getDefaultStockId();
             } else {
@@ -65,7 +65,7 @@ class PriceLoader
         }
         /* customer group ID */
         if (is_null($groupId)) {
-            if ($scope != \Magento\Framework\App\Area::AREA_FRONTEND) {
+            if ($scope == \Magento\Framework\App\Area::AREA_ADMINHTML) {
                 /* backend mode */
                 $custGroup = $this->manGroup->getDefaultGroup();
                 $groupId = $custGroup->getId();
