@@ -14,7 +14,7 @@ class QuoteRepository
     const SESS_QUOTE_REGISTRY = 'prxgt_quote_registry';
 
     private static $counter = 0;
-    /** @var \Praxigento\Core\App\Repo\IGeneric */
+    /** @var \Praxigento\Core\Api\App\Repo\Generic */
     private $daoGeneric;
     /** @var \Praxigento\Warehouse\Repo\Dao\Quote */
     private $daoWrhsQuote;
@@ -31,7 +31,7 @@ class QuoteRepository
         \Magento\Checkout\Model\Session $sessCheckout,
         \Magento\Customer\Model\Session $sessCustomer,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
-        \Praxigento\Core\App\Repo\IGeneric $daoGeneric,
+        \Praxigento\Core\Api\App\Repo\Generic $daoGeneric,
         \Praxigento\Warehouse\Repo\Dao\Quote $daoWrhsQuote,
         \Praxigento\Warehouse\Api\Helper\Stock $hlpStock
     ) {

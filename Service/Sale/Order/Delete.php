@@ -23,7 +23,7 @@ class Delete
     private $hlpStock;
     /** @var \Praxigento\Warehouse\Service\Sale\Order\Delete\Own\Repo\Query\GetStockItem */
     private $qbGetStockItem;
-    /** @var \Praxigento\Core\App\Repo\IGeneric */
+    /** @var \Praxigento\Core\Api\App\Repo\Generic */
     private $daoGeneric;
     /** @var \Praxigento\Warehouse\Repo\Dao\Quantity */
     private $daoQty;
@@ -34,7 +34,7 @@ class Delete
 
     public function __construct(
         \Magento\Sales\Api\OrderRepositoryInterface $daoSaleOrder,
-        \Praxigento\Core\App\Repo\IGeneric $daoGeneric,
+        \Praxigento\Core\Api\App\Repo\Generic $daoGeneric,
         \Praxigento\Warehouse\Repo\Dao\Quantity $daoQty,
         \Praxigento\Warehouse\Repo\Dao\Quantity\Sale $daoQtySale,
         \Praxigento\Warehouse\Api\Helper\Stock $hlpStock,
