@@ -17,7 +17,7 @@ namespace Praxigento\Warehouse\Service\QtyDistributor\Register\SaleItem;
  *
  */
 class Request
-    extends \Praxigento\Core\App\Service\Base\Request
+    extends \Praxigento\Core\App\Service\Request
 {
 
 }

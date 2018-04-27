@@ -7,7 +7,7 @@ namespace Praxigento\Warehouse\Service\QtyDistributor\Register\Sale;
 
 
 class Response
-    extends \Praxigento\Core\App\Service\Base\Response
+    extends \Praxigento\Core\App\Service\Response
 {
 
 }

@@ -12,6 +12,6 @@ use Praxigento\Warehouse\Service\QtyDistributor\Data\Item as AItem;
  * @method void setSaleItems(AItem [] $data)
  */
 class Request
-    extends \Praxigento\Core\App\Service\Base\Request
+    extends \Praxigento\Core\App\Service\Request
 {
 }

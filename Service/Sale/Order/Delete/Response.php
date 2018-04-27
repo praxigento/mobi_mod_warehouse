@@ -10,7 +10,7 @@ namespace Praxigento\Warehouse\Service\Sale\Order\Delete;
  *
  */
 class Response
-    extends \Praxigento\Core\App\Service\Base\Response
+    extends \Praxigento\Core\App\Service\Response
 {
 
 }
