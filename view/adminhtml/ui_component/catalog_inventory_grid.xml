@@ -18,10 +18,10 @@
     <!-- **************************************************** -->
     <dataSource name="catalog_inventory_grid_data_source">
         <argument name="dataProvider" xsi:type="configurableObject">
-            <argument name="class" xsi:type="string">\Praxigento\Core\App\Ui\DataProvider\Grid\Base</argument>
+            <argument name="class" xsi:type="string">Praxigento\Core\App\Ui\DataProvider\Grid\Base</argument>
             <argument name="name" xsi:type="string">catalog_inventory_grid_data_source</argument>
             <argument name="gridQueryBuilder"
-                      xsi:type="object">\Praxigento\Warehouse\Ui\DataProvider\Grid\Inventory\QueryBuilder</argument>
+                      xsi:type="object">Praxigento\Warehouse\Ui\DataProvider\Grid\Inventory\QueryBuilder</argument>
         </argument>
         <argument name="data" xsi:type="array">
             <item name="js_config" xsi:type="array">
