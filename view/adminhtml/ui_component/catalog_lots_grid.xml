@@ -44,7 +44,7 @@
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="storageConfig" xsi:type="array">
-                        <item name="namespace" xsi:type="string">customer_online_grid</item>
+                        <item name="namespace" xsi:type="string">catalog_lots_grid</item>
                     </item>
                 </item>
             </argument>
