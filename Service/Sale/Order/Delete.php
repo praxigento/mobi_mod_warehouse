@@ -193,15 +193,26 @@ class Delete
 
     private function returnQtyToLot($stockItemId, $lotId, $qty)
     {
-        $exp = '(`' . EQty::A_TOTAL . '`+' . abs((float)$qty) . ')';
-        $exp = new AnExpression($exp);
-        $data = [EQty::A_TOTAL => $exp];
-        $byStock = EQty::A_STOCK_ITEM_REF . '=' . (int)$stockItemId;
-        $byLot = EQty::A_LOT_REF . '=' . (int)$lotId;
-        $where = "($byStock) AND ($byLot)";
-        $updated = $this->daoQty->update($data, $where);
-        if ($updated != 1) {
-            throw  new \Exception("Data inconsistency on return qty to warehouse lot ($stockItemId/$lotId/$qty).");
+        $validQty = abs((float)$qty);
+        /* update existing record or create new one? */
+        $pk = [
+            EQty::A_STOCK_ITEM_REF => (int)$stockItemId,
+            EQty::A_LOT_REF => (int)$lotId
+        ];
+        /** @var EQty $found */
+        $found = $this->daoQty->getById($pk);
+        if ($found) {
+            $total = $found->getTotal();
+            $newTotal = $total + $validQty;
+            $found->setTotal($newTotal);
+            $this->daoQty->updateById($pk, $found);
+        } else {
+            /* all qty from the lot are sold, restore record */
+            $entity = new EQty();
+            $entity->setStockItemRef((int)$stockItemId);
+            $entity->setLotRef((int)$lotId);
+            $entity->setTotal($validQty);
+            $this->daoQty->create($entity);
         }
     }
 }
