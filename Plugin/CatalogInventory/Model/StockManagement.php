@@ -59,7 +59,7 @@ class StockManagement
      * @param array $items
      * @param int $websiteId is not used
      * @throws \Magento\Framework\Exception\LocalizedException
-     * @return null
+     * @return \Magento\CatalogInventory\Api\Data\StockItemInterface[]
      */
     public function aroundRegisterProductsSale(
         \Magento\CatalogInventory\Model\StockManagement $subject,

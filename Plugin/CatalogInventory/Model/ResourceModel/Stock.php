@@ -19,7 +19,7 @@ class Stock
      * @param array $items
      * @param int $stockId defined in \Praxigento\Warehouse\Plugin\CatalogInventory\Model\StockManagement::aroundRegisterProductsSale
      * @param string $operator
-     * @return null
+     * @return void
      */
     public function aroundCorrectItemsQty(
         \Magento\CatalogInventory\Model\ResourceModel\Stock $subject,
