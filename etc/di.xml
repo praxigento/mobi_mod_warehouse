@@ -8,136 +8,136 @@
     <type name="Magento\Catalog\Model\Product\Type\Price">
         <!-- Replace product regular price by warehouse group price or warehouse price -->
         <plugin name="prxgt_wrhs_plugin"
-                type="Praxigento\Warehouse\Plugin\Catalog\Model\Product\Type\Price"
+                type="Praxigento\Warehouse\Plugin\Magento\Catalog\Model\Product\Type\Price"
                 sortOrder="600" disabled="false"/>
     </type>
 
     <type name="Magento\Catalog\Model\ResourceModel\Product\Collection">
         <!-- Enable order &filter for additional fields ('qty' override) in products collection -->
         <plugin name="prxgt_wrhs_plugin"
-                type="Praxigento\Warehouse\Plugin\Catalog\Model\ResourceModel\Product\Collection"
+                type="Praxigento\Warehouse\Plugin\Magento\Catalog\Model\ResourceModel\Product\Collection"
                 sortOrder="600" disabled="false"/>
     </type>
 
     <type name="Magento\CatalogInventory\Model\ResourceModel\Stock">
         <!-- Update stock qty when sale order is placed -->
         <plugin name="prxgt_wrhs_plugin"
-                type="Praxigento\Warehouse\Plugin\CatalogInventory\Model\ResourceModel\Stock"
+                type="Praxigento\Warehouse\Plugin\Magento\CatalogInventory\Model\ResourceModel\Stock"
                 sortOrder="600" disabled="false"/>
     </type>
 
     <type name="Magento\CatalogInventory\Model\ResourceModel\Stock\Status\Collection">
         <!-- Create composite primary key (MOBI-582) -->
         <plugin name="prxgt_wrhs_plugin"
-                type="Praxigento\Warehouse\Plugin\CatalogInventory\Model\ResourceModel\Stock\Status\Collection"
+                type="Praxigento\Warehouse\Plugin\Magento\CatalogInventory\Model\ResourceModel\Stock\Status\Collection"
                 sortOrder="600" disabled="false"/>
     </type>
 
     <type name="Magento\CatalogInventory\Model\ResourceModel\Stock\Status">
         <!-- Switch stockId for products collections (MOBI-311) -->
         <plugin name="prxgt_wrhs_plugin"
-                type="Praxigento\Warehouse\Plugin\CatalogInventory\Model\ResourceModel\Stock\Status"
+                type="Praxigento\Warehouse\Plugin\Magento\CatalogInventory\Model\ResourceModel\Stock\Status"
                 sortOrder="600" disabled="false"/>
     </type>
 
     <type name="Magento\CatalogInventory\Model\Stock\Item">
         <!-- Disable default stock item ID if stock ID is 'null'-->
         <plugin name="prxgt_wrhs_plugin"
-                type="Praxigento\Warehouse\Plugin\CatalogInventory\Model\Stock\Item"
+                type="Praxigento\Warehouse\Plugin\Magento\CatalogInventory\Model\Stock\Item"
                 sortOrder="600" disabled="false"/>
     </type>
     <type name="Magento\CatalogInventory\Model\Stock\Status">
         <!-- Composite primary key (MOBI-582) -->
         <plugin name="prxgt_wrhs_plugin"
-                type="Praxigento\Warehouse\Plugin\CatalogInventory\Model\Stock\Status"
+                type="Praxigento\Warehouse\Plugin\Magento\CatalogInventory\Model\Stock\Status"
                 sortOrder="600" disabled="false"/>
     </type>
 
     <type name="Magento\CatalogInventory\Model\StockManagement">
         <!-- Update qty on the order placement (MOBI-379) -->
         <plugin name="prxgt_wrhs_plugin"
-                type="Praxigento\Warehouse\Plugin\CatalogInventory\Model\StockManagement"
+                type="Praxigento\Warehouse\Plugin\Magento\CatalogInventory\Model\StockManagement"
                 sortOrder="600" disabled="false"/>
     </type>
 
     <type name="Magento\CatalogInventory\Model\StockRegistry">
         <!-- Disable default stock item ID registration on product save -->
         <plugin name="prxgt_wrhs_plugin"
-                type="Praxigento\Warehouse\Plugin\CatalogInventory\Model\StockRegistry"
+                type="Praxigento\Warehouse\Plugin\Magento\CatalogInventory\Model\StockRegistry"
                 sortOrder="600" disabled="false"/>
     </type>
 
     <type name="Magento\CatalogInventory\Model\StockRegistryProvider">
         <!-- Detect current stock and select appropriate stock item -->
         <plugin name="prxgt_wrhs_plugin"
-                type="Praxigento\Warehouse\Plugin\CatalogInventory\Model\StockRegistryProvider"
+                type="Praxigento\Warehouse\Plugin\Magento\CatalogInventory\Model\StockRegistryProvider"
                 sortOrder="600" disabled="false"/>
     </type>
 
     <type name="Magento\CatalogInventory\Ui\DataProvider\Product\AddQuantityFieldToCollection">
         <!-- Join 'cataloginventory_stock_item' & 'prxgt_wrhs_qty' tables to get totals for all lots/warehouses. -->
         <plugin name="prxgt_wrhs_plugin"
-                type="Praxigento\Warehouse\Plugin\CatalogInventory\Ui\DataProvider\Product\AddQuantityFieldToCollection"
+                type="Praxigento\Warehouse\Plugin\Magento\CatalogInventory\Ui\DataProvider\Product\AddQuantityFieldToCollection"
                 sortOrder="600" disabled="false"/>
     </type>
 
     <type name="Magento\CatalogInventory\Ui\DataProvider\Product\AddQuantityFilterToCollection">
         <plugin name="prxgt_wrhs_plugin"
-                type="Praxigento\Warehouse\Plugin\CatalogInventory\Ui\DataProvider\Product\AddQuantityFilterToCollection"
+                type="Praxigento\Warehouse\Plugin\Magento\CatalogInventory\Ui\DataProvider\Product\AddQuantityFilterToCollection"
                 sortOrder="600" disabled="false"/>
     </type>
 
     <type name="Magento\CatalogSearch\Model\Search\IndexBuilder">
         <plugin name="prxgt_wrhs_plugin"
-                type="Praxigento\Warehouse\Plugin\CatalogSearch\Model\Search\IndexBuilder"
+                type="Praxigento\Warehouse\Plugin\Magento\CatalogSearch\Model\Search\IndexBuilder"
                 sortOrder="600" disabled="false"/>
     </type>
 
     <type name="Magento\Payment\Model\Method\Adapter">
         <!-- Convert payment amounts from store currency into payment currency. -->
         <plugin name="prxgt_wrhs_plugin"
-                type="Praxigento\Warehouse\Plugin\Payment\Model\Method\Adapter"
+                type="Praxigento\Warehouse\Plugin\Magento\Payment\Model\Method\Adapter"
                 sortOrder="600" disabled="false"/>
     </type>
 
     <type name="Magento\Quote\Model\Quote\Item\AbstractItem">
         <!-- add warehouse & group price to product used in quote item -->
         <plugin name="prxgt_wrhs_plugin"
-                type="Praxigento\Warehouse\Plugin\Quote\Model\Quote\Item\AbstractItem"
+                type="Praxigento\Warehouse\Plugin\Magento\Quote\Model\Quote\Item\AbstractItem"
                 sortOrder="600" disabled="false"/>
     </type>
 
     <type name="Magento\Quote\Model\QuoteRepository">
         <!-- Check active quote according to current stock and switch quote if stock is changed. -->
         <plugin name="prxgt_wrhs_plugin"
-                type="Praxigento\Warehouse\Plugin\Quote\Model\QuoteRepository"
+                type="Praxigento\Warehouse\Plugin\Magento\Quote\Model\QuoteRepository"
                 sortOrder="600" disabled="false"/>
     </type>
 
     <type name="Magento\Sales\Block\Adminhtml\Order\Create\Search\Grid\Renderer\Product">
         <!-- Replace product price by warehouse group price before rendering. -->
         <plugin name="prxgt_wrhs_plugin"
-                type="Praxigento\Warehouse\Plugin\Sales\Block\Adminhtml\Order\Create\Search\Grid\Renderer\Product"
+                type="Praxigento\Warehouse\Plugin\Magento\Sales\Block\Adminhtml\Order\Create\Search\Grid\Renderer\Product"
                 sortOrder="600" disabled="false"/>
     </type>
 
     <type name="Magento\Sales\Model\Service\OrderService">
         <!-- Return products to inventory on order cancellation. -->
         <plugin name="prxgt_wrhs_plugin"
-                type="Praxigento\Warehouse\Plugin\Sales\Model\Service\OrderService"
+                type="Praxigento\Warehouse\Plugin\Magento\Sales\Model\Service\OrderService"
                 sortOrder="600" disabled="false"/>
     </type>
 
     <type name="Magento\Store\Model\Store">
         <!-- Replace Magento base currency by warehouse currency -->
         <plugin name="prxgt_wrhs_plugin"
-                type="Praxigento\Warehouse\Plugin\Store\Model\Store"
+                type="Praxigento\Warehouse\Plugin\Magento\Store\Model\Store"
                 sortOrder="600" disabled="false"/>
     </type>
 
     <type name="Magento\Tax\Model\Calculation">
         <plugin name="prxgt_wrhs_plugin"
-                type="Praxigento\Warehouse\Plugin\Tax\Model\Calculation"
+                type="Praxigento\Warehouse\Plugin\Magento\Tax\Model\Calculation"
                 sortOrder="600" disabled="false"/>
     </type>
 

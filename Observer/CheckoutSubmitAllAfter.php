@@ -4,7 +4,7 @@
  */
 namespace Praxigento\Warehouse\Observer;
 
-use Praxigento\Warehouse\Plugin\Quote\Model\QuoteRepository as AQuoteRepo;
+use Praxigento\Warehouse\Plugin\Magento\Quote\Model\QuoteRepository as AQuoteRepo;
 use Praxigento\Warehouse\Service\QtyDistributor\Data\Item as DItem;
 use Praxigento\Warehouse\Service\QtyDistributor\Register\Sale\Request as ARequest;
 
