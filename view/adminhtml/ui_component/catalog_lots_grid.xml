@@ -1,139 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-/**
- * Copyright © 2016 Magento. All rights reserved.
- * See COPYING.txt for license details.
- */
--->
-<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
 
     <!-- **************************************************** -->
-    <!-- Data loader (???) -->
+    <!-- Configuration of the component's data provider.      -->
     <!-- **************************************************** -->
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
             <item name="provider" xsi:type="string">catalog_lots_grid.catalog_lots_grid_data_source</item>
+            <!-- Prevent JS error: "this.source is not a function at UiClass.exportSorting (column.js:187)" -->
             <item name="deps" xsi:type="string">catalog_lots_grid.catalog_lots_grid_data_source</item>
         </item>
+        <!-- data loading indicator is bound to grid columns area (spinner will not disappear w/o it) -->
         <item name="spinner" xsi:type="string">catalog_lots_columns</item>
     </argument>
 
     <!-- **************************************************** -->
-    <!-- Data Source definition -->
+    <!-- Data Source (is used by data provider).              -->
     <!-- **************************************************** -->
-    <dataSource name="catalog_lots_grid_data_source">
+    <dataSource name="catalog_lots_grid_data_source"
+                component="Magento_Ui/js/grid/provider">
         <argument name="dataProvider" xsi:type="configurableObject">
+            <!--https://magento.stackexchange.com/questions/248611/magento-2-grid-data-source-definition-in-compact-form -->
             <argument name="class" xsi:type="string">Praxigento\Core\App\Ui\DataProvider\Grid\Base</argument>
             <argument name="name" xsi:type="string">catalog_lots_grid_data_source</argument>
-            <argument name="gridQueryBuilder"
-                      xsi:type="object">Praxigento\Warehouse\Ui\DataProvider\Grid\Lot\QueryBuilder</argument>
-        </argument>
-        <argument name="data" xsi:type="array">
-            <item name="js_config" xsi:type="array">
-                <item name="component" xsi:type="string">Magento_Ui/js/grid/provider</item>
-            </item>
+            <argument name="gridQueryBuilder" xsi:type="object">Praxigento\Warehouse\Ui\DataProvider\Grid\Lot\QueryBuilder</argument>
         </argument>
     </dataSource>
-    <container name="listing_top">
-        <argument name="data" xsi:type="array">
-            <item name="config" xsi:type="array">
-                <item name="template" xsi:type="string">ui/grid/toolbar</item>
-            </item>
-        </argument>
-        <bookmark name="bookmarks">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="storageConfig" xsi:type="array">
-                        <item name="namespace" xsi:type="string">catalog_lots_grid</item>
-                    </item>
-                </item>
-            </argument>
-        </bookmark>
-        <component name="columns_controls">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="columnsData" xsi:type="array">
-                        <item name="provider" xsi:type="string">catalog_lots_grid.catalog_lots_grid.catalog_lots_columns</item>
-                    </item>
-                    <item name="component" xsi:type="string">Magento_Ui/js/grid/controls/columns</item>
-                    <item name="displayArea" xsi:type="string">dataGridActions</item>
-                </item>
-            </argument>
-        </component>
-        <filters name="listing_filters">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="columnsProvider" xsi:type="string">catalog_lots_grid.catalog_lots_grid.catalog_lots_columns</item>
-                    <item name="storageConfig" xsi:type="array">
-                        <item name="provider" xsi:type="string">catalog_lots_grid.catalog_lots_grid.listing_top.bookmarks</item>
-                        <item name="namespace" xsi:type="string">current.filters</item>
-                    </item>
-                    <item name="childDefaults" xsi:type="array">
-                        <item name="provider" xsi:type="string">catalog_lots_grid.catalog_lots_grid.listing_top.listing_filters</item>
-                        <item name="imports" xsi:type="array">
-                            <item name="visible" xsi:type="string">catalog_lots_grid.catalog_lots_grid.catalog_lots_columns.${ $.index }:visible</item>
-                        </item>
-                    </item>
-                </item>
-            </argument>
-        </filters>
-        <paging name="listing_paging">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="storageConfig" xsi:type="array">
-                        <item name="provider" xsi:type="string">catalog_lots_grid.catalog_lots_grid.listing_top.bookmarks</item>
-                        <item name="namespace" xsi:type="string">current.paging</item>
-                    </item>
-                    <item name="selectProvider" xsi:type="string">catalog_lots_grid.catalog_lots_grid.catalog_lots_columns.ids</item>
-                </item>
-            </argument>
-        </paging>
-    </container>
+
+    <!-- **************************************************** -->
+    <!-- Grid header (filter, bookmarks, pager, ...).         -->
+    <!-- **************************************************** -->
+    <listingToolbar name="listing_top">
+        <settings>
+            <sticky>false</sticky>
+        </settings>
+        <bookmark name="bookmarks"/>
+        <columnsControls name="columns_controls"/>
+        <filters name="listing_filters"/>
+        <paging name="listing_paging"/>
+    </listingToolbar>
 
     <!-- **************************************************** -->
     <!-- Grid Columns -->
     <!-- **************************************************** -->
     <columns name="catalog_lots_columns">
-        <argument name="data" xsi:type="array">
-            <item name="config" xsi:type="array">
-                <item name="storageConfig" xsi:type="array">
-                    <item name="provider" xsi:type="string">catalog_lots_grid.catalog_lots_grid.listing_top.bookmarks</item>
-                    <item name="namespace" xsi:type="string">current</item>
-                </item>
-                <item name="childDefaults" xsi:type="array">
-                    <item name="storageConfig" xsi:type="array">
-                        <item name="provider" xsi:type="string">catalog_lots_grid.catalog_lots_grid.listing_top.bookmarks</item>
-                        <item name="root" xsi:type="string">columns.${ $.index }</item>
-                        <item name="namespace" xsi:type="string">current.${ $.storageConfig.root}</item>
-                    </item>
-                </item>
-            </item>
-        </argument>
 
         <column name="id">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="filter" xsi:type="string">textRange</item>
-                    <item name="sorting" xsi:type="string">asc</item>
-                    <item name="label" xsi:type="string" translate="true">ID</item>
-                </item>
-            </argument>
+            <settings>
+                <dataType>number</dataType>
+                <filter>text</filter>
+                <label translate="true">ID</label>
+                <sorting>asc</sorting>
+            </settings>
         </column>
+
         <column name="code">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="filter" xsi:type="string">text</item>
-                    <item name="label" xsi:type="string" translate="true">Code</item>
-                </item>
-            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <filter>text</filter>
+                <label translate="true">Code</label>
+            </settings>
         </column>
+
         <column name="expDate">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="filter" xsi:type="string">text</item>
-                    <item name="label" xsi:type="string" translate="true">Expiration Date</item>
-                </item>
-            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <filter>text</filter>
+                <label translate="true">Expiration Date</label>
+            </settings>
         </column>
 
     </columns>
