@@ -42,7 +42,7 @@
     </listingToolbar>
 
     <!-- **************************************************** -->
-    <!-- Grid Columns -->
+    <!-- Grid Columns                                         -->
     <!-- **************************************************** -->
     <columns name="catalog_inventory_columns">
 

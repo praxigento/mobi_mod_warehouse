@@ -2,33 +2,47 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
     <menu>
+
+        <!-- Groups separator -->
+        <add id="Praxigento_Warehouse::catalog"
+             title="MOBI"
+             translate="title"
+             module="Praxigento_Warehouse"
+             sortOrder="2000"
+             parent="Magento_Catalog::catalog"
+             resource="Magento_Catalog::catalog_inventory"/>
+
         <add id="Praxigento_Warehouse::catalog_inventory"
              title="Inventory"
              module="Praxigento_Warehouse"
              sortOrder="60"
-             parent="Magento_Catalog::inventory"
+             parent="Praxigento_Warehouse::catalog"
              action="catalog/inventory"
              resource="Praxigento_Warehouse::catalog_inventory"/>
-        <add id="Praxigento_Warehouse::catalog_lots"
-             title="Lots"
-             module="Praxigento_Warehouse"
-             sortOrder="70"
-             parent="Magento_Catalog::inventory"
-             action="catalog/lots"
-             resource="Praxigento_Warehouse::catalog_lots"/>
-        <add id="Praxigento_Warehouse::catalog_warehouses"
-             title="Warehouses"
-             module="Praxigento_Warehouse"
-             sortOrder="80"
-             parent="Magento_Catalog::inventory"
-             action="catalog/warehouses"
-             resource="Praxigento_Warehouse::catalog_warehouses"/>
+
         <add id="Praxigento_Warehouse::catalog_group_prices"
              title="Group Prices"
              module="Praxigento_Warehouse"
-             sortOrder="90"
-             parent="Magento_Catalog::inventory"
+             sortOrder="70"
+             parent="Praxigento_Warehouse::catalog"
              action="catalog/group_prices"
              resource="Praxigento_Warehouse::catalog_group_prices"/>
+
+        <add id="Praxigento_Warehouse::catalog_lots"
+             title="Lots"
+             module="Praxigento_Warehouse"
+             sortOrder="80"
+             parent="Praxigento_Warehouse::catalog"
+             action="catalog/lots"
+             resource="Praxigento_Warehouse::catalog_lots"/>
+
+        <add id="Praxigento_Warehouse::catalog_warehouses"
+             title="Warehouses"
+             module="Praxigento_Warehouse"
+             sortOrder="90"
+             parent="Praxigento_Warehouse::catalog"
+             action="catalog/warehouses"
+             resource="Praxigento_Warehouse::catalog_warehouses"/>
+
     </menu>
 </config>
