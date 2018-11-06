@@ -5,18 +5,20 @@
 
 namespace Praxigento\Warehouse\Repo\Dao;
 
+use Praxigento\Warehouse\Repo\Data\Warehouse as Entity;
+
 class Warehouse extends \Praxigento\Core\App\Repo\Dao
 {
     public function __construct(
         \Magento\Framework\App\ResourceConnection $resource,
         \Praxigento\Core\Api\App\Repo\Generic $daoGeneric
     ) {
-        parent::__construct($resource, $daoGeneric, \Praxigento\Warehouse\Repo\Data\Warehouse::class);
+        parent::__construct($resource, $daoGeneric, Entity::class);
     }
 
     /**
-     * @param array|\Praxigento\Warehouse\Repo\Data\Warehouse $data
-     * @return \Praxigento\Warehouse\Repo\Data\Warehouse
+     * @param array|Entity $data
+     * @return Entity
      */
     public function create($data)
     {
@@ -34,7 +36,7 @@ class Warehouse extends \Praxigento\Core\App\Repo\Dao
      * @param null $columns
      * @param null $group
      * @param null $having
-     * @return \Praxigento\Warehouse\Repo\Data\Warehouse[] Found data or empty array if no data found.
+     * @return Entity[] Found data or empty array if no data found.
      */
     public function get(
         $where = null,
@@ -44,8 +46,7 @@ class Warehouse extends \Praxigento\Core\App\Repo\Dao
         $columns = null,
         $group = null,
         $having = null
-    )
-    {
+    ) {
         $result = parent::get($where, $order, $limit, $offset, $columns, $group, $having);
         return $result;
     }
@@ -54,7 +55,7 @@ class Warehouse extends \Praxigento\Core\App\Repo\Dao
      * Get the data instance by ID.
      *
      * @param int $id
-     * @return \Praxigento\Warehouse\Repo\Data\Warehouse|bool Found instance data or 'false'
+     * @return Entity|bool Found instance data or 'false'
      */
     public function getById($id)
     {

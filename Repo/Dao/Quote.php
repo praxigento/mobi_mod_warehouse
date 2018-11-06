@@ -5,7 +5,7 @@
 
 namespace Praxigento\Warehouse\Repo\Dao;
 
-use Praxigento\Warehouse\Repo\Data\Quote as DEntity;
+use Praxigento\Warehouse\Repo\Data\Quote as Entity;
 
 class Quote
     extends \Praxigento\Core\App\Repo\Dao
@@ -14,13 +14,13 @@ class Quote
         \Magento\Framework\App\ResourceConnection $resource,
         \Praxigento\Core\Api\App\Repo\Generic $daoGeneric
     ) {
-        parent::__construct($resource, $daoGeneric, DEntity::class);
+        parent::__construct($resource, $daoGeneric, Entity::class);
     }
 
 
     /**
-     * @param DEntity|array $data
-     * @return DEntity
+     * @param Entity|array $data
+     * @return Entity
      */
     public function create($data)
     {
@@ -38,7 +38,7 @@ class Quote
      * @param null $columns
      * @param null $group
      * @param null $having
-     * @return DEntity[] Found data or empty array if no data found.
+     * @return Entity[] Found data or empty array if no data found.
      */
     public function get(
         $where = null,
@@ -57,7 +57,7 @@ class Quote
      * Get the data instance by ID.
      *
      * @param int $id
-     * @return DEntity|bool Found instance data or 'false'
+     * @return Entity|bool Found instance data or 'false'
      */
     public function getById($id)
     {

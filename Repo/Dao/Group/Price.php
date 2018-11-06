@@ -5,6 +5,8 @@
 
 namespace Praxigento\Warehouse\Repo\Dao\Group;
 
+use Praxigento\Warehouse\Repo\Data\Group\Price as Entity;
+
 class Price
     extends \Praxigento\Core\App\Repo\Dao
 {
@@ -12,12 +14,12 @@ class Price
         \Magento\Framework\App\ResourceConnection $resource,
         \Praxigento\Core\Api\App\Repo\Generic $daoGeneric
     ) {
-        parent::__construct($resource, $daoGeneric, \Praxigento\Warehouse\Repo\Data\Group\Price::class);
+        parent::__construct($resource, $daoGeneric, Entity::class);
     }
 
     /**
-     * @param array|\Praxigento\Warehouse\Repo\Data\Group\Price $data
-     * @return \Praxigento\Warehouse\Repo\Data\Group\Price
+     * @param array|Entity $data
+     * @return Entity
      */
     public function create($data)
     {
@@ -35,7 +37,7 @@ class Price
      * @param null $columns
      * @param null $group
      * @param null $having
-     * @return \Praxigento\Warehouse\Repo\Data\Group\Price[] Found data or empty array if no data found.
+     * @return Entity[] Found data or empty array if no data found.
      */
     public function get(
         $where = null,
@@ -45,8 +47,7 @@ class Price
         $columns = null,
         $group = null,
         $having = null
-    )
-    {
+    ) {
         $result = parent::get($where, $order, $limit, $offset, $columns, $group, $having);
         return $result;
     }
@@ -55,7 +56,7 @@ class Price
      * Get the data instance by ID.
      *
      * @param int $id
-     * @return \Praxigento\Warehouse\Repo\Data\Group\Price|bool Found instance data or 'false'
+     * @return Entity|bool Found instance data or 'false'
      */
     public function getById($id)
     {
