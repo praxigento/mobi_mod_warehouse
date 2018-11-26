@@ -22,6 +22,7 @@ class OrderService
         \Praxigento\Warehouse\Helper\Config $hlpConfig,
         \Praxigento\Warehouse\Service\Sale\Order\Delete $servSaleDelete
     ) {
+        /* TODO: remove transaction manager as unused */
         $this->manTrans = $manTrans;
         $this->hlpConfig = $hlpConfig;
         $this->servSaleDelete = $servSaleDelete;
@@ -40,20 +41,13 @@ class OrderService
         \Closure $proceed,
         $id
     ) {
-        $def = $this->manTrans->begin();
-        try {
-            $result = $proceed($id);
-            if ($result === true) {
-                $req = new ARequest();
-                $req->setSaleId($id);
-                $deleteSales = $this->hlpConfig->getSalesGeneralDeleteCancelled();
-                $req->setCleanDb($deleteSales);
-                $this->servSaleDelete->exec($req);
-            }
-            $this->manTrans->commit($def);
-        } finally {
-            /* rollback transaction on exception (nothing is done if transaction was committed before) */
-            $this->manTrans->end($def);
+        $result = $proceed($id);
+        if ($result === true) {
+            $req = new ARequest();
+            $req->setSaleId($id);
+            $deleteSales = $this->hlpConfig->getSalesGeneralDeleteCancelled();
+            $req->setCleanDb($deleteSales);
+            $this->servSaleDelete->exec($req);
         }
         return $result;
     }

@@ -31,18 +31,26 @@ class Stock
         if (empty($items)) {
             return $subject;
         }
-        $conn = $subject->getConnection();
-        $conditions = [];
-        foreach ($items as $productId => $qty) {
-            $quotedId = $conn->quoteInto('?', $productId);
-            $quotedQty = $conn->quoteInto("qty{$operator}?", $qty);
-            $conditions[$quotedId] = $quotedQty;
+        try {
+            $conn = $subject->getConnection();
+            $conditions = [];
+            foreach ($items as $productId => $qty) {
+                $quotedId = $conn->quoteInto('?', $productId);
+                $quotedQty = $conn->quoteInto("qty{$operator}?", $qty);
+                $conditions[$quotedId] = $quotedQty;
+            }
+            $value = $conn->getCaseSql('product_id', $conditions, 'qty');
+            $where = ['product_id IN (?)' => array_keys($items), 'stock_id = ?' => $stockId];
+            $conn->update($subject->getTable('cataloginventory_stock_item'), ['qty' => $value], $where);
+        } catch (\Throwable $e) {
+            /* TODO: use constructor arg to inject logger */
+            $manObj = \Magento\Framework\App\ObjectManager::getInstance();
+            /** @var \Praxigento\Core\Api\App\Logger\Main $logger */
+            $logger = $manObj->get(\Praxigento\Core\Api\App\Logger\Main::class);
+            $msg = $e->getMessage();
+            $stack = $e->getTraceAsString();
+            $logger->critical("Cannot update stock items. Error: $msg. Trace: $stack");
         }
-        $value = $conn->getCaseSql('product_id', $conditions, 'qty');
-        $where = ['product_id IN (?)' => array_keys($items), 'stock_id = ?' => $stockId];
-        $conn->beginTransaction();
-        $conn->update($subject->getTable('cataloginventory_stock_item'), ['qty' => $value], $where);
-        $conn->commit();
     }
 
     /**
