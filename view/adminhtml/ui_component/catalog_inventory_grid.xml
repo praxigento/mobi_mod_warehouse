@@ -79,7 +79,8 @@
             </settings>
         </column>
 
-        <column name="wrhsPrice">
+        <column name="wrhsPrice"
+                component="Praxigento_Core/js/grid/columns/number">
             <settings>
                 <dataType>price</dataType>
                 <filter>textRange</filter>
@@ -111,7 +112,8 @@
             </settings>
         </column>
 
-        <column name="qty">
+        <column name="qty"
+                component="Praxigento_Core/js/grid/columns/number">
             <settings>
                 <dataType>number</dataType>
                 <filter>textRange</filter>
