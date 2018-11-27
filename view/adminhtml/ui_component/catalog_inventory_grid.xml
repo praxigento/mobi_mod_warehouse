@@ -46,7 +46,8 @@
     <!-- **************************************************** -->
     <columns name="catalog_inventory_columns">
 
-        <column name="productId">
+        <column name="productId"
+                component="Praxigento_Core/js/grid/columns/integer">
             <settings>
                 <dataType>number</dataType>
                 <filter>text</filter>
@@ -63,7 +64,8 @@
             </settings>
         </column>
 
-        <column name="wrhsId">
+        <column name="wrhsId"
+                component="Praxigento_Core/js/grid/columns/integer">
             <settings>
                 <dataType>number</dataType>
                 <filter>text</filter>
@@ -80,7 +82,7 @@
         </column>
 
         <column name="wrhsPrice"
-                component="Praxigento_Core/js/grid/columns/number">
+                component="Praxigento_Core/js/grid/columns/decimal">
             <settings>
                 <dataType>price</dataType>
                 <filter>textRange</filter>
@@ -113,7 +115,7 @@
         </column>
 
         <column name="qty"
-                component="Praxigento_Core/js/grid/columns/number">
+                component="Praxigento_Core/js/grid/columns/decimal">
             <settings>
                 <dataType>number</dataType>
                 <filter>textRange</filter>
