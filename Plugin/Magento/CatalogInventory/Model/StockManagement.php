@@ -4,38 +4,36 @@
  */
 namespace Praxigento\Warehouse\Plugin\Magento\CatalogInventory\Model;
 
+use Magento\Framework\Exception\LocalizedException as AMageExcept;
+
 /**
  * Update stock items on sales.
  */
 class StockManagement
 {
     /** @var \Magento\CatalogInventory\Api\StockConfigurationInterface */
-    protected $_configStock;
+    private $configStock;
     /** @var  \Praxigento\Warehouse\Api\Helper\Stock */
-    protected $_manStock;
-    /** @var  \Praxigento\Core\Api\App\Repo\Transaction\Manager */
-    protected $_manTrans;
+    private $manStock;
     /** @var \Magento\CatalogInventory\Model\Spi\StockRegistryProviderInterface */
-    protected $_providerStockRegistry;
+    private $providerStockRegistry;
     /** @var \Magento\CatalogInventory\Model\ResourceModel\Stock */
-    protected $_resourceStock;
+    private $resourceStock;
     /** @var \Magento\CatalogInventory\Model\StockState */
-    protected $_stockState;
+    private $stockState;
 
     public function __construct(
         \Magento\CatalogInventory\Model\ResourceModel\Stock $resourceStock,
         \Magento\CatalogInventory\Model\Spi\StockRegistryProviderInterface $providerStockRegistry,
         \Magento\CatalogInventory\Api\StockConfigurationInterface $configStock,
         \Magento\CatalogInventory\Model\StockState $stockState,
-        \Praxigento\Warehouse\Api\Helper\Stock $manStock,
-        \Praxigento\Core\Api\App\Repo\Transaction\Manager $manTrans
+        \Praxigento\Warehouse\Api\Helper\Stock $manStock
     ) {
-        $this->_resourceStock = $resourceStock;
-        $this->_providerStockRegistry = $providerStockRegistry;
-        $this->_configStock = $configStock;
-        $this->_stockState = $stockState;
-        $this->_manStock = $manStock;
-        $this->_manTrans = $manTrans;
+        $this->resourceStock = $resourceStock;
+        $this->providerStockRegistry = $providerStockRegistry;
+        $this->configStock = $configStock;
+        $this->stockState = $stockState;
+        $this->manStock = $manStock;
     }
 
     /**
@@ -47,7 +45,7 @@ class StockManagement
     protected function _canSubtractQty(
         \Magento\CatalogInventory\Api\Data\StockItemInterface $stockItem
     ) {
-        $result = $stockItem->getManageStock() && $this->_configStock->canSubtractQty();
+        $result = $stockItem->getManageStock() && $this->configStock->canSubtractQty();
         return $result;
     }
 
@@ -69,41 +67,38 @@ class StockManagement
     ) {
         /* This code is moved from original 'registerProductsSale' method. */
         /* replace websiteId by stockId */
-        $stockId = $this->_manStock->getCurrentStockId();
-        $def = $this->_manTrans->begin();
-        $lockedItems = $this->_resourceStock->lockProductsStock(array_keys($items), $stockId);
+        $stockId = $this->manStock->getCurrentStockId();
+        $lockedItems = $this->resourceStock->lockProductsStock(array_keys($items), $stockId);
         $fullSaveItems = $registeredItems = [];
         foreach ($lockedItems as $lockedItemRecord) {
             $productId = $lockedItemRecord['product_id'];
             $orderedQty = $items[$productId];
             /** @var \Magento\CatalogInventory\Api\Data\StockItemInterface $stockItem */
-            $stockItem = $this->_providerStockRegistry->getStockItem($productId, $stockId);
+            $stockItem = $this->providerStockRegistry->getStockItem($productId, $stockId);
             $stockItemId = $stockItem->getItemId();
             $canSubtractQty = $stockItemId && $this->_canSubtractQty($stockItem);
-            if (!$canSubtractQty || !$this->_configStock->isQty($lockedItemRecord['type_id'])) {
+            if (!$canSubtractQty || !$this->configStock->isQty($lockedItemRecord['type_id'])) {
                 continue;
             }
             if (
                 !$stockItem->hasAdminArea() &&
-                !$this->_stockState->checkQty($productId, $orderedQty)
+                !$this->stockState->checkQty($productId, $orderedQty)
             ) {
-                $this->_manTrans->rollback($def);
-                throw new \Magento\Framework\Exception\LocalizedException(
-                    __('Not all of your products are available in the requested quantity.')
-                );
+                $msg = 'Not all of your products are available in the requested quantity. ';
+                $msg .= 'Product #%1, stock item #%2, stock #%3.';
+                throw new AMageExcept(__($msg, $productId, $stockItemId, $stockId));
             }
             if ($this->_canSubtractQty($stockItem)) {
                 $stockItem->setQty($stockItem->getQty() - $orderedQty);
             }
             $registeredItems[$productId] = $orderedQty;
-            if (!$this->_stockState->verifyStock($productId)
-                || $this->_stockState->verifyNotification($productId)
+            if (!$this->stockState->verifyStock($productId)
+                || $this->stockState->verifyNotification($productId)
             ) {
                 $fullSaveItems[] = $stockItem;
             }
         }
-        $this->_resourceStock->correctItemsQty($registeredItems, $stockId, '-');
-        $this->_manTrans->commit($def);
+        $this->resourceStock->correctItemsQty($registeredItems, $stockId, '-');
         return $fullSaveItems;
     }
 }
