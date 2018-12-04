@@ -26,11 +26,14 @@ class QuoteRepository
     private $sessCustomer;
     /** @var \Magento\Store\Model\StoreManagerInterface */
     private $storeManager;
+    /** @var \Magento\Quote\Api\CartRepositoryInterface */
+    private $repoQuote;
 
     public function __construct(
         \Magento\Checkout\Model\Session $sessCheckout,
         \Magento\Customer\Model\Session $sessCustomer,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
+        \Magento\Quote\Api\CartRepositoryInterface $repoQuote,
         \Praxigento\Core\Api\App\Repo\Generic $daoGeneric,
         \Praxigento\Warehouse\Repo\Dao\Quote $daoWrhsQuote,
         \Praxigento\Warehouse\Api\Helper\Stock $hlpStock
@@ -38,6 +41,7 @@ class QuoteRepository
         $this->sessCheckout = $sessCheckout;
         $this->sessCustomer = $sessCustomer;
         $this->storeManager = $storeManager;
+        $this->repoQuote = $repoQuote;
         $this->daoGeneric = $daoGeneric;
         $this->daoWrhsQuote = $daoWrhsQuote;
         $this->hlpStock = $hlpStock;
@@ -134,10 +138,14 @@ class QuoteRepository
         /* merge anonymous session if exists */
         /* TODO: this code is doubt; session should be reset after authentication */
         $fromSession = $this->findQuoteByStockIdInSession($stockId);
-        if ($fromSession) {
-            $result->merge($fromSession);
-            $quoteIdSess = $fromSession->getQuoteRef();
-            $this->unsetQuoteInSession($quoteIdSess);
+        if ($fromSession instanceof \Praxigento\Warehouse\Repo\Data\Quote) {
+            $quoteIdSaved = $fromSession->getQuoteRef();
+            $quoteSaved = $this->repoQuote->get($quoteIdSaved);
+            if ($quoteSaved) {
+                $result->merge($fromSession);
+                $quoteIdSess = $fromSession->getQuoteRef();
+                $this->unsetQuoteInSession($quoteIdSess);
+            }
         }
         return $result;
     }
