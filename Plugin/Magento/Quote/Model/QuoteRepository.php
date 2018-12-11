@@ -123,14 +123,15 @@ class QuoteRepository
         $customerId,
         array $sharedStoreIds = []
     ) {
-        /* find registered quote by current stock & customer ID */
-        $stockId = $this->getCurrentStockId();
-        $found = $this->getQuoteIdByCustomerAndStock($customerId, $stockId);
         /* set all quotes inactive */
         $this->setQuotesAllInactive($customerId);
+        /* find registered quote by current stock & customer ID */
+        $stockId = $this->getCurrentStockId();
+        $found = $this->getRegisteredQuoteByUniqueKey($customerId, $stockId);
         if ($found) {
             /* set found quote as active */
-            $this->setQuoteActive($found);
+            $foundQuoteId = $found->getQuoteRef();
+            $this->setQuoteActive($foundQuoteId);
         }
         /* ... then load active quote */
         /** @var \Magento\Quote\Model\Quote $result */
@@ -203,19 +204,6 @@ class QuoteRepository
         return $result;
     }
 
-    private function getQuoteIdByCustomerAndStock($custId, $stockId)
-    {
-        $result = 0;
-        $byCust = EWrhsQuote::A_CUST_REF . '=' . (int)$custId;
-        $byStock = EWrhsQuote::A_STOCK_REF . '=' . (int)$stockId;
-        $where = "($byCust) AND ($byStock)";
-        $rs = $this->daoWrhsQuote->get($where);
-        if (is_array($rs) && count($rs) == 1) {
-            $one = reset($rs);
-            $result = $one->getQuoteRef();
-        }
-        return $result;
-    }
 
     /** @return bool */
     private function isCustomerAuthenticated()
@@ -231,6 +219,13 @@ class QuoteRepository
         $entity->setQuoteRef($quoteId);
         $entity->setStockRef($stockId);
         if ($this->isCustomerAuthenticated()) {
+            /* validate existence of the other quote with the same $custId/$stockId */
+            $found = $this->getRegisteredQuoteByUniqueKey($custId, $stockId);
+            if ($found) {
+                /* SAN-490: delete existing quote before creating */
+                $existQuoteId = $found->getQuoteRef();
+                $this->daoWrhsQuote->deleteById($existQuoteId);
+            }
             $this->daoWrhsQuote->create($entity);
         } else {
             $quoteReg = $this->sessCustomer->getData(self::SESS_QUOTE_REGISTRY);
@@ -238,6 +233,25 @@ class QuoteRepository
             $quoteReg[$quoteId] = $entity;
             $this->sessCustomer->setData(self::SESS_QUOTE_REGISTRY, $quoteReg);
         }
+    }
+
+    /**
+     * Get quote from registry by unique key.
+     * @param int $custId
+     * @param int $stockId
+     * @return \Praxigento\Warehouse\Repo\Data\Quote|null
+     */
+    private function getRegisteredQuoteByUniqueKey($custId, $stockId)
+    {
+        $result = null;
+        $byCustId = EWrhsQuote::A_CUST_REF . '=' . (int)$custId;
+        $byStockId = EWrhsQuote::A_STOCK_REF . '=' . (int)$stockId;
+        $where = "($byCustId) AND ($byStockId)";
+        $rs = $this->daoWrhsQuote->get($where);
+        if (count($rs) == 1) {
+            $result = reset($rs);
+        }
+        return $result;
     }
 
     private function setQuoteActive($quoteId)
