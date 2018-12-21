@@ -47,7 +47,7 @@
     <columns name="catalog_warehouses_columns">
 
         <column name="Id"
-                component="Praxigento_Core/js/grid/columns/integer">
+                component="Praxigento_Core/js/grid/column/integer">
             <settings>
                 <dataType>number</dataType>
                 <filter>text</filter>

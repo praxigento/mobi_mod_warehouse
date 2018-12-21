@@ -47,7 +47,7 @@
     <columns name="catalog_group_prices_columns">
 
         <column name="productId"
-                component="Praxigento_Core/js/grid/columns/integer">
+                component="Praxigento_Core/js/grid/column/integer">
             <settings>
                 <dataType>number</dataType>
                 <filter>text</filter>
@@ -65,7 +65,7 @@
         </column>
 
         <column name="wrhsId"
-                component="Praxigento_Core/js/grid/columns/integer">
+                component="Praxigento_Core/js/grid/column/integer">
             <settings>
                 <dataType>number</dataType>
                 <filter>text</filter>
@@ -82,7 +82,7 @@
         </column>
 
         <column name="wrhsPrice"
-                component="Praxigento_Core/js/grid/columns/decimal">
+                component="Praxigento_Core/js/grid/column/decimal">
             <settings>
                 <dataType>price</dataType>
                 <filter>textRange</filter>
@@ -91,7 +91,7 @@
         </column>
 
         <column name="groupPrice"
-                component="Praxigento_Core/js/grid/columns/decimal">
+                component="Praxigento_Core/js/grid/column/decimal">
             <settings>
                 <dataType>price</dataType>
                 <filter>textRange</filter>
@@ -108,7 +108,7 @@
         </column>
 
         <column name="groupId"
-                component="Praxigento_Core/js/grid/columns/integer">
+                component="Praxigento_Core/js/grid/column/integer">
             <settings>
                 <dataType>number</dataType>
                 <filter>text</filter>
