@@ -106,10 +106,12 @@
             </settings>
         </column>
 
-        <column name="dateExp">
+        <column name="dateExp"
+                class="Magento\Ui\Component\Listing\Columns\Date"
+                component="Magento_Ui/js/grid/columns/date">
             <settings>
-                <dataType>text</dataType>
-                <filter>text</filter>
+                <dataType>date</dataType>
+                <filter>dateRange</filter>
                 <label translate="true">Date Expiration</label>
             </settings>
         </column>
