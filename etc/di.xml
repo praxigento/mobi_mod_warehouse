@@ -93,6 +93,13 @@
                 sortOrder="200" disabled="false"/>
     </type>
 
+    <type name="Magento\InventoryCatalog\Model\ResourceModel\AddStockDataToCollection">
+        <!-- Add current warehouse filter to stock status data. -->
+        <plugin name="prxgt_wrhs_plugin"
+                type="Praxigento\Warehouse\Plugin\Magento\InventoryCatalog\Model\ResourceModel\AddStockDataToCollection"
+                sortOrder="200" disabled="false"/>
+    </type>
+
     <type name="Magento\Payment\Model\Method\Adapter">
         <!-- Convert payment amounts from store currency into payment currency. -->
         <plugin name="prxgt_wrhs_plugin"
