@@ -10,13 +10,6 @@ use Praxigento\Warehouse\Api\Data\Catalog\Product as AWrhsProd;
 
 class Price
 {
-    /**
-     * Additional Product attributes. They are used in query builders to get data from DB and in
-     * this plugin to replace original prices by warehouse values.
-     */
-    const A_PRICE_WRHS = 'prxgt_wrhs_price';
-    const A_PRICE_WRHS_GROUP = 'prxgt_wrhs_price_group';
-
     /** @var \Praxigento\Warehouse\Helper\PriceLoader */
     private $hlpPriceLoader;
 
