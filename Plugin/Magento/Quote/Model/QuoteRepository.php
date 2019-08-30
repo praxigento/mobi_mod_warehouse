@@ -20,14 +20,14 @@ class QuoteRepository
     private $daoWrhsQuote;
     /** @var \Praxigento\Warehouse\Api\Helper\Stock */
     private $hlpStock;
+    /** @var \Magento\Quote\Api\CartRepositoryInterface */
+    private $repoQuote;
     /** @var \Magento\Checkout\Model\Session */
     private $sessCheckout;
     /** @var \Magento\Customer\Model\Session */
     private $sessCustomer;
     /** @var \Magento\Store\Model\StoreManagerInterface */
     private $storeManager;
-    /** @var \Magento\Quote\Api\CartRepositoryInterface */
-    private $repoQuote;
 
     public function __construct(
         \Magento\Checkout\Model\Session $sessCheckout,
@@ -143,7 +143,8 @@ class QuoteRepository
             $quoteIdSaved = $fromSession->getQuoteRef();
             $quoteSaved = $this->repoQuote->get($quoteIdSaved);
             if ($quoteSaved) {
-                $result->merge($fromSession);
+                // there is an error when merging warehouse quote into magento quote (I forgot why I do this)
+                // $result->merge($fromSession);
                 $quoteIdSess = $fromSession->getQuoteRef();
                 $this->unsetQuoteInSession($quoteIdSess);
             }
@@ -204,6 +205,24 @@ class QuoteRepository
         return $result;
     }
 
+    /**
+     * Get quote from registry by unique key.
+     * @param int $custId
+     * @param int $stockId
+     * @return \Praxigento\Warehouse\Repo\Data\Quote|null
+     */
+    private function getRegisteredQuoteByUniqueKey($custId, $stockId)
+    {
+        $result = null;
+        $byCustId = EWrhsQuote::A_CUST_REF . '=' . (int)$custId;
+        $byStockId = EWrhsQuote::A_STOCK_REF . '=' . (int)$stockId;
+        $where = "($byCustId) AND ($byStockId)";
+        $rs = $this->daoWrhsQuote->get($where);
+        if (count($rs) == 1) {
+            $result = reset($rs);
+        }
+        return $result;
+    }
 
     /** @return bool */
     private function isCustomerAuthenticated()
@@ -229,29 +248,12 @@ class QuoteRepository
             $this->daoWrhsQuote->create($entity);
         } else {
             $quoteReg = $this->sessCustomer->getData(self::SESS_QUOTE_REGISTRY);
-            if (!is_array($quoteReg)) $quoteReg = [];
+            if (!is_array($quoteReg)) {
+                $quoteReg = [];
+            }
             $quoteReg[$quoteId] = $entity;
             $this->sessCustomer->setData(self::SESS_QUOTE_REGISTRY, $quoteReg);
         }
-    }
-
-    /**
-     * Get quote from registry by unique key.
-     * @param int $custId
-     * @param int $stockId
-     * @return \Praxigento\Warehouse\Repo\Data\Quote|null
-     */
-    private function getRegisteredQuoteByUniqueKey($custId, $stockId)
-    {
-        $result = null;
-        $byCustId = EWrhsQuote::A_CUST_REF . '=' . (int)$custId;
-        $byStockId = EWrhsQuote::A_STOCK_REF . '=' . (int)$stockId;
-        $where = "($byCustId) AND ($byStockId)";
-        $rs = $this->daoWrhsQuote->get($where);
-        if (count($rs) == 1) {
-            $result = reset($rs);
-        }
-        return $result;
     }
 
     private function setQuoteActive($quoteId)
