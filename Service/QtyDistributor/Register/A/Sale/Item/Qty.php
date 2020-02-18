@@ -22,8 +22,7 @@ class Qty
     public function __construct(
         \Praxigento\Warehouse\Repo\Dao\Quantity $daoQty,
         \Praxigento\Warehouse\Repo\Dao\Quantity\Sale $daoQtySale
-    )
-    {
+    ) {
         $this->daoQty = $daoQty;
         $this->daoQtySale = $daoQtySale;
     }
@@ -49,7 +48,9 @@ class Qty
                 EQuantity::A_STOCK_ITEM_REF => $stockItemId,
                 EQuantity::A_LOT_REF => $lotId
             ];
-            if ($rest < $qty) {
+            if ($rest <= 0) {
+                break;
+            } elseif ($rest < $qty) {
                 /* lot's $qty is greater than $total (or $rest) */
                 $qtySaleData = [
                     EQtySale::A_SALE_ITEM_REF => $saleItemId,
@@ -74,9 +75,6 @@ class Qty
                 $this->daoQty->deleteById($qtyPk);
                 /* decrease $rest of $total*/
                 $rest -= $qty;
-            }
-            if ($rest <= 0) {
-                break;
             }
         }
     }
