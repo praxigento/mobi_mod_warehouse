@@ -11,6 +11,11 @@ use Praxigento\Warehouse\Service\QtyDistributor\Register\Sale\Request as AReques
 /**
  * 1) Split items qty by lots and register it (for credit cards payments events).
  * 2) Remove placed quote from warehouse registry.
+ *
+ * This functionality is used on events:
+ *   - checkout_submit_all_after
+ *   - paypal_express_place_order_success
+ *
  */
 class CheckoutSubmitAllAfter
     implements \Magento\Framework\Event\ObserverInterface

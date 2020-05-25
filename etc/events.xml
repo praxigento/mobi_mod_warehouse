@@ -15,4 +15,12 @@
                   instance="Praxigento\Warehouse\Observer\CheckoutSubmitAllAfter"/>
     </event>
 
+    <event name="paypal_express_place_order_success">
+        <!-- Split total items qty by lots and register it. -->
+        <!-- Remove placed quote from warehouse registry. -->
+        <!-- Used separately for PayPal Standard payments only -->
+        <observer name="prxgt_wrhs_on_paypal_express_place_order_success"
+                  instance="Praxigento\Warehouse\Observer\CheckoutSubmitAllAfter"/>
+    </event>
+
 </config>
