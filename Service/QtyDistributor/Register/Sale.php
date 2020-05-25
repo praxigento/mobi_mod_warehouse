@@ -13,15 +13,15 @@ class Sale
 {
     /** @var \Praxigento\Warehouse\Repo\Query\Lots\By\Product\Id\Get */
     private $daoGetLots;
-    /** @var \Praxigento\Warehouse\Service\QtyDistributor\Register\A\Sale\Item\Qty */
-    private $subQtyReg;
+    /** @var \Praxigento\Warehouse\Service\QtyDistributor\Register\Sale\A\Qty */
+    private $aQtyReg;
 
     public function __construct(
-        \Praxigento\Warehouse\Service\QtyDistributor\Register\A\Sale\Item\Qty $subQtyReg,
-        \Praxigento\Warehouse\Repo\Query\Lots\By\Product\Id\Get $daoGetLots
+        \Praxigento\Warehouse\Repo\Query\Lots\By\Product\Id\Get $daoGetLots,
+        \Praxigento\Warehouse\Service\QtyDistributor\Register\Sale\A\Qty $aQtyReg
     ) {
-        $this->subQtyReg = $subQtyReg;
         $this->daoGetLots = $daoGetLots;
+        $this->aQtyReg = $aQtyReg;
     }
 
     /**
@@ -47,7 +47,7 @@ class Sale
                 ];
                 $conn = $query->getConnection();
                 $lots = $conn->fetchAll($query, $bind);
-                $this->subQtyReg->exec($itemId, $qty, $lots);
+                $this->aQtyReg->exec($itemId, $qty, $lots);
             }
         }
         $result->markSucceed();

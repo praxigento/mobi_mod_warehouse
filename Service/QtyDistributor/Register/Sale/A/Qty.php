@@ -3,14 +3,14 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Warehouse\Service\QtyDistributor\Register\A\Sale\Item;
+namespace Praxigento\Warehouse\Service\QtyDistributor\Register\Sale\A;
 
 use Praxigento\Warehouse\Repo\Data\Quantity as EQuantity;
 use Praxigento\Warehouse\Repo\Data\Quantity\Sale as EQtySale;
 use Praxigento\Warehouse\Repo\Query\Lots\By\Product\Id\Get as AGet;
 
 /**
- * Internal service for group of classes (\Praxigento\Warehouse\Service\QtyDistributor\Register\...).
+ * Internal service to define lots for sale items register quantities in DB.
  */
 class Qty
 {
