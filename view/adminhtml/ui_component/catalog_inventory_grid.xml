@@ -24,7 +24,9 @@
             <!--https://magento.stackexchange.com/questions/248611/magento-2-grid-data-source-definition-in-compact-form -->
             <argument name="class" xsi:type="string">Praxigento\Core\App\Ui\DataProvider\Grid\Base</argument>
             <argument name="name" xsi:type="string">catalog_inventory_grid_data_source</argument>
-            <argument name="gridQueryBuilder" xsi:type="object">Praxigento\Warehouse\Ui\DataProvider\Grid\Inventory\QueryBuilder</argument>
+            <argument name="gridQueryBuilder" xsi:type="object">
+                Praxigento\Warehouse\Ui\DataProvider\Grid\Inventory\QueryBuilder
+            </argument>
         </argument>
     </dataSource>
 
@@ -65,19 +67,13 @@
         </column>
 
         <column name="wrhsId"
-                component="Praxigento_Core/js/grid/column/integer">
+                component="Magento_Ui/js/grid/columns/select">
             <settings>
-                <dataType>number</dataType>
-                <filter>text</filter>
-                <label translate="true">Warehouse Id</label>
-            </settings>
-        </column>
-
-        <column name="wrhsCode">
-            <settings>
-                <dataType>text</dataType>
-                <filter>text</filter>
-                <label translate="true">Warehouse Code</label>
+                <dataType>select</dataType>
+                <filter>select</filter>
+                <options class="Praxigento\Warehouse\Model\Config\Source\Warehouse"/>
+                <sortable>true</sortable>
+                <label translate="true">Warehouse</label>
             </settings>
         </column>
 
@@ -86,15 +82,18 @@
             <settings>
                 <dataType>price</dataType>
                 <filter>textRange</filter>
-                <label translate="true">Warehouse Price</label>
+                <label translate="true">Wrhs Price</label>
             </settings>
         </column>
 
-        <column name="wrhsCur">
+        <column name="wrhsCur"
+                component="Magento_Ui/js/grid/columns/select">
             <settings>
-                <dataType>text</dataType>
-                <filter>text</filter>
-                <label translate="true">Warehouse Currency</label>
+                <dataType>select</dataType>
+                <filter>select</filter>
+                <options class="Praxigento\Warehouse\Model\Config\Source\Warehouse\Currency"/>
+                <sortable>true</sortable>
+                <label translate="true">Wrhs Currency</label>
             </settings>
         </column>
 
@@ -112,7 +111,7 @@
             <settings>
                 <dataType>date</dataType>
                 <filter>dateRange</filter>
-                <label translate="true">Date Expiration</label>
+                <label translate="true">Exp. Date</label>
             </settings>
         </column>
 
