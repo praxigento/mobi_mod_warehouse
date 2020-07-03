@@ -66,11 +66,6 @@ class SaleTest
 
     public function test_create()
     {
-        $this->oneItem(3207);
-        $this->oneItem(3209);
-        $this->oneItem(3217);
-        $this->oneItem(3218);
-        $this->oneItem(3219);
-        $this->oneItem(3220);
+        $this->oneItem(3421);
     }
 }
