@@ -57,7 +57,7 @@ class SaleTest
         $this->assertInstanceOf(\Praxigento\Warehouse\Service\QtyDistributor\Register\Sale\Response::class, $resp);
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->hlpStock = $this->manObj->get(\Praxigento\Warehouse\Api\Helper\Stock::class);
         $this->repoSaleOrder = $this->manObj->get(\Magento\Sales\Api\OrderRepositoryInterface::class);
