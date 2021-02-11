@@ -114,6 +114,13 @@
                 sortOrder="200" disabled="false"/>
     </type>
 
+    <type name="Magento\Quote\Model\QuoteManagement">
+        <!-- Register new quote on sale order reorder by customer. -->
+        <plugin name="prxgt_wrhs_plugin"
+                type="Praxigento\Warehouse\Plugin\Magento\Quote\Model\QuoteManagement"
+                sortOrder="200" disabled="false"/>
+    </type>
+
     <type name="Magento\Quote\Model\QuoteRepository">
         <!-- Check active quote according to current stock and switch quote if stock is changed. -->
         <plugin name="prxgt_wrhs_plugin"
