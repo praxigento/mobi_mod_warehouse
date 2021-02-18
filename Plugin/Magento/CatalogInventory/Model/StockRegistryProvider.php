@@ -6,8 +6,19 @@
 namespace Praxigento\Warehouse\Plugin\Magento\CatalogInventory\Model;
 
 
-class StockRegistryProvider
-{
+class StockRegistryProvider {
+    /**
+     * @var \Magento\CatalogInventory\Api\StockRepositoryInterface
+     */
+    private $daoStock;
+    /**
+     * @var  \Magento\CatalogInventory\Api\StockItemRepositoryInterface
+     */
+    private $daoStockItem;
+    /**
+     * @var \Magento\CatalogInventory\Api\StockStatusRepositoryInterface
+     */
+    private $daoStockStatus;
     /**
      * @var \Magento\CatalogInventory\Api\Data\StockItemInterfaceFactory
      */
@@ -24,18 +35,6 @@ class StockRegistryProvider
      * @var \Magento\Backend\Model\Session\Quote
      */
     private $modQuoteSession;
-    /**
-     * @var \Magento\CatalogInventory\Api\StockRepositoryInterface
-     */
-    private $daoStock;
-    /**
-     * @var  \Magento\CatalogInventory\Api\StockItemRepositoryInterface
-     */
-    private $daoStockItem;
-    /**
-     * @var \Magento\CatalogInventory\Api\StockStatusRepositoryInterface
-     */
-    private $daoStockStatus;
     /**
      * @var  \Magento\CatalogInventory\Model\StockRegistryStorage
      */
@@ -73,8 +72,7 @@ class StockRegistryProvider
         \Magento\CatalogInventory\Model\StockRegistryProvider $subject,
         \Closure $proceed,
         $scopeId
-    )
-    {
+    ) {
         // $result = $proceed($scopeId); - don't use dumb code.
         /* get stock by scopeId (websiteId) from app cache if was cached before */
         $stock = $this->storeStockRegistry->getStock($scopeId);
@@ -102,7 +100,10 @@ class StockRegistryProvider
         $productId,
         $scopeId
     ) {
-        // $result = $proceed($productId, $scopeId); // original method will create empty item for stock registry
+        // we have no '0' stock in DB
+        if ($scopeId === 0) {
+            $scopeId = $this->manStock->getCurrentStockId();
+        }
         $result = $this->storeStockRegistry->getStockItem($productId, $scopeId);
         if (null === $result) {
             $criteria = $this->factStockItemCrit->create();
@@ -132,10 +133,11 @@ class StockRegistryProvider
         \Closure $proceed,
         $productId,
         $scopeId
-    )
-    {
-        // $result = $proceed($productId, $scopeId); - don't use dumb code.
-        /* get stock status by productId and scopeId (websiteId) from app cache if was cached before */
+    ) {
+        // we have no '0' stock in DB
+        if ($scopeId === 0) {
+            $scopeId = $this->manStock->getCurrentStockId();
+        }
         $stockStatus = $this->storeStockRegistry->getStockStatus($productId, $scopeId);
         if (null === $stockStatus) {
             /* ... or load current stock status and save to app cache */
