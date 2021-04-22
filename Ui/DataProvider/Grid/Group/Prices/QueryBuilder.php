@@ -1,7 +1,7 @@
 <?php
 
 /**
- * File creator: makhovdmitrii@inbox.ru
+ * File creator: dmitriimakhov@gmail.com
  */
 
 namespace Praxigento\Warehouse\Ui\DataProvider\Grid\Group\Prices;
