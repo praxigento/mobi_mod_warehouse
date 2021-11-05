@@ -64,6 +64,14 @@
             </settings>
         </column>
 
+        <column name="productName">
+            <settings>
+                <dataType>text</dataType>
+                <filter>text</filter>
+                <label translate="true">Product Name</label>
+            </settings>
+        </column>
+
         <column name="wrhsId"
                 component="Praxigento_Core/js/grid/column/integer">
             <settings>

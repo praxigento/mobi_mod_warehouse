@@ -19,6 +19,7 @@ class QueryBuilder
     const AS_CATALOG_INVENTORY_STOCK_ITEM = 'cist';
     const AS_CATALOG_PRODUCT_ENTITY = 'cpe';
     const AS_CUSTOMER_GROUP = 'cg';
+    const AS_PROD_NAME = 'pname';
     const AS_PRXGT_WRHS_GROUP_PRICE = 'pwgp';
     const AS_PRXGT_WRHS_STOCK_ITEM = 'pwsi';
     const AS_PRXGT_WRHS_WRHS = 'pww';
@@ -32,6 +33,7 @@ class QueryBuilder
     const A_GROUP_PRICE = 'groupPrice';
     const A_PRICE = 'wrhsPrice';
     const A_PRODUCT_ID = 'productId';
+    const A_PRODUCT_NAME = 'productName';
     const A_SKU = 'sku';
     const A_STOCK_REF = 'wrhsId';
     const A_WRHS_CODE = 'wrhsCode';
@@ -43,6 +45,7 @@ class QueryBuilder
         if (is_null($this->mapper)) {
             $map = [
                 self::A_PRODUCT_ID => self::AS_CATALOG_PRODUCT_ENTITY . '.' . Cfg::E_PRODUCT_A_ENTITY_ID,
+                self::A_PRODUCT_NAME => self::AS_PROD_NAME . '.' . Cfg::E_CATPROD_EAV_VARCHAR_A_VALUE,
                 self::A_SKU => self::AS_CATALOG_PRODUCT_ENTITY . '.' . Cfg::E_PRODUCT_A_SKU,
                 self::A_STOCK_REF => self::AS_PRXGT_WRHS_WRHS . '.' . EWarehouse::A_STOCK_REF,
                 self::A_WRHS_CODE => self::AS_PRXGT_WRHS_WRHS . '.' . EWarehouse::A_CODE,
@@ -71,6 +74,18 @@ class QueryBuilder
             self::A_SKU => Cfg::E_PRODUCT_A_SKU
         ];
         $result->from([$as => $tbl], $cols);
+
+        /* LEFT JOIN catalog_product_entity_varchar for productName */
+        $tbl = $this->resource->getTableName(Cfg::ENTITY_MAGE_CATALOG_PRODUCT_EAV_VARCHAR);
+        $as = self::AS_PROD_NAME;
+        $cols = [
+            self::A_PRODUCT_NAME => Cfg::E_CATPROD_EAV_VARCHAR_A_VALUE
+        ];
+        $cond1 = $as . '.' . Cfg::E_CATPROD_EAV_VARCHAR_A_ENTITY_ID . '=' . self::AS_CATALOG_PRODUCT_ENTITY . '.' . Cfg::E_PRODUCT_A_ENTITY_ID;
+        $cond2 = $as . '.' . Cfg::E_CATPROD_EAV_VARCHAR_A_ATTRIBUTE_ID . '=73'; // product.name
+        $cond3 = $as . '.' . Cfg::E_CATPROD_EAV_VARCHAR_A_STORE_ID . '=0'; // admin store
+        $cond = "($cond1) AND ($cond2) AND ($cond3)";
+        $result->joinLeft([$as => $tbl], $cond, $cols);
 
         /* LEFT JOIN cataloginventory_stock_item */
         $tbl = $this->resource->getTableName(Cfg::ENTITY_MAGE_CATALOGINVENTORY_STOCK_ITEM);
